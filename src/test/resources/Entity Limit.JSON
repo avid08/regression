@@ -1,0 +1,2024 @@
+{
+  "data": {
+    "type": "valueResponse",
+    "attributes": {
+      "dateOptions": {
+        "dates": [
+         "2015-04-21"
+        ]
+      },
+      "entities": [
+        {
+            "id" : "DEB.LN",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80362369",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80371413",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "2495E0",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E1",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E4",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E5",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495EP",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "25647V",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "16925Q",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "294549",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80089774",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80096471",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "709323",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80089817",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80096495",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "564816",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "564835",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "56503#",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80092068",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80105992",
+            "type" : "fitchGroupId"
+        },
+		{
+            "id" : "80464318",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80465089",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "816851",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "81685R",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "SRE",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "XIA.YY",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80360136",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80369917",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "PEO.WA",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80362366",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80371410",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "DTAC.TH",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80496836",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "150260",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "362335",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80092142",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80097766",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "247025",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "24702N",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "24702R",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2470C2",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2470C3",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "DELL.XX",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "70931Q",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "709903",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80360157",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80369933",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80443395",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "06390A",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "DEB.LN",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80362369",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80371413",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "2495E0",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E1",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E4",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E5",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495EP",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "25647V",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "16925Q",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "294549",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80089774",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80096471",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "709323",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80089817",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80096495",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "564816",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "564835",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "56503#",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80092068",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80105992",
+            "type" : "fitchGroupId"
+        },
+		{
+            "id" : "80464318",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80465089",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "816851",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "81685R",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "SRE",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "XIA.YY",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80360136",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80369917",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "PEO.WA",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80362366",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80371410",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "DTAC.TH",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80496836",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "150260",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "362335",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80092142",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80097766",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "247025",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "24702N",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "24702R",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2470C2",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2470C3",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "DELL.XX",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "70931Q",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "709903",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80360157",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80369933",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80443395",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "06390A",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "DEB.LN",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80362369",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80371413",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "2495E0",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E1",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E4",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E5",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495EP",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "25647V",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "16925Q",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "294549",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80089774",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80096471",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "709323",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80089817",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80096495",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "564816",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "564835",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "56503#",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80092068",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80105992",
+            "type" : "fitchGroupId"
+        },
+		{
+            "id" : "80464318",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80465089",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "816851",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "81685R",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "SRE",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "XIA.YY",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80360136",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80369917",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "PEO.WA",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80362366",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80371410",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "DTAC.TH",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80496836",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "150260",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "362335",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80092142",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80097766",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "247025",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "24702N",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "24702R",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2470C2",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2470C3",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "DELL.XX",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "70931Q",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "709903",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80360157",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80369933",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80443395",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "06390A",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "DEB.LN",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80362369",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80371413",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "2495E0",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E1",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E4",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E5",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495EP",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "25647V",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "16925Q",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "294549",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80089774",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80096471",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "709323",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80089817",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80096495",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "564816",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "564835",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "56503#",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80092068",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80105992",
+            "type" : "fitchGroupId"
+        },
+		{
+            "id" : "80464318",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80465089",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "816851",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "81685R",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "SRE",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "XIA.YY",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80360136",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80369917",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "PEO.WA",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80362366",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80371410",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "DTAC.TH",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80496836",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "150260",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "362335",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80092142",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80097766",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "247025",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "24702N",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "24702R",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2470C2",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2470C3",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "DELL.XX",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "70931Q",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "709903",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80360157",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80369933",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80443395",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "06390A",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "DEB.LN",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80362369",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80371413",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "2495E0",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E1",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E4",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E5",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495EP",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "25647V",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "16925Q",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "294549",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80089774",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80096471",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "709323",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80089817",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80096495",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "564816",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "564835",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "56503#",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80092068",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80105992",
+            "type" : "fitchGroupId"
+        },
+		{
+            "id" : "80464318",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80465089",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "816851",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "81685R",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "SRE",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "XIA.YY",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80360136",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80369917",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "PEO.WA",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80362366",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80371410",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "DTAC.TH",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80496836",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "150260",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "362335",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80092142",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80097766",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "247025",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "24702N",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "24702R",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2470C2",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2470C3",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "DELL.XX",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "70931Q",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "709903",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80360157",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80369933",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80443395",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "06390A",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "DEB.LN",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80362369",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80371413",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "2495E0",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E1",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E4",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E5",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495EP",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "25647V",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "16925Q",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "294549",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80089774",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80096471",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "709323",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80089817",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80096495",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "564816",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "564835",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "56503#",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80092068",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80105992",
+            "type" : "fitchGroupId"
+        },
+		{
+            "id" : "80464318",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80465089",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "816851",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "81685R",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "SRE",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "XIA.YY",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80360136",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80369917",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "PEO.WA",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80362366",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80371410",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "DTAC.TH",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80496836",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "150260",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "362335",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80092142",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80097766",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "247025",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "24702N",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "24702R",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2470C2",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2470C3",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "DELL.XX",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "70931Q",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "709903",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80360157",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80369933",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80443395",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "06390A",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "DEB.LN",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80362369",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80371413",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "2495E0",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E1",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E4",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E5",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495EP",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "25647V",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "16925Q",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "294549",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80089774",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80096471",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "709323",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80089817",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80096495",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "564816",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "564835",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "56503#",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80092068",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80105992",
+            "type" : "fitchGroupId"
+        },
+		{
+            "id" : "80464318",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80465089",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "816851",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "81685R",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "SRE",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "XIA.YY",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80360136",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80369917",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "PEO.WA",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80362366",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80371410",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "DTAC.TH",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80496836",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "150260",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "362335",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80092142",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80097766",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "247025",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "24702N",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "24702R",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2470C2",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2470C3",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "DELL.XX",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "70931Q",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "709903",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80360157",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80369933",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80443395",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "06390A",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "DEB.LN",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80362369",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80371413",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "2495E0",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E1",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E4",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E5",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495EP",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "25647V",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "16925Q",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "294549",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80089774",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80096471",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "709323",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80089817",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80096495",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "564816",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "564835",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "56503#",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80092068",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80105992",
+            "type" : "fitchGroupId"
+        },
+		{
+            "id" : "80464318",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80465089",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "816851",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "81685R",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "SRE",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "XIA.YY",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80360136",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80369917",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "PEO.WA",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80362366",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80371410",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "DTAC.TH",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80496836",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "150260",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "362335",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80092142",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80097766",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "247025",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "24702N",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "24702R",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2470C2",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2470C3",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "DELL.XX",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "70931Q",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "709903",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80360157",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80369933",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80443395",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "06390A",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "DEB.LN",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80362369",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80371413",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "2495E0",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E1",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E4",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E5",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495EP",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "25647V",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "16925Q",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "294549",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80089774",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80096471",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "709323",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80089817",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80096495",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "564816",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "564835",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "56503#",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80092068",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80105992",
+            "type" : "fitchGroupId"
+        },
+		{
+            "id" : "80464318",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80465089",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "816851",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "81685R",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "SRE",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "XIA.YY",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80360136",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80369917",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "PEO.WA",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80362366",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80371410",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "DTAC.TH",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80496836",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "150260",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "362335",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80092142",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80097766",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "247025",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "24702N",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "24702R",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2470C2",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2470C3",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "DELL.XX",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "70931Q",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "709903",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80360157",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80369933",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80443395",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "06390A",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "DEB.LN",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80362369",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80371413",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "2495E0",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E1",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E4",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E5",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495EP",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "25647V",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "16925Q",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "294549",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80089774",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80096471",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "709323",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80089817",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80096495",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "564816",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "564835",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "56503#",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80092068",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80105992",
+            "type" : "fitchGroupId"
+        },
+		{
+            "id" : "80464318",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80465089",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "816851",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "81685R",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "SRE",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "XIA.YY",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80360136",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80369917",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "PEO.WA",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80362366",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80371410",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "DTAC.TH",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "80496836",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "150260",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "362335",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80092142",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80097766",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "247025",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "24702N",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "24702R",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2470C2",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2470C3",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "DELL.XX",
+            "type" : "companyTicker"
+        },
+		{
+            "id" : "70931Q",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "709903",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "80360157",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80369933",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "80443395",
+            "type" : "fitchGroupId"
+        }, 
+        {
+            "id" : "06390A",
+            "type" : "CUSIP6"
+        },
+		{
+            "id" : "06390A",
+            "type" : "CUSIP6"
+        }
+      ],
+      "fitchFieldIds": [
+		"FC_OTHER_OPER_INC_HC_BNK"		
+      ],
+      "options": [
+        
+      ]
+    }
+  }
+}

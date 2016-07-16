@@ -1,0 +1,34 @@
+{
+   "data":{
+      "type":"valueRequest",
+      "attributes":{
+         "dateOptions":{
+            "dates":[
+              "2010-09-09"
+           
+            ],
+         "periods":[
+            {
+               "type":"Q1",
+               "year":2015
+            },
+            {
+               "type":"Annual",
+               "year":2014
+            }
+         ]},
+         "entities":[
+            {
+               "id":"123456789",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[
+            "FC_INT_INC_LOANS_BNK"
+         ],
+         "options":[
+
+         ]
+      }
+   }
+}

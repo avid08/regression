@@ -1,0 +1,54 @@
+{
+   "data":{
+      "type":"valueRequest",
+      "attributes":{
+         "dateOptions":{
+            "dates":[
+              "2007-09-09"
+            ],
+         "periods":[
+            
+         ]},
+         "entities":[
+            {
+               "id":"112427",
+               "type":"FitchID"
+            },
+            {
+               "id":"IBM",
+               "type":"companyTicker"
+            },
+            {
+               "id":"12589R",
+               "type":"CUSIP6"
+            },
+            {
+               "id":"80089138",
+               "type":"fitchGroupId"
+            },
+            {
+               "id":"115911",
+               "type":"FitchID"
+            }
+            
+         ],
+         "fitchFieldIds":[
+			"FC_RATING_OUTLOOK_RANK_MDY"
+         ],
+         "options":[
+		{
+               "name":"consolidation",
+               "value":"combined"
+            },
+            {
+               "name":"accountingStandard",
+               "value":"USGAAP"
+            },
+            {
+               "name":"filingType",
+               "value":"Original"
+            }
+         ]
+      }
+   }
+}

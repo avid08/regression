@@ -1,0 +1,43 @@
+{
+   "data":{
+      "type":"valueRequest",
+      "attributes":{
+         "dateOptions":{
+            "dates":[
+               "2015-08-09",
+               "2014-09-27"
+            ],
+            "periods":[
+               
+            ]
+         },
+         "entities":[
+            {
+               "id":"116980",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[
+            "FC_LT_IDR",
+            "FC_LT_IDR_DT",
+            "FC_ST_IDR",
+            "FC_ST_IDR_DT",
+            "FC_LT_IDR_ALRT"
+         ],
+         "options":[
+		{
+               "name":"consolidation",
+               "value":"combined"
+            },
+            {
+               "name":"accountingStandard",
+               "value":"USGAAP"
+            },
+            {
+               "name":"filingType",
+               "value":"Original"
+            }
+         ]
+      }
+   }
+}

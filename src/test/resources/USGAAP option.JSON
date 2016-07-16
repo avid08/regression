@@ -1,0 +1,42 @@
+{
+   "data":{
+      "type":"valueResponse",
+      "attributes":{
+         "dateOptions":{
+            "dates":[
+
+            ],
+            "periods":[
+
+            ]
+         },
+         "entities":[
+            {
+               "id":"1012738",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[
+            "FC_TRADING_SECURITIES_FV_INC_BNK"
+         ],
+         "options":[
+           {
+               "name":"consolidation",
+               "value":"combined"
+            },
+            {
+               "name":"accountingStandard",
+               "value":"USGAAP"
+            },
+            {
+               "name":"filingType",
+               "value":"Original"
+            },
+            {
+               "name":"currency",
+               "value":"USD"
+            } 
+         ]
+      }
+   }
+}

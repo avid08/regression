@@ -1,0 +1,28 @@
+{  
+   "data":{  
+      "type":"valueResponse",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+
+            ],
+            "periods":[  
+
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"112873",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+            "FC_COMPANY_NAME",
+            "FC_CONNECT_URL"
+         ],
+         "options":[  
+
+         ]
+      }
+   }
+}
