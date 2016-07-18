@@ -37,7 +37,6 @@ public class ApIsmokeTestSuite {
 	public String AuthrztionValue;
 	public String baseURI;
 	public String env;
-	// String baseURI = "https://api-qa.fitchconnect.com"; // URL for QA
 	String metaEndPoint = "/v1/metadata/fields"; // Metadata-EndPoint
 	String metaUrl = baseURI + metaEndPoint;
 	String dataEndPoint = "/v1/data/valueRequest";
