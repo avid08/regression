@@ -1712,5 +1712,28 @@ public class ApIsmokeTestSuite {
 		
 		
 	}
+	
+	
+	   @Test 
+	    public void Shareholders_756(){
+		   String sharehdlerUri = "/v1/shareholders";
+			String sharhlderUrl =baseURI+sharehdlerUri ;  
+			
+			 Response shreholder =  given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue)
+
+				.when().get(sharhlderUrl).then().statusCode(200)
+				.body("data.type",hasItem("shareholders"))
+				.contentType(ContentType.JSON).extract().response();
+			 
+	/*	        List<String> wonrshipType    = shreholder.
+				List<String> country         = 
+				List<String> name            = 
+				List<String> sharholdrType   = 
+				List<String> wonrShipPrcentGe= 
+			 */
+		   
+	   }
+
 
 }
