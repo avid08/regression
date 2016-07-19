@@ -11,6 +11,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -263,7 +264,8 @@ public class ApIsmokeTestSuite {
 	@Test(enabled = true)
 	public void entity_search_976_statement() {
 
-		String enTityendPoint2 = "/v1/entities/111607/statements"; // publishflag = false 
+		String enTityendPoint2 = "/v1/entities/111607/statements"; // publishflag
+																	// = false
 		String enTityUrl2 = baseURI + enTityendPoint2;
 
 		given().header("Authorization", AuthrztionValue).header("content", contentValue).header("'Accept", acceptValue)
@@ -365,7 +367,7 @@ public class ApIsmokeTestSuite {
 	// Test Description : Verify that all fields within MetaData Response
 	// contains all the fields from different entities.
 	@Test
-	public void metaDataResponse_Compare() throws IOException {
+	public void metaDataResponse_Compare() throws IOException, URISyntaxException {
 
 		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrl).then()
@@ -378,11 +380,15 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(response.asString().contains("isError"));
 		Assert.assertFalse(response.asString().contains("isMissing"));
-
-		File src = new File("C://Users//aislam//Desktop//Month Of June//API Project//Sprint 19//fitchfieldID.xlsx");
+       
+		URL fileUrl = Resources.getResource("fitchfieldID.xlsx");
+		
+		
+		File src = new File(fileUrl.toURI());
+		
 		FileInputStream file = new FileInputStream(src);
 
-		XSSFWorkbook wb = new XSSFWorkbook(file);
+		XSSFWorkbook wb = new XSSFWorkbook(file);		
 		XSSFSheet mySheet = wb.getSheet("Sheet1");
 		int rowcount = mySheet.getPhysicalNumberOfRows();
 		System.out.println(rowcount + " fields are available");
@@ -1697,43 +1703,92 @@ public class ApIsmokeTestSuite {
 				.body("data.links.self", equalTo("http://meta-service:8080/v1/metadata/fields/FC_ST_LC_FER_SP"));
 
 	}
-	
+
 	@Test
-   public void directors_788(){
-		
+	public void directors_788() {
+
 		String directorUri = "/v1/directors";
-		String dirctorUrl =baseURI+directorUri ;
-		
-		Response drectorRes = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-		.header("accept", acceptValue).header("content", contentValue)
+		String dirctorUrl = baseURI + directorUri;
 
-		.when().get(dirctorUrl).then().statusCode(200)
-		.contentType(ContentType.JSON).extract().response();
-		
-		
-	}
-	
-	
-	   @Test 
-	    public void Shareholders_756(){
-		   String sharehdlerUri = "/v1/shareholders";
-			String sharhlderUrl =baseURI+sharehdlerUri ;  
-			
-			 Response shreholder =  given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue)
+		Response drectorRes = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
+				.header("content", contentValue)
 
-				.when().get(sharhlderUrl).then().statusCode(200)
-				.body("data.type",hasItem("shareholders"))
+				.when().get(dirctorUrl).then().statusCode(200).body("data.type", hasItem("directors"))
 				.contentType(ContentType.JSON).extract().response();
-			 
-	/*	        List<String> wonrshipType    = shreholder.
-				List<String> country         = 
-				List<String> name            = 
-				List<String> sharholdrType   = 
-				List<String> wonrShipPrcentGe= 
-			 */
-		   
-	   }
 
+		List<String> role = drectorRes.path("data.attributes.role");
+		List<String> countnamery = drectorRes.path("data.attributes.name");
+		List<String> position = drectorRes.path("data.attributes.position");
 
+		Assert.assertFalse(drectorRes.asString().contains("isError"));
+		Assert.assertFalse(drectorRes.asString().contains("isMissing"));
+
+		for (int i = 0; i < role.size(); i++) {
+
+			Assert.assertNotNull(role.get(i));
+			Assert.assertNotNull(countnamery.get(i));
+			Assert.assertNotNull(position.get(i));
+
+		}
+
+	}
+
+	@Test
+	public void Shareholders_830() {
+		String sharehdlerUri = "/v1/shareholders";
+		String sharhlderUrl = baseURI + sharehdlerUri;
+
+		Response shreholder = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
+				.header("content", contentValue)
+
+				.when().get(sharhlderUrl).then().statusCode(200).body("data.type", hasItem("shareholders"))
+				.contentType(ContentType.JSON).extract().response();
+
+		List<String> wonrshipType = shreholder.path("data.attributes.ownershipType");
+		List<String> country = shreholder.path("data.attributes.country");
+		List<String> name = shreholder.path("data.attributes.name");
+
+		Assert.assertFalse(shreholder.asString().contains("isError"));
+		Assert.assertFalse(shreholder.asString().contains("isMissing"));
+
+		for (int i = 0; i < wonrshipType.size(); i++) {
+
+			Assert.assertNotNull(wonrshipType.get(i));
+			Assert.assertNotNull(country.get(i));
+			Assert.assertNotNull(name.get(i));
+
+		}
+
+	}
+
+	@Test
+
+	public void Officers_756() {
+
+		String officrUri = "/v1/officers";
+		String offcrsUrl = baseURI + officrUri;
+
+		Response officersdata = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
+				.header("content", contentValue)
+
+				.when().get(offcrsUrl).then().statusCode(200).body("data.type", hasItem("officers"))
+				.contentType(ContentType.JSON).extract().response();
+
+		List<String> name = officersdata.path("data.attributes.name");
+		List<String> position = officersdata.path("data.attributes.position");
+
+		Assert.assertFalse(officersdata.asString().contains("isError"));
+		Assert.assertFalse(officersdata.asString().contains("isMissing"));
+
+		for (int i = 0; i < name.size(); i++) {
+
+			Assert.assertNotNull(name.get(i));
+			Assert.assertNotNull(position.get(i));
+
+		}
+
+	}
 }
