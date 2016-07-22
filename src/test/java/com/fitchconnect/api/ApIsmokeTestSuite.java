@@ -51,16 +51,15 @@ public class ApIsmokeTestSuite {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-
 			baseURI = "https://api-int.fitchconnect.com";
-			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
+			this.AuthrztionValue = ("Basic MUtQNk1DVVk0WkU1SDFXVlVBWlJUVjNUSjpPM0owV0orUGVhZ3JqMis1bTBTMkdvdnZKRDBrQUd1R3F6Q0M5REIydjRv");
 		} else if (env.equals("dev")) {
 			baseURI = "https://api-dev.fitchconnect.com";
 			this.AuthrztionValue = ("Basic NTA4Rk44V1BKTUdGVVI5VFpOREFEV0NCSzpvMVY5bkRCMG8yM3djSHp2eVlHNnZZb01GSkJWdG1KZmEwS20vbUczVWVV");
 
 		} else if (env.equals("int")) {
 			baseURI = "https://api-int.fitchconnect.com";
-			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
+			this.AuthrztionValue = ("Basic MUtQNk1DVVk0WkU1SDFXVlVBWlJUVjNUSjpPM0owV0orUGVhZ3JqMis1bTBTMkdvdnZKRDBrQUd1R3F6Q0M5REIydjRv");
 
 		} else if (env.equals("qa")) {
 			baseURI = "https://api-qa.fitchconnect.com";
@@ -374,21 +373,17 @@ public class ApIsmokeTestSuite {
 				.contentType(ContentType.JSON).extract().response();
 
 		jsonAsString = response.asString();
-
-		List<String> id = response.path("data.id");
-		assertNotNull(id);
-
+   
 		Assert.assertFalse(response.asString().contains("isError"));
 		Assert.assertFalse(response.asString().contains("isMissing"));
-       
+
 		URL fileUrl = Resources.getResource("fitchfieldID.xlsx");
-		
-		
+
 		File src = new File(fileUrl.toURI());
-		
+
 		FileInputStream file = new FileInputStream(src);
 
-		XSSFWorkbook wb = new XSSFWorkbook(file);		
+		XSSFWorkbook wb = new XSSFWorkbook(file);
 		XSSFSheet mySheet = wb.getSheet("Sheet1");
 		int rowcount = mySheet.getPhysicalNumberOfRows();
 		System.out.println(rowcount + " fields are available");
@@ -475,6 +470,8 @@ public class ApIsmokeTestSuite {
 			Assert.assertNotNull(role.get(i));
 			Assert.assertNotNull(name.get(i));
 			Assert.assertNotNull(position.get(i));
+			
+			
 
 		}
 
@@ -1775,7 +1772,7 @@ public class ApIsmokeTestSuite {
 				.header("content", contentValue)
 
 				.when().get(offcrsUrl).then().statusCode(200).body("data.type", hasItem("officers"))
-				.contentType(ContentType.JSON).extract().response();
+				.contentType("application/vnd.api+json").extract().response();
 
 		List<String> name = officersdata.path("data.attributes.name");
 		List<String> position = officersdata.path("data.attributes.position");
@@ -1791,4 +1788,289 @@ public class ApIsmokeTestSuite {
 		}
 
 	}
+
+	@Test
+
+	public void unRated_928() throws IOException {
+
+		URL file = Resources.getResource("928_Request_UnRated.Json");
+
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response dataResponse = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).contentType(contentValue).body(myJson).with()
+
+				.when().post(dataPostUrl)
+
+				.then().assertThat().log().ifError().statusCode(200).body(containsString("FC_COMPANY_NAME"))
+				.body(containsString("AGNT_")).extract().response();
+
+		Assert.assertFalse(dataResponse.asString().contains("isError"));
+		Assert.assertFalse(dataResponse.asString().contains("isMissing"));
+
+	}
+
+	@Test
+
+	public void UpdateFinalcial_microSrvice_595() throws IOException {
+
+		URL file = Resources.getResource("financial Micro Servce.JSON");
+
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response financialData = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).contentType(contentValue).body(myJson).with()
+
+				.when().post(dataPostUrl)
+
+				.then().assertThat().log().ifError().statusCode(200).body(containsString("USD"))
+				.body(containsString("2014")).extract().response();
+
+		Assert.assertFalse(financialData.asString().contains("isError"));
+		Assert.assertFalse(financialData.asString().contains("isMissing"));
+
+		List<String> id = financialData.path("data.attributes.entities.type");
+		assert (id.contains("FitchID"));
+
+	}
+
+	@Test
+
+	public void defaultCurrenyType_401_returnSingleCurrency() throws IOException {
+
+		URL myfile = Resources.getResource("defaultCurreny Type.json");
+
+		String myJson = Resources.toString(myfile, Charsets.UTF_8);
+
+		Response defaultCurrncyData = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).contentType(contentValue).body(myJson).with()
+
+				.when().post(dataPostUrl)
+
+				.then().assertThat().log().ifError().statusCode(200).body(containsString("VND"))
+				.body(containsString("2014")).body(containsString("784530000000")).extract().response();
+
+		Assert.assertFalse(defaultCurrncyData.asString().contains("isError"));
+		Assert.assertFalse(defaultCurrncyData.asString().contains("isMissing"));
+
+		List<String> id = defaultCurrncyData.path("data.attributes.entities.id");
+		assert (id.contains("1466804"));
+
+	}
+
+	@Test
+
+	public void defaultLOB_570() throws IOException {
+
+		URL xfile = Resources.getResource("Default_LOB.Json");
+
+		String jsonbody = Resources.toString(xfile, Charsets.UTF_8);
+
+		Response dataResponse = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).contentType(contentValue).body(jsonbody).with()
+
+				.when().post(dataPostUrl)
+
+				.then().assertThat().statusCode(200).body(containsString("FC_SHARE_CAPITAL_INS"))
+				.body(containsString("Q2")).body(containsString("GBP")).extract().response();
+
+		Assert.assertFalse(dataResponse.asString().contains("isError"));
+		Assert.assertFalse(dataResponse.asString().contains("isMissing"));
+
+	}
+
+	@Test
+	public void period_resoltion_available_Statement_709() throws IOException {
+
+		boolean failure = false;
+
+		URL xfile = Resources.getResource("Period Resoluton for statemnet.json");
+
+		String myjson = Resources.toString(xfile, Charsets.UTF_8);
+
+		Response responseData = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).contentType(contentValue).body(myjson).with()
+
+				.when().post(dataPostUrl).then().assertThat().statusCode(200).extract().response();
+
+		String quatr1 = responseData.path("data.attributes.dateOptions.periods.get(0).type");
+		String quatr2 = responseData.path("data.attributes.dateOptions.periods.get(1).type");
+		String Grade1 = responseData.path("data.attributes.entities[0].values[1].values[0].value[0]");
+		String Grade2 = responseData.path("data.attributes.entities[0].values[1].values[1].value[0]");
+
+		if (quatr1.equals("Q1") && quatr2.equals("Annual") && (Grade1.equals("A+") && Grade2.equals("A+"))) {
+			System.out.println(quatr1 + "," + quatr2);
+			System.out.println(Grade1 + "," + Grade2);
+
+		} else {
+			failure = true;
+			System.err.println(quatr1 + "Not working");
+		}
+
+		Assert.assertFalse(failure);
+		Assert.assertFalse(responseData.asString().contains("isError"));
+		Assert.assertFalse(responseData.asString().contains("isMissing"));
+
+	}
+
+	@Test
+
+	public void defaultAccountstandard_IFRS_708_704() throws IOException {
+		boolean faildata = false;
+
+		URL xfile = Resources.getResource("defaultAccountingStandard.json");
+
+		String myjson = Resources.toString(xfile, Charsets.UTF_8);
+
+		Response dataRespnse = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).contentType(contentValue).body(myjson).with().when()
+				.post(dataPostUrl).then().assertThat().statusCode(200)
+				.body("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.type", equalTo("Q2"))
+				.body("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.year", equalTo(2015))
+
+				.extract().response();
+
+		float IFRSvalue = dataRespnse.path("data.attributes.entities[0].values[0].values[0].value[0].USD");
+
+		if (IFRSvalue == 2.9652008E7) {
+			System.out.println(IFRSvalue);
+		} else {
+			System.err.println("value does not Match");
+			faildata = true;
+		}
+
+		Assert.assertFalse(faildata);
+		Assert.assertFalse(dataRespnse.asString().contains("isError"));
+		Assert.assertFalse(dataRespnse.asString().contains("isMissing"));
+	}
+
+	@Test
+	public void enforce_date_period_limit_714() {
+		URL xfile = Resources.getResource("enForce Date_Period limit.json");
+
+		String myjson = null;
+		try {
+			myjson = Resources.toString(xfile, Charsets.UTF_8);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType(contentValue).body(myjson).with().when().post(dataPostUrl).then().assertThat()
+				.statusCode(200).body("data.attributes.dateOptions.dates[0]", equalTo("2015-09-09"))
+				.body("data.attributes.dateOptions.dates[3]", equalTo("2015-12-09"))
+				.body("data.attributes.entities[0].values[0].values[0].timeIntervalDate", equalTo("2015-09-09"))
+				.body("data.attributes.entities[0].values[0].values[3].value[0]", equalTo("A+"))
+				.body("data.attributes.entities[0].values[0].values[3].timeIntervalDate", equalTo("2015-12-09"))
+
+				.extract().response();
+
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+		
+		
+		List <String> timeintervalDate = res.path("data.attributes.entities[0].values[0].values[0].timeIntervalDate");
+		for(int i=0;i<timeintervalDate.size();i++){
+			System.out.println(timeintervalDate.get(i));
+		}
+
+	}
+	
+	@Test
+	public void MetaData_Issue_1026(){
+		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrl).then()
+				.contentType(ContentType.JSON).extract().response();
+
+		jsonAsString = response.asString();
+
+		List<String> Id = response.path("data.id");
+		List<String> displayNme = response.path("data.attributes.displayName");
+
+		List<String> fitchFieldDes = response.path("data.attributes.fitchFieldDesc");
+
+		List<String> link = response.path("data.links.self");
+
+      for (int i = 0;i>Id.size();i++){
+    	  Assert.assertNotNull(Id.get(i));
+    	  Assert.assertNotNull(displayNme.get(i));
+    	  Assert.assertNotNull(fitchFieldDes.get(i));
+    	  Assert.assertNotNull(link.get(i));
+    	  
+    	  
+      }
+		
+	}
+	
+   @Test
+   public void  morethan200_entity_1039() throws IOException{
+
+		URL xfile = Resources.getResource("1039_request with Multi entity.json");
+
+		String myjson = Resources.toString(xfile, Charsets.UTF_8);
+
+		Response dataRespnse = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).contentType(contentValue).body(myjson).with().when()
+				.post(dataPostUrl).then().assertThat().statusCode(200)
+				.contentType(ContentType.JSON).extract().response();
+				
+		Assert.assertFalse(dataRespnse.asString().contains("isError"));
+		Assert.assertFalse(dataRespnse.asString().contains("isMissing"));
+		
+	   
+   }
+   @Test
+   public void fillingtype_515() {
+
+          String url = baseURI + "/v1/statements/6398950/filings";
+          RestAssured.baseURI = url;
+
+          Response res = given()
+
+                       .header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+                       .header("accept", acceptValue).header("content", contentValue)
+                       
+                       .when().get().then().statusCode(200)
+                       
+                      .body("data.type[0]", equalTo("filings"))
+                       .body("data.attributes.fileName[0]", containsString(".pdf"))
+                       .body("data.attributes.fileType[0]", equalTo("pdf"))
+                        .body("data.relationships.statement.data.id[0]", equalTo("6398950"))
+                       .body("data.links.download[0]", containsString("https:"))
+                       .contentType(ContentType.JSON)
+                       .extract().response();
+
+          Assert.assertFalse(res.asString().contains("isError"));
+          Assert.assertFalse(res.asString().contains("isMissing"));
+          
+   }
+
+   @Test
+   public void currencyoption_716() throws IOException {
+          
+          URL file = Resources.getResource("currency_716.json");
+          String myJson = Resources.toString(file, Charsets.UTF_8);
+          
+          Response output = given()
+                       .header("Authorization", AuthrztionValue). header("X-App-Client-Id", XappClintIDvalue)
+                        .contentType("application/vnd.api+json").body(myJson).with()
+                       
+                       .when().post(dataPostUrl)
+
+                        .then().assertThat().log().ifError().statusCode(200)
+                       
+                        .body("data.attributes.entities.values.values.value.USD", Matchers.notNullValue())
+                       
+                       .contentType(ContentType.JSON)
+                       .extract().response();
+          
+          Assert.assertNotNull(output);
+          Assert.assertFalse(output.asString().contains("isError"));
+          Assert.assertFalse(output.asString().contains("isMissing"));
+
+   }
+
 }
+
+
