@@ -1,0 +1,41 @@
+{
+"data": {
+"type": "valueRequest",
+"attributes": {
+"dateOptions": {
+"periodRanges":[
+{
+"startPeriod" : {"type": "Annual", "year": 2013}
+}
+]
+},
+"entities": [
+		{
+		     "id": "110631",
+		     "type": "FitchID"
+		}
+      ],
+      "fitchFieldIds" : [
+        "FC_INT_INC_LOANS_BNK"
+      ],
+ "options": [
+ {
+               "name":"consolidation",
+               "value":"con"
+            },
+            {
+               "name":"accountingStandard",
+               "value":"USGAAP"
+            },
+            {
+               "name":"filingType",
+               "value":"Original"
+            },
+            {
+               "name":"currency",
+               "value":"USD"
+            }
+ ]
+    }
+  }
+}

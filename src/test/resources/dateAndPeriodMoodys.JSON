@@ -1,0 +1,43 @@
+{
+   "data":{
+      "type":"valueRequest",
+      "attributes":{
+         "dateOptions":{
+            "dates":[
+               "2010-09-09"
+
+            ],
+         "periods":[
+            {
+               "type":"Q1",
+               "year":2014
+            }
+         ]},
+         "entities":[
+            
+               {
+          "id": "IBM",
+          "type": "companyTicker"
+        }
+          
+         ],
+         "fitchFieldIds":[
+          "FC_LT_LC_ISSR_MDY"
+         ],
+         "options":[
+		{
+               "name":"consolidation",
+               "value":"combined"
+            },
+            {
+               "name":"accountingStandard",
+               "value":"USGAAP"
+            },
+            {
+               "name":"filingType",
+               "value":"Original"
+            }
+         ]
+      }
+   }
+}

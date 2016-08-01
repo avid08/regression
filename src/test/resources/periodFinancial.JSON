@@ -1,0 +1,36 @@
+{
+    "data": {
+        "type": "valueRequest",
+        "attributes": {
+            "dateOptions": {
+                "dates": ["2015-12-31"],
+                "periods": [],
+                "dateRanges": [],
+                "periodRanges": []
+            },          
+            "entities": [{
+                "id": "1003961",
+                "type": "FitchID"
+           }],
+            "fitchFieldIds": ["FC_INT_INC_LOANS_BNK"],
+            "options": [{
+                "name": "accountingStandard",
+                "value": "Local"
+            },
+            {
+                "name": "currency",
+                "value": "GBP"
+            },
+            {
+                "name": "linesOfBusiness",
+                "value": "NonLife"
+            },
+            {
+                "name": "consolidation",
+                "value": "combined"
+            }]
+        }
+    }
+}
+
+

@@ -1,0 +1,59 @@
+{
+  "data": {
+    "type": "valueResponse",
+    "attributes": {
+      "dateOptions": {
+        "dates": [
+		"2016-02-24"
+        ],
+        "periods": [
+         {
+            "type": "Q3",
+            "year": 2015
+          }
+        ]
+        
+      },
+      "entities": [
+        {
+          "id": "1466379",
+          "type": "FitchID"
+        }
+      
+      ],
+      "fitchFieldIds": [
+        "FC_INT_INC_LOANS_BNK"
+
+
+      ],
+      "options": [
+
+			{
+               "name":"consolidation",
+               "value":"con"
+            },
+            {
+               "name":"accountingStandard",
+               "value":"Local"
+            },
+            {
+               "name":"filingType",
+               "value":"Original"
+            },
+            {
+               "name":"currency",
+               "value":"USD"
+            },
+            {
+               "name":"currency",
+               "value":"Local"
+            },
+            {
+               "name":"currency",
+               "value":"GBP"
+            }
+          
+      ]
+    }
+  }
+}

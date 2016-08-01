@@ -1,0 +1,46 @@
+{
+   "data":{
+      "type":"valueResponse",
+      "attributes":{
+         "dateOptions":{
+            "dates":[
+                "2014-12-31"
+            ],
+            "periods":[
+
+            ]
+         },
+         "entities":[
+            {
+               "id":"1346752",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[
+            "FC_INV_SUB_CO_INS"
+         ],
+         "options":[
+            {
+               "name":"linesOfBusiness",
+               "value":"Life"
+            },
+            {
+               "name":"consolidation",
+               "value":"noncon"
+            },
+            {
+               "name":"accountingStandard",
+               "value":"Local"
+            },
+            {
+               "name":"filingType",
+               "value":"Original"
+            },
+            {
+               "name":"currency",
+               "value":"USD"
+            }
+         ]
+      }
+   }
+}
