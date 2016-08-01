@@ -2039,7 +2039,8 @@ public class ApIsmokeTestSuite {
 
 				.when().get().then().statusCode(200)
 
-				.body("data.type[0]", equalTo("filings")).body("data.attributes.fileName[0]", containsString(".pdf"))
+				.body("data.type[0]", equalTo("filings"))
+				.body("data.attributes.fileName[0]", containsString(".pdf"))
 				.body("data.attributes.fileType[0]", equalTo("pdf"))
 				.body("data.relationships.statement.data.id[0]", equalTo("5454931"))
 				.body("data.links.download[0]", containsString("https:")).contentType(ContentType.JSON).extract()
