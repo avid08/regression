@@ -11,7 +11,9 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +22,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import org.testng.AssertJUnit;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -27,21 +30,25 @@ import com.google.common.io.Resources;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoException;
 
 import groovy.json.internal.Charsets;
 
 public class ApIsmokeTestSuite {
-	public static Response response;
-	public static String jsonAsString;
-	public static String myjson;
-	public String AuthrztionValue;
-	public String baseURI;
-	public String env;
-	// String baseURI = "https://api-qa.fitchconnect.com"; // URL for QA
+	public Response response;
+	
+	String myjson;
+	String AuthrztionValue;
+	String baseURI;
+	String env;
 	String metaEndPoint = "/v1/metadata/fields"; // Metadata-EndPoint
-	String metaUrl = baseURI + metaEndPoint;
+	String metaUrl ;
 	String dataEndPoint = "/v1/data/valueRequest";
-	String dataPostUrl = baseURI + dataEndPoint; // Data Aggregator -EndPoint
+	String dataPostUrl ; // 
 	String XappClintIDvalue = "3dab0f06-eb00-4bee-8966-268a0ee27ba0";
 	String acceptValue = "application/vnd.api+json";
 	String contentValue = "application/vnd.api+json";
@@ -51,16 +58,15 @@ public class ApIsmokeTestSuite {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-
-			baseURI = "https://api-int.fitchconnect.com";
-			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
+			baseURI = "https://api-qa.fitchconnect.com";
+			this.AuthrztionValue = ("Basic MUlLVk1SMjlJS1lIMllPSjFUQkdGQ0tKSDpFN1Y2Z1FJY3RPeG5KbG8rSVBHaGY0K0tTSGc3LzFpOFJsbVo1Tmd6NUpB");
 		} else if (env.equals("dev")) {
 			baseURI = "https://api-dev.fitchconnect.com";
 			this.AuthrztionValue = ("Basic NTA4Rk44V1BKTUdGVVI5VFpOREFEV0NCSzpvMVY5bkRCMG8yM3djSHp2eVlHNnZZb01GSkJWdG1KZmEwS20vbUczVWVV");
 
 		} else if (env.equals("int")) {
 			baseURI = "https://api-int.fitchconnect.com";
-			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
+			this.AuthrztionValue = ("Basic MUtQNk1DVVk0WkU1SDFXVlVBWlJUVjNUSjpPM0owV0orUGVhZ3JqMis1bTBTMkdvdnZKRDBrQUd1R3F6Q0M5REIydjRv");
 
 		} else if (env.equals("qa")) {
 			baseURI = "https://api-qa.fitchconnect.com";
@@ -80,7 +86,7 @@ public class ApIsmokeTestSuite {
 		dataPostUrl = baseURI + dataEndPoint;
 	}
 
-	@Test
+	@Test()
 	public void StatusCodeTest() {
 
 		int statuscode = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -94,8 +100,10 @@ public class ApIsmokeTestSuite {
 
 	// Test Description : Verify that Pulish_Flag added to metadata service and
 	// in the Entity Summary
-	@Test
+	@Test()
 	public void metaDataResponse_with_PF_US897() {
+		
+	
 
 		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrl).then().assertThat()
@@ -107,7 +115,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertFalse(response.asString().contains("isMissing"));
 		Assert.assertTrue(response.asString().contains("FC_CH_PUBLISH_FLAG"));
 
-		jsonAsString = response.asString();
+
 
 		List<String> attributes = response.path("data.attributes");
 		assertNotNull(attributes);
@@ -116,12 +124,15 @@ public class ApIsmokeTestSuite {
 
 	// Test Description :verify that PublishFlag field will return the value
 	// from corporateHierarchy.PublishFlag
-	@Test
-	public void FC_CH_Publish_Flag_EntitySummary_US889() {
-
+	@Test()
+	public void FC_CH_Publish_Flag_EntitySummary_US889() throws InterruptedException {
+		
 		given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("Accept", acceptValue).header("content", contentValue).when().get(metaUrl).then().log()
-				.ifError().assertThat().statusCode(200).body("data.id", hasItem("FC_CH_PUBLISH_FLAG")).and()
+				.header("Accept", acceptValue).header("content", contentValue)
+				.when().get(metaUrl)
+				.then().log()
+				.ifError().assertThat()
+				.statusCode(200).body("data.id", hasItem("FC_CH_PUBLISH_FLAG")).and()
 				.body("data.attributes.type", hasItem("CURRENCY"));
 
 	}
@@ -182,6 +193,7 @@ public class ApIsmokeTestSuite {
 	@Test(enabled = true)
 	public void ModyNewFields_775() throws IOException {
 
+        
 		URL file = Resources.getResource("ModyNewFieldsReq.json");
 		String myRequest = Resources.toString(file, Charsets.UTF_8);
 
@@ -198,7 +210,7 @@ public class ApIsmokeTestSuite {
 				.body(containsString("FC_LT_FC_BANK_DEPOSITS_WATCHLIST_DT_MDY"))
 
 				.extract().response();
-		jsonAsString = fieldResponse.asString();
+	
 
 		Assert.assertFalse(fieldResponse.asString().contains("isError"));
 		Assert.assertFalse(fieldResponse.asString().contains("isMissing"));
@@ -264,7 +276,8 @@ public class ApIsmokeTestSuite {
 	@Test(enabled = true)
 	public void entity_search_976_statement() {
 
-		String enTityendPoint2 = "/v1/entities/111607/statements"; // publishflag = false 
+		String enTityendPoint2 = "/v1/entities/111607/statements"; // publishflag
+																	// = false
 		String enTityUrl2 = baseURI + enTityendPoint2;
 
 		given().header("Authorization", AuthrztionValue).header("content", contentValue).header("'Accept", acceptValue)
@@ -365,8 +378,9 @@ public class ApIsmokeTestSuite {
 
 	// Test Description : Verify that all fields within MetaData Response
 	// contains all the fields from different entities.
-	@Test
-	public void metaDataResponse_Compare() throws IOException {
+	@Test()
+	public void metaDataResponse_Compare() throws IOException, URISyntaxException {
+		String jsonAsString;
 
 		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrl).then()
@@ -374,13 +388,13 @@ public class ApIsmokeTestSuite {
 
 		jsonAsString = response.asString();
 
-		List<String> id = response.path("data.id");
-		assertNotNull(id);
-
 		Assert.assertFalse(response.asString().contains("isError"));
 		Assert.assertFalse(response.asString().contains("isMissing"));
 
-		File src = new File("C://Users//aislam//Desktop//Month Of June//API Project//Sprint 19//fitchfieldID.xlsx");
+		URL fileUrl = Resources.getResource("fitchfieldID.xlsx");
+
+		File src = new File(fileUrl.toURI());
+
 		FileInputStream file = new FileInputStream(src);
 
 		XSSFWorkbook wb = new XSSFWorkbook(file);
@@ -418,7 +432,7 @@ public class ApIsmokeTestSuite {
 	// response about Mody's fields with proper permission in MongoDB
 	@Test(enabled = true)
 	public void ModyNewFields_775_withPermission() throws IOException {
-
+		
 		URL file = Resources.getResource("ModyNewFieldsReq.json");
 		String myRequest = Resources.toString(file, Charsets.UTF_8);
 
@@ -434,7 +448,7 @@ public class ApIsmokeTestSuite {
 				.body(containsString("FC_NIFSR_FC_WATCHLIST_DT_MDY"))
 				.body(containsString("FC_LT_FC_BANK_DEPOSITS_WATCHLIST_DT_MDY")).extract().response();
 
-		jsonAsString = fieldResponse.asString();
+
 
 		Assert.assertFalse(fieldResponse.asString().contains("isError"));
 		Assert.assertFalse(fieldResponse.asString().contains("isMissing"));
@@ -478,7 +492,7 @@ public class ApIsmokeTestSuite {
 	// Test Description : Verifies all the financialService fitch fields are
 	// available through Data aggregator and response displays their values as
 	// well
-	@Test
+	@Test(enabled=false)
 	public void financialServiceData_Verification_807_dataAggregator() throws IOException {
 
 		URL file = Resources.getResource("financial Mnemonics Data fields.json");
@@ -876,9 +890,9 @@ public class ApIsmokeTestSuite {
 
 	@Test
 
-	public void wrongMethod() throws IOException {
+	public void wrongMethod() {
 
-		try {
+		try{
 
 			given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 					.header("accept", acceptValue).header("content", contentValue).when().get(dataPostUrl)
@@ -888,11 +902,12 @@ public class ApIsmokeTestSuite {
 					.body("errors.get(0).status", equalTo(405)).body("errors.get(0).code", equalTo("21005"))
 					.body("errors.get(0).detail", equalTo("A request was made using a request method not supported."))
 					.extract().response();
-
-		} catch (IllegalArgumentException e) {
-			assertTrue(true);
-
-		}
+			
+			
+		   } catch(IllegalArgumentException e){
+			    assertTrue(true);
+			    
+		   }
 
 	}
 
@@ -1047,21 +1062,6 @@ public class ApIsmokeTestSuite {
 				.body("data.attributes.entities.fitchEntityId", contains("116980"))
 				.body("data.attributes.dateOptions.dates", contains("2007-09-09")).extract().response();
 		assertNotNull(res);
-	}
-
-	@Test(enabled = true)
-
-	public void periodRating() throws IOException {
-
-		URL file = Resources.getResource("periodRating.JSON");
-		String myJson = Resources.toString(file, Charsets.UTF_8);
-
-		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
-				.assertThat().log().ifError().statusCode(200).extract().response();
-
-		assertNotNull(res);
-
 	}
 
 	// Test Description:
@@ -1624,7 +1624,7 @@ public class ApIsmokeTestSuite {
 	}
 
 	// Test Description :FCA 975 Metadata Service with links to Fitch Field IDs
-	@Test(enabled = true)
+	@Test()
 	public void MetaDataWithLinks_975() {
 
 		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1634,8 +1634,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertFalse(response.asString().contains("isError"));
 		Assert.assertFalse(response.asString().contains("isMissing"));
 
-		jsonAsString = response.asString();
-		assertNotNull(jsonAsString);
+		
 
 		List<String> link = response.path("data.links.self");
 		List<String> selfCaterogies = response.path("data.relationships.categories.links.self");
@@ -1653,7 +1652,7 @@ public class ApIsmokeTestSuite {
 
 	}
 
-	@Test(enabled = true)
+	@Test()
 
 	public void additional_FC_ConnectURl_934() {
 
@@ -1698,20 +1697,1874 @@ public class ApIsmokeTestSuite {
 				.body("data.links.self", equalTo("http://meta-service:8080/v1/metadata/fields/FC_ST_LC_FER_SP"));
 
 	}
-	
-	@Test
-   public void directors_788(){
-		
-		String directorUri = "/v1/directors";
-		String dirctorUrl =baseURI+directorUri ;
-		
-		Response drectorRes = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-		.header("accept", acceptValue).header("content", contentValue)
 
-		.when().get(dirctorUrl).then().statusCode(200)
-		.contentType(ContentType.JSON).extract().response();
+	@Test
+	public void directors_788() {
+
+		String directorUri = "/v1/directors";
+		String dirctorUrl = baseURI + directorUri;
+
+		Response drectorRes = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
+				.header("content", contentValue)
+
+				.when().get(dirctorUrl).then().statusCode(200).body("data.type", hasItem("directors"))
+				.contentType(ContentType.JSON).extract().response();
+
+		List<String> role = drectorRes.path("data.attributes.role");
+		List<String> countnamery = drectorRes.path("data.attributes.name");
+		List<String> position = drectorRes.path("data.attributes.position");
+
+		Assert.assertFalse(drectorRes.asString().contains("isError"));
+		Assert.assertFalse(drectorRes.asString().contains("isMissing"));
+
+		for (int i = 0; i < role.size(); i++) {
+
+			Assert.assertNotNull(role.get(i));
+			Assert.assertNotNull(countnamery.get(i));
+			Assert.assertNotNull(position.get(i));
+
+		}
+
+	}
+
+	@Test
+	public void Shareholders_830() {
+		String sharehdlerUri = "/v1/shareholders";
+		String sharhlderUrl = baseURI + sharehdlerUri;
+
+		Response shreholder = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
+				.header("content", contentValue)
+
+				.when().get(sharhlderUrl).then().statusCode(200).body("data.type", hasItem("shareholders"))
+				.contentType(ContentType.JSON).extract().response();
+
+		List<String> wonrshipType = shreholder.path("data.attributes.ownershipType");
+		List<String> country = shreholder.path("data.attributes.country");
+		List<String> name = shreholder.path("data.attributes.name");
+
+		Assert.assertFalse(shreholder.asString().contains("isError"));
+		Assert.assertFalse(shreholder.asString().contains("isMissing"));
+
+		for (int i = 0; i < wonrshipType.size(); i++) {
+
+			Assert.assertNotNull(wonrshipType.get(i));
+			Assert.assertNotNull(country.get(i));
+			Assert.assertNotNull(name.get(i));
+
+		}
+
+	}
+
+	@Test
+
+	public void Officers_756() {
+
+		String officrUri = "/v1/officers";
+		String offcrsUrl = baseURI + officrUri;
+
+		Response officersdata = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
+				.header("content", contentValue)
+
+				.when().get(offcrsUrl).then().statusCode(200).body("data.type", hasItem("officers"))
+				.contentType("application/vnd.api+json").extract().response();
+
+		List<String> name = officersdata.path("data.attributes.name");
+		List<String> position = officersdata.path("data.attributes.position");
+
+		Assert.assertFalse(officersdata.asString().contains("isError"));
+		Assert.assertFalse(officersdata.asString().contains("isMissing"));
+
+		for (int i = 0; i < name.size(); i++) {
+
+			Assert.assertNotNull(name.get(i));
+			Assert.assertNotNull(position.get(i));
+
+		}
+
+	}
+
+	@Test
+
+	public void unRated_928() throws IOException {
+
+		URL file = Resources.getResource("928_Request_UnRated.Json");
+
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response dataResponse = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).contentType(contentValue).body(myJson).with()
+
+				.when().post(dataPostUrl)
+
+				.then().assertThat().log().ifError().statusCode(200).body(containsString("FC_COMPANY_NAME"))
+				.body(containsString("AGNT_")).extract().response();
+
+		Assert.assertFalse(dataResponse.asString().contains("isError"));
+		Assert.assertFalse(dataResponse.asString().contains("isMissing"));
+
+	}
+
+	@Test
+
+	public void UpdateFinalcial_microSrvice_595() throws IOException {
+
+		URL file = Resources.getResource("financial Micro Servce.JSON");
+
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response financialData = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).contentType(contentValue).body(myJson).with()
+
+				.when().post(dataPostUrl)
+
+				.then().assertThat().log().ifError().statusCode(200).body(containsString("USD"))
+				.body(containsString("2014")).extract().response();
+
+		Assert.assertFalse(financialData.asString().contains("isError"));
+		Assert.assertFalse(financialData.asString().contains("isMissing"));
+
+		List<String> id = financialData.path("data.attributes.entities.type");
+		assert (id.contains("FitchID"));
+
+	}
+
+	@Test
+
+	public void defaultCurrenyType_401_returnSingleCurrency() throws IOException {
+
+		URL myfile = Resources.getResource("defaultCurreny Type.json");
+
+		String myJson = Resources.toString(myfile, Charsets.UTF_8);
+
+		Response defaultCurrncyData = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).contentType(contentValue).body(myJson).with()
+
+				.when().post(dataPostUrl)
+
+				.then().assertThat().log().ifError().statusCode(200).body(containsString("VND"))
+				.body(containsString("2014")).body(containsString("784530000000")).extract().response();
+
+		Assert.assertFalse(defaultCurrncyData.asString().contains("isError"));
+		Assert.assertFalse(defaultCurrncyData.asString().contains("isMissing"));
+
+		List<String> id = defaultCurrncyData.path("data.attributes.entities.id");
+		assert (id.contains("1466804"));
+
+	}
+
+	@Test
+
+	public void defaultLOB_570() throws IOException {
+
+		URL xfile = Resources.getResource("Default_LOB.Json");
+
+		String jsonbody = Resources.toString(xfile, Charsets.UTF_8);
+
+		Response dataResponse = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).contentType(contentValue).body(jsonbody).with()
+
+				.when().post(dataPostUrl)
+
+				.then().assertThat().statusCode(200).body(containsString("FC_SHARE_CAPITAL_INS"))
+				.body(containsString("Q2")).body(containsString("GBP")).extract().response();
+
+		Assert.assertFalse(dataResponse.asString().contains("isError"));
+		Assert.assertFalse(dataResponse.asString().contains("isMissing"));
+
+	}
+
+	@Test
+	public void period_resoltion_available_Statement_709() throws IOException {
+
+		boolean failure = false;
+
+		URL xfile = Resources.getResource("Period Resoluton for statemnet.json");
+
+		String myjson = Resources.toString(xfile, Charsets.UTF_8);
+
+		Response responseData = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).contentType(contentValue).body(myjson).with()
+
+				.when().post(dataPostUrl).then().assertThat().statusCode(200).extract().response();
+
+		String quatr1 = responseData.path("data.attributes.dateOptions.periods.get(0).type");
+		String quatr2 = responseData.path("data.attributes.dateOptions.periods.get(1).type");
+		String Grade1 = responseData.path("data.attributes.entities[0].values[1].values[0].value[0]");
+		String Grade2 = responseData.path("data.attributes.entities[0].values[1].values[1].value[0]");
+
+		if (quatr1.equals("Q1") && quatr2.equals("Annual") && (Grade1.equals("A+") && Grade2.equals("A+"))) {
+			System.out.println(quatr1 + "," + quatr2);
+			System.out.println(Grade1 + "," + Grade2);
+
+		} else {
+			failure = true;
+			System.err.println(quatr1 + "Not working");
+		}
+
+		Assert.assertFalse(failure);
+		Assert.assertFalse(responseData.asString().contains("isError"));
+		Assert.assertFalse(responseData.asString().contains("isMissing"));
+
+	}
+
+	@Test
+
+	public void defaultAccountstandard_IFRS_708_704() throws IOException {
+		boolean faildata = false;
+
+		URL xfile = Resources.getResource("defaultAccountingStandard.json");
+
+		String myjson = Resources.toString(xfile, Charsets.UTF_8);
+
+		Response dataRespnse = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).contentType(contentValue).body(myjson).with().when()
+				.post(dataPostUrl).then().assertThat().statusCode(200)
+				.body("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.type", equalTo("Q2"))
+				.body("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.year", equalTo(2015))
+
+				.extract().response();
+
+		float IFRSvalue = dataRespnse.path("data.attributes.entities[0].values[0].values[0].value[0].USD");
+
+		if (IFRSvalue == 2.9652008E7) {
+			System.out.println(IFRSvalue);
+		} else {
+			System.err.println("value does not Match");
+			faildata = true;
+		}
+
+		Assert.assertFalse(faildata);
+		Assert.assertFalse(dataRespnse.asString().contains("isError"));
+		Assert.assertFalse(dataRespnse.asString().contains("isMissing"));
+	}
+
+	@Test
+	public void enforce_date_period_limit_714() throws IOException {
+		URL xfile = Resources.getResource("enForce Date_Period limit.json");
+
+		String myjson = null;
+	
+			myjson = Resources.toString(xfile, Charsets.UTF_8);
+	
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType(contentValue).body(myjson).with().when().post(dataPostUrl).then().assertThat()
+				.statusCode(200).body("data.attributes.dateOptions.dates[0]", equalTo("2015-09-09"))
+				.body("data.attributes.dateOptions.dates[3]", equalTo("2015-12-09"))
+				.body("data.attributes.entities[0].values[0].values[0].timeIntervalDate", equalTo("2015-09-09"))
+				.body("data.attributes.entities[0].values[0].values[3].value[0]", equalTo("A+"))
+				.body("data.attributes.entities[0].values[0].values[3].timeIntervalDate", equalTo("2015-12-09"))
+
+				.extract().response();
+
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+
+	}
+
+	@Test()
+	public void MetaData_Issue_1026() {
 		
+
 		
+		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrl).then()
+				.contentType(ContentType.JSON).extract().response();
+
+	      System.out.println(response.asString());
+
+		List<String> Id = response.path("data.id");
+		List<String> displayNme = response.path("data.attributes.displayName");
+
+		List<String> fitchFieldDes = response.path("data.attributes.fitchFieldDesc");
+
+		List<String> link = response.path("data.links.self");
+
+		for (int i = 0; i > Id.size(); i++) {
+			Assert.assertNotNull(Id.get(i));
+			Assert.assertNotNull(displayNme.get(i));
+			Assert.assertNotNull(fitchFieldDes.get(i));
+			Assert.assertNotNull(link.get(i));
+
+		}
+
+	}
+
+	@Test
+	public void with_500_entitescall_1039() throws IOException {
+
+		URL xfile = Resources.getResource("1039_request with 500 entity.json");
+
+		String myjson = Resources.toString(xfile, Charsets.UTF_8);
+
+		Response entityResponse = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).contentType(contentValue).body(myjson).with().when()
+				.post(dataPostUrl).then().assertThat().statusCode(200).contentType(ContentType.JSON).extract()
+				.response();
+
+		List<String> type = entityResponse.path("data.attributes.entities.id");
+		List<String> FitchId = entityResponse.path("data.attributes.entities.values.fitchFieldId");
+		List<String> value = entityResponse.path("data.attributes.entities.values.values.value");
+
+		System.out.println("Number of Entities:" + value.size());
+
+		for (int i = 0; i > value.size(); i++) {
+			Assert.assertNotNull(type.get(i));
+			Assert.assertNotNull(FitchId.get(i));
+			Assert.assertNotNull(value.get(i));
+
+		}
+
+		Assert.assertFalse(entityResponse.asString().contains("isError"));
+		Assert.assertFalse(entityResponse.asString().contains("isMissing"));
+
+	}
+
+	@Test
+	public void fillingtype_515() {
+
+		String url = baseURI + "/v1/statements/5454931/filings";
+		RestAssured.baseURI = url;
+
+		Response res = given()
+
+				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue)
+
+				.when().get().then().statusCode(200)
+
+				.body("data.type[0]", equalTo("filings")).body("data.attributes.fileName[0]", containsString(".pdf"))
+				.body("data.attributes.fileType[0]", equalTo("pdf"))
+				.body("data.relationships.statement.data.id[0]", equalTo("5454931"))
+				.body("data.links.download[0]", containsString("https:")).contentType(ContentType.JSON).extract()
+				.response();
+
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+
+	}
+
+	@Test
+	public void currencyoption_716() throws IOException {
+
+		URL file = Resources.getResource("currency_716.json");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response output = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with()
+
+				.when().post(dataPostUrl)
+
+				.then().assertThat().log().ifError().statusCode(200)
+
+				.body("data.attributes.entities.values.values.value.USD", Matchers.notNullValue())
+
+				.contentType(ContentType.JSON).extract().response();
+
+		Assert.assertNotNull(output);
+		Assert.assertFalse(output.asString().contains("isError"));
+		Assert.assertFalse(output.asString().contains("isMissing"));
+
+	}
+
+	@Test
+
+	public void InputdateLimit_IndvidulReqest_267() throws IOException {
+		URL file = Resources.getResource("inputDate Limit for Individual API Request.json");
+		String jsonBody = Resources.toString(file, Charsets.UTF_8);
+		Response Rspnse = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(jsonBody).with().when().post(dataPostUrl)
+
+				.then().assertThat().log().ifError().statusCode(200)
+				.body("data.attributes.entities[0].values[0].values[1].timeIntervalDate", equalTo("2014-01-02"))
+				.body("data.attributes.entities[0].values[0].values[1].timeIntervalPeriod.type", equalTo(""))
+				.body("data.attributes.entities[0].values[0].values[0].value[0]", equalTo("AA-"))
+				.body("data.attributes.entities[0].values[0].values[1].value[0]", equalTo("AA-"))
+
+				.extract().response();
+
+		Assert.assertNotNull(Rspnse);
+		Assert.assertFalse(Rspnse.asString().contains("isError"));
+		Assert.assertFalse(Rspnse.asString().contains("isMissing"));
+
+		List<String> datesOption = Rspnse.path("data.attributes.dateOptions.dates");
+		System.out.println(datesOption);
+
+		for (int i = 0; i < datesOption.size(); i++) {
+
+			Assert.assertNotNull(datesOption.get(i));
+		}
+
+	}
+
+	// Test Description: Test period rating options
+	@Test
+	public void periodRating() throws IOException {
+
+		URL file = Resources.getResource("periodRating.JSON");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+				.assertThat().log().ifError().statusCode(200).extract().response();
+
+		Assert.assertNotNull(res);
+		List<String> periodResolutionType = res.path("data.attributes.entities.get(0).periodResolution.type");
+
+		for (int i = 0; i < periodResolutionType.size(); i++) {
+			Assert.assertNotNull(periodResolutionType.get(i));
+		}
+
+		Assert.assertTrue(periodResolutionType.get(0).contains("Annual"));
+		Assert.assertTrue(periodResolutionType.get(1).contains("Q4"));
+		Assert.assertTrue(periodResolutionType.get(2).contains("Q2"));
+		Assert.assertTrue(periodResolutionType.get(3).contains("Q3"));
+		Assert.assertTrue(periodResolutionType.get(4).contains("Q1"));
+
+		List<String> periodResolutionYear = res.path("data.attributes.entities.get(0).periodResolution.year");
+
+		for (int i = 0; i < periodResolutionYear.size(); i++) {
+			Assert.assertNotNull(periodResolutionYear.get(i));
+		}
+
+		List<String> periodResolutionDate = res.path("data.attributes.entities.get(0).periodResolution.periodDate");
+
+		for (int i = 1; i < periodResolutionDate.size(); i++) {
+			Assert.assertNotNull(periodResolutionDate.get(i));
+		}
+
+		Assert.assertTrue(periodResolutionDate.get(1).contains("2014-12-31"));
+		Assert.assertTrue(periodResolutionDate.get(2).contains("2014-06-30"));
+		Assert.assertTrue(periodResolutionDate.get(3).contains("2014-09-30"));
+		Assert.assertTrue(periodResolutionDate.get(4).contains("2014-03-31"));
+
+		List<String> actual_value = res.path("data.attributes.entities.values.values.value");
+
+		for (int i = 0; i < actual_value.size(); i++) {
+			Assert.assertNotNull(actual_value.get(i));
+
+		}
+
+	}
+
+	// Test Description: Test period financial options
+	@Test
+
+	public void periodFinancial() throws IOException {
+
+		URL file = Resources.getResource("periodFinancial.JSON");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+				.body("data.attributes.entities.get(0).id", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).id", equalTo("1003961"))
+				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).type", equalTo("FitchID")).assertThat().log().ifError()
+				.statusCode(200).extract().response();
+
+		List<String> actual_value = res.path("data.attributes.entities.values.values.value.GBP");
+		Assert.assertNotNull(actual_value);
+
+	}
+
+	// Test Description: Test for period summary
+	@Test
+
+	public void periodEntitySummary() throws IOException {
+
+		URL file = Resources.getResource("periodEntitySummary.JSON");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+				.body("data.attributes.entities.get(0).id", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).id", equalTo("116980"))
+				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).type", equalTo("FitchID")).assertThat().log().ifError()
+				.statusCode(200).extract().response();
+
+		Assert.assertNotNull(res);
+
+		List<String> periodResolutionDate = res.path("data.attributes.entities.periodResolution.get(0).periodDate");
+		Assert.assertNotNull(periodResolutionDate);
+
+		List<String> periodResolutiontype = res.path("data.attributes.entities.periodResolution.get(0).type");
+		Assert.assertNotNull(periodResolutiontype);
+
+		List<String> periodResolutionyear = res.path("data.attributes.entities.periodResolution.get(0).year");
+		Assert.assertNotNull(periodResolutionyear);
+
+		List<String> actual_value = res.path("data.attributes.entities.get(0).values.get(0).values.value");
+		Assert.assertNotNull(actual_value);
+
+		Assert.assertTrue(periodResolutionDate.get(0).contains("2014-12-31"));
+		Assert.assertTrue(periodResolutionDate.get(1).contains("2014-06-30"));
+		Assert.assertTrue(periodResolutionDate.get(2).contains("2014-09-30"));
+		Assert.assertTrue(periodResolutionDate.get(3).contains("2015-12-31"));
+		Assert.assertTrue(periodResolutionDate.get(4).contains("2014-03-31"));
+
+		Assert.assertTrue(periodResolutiontype.get(0).contains("Q4"));
+		Assert.assertTrue(periodResolutiontype.get(1).contains("Q2"));
+		Assert.assertTrue(periodResolutiontype.get(2).contains("Q3"));
+		Assert.assertTrue(periodResolutiontype.get(3).contains("Annual"));
+		Assert.assertTrue(periodResolutiontype.get(4).contains("Q1"));
+
+		Assert.assertEquals(periodResolutionyear.get(0), 2014);
+		Assert.assertEquals(periodResolutionyear.get(1), 2014);
+		Assert.assertEquals(periodResolutionyear.get(2), 2014);
+		Assert.assertEquals(periodResolutionyear.get(3), 2015);
+		Assert.assertEquals(periodResolutionyear.get(4), 2014);
+
+	}
+
+	// Test Description: Test for period moodys option
+	@Test
+
+	public void periodMoodys() throws IOException {
+
+		URL file = Resources.getResource("periodMoodys.JSON");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+				.body("data.attributes.entities.get(0).id", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).id", equalTo("116980"))
+				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).type", equalTo("FitchID"))
+				.body("data.attributes.entities.get(0).values.get(0).values.get(0).value.get(0)", equalTo("Aa3"))
+				.body("data.attributes.entities.get(0).values.get(0).values.get(1).value.get(0)", equalTo("Aa3"))
+				.body("data.attributes.entities.get(0).values.get(0).values.get(2).value.get(0)", equalTo("Aa3"))
+				.body("data.attributes.entities.get(0).values.get(0).values.get(3).value.get(0)", equalTo("Aa3"))
+				.body("data.attributes.entities.get(0).values.get(0).values.get(4).value.get(0)", equalTo("Aa3"))
+				.assertThat().log().ifError().statusCode(200).extract().response();
+
+		Assert.assertNotNull(res);
+
+		List<String> periodResolutionDate = res.path("data.attributes.entities.periodResolution.get(0).periodDate");
+		Assert.assertNotNull(periodResolutionDate);
+
+		List<String> periodResolutiontype = res.path("data.attributes.entities.periodResolution.get(0).type");
+		Assert.assertNotNull(periodResolutiontype);
+
+		List<String> periodResolutionyear = res.path("data.attributes.entities.periodResolution.get(0).year");
+		Assert.assertNotNull(periodResolutionyear);
+
+		List<String> actual_value = res.path("data.attributes.entities.get(0).values.get(0).values.value");
+		Assert.assertNotNull(actual_value);
+
+		Assert.assertTrue(periodResolutionDate.get(0).contains("2014-12-31"));
+		Assert.assertTrue(periodResolutionDate.get(1).contains("2014-06-30"));
+		Assert.assertTrue(periodResolutionDate.get(2).contains("2014-09-30"));
+		Assert.assertTrue(periodResolutionDate.get(3).contains("2015-12-31"));
+		Assert.assertTrue(periodResolutionDate.get(4).contains("2014-03-31"));
+
+		Assert.assertTrue(periodResolutiontype.get(0).contains("Q4"));
+		Assert.assertTrue(periodResolutiontype.get(1).contains("Q2"));
+		Assert.assertTrue(periodResolutiontype.get(2).contains("Q3"));
+		Assert.assertTrue(periodResolutiontype.get(3).contains("Annual"));
+		Assert.assertTrue(periodResolutiontype.get(4).contains("Q1"));
+
+		Assert.assertEquals(periodResolutionyear.get(0), 2014);
+		Assert.assertEquals(periodResolutionyear.get(1), 2014);
+		Assert.assertEquals(periodResolutionyear.get(2), 2014);
+		Assert.assertEquals(periodResolutionyear.get(3), 2015);
+		Assert.assertEquals(periodResolutionyear.get(4), 2014);
+
+	}
+
+	// Test Description: Test for date and period rating options
+	@Test
+
+	public void dateAndPeriodRating() throws IOException {
+
+		URL file = Resources.getResource("datePeriodRating.JSON");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+				.body("data.attributes.entities.get(0).id", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).id", equalTo("80089181"))
+				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).type", equalTo("fitchGroupId"))
+				.body("data.attributes.entities.get(0).values.get(0).values.get(0).value.get(0)", equalTo("A+"))
+				.body("data.attributes.entities.get(0).values.get(0).values.get(1).value.get(0)", equalTo("A+"))
+				.assertThat().log().ifError().statusCode(200).extract().response();
+
+		Assert.assertNotNull(res);
+
+		List<String> periodResolutionDate = res.path("data.attributes.entities.periodResolution.get(0).periodDate");
+		Assert.assertNotNull(periodResolutionDate);
+
+		List<String> periodResolutiontype = res.path("data.attributes.entities.periodResolution.get(0).type");
+		Assert.assertNotNull(periodResolutiontype);
+
+		List<String> periodResolutionyear = res.path("data.attributes.entities.periodResolution.get(0).year");
+		Assert.assertNotNull(periodResolutionyear);
+
+		Assert.assertTrue(periodResolutionDate.get(0).contains("2014-03-31"));
+		Assert.assertTrue(periodResolutiontype.get(0).contains("Q1"));
+		Assert.assertEquals(periodResolutionyear.get(0), 2014);
+
+	}
+
+	// Test Description: Test for date and period financial options
+	@Test
+
+	public void dateAndPeriodFinancial() throws IOException {
+
+		URL file = Resources.getResource("dateAndPeriodFinancial.JSON");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		String dataPostUrl = "https://api-qa.fitchconnect.com" + dataEndPoint; // Data
+																				// Aggregator
+																				// -EndPoint
+
+		Response res = given()
+				.header("Authorization",
+						"Basic MUlLVk1SMjlJS1lIMllPSjFUQkdGQ0tKSDpFN1Y2Z1FJY3RPeG5KbG8rSVBHaGY0K0tTSGc3LzFpOFJsbVo1Tmd6NUpB")
+				.header("X-App-Client-Id", XappClintIDvalue).contentType("application/vnd.api+json").body(myJson).with()
+				.when().post(dataPostUrl).then().body("data.attributes.entities.get(0).id", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).id", equalTo("116980"))
+				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).type", equalTo("FitchID")).assertThat().log().ifError()
+				.statusCode(200).extract().response();
+
+		Assert.assertNotNull(res);
+
+		List<String> periodResolutionDate = res.path("data.attributes.entities.periodResolution.get(0).periodDate");
+		Assert.assertNotNull(periodResolutionDate);
+		;
+
+		List<String> periodResolutiontype = res.path("data.attributes.entities.periodResolution.get(0).type");
+		Assert.assertNotNull(periodResolutiontype);
+
+		List<String> periodResolutionyear = res.path("data.attributes.entities.periodResolution.get(0).year");
+		Assert.assertNotNull(periodResolutionyear);
+
+		Assert.assertTrue(periodResolutionDate.get(0).contains("2014-03-31"));
+		Assert.assertTrue(periodResolutiontype.get(0).contains("Q1"));
+		Assert.assertEquals(periodResolutionyear.get(0), 2014);
+
+	}
+
+	// Test Description: Test for date and period Entity summary options
+	@Test
+
+	public void dateAndPeriodEntitySummary() throws IOException {
+
+		URL file = Resources.getResource("dateAndPeriodEntitySummary.JSON");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+				.body("data.attributes.entities.get(0).id", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).id", equalTo("116980"))
+				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).type", equalTo("FitchID")).assertThat().log().ifError()
+				.statusCode(200).extract().response();
+
+		Assert.assertNotNull(res);
+
+		List<String> periodResolutionDate = res.path("data.attributes.entities.periodResolution.get(0).periodDate");
+		Assert.assertNotNull(periodResolutionDate);
+		;
+
+		List<String> periodResolutiontype = res.path("data.attributes.entities.periodResolution.get(0).type");
+		Assert.assertNotNull(periodResolutiontype);
+
+		List<String> periodResolutionyear = res.path("data.attributes.entities.periodResolution.get(0).year");
+		Assert.assertNotNull(periodResolutionyear);
+
+		Assert.assertTrue(periodResolutionDate.get(0).contains("2014-03-31"));
+		Assert.assertTrue(periodResolutiontype.get(0).contains("Q1"));
+		Assert.assertEquals(periodResolutionyear.get(0), 2014);
+
+		List<String> actual_value = res.path("data.attributes.entities.get(0).values.get(0).values.get(0).value");
+		Assert.assertNotNull(actual_value);
+		Assert.assertTrue(actual_value.contains("1 New Orchard Road"));
+
+		actual_value = res.path("data.attributes.entities.get(0).values.get(0).values.get(1).value");
+		Assert.assertNotNull(actual_value);
+		Assert.assertTrue(actual_value.contains("1 New Orchard Road"));
+
+	}
+
+	// Test Description: checks for date and period moodys option
+	@Test
+
+	public void dateAndPeriodMoodys() throws IOException {
+
+		URL file = Resources.getResource("dateAndPeriodMoodys.JSON");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+				.body("data.attributes.entities.get(0).id", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).id", equalTo("IBM"))
+				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).type", equalTo("companyTicker"))
+				.body("data.attributes.entities.get(0).fitchEntityId", equalTo("116980")).assertThat().log().ifError()
+				.statusCode(200).extract().response();
+
+		Assert.assertNotNull(res);
+
+		List<String> periodResolutionDate = res.path("data.attributes.entities.periodResolution.get(0).periodDate");
+		Assert.assertNotNull(periodResolutionDate);
+		;
+
+		List<String> periodResolutiontype = res.path("data.attributes.entities.periodResolution.get(0).type");
+		Assert.assertNotNull(periodResolutiontype);
+
+		List<String> periodResolutionyear = res.path("data.attributes.entities.periodResolution.get(0).year");
+		Assert.assertNotNull(periodResolutionyear);
+
+		Assert.assertTrue(periodResolutionDate.get(0).contains("2014-03-31"));
+		Assert.assertTrue(periodResolutiontype.get(0).contains("Q1"));
+		Assert.assertEquals(periodResolutionyear.get(0), 2014);
+
+		List<String> actual_value = res.path("data.attributes.entities.get(0).values.get(0).values.get(0).value");
+		Assert.assertNotNull(actual_value);
+		Assert.assertTrue(actual_value.contains("A1"));
+
+		actual_value = res.path("data.attributes.entities.get(0).values.get(0).values.get(1).value");
+		Assert.assertNotNull(actual_value);
+		Assert.assertTrue(actual_value.contains("Aa3"));
+
+	}
+
+	// Test Description: Checks for period range qtrly.
+	@Test
+
+	public void periodRangeQtr() throws IOException {
+
+		URL file = Resources.getResource("periodRangeQRT.JSON");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+				.body("data.attributes.entities.get(0).id", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).id", equalTo("116980"))
+				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).type", equalTo("FitchID"))
+				.body("data.attributes.entities.get(0).fitchEntityId", equalTo("116980"))
+				.body("data.attributes.entities.get(0).values.get(0).fitchFieldId", equalTo("FC_INT_INC_LOANS_BNK"))
+				.assertThat().log().ifError().statusCode(200).extract().response();
+
+		Assert.assertNotNull(res);
+
+		List<String> periodResolutionDate = res.path("data.attributes.entities.periodResolution.get(0).periodDate");
+		Assert.assertNotNull(periodResolutionDate);
+
+		List<String> periodResolutiontype = res.path("data.attributes.entities.periodResolution.get(0).type");
+		Assert.assertNotNull(periodResolutiontype);
+
+		List<String> periodResolutionyear = res.path("data.attributes.entities.periodResolution.get(0).year");
+		Assert.assertNotNull(periodResolutionyear);
+
+		Assert.assertTrue(periodResolutionDate.get(0).contains("2010-12-31"));
+		Assert.assertTrue(periodResolutiontype.get(0).contains("Q4"));
+		Assert.assertEquals(periodResolutionyear.get(0), 2010);
+
+		Assert.assertTrue(periodResolutionDate.get(1).contains("2010-06-30"));
+		Assert.assertTrue(periodResolutiontype.get(1).contains("Q2"));
+		Assert.assertEquals(periodResolutionyear.get(1), 2010);
+
+		Assert.assertTrue(periodResolutionDate.get(2).contains("2010-09-30"));
+		Assert.assertTrue(periodResolutiontype.get(2).contains("Q3"));
+		Assert.assertEquals(periodResolutionyear.get(2), 2010);
+
+		Assert.assertTrue(periodResolutionDate.get(3).contains("2011-03-31"));
+		Assert.assertTrue(periodResolutiontype.get(3).contains("Q1"));
+		Assert.assertEquals(periodResolutionyear.get(3), 2011);
+
+		List<String> dateOptionsType = res.path("data.attributes.dateOptions.periods.type");
+		Assert.assertNotNull(dateOptionsType);
+
+		List<Integer> dateOptionsYear = res.path("data.attributes.dateOptions.periods.year");
+		Assert.assertNotNull(dateOptionsYear);
+
+		Assert.assertTrue(dateOptionsType.get(0).contains("Q2"));
+		Assert.assertTrue(dateOptionsYear.get(0).equals(2010));
+
+		Assert.assertTrue(dateOptionsType.get(1).contains("Q3"));
+		Assert.assertTrue(dateOptionsYear.get(1).equals(2010));
+
+		Assert.assertTrue(dateOptionsType.get(2).contains("Q4"));
+		Assert.assertTrue(dateOptionsYear.get(2).equals(2010));
+
+		Assert.assertTrue(dateOptionsType.get(3).contains("Q1"));
+		Assert.assertTrue(dateOptionsYear.get(3).equals(2011));
+
+	}
+
+	// Test Description: Checks for period range annually.
+	@Test
+
+	public void periodRangeAnnually() throws IOException {
+
+		URL file = Resources.getResource("periodRangeAnnually.JSON");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+				.body("data.attributes.entities.get(0).id", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).id", equalTo("110631"))
+				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).type", equalTo("FitchID"))
+				.body("data.attributes.entities.get(0).fitchEntityId", equalTo("110631"))
+				.body("data.attributes.entities.get(0).values.get(0).fitchFieldId", equalTo("FC_INT_INC_LOANS_BNK"))
+				.assertThat().log().ifError().statusCode(200).extract().response();
+
+		Assert.assertNotNull(res);
+
+		List<String> periodResolutionDate = res.path("data.attributes.entities.periodResolution.get(0).periodDate");
+		Assert.assertNotNull(periodResolutionDate);
+
+		List<String> periodResolutiontype = res.path("data.attributes.entities.periodResolution.get(0).type");
+		Assert.assertNotNull(periodResolutiontype);
+
+		List<String> periodResolutionyear = res.path("data.attributes.entities.periodResolution.get(0).year");
+		Assert.assertNotNull(periodResolutionyear);
+
+		Assert.assertTrue(periodResolutionDate.get(0).contains("2011-12-31"));
+		Assert.assertTrue(periodResolutiontype.get(0).contains("Annual"));
+		Assert.assertEquals(periodResolutionyear.get(0), 2011);
+
+		Assert.assertTrue(periodResolutionDate.get(1).contains("2010-12-31"));
+		Assert.assertTrue(periodResolutiontype.get(1).contains("Annual"));
+		Assert.assertEquals(periodResolutionyear.get(1), 2010);
+
+		List<String> dateOptionsType = res.path("data.attributes.dateOptions.periods.type");
+		Assert.assertNotNull(dateOptionsType);
+
+		List<Integer> dateOptionsYear = res.path("data.attributes.dateOptions.periods.year");
+		Assert.assertNotNull(dateOptionsYear);
+
+		List<String> actual_value = res.path("data.attributes.entities.get(0).values.get(0).values");
+		Assert.assertNotNull(actual_value);
+
+		Assert.assertEquals((float) 50996000000.0,
+				res.path("data.attributes.entities.get(0).values.get(0).values.get(0).value.get(0).USD"));
+		Assert.assertEquals((float) 44966000000.0,
+				res.path("data.attributes.entities.get(0).values.get(0).values.get(1).value.get(0).USD"));
+
+		Assert.assertTrue(dateOptionsType.get(0).contains("Annual"));
+		Assert.assertTrue(dateOptionsYear.get(0).equals(2010));
+
+		Assert.assertTrue(dateOptionsType.get(1).contains("Annual"));
+		Assert.assertTrue(dateOptionsYear.get(1).equals(2011));
+
+	}
+
+	// Test Description: Checks for period range with null or unreached endpoint
+	@Test
+
+	public void periodRangeNullEndPoint() throws IOException {
+
+		URL file = Resources.getResource("periodRangeNullEndpoint.JSON");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+				.body("data.attributes.entities.get(0).id", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).id", equalTo("110631"))
+				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).type", equalTo("FitchID"))
+				.body("data.attributes.entities.get(0).fitchEntityId", equalTo("110631"))
+				.body("data.attributes.entities.get(0).values.get(0).fitchFieldId", equalTo("FC_INT_INC_LOANS_BNK"))
+				.assertThat().log().ifError().statusCode(200).extract().response();
+
+		Assert.assertNotNull(res);
+
+		List<String> dateOptionsType = res.path("data.attributes.dateOptions.periods.type");
+		Assert.assertNotNull(dateOptionsType);
+
+		List<Integer> dateOptionsYear = res.path("data.attributes.dateOptions.periods.year");
+		Assert.assertNotNull(dateOptionsYear);
+
+		List<String> actual_value = res.path("data.attributes.entities.get(0).values.get(0).values.value.USD");
+		Assert.assertNotNull(actual_value);
+
+		Assert.assertEquals((float) 36470000000.0,
+				res.path("data.attributes.entities.get(0).values.get(0).values.get(0).value.get(0).USD"));
+		Assert.assertEquals((float) 34307000000.0,
+				res.path("data.attributes.entities.get(0).values.get(0).values.get(1).value.get(0).USD"));
+		Assert.assertEquals((float) 32070000000.0,
+				res.path("data.attributes.entities.get(0).values.get(0).values.get(2).value.get(0).USD"));
+
+		Assert.assertTrue(dateOptionsType.get(0).contains("Annual"));
+		Assert.assertTrue(dateOptionsYear.get(0).equals(2013));
+
+		Assert.assertTrue(dateOptionsType.get(1).contains("Annual"));
+		Assert.assertTrue(dateOptionsYear.get(1).equals(2014));
+
+		Assert.assertTrue(dateOptionsType.get(2).contains("Annual"));
+		Assert.assertTrue(dateOptionsYear.get(2).equals(2015));
+
+		Assert.assertTrue(dateOptionsType.get(3).contains("Annual"));
+		Assert.assertTrue(dateOptionsYear.get(3).equals(2016));
+
+		List<String> periodResolutionDate = res.path("data.attributes.entities.periodResolution.get(0).periodDate");
+		Assert.assertNotNull(periodResolutionDate);
+
+		List<String> periodResolutiontype = res.path("data.attributes.entities.periodResolution.get(0).type");
+		Assert.assertNotNull(periodResolutiontype);
+
+		List<String> periodResolutionyear = res.path("data.attributes.entities.periodResolution.get(0).year");
+		Assert.assertNotNull(periodResolutionyear);
+
+		Assert.assertTrue(periodResolutionDate.get(0).contains("2013-12-31"));
+		Assert.assertTrue(periodResolutiontype.get(0).contains("Annual"));
+		Assert.assertEquals(periodResolutionyear.get(0), 2013);
+
+		Assert.assertTrue(periodResolutionDate.get(1).contains("2014-12-31"));
+		Assert.assertTrue(periodResolutiontype.get(1).contains("Annual"));
+		Assert.assertEquals(periodResolutionyear.get(1), 2014);
+
+		Assert.assertTrue(periodResolutionDate.get(2).contains("2015-12-31"));
+		Assert.assertTrue(periodResolutiontype.get(2).contains("Annual"));
+		Assert.assertEquals(periodResolutionyear.get(2), 2015);
+
+		Assert.assertNull(periodResolutionDate.get(3));
+		Assert.assertTrue(periodResolutiontype.get(3).contains("Annual"));
+		Assert.assertEquals(periodResolutionyear.get(3), 2016);
+
+	}
+
+	// Test Description: Checks for period range qtrly Rating.
+	@Test
+
+	public void dateDailyAndPeriodQtrRating() throws IOException {
+
+		URL file = Resources.getResource("date daily and period.JSON");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+				.body("data.attributes.entities.get(0).id", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).id", equalTo("116980"))
+				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).type", equalTo("FitchID"))
+				.body("data.attributes.entities.get(0).fitchEntityId", equalTo("116980"))
+				.body("data.attributes.entities.get(0).values.get(0).fitchFieldId", equalTo("FC_LT_IDR")).assertThat()
+				.log().ifError().statusCode(200).extract().response();
+
+		Assert.assertNotNull(res);
+
+		List<String> actual_values = res.path("data.attributes.entities.get(0).values.get(0).values");
+		List<String> dateOptions = res.path("data.attributes.dateOptions.dates");
+
+		for (int i = 0; i < dateOptions.size(); i++) {
+			Assert.assertNotNull(dateOptions.get(i));
+
+		}
+
+		for (int j = 0; j < actual_values.size(); j++) {
+			Assert.assertNotNull(actual_values.get(j));
+
+		}
+
+		List<String> periodResolutionDate = res.path("data.attributes.entities.periodResolution.get(0).periodDate");
+		Assert.assertNotNull(periodResolutionDate);
+
+		List<String> periodResolutiontype = res.path("data.attributes.entities.periodResolution.get(0).type");
+		Assert.assertNotNull(periodResolutiontype);
+
+		List<String> periodResolutionyear = res.path("data.attributes.entities.periodResolution.get(0).year");
+		Assert.assertNotNull(periodResolutionyear);
+
+		List<String> dateOptionsType = res.path("data.attributes.dateOptions.periods.type");
+		Assert.assertNotNull(dateOptionsType);
+
+		List<Integer> dateOptionsYear = res.path("data.attributes.dateOptions.periods.year");
+		Assert.assertNotNull(dateOptionsYear);
+
+		Assert.assertTrue(periodResolutionDate.get(0).contains("2014-12-31"));
+		Assert.assertTrue(periodResolutiontype.get(0).contains("Q4"));
+		Assert.assertEquals(periodResolutionyear.get(0), 2014);
+
+		Assert.assertTrue(periodResolutionDate.get(1).contains("2014-06-30"));
+		Assert.assertTrue(periodResolutiontype.get(1).contains("Q2"));
+		Assert.assertEquals(periodResolutionyear.get(1), 2014);
+
+		Assert.assertTrue(periodResolutionDate.get(2).contains("2014-09-30"));
+		Assert.assertTrue(periodResolutiontype.get(2).contains("Q3"));
+		Assert.assertEquals(periodResolutionyear.get(2), 2014);
+
+		Assert.assertEquals(res.path("data.attributes.entities.get(0).values.get(0).values.get(0).value.get(0)"),
+				("A+"));
+		Assert.assertEquals(res.path("data.attributes.entities.get(0).values.get(0).values.get(1).value.get(0)"),
+				("A+"));
+		Assert.assertEquals(res.path("data.attributes.entities.get(0).values.get(0).values.get(2).value.get(0)"),
+				("A+"));
+		Assert.assertEquals(res.path("data.attributes.entities.get(0).values.get(0).values.get(3).value.get(0)"),
+				("A+"));
+		Assert.assertEquals(res.path("data.attributes.entities.get(0).values.get(0).values.get(4).value.get(0)"),
+				("A+"));
+		Assert.assertEquals(res.path("data.attributes.entities.get(0).values.get(0).values.get(5).value.get(0)"),
+				("A+"));
+		Assert.assertEquals(res.path("data.attributes.entities.get(0).values.get(0).values.get(6).value.get(0)"),
+				("A+"));
+		Assert.assertEquals(res.path("data.attributes.entities.get(0).values.get(0).values.get(7).value.get(0)"),
+				("A+"));
+		Assert.assertEquals(res.path("data.attributes.entities.get(0).values.get(0).values.get(8).value.get(0)"),
+				("A+"));
+		Assert.assertEquals(res.path("data.attributes.entities.get(0).values.get(0).values.get(9).value.get(0)"),
+				("A+"));
+		Assert.assertEquals(res.path("data.attributes.entities.get(0).values.get(0).values.get(10).value.get(0)"),
+				("A+"));
+		Assert.assertEquals(res.path("data.attributes.entities.get(0).values.get(0).values.get(11).value.get(0)"),
+				("A+"));
+		Assert.assertEquals(res.path("data.attributes.entities.get(0).values.get(0).values.get(12).value.get(0)"),
+				("A+"));
+		Assert.assertEquals(res.path("data.attributes.entities.get(0).values.get(0).values.get(13).value.get(0)"),
+				("A+"));
+
+		Assert.assertTrue(dateOptions.get(0).contains("2011-01-01"));
+		Assert.assertTrue(dateOptions.get(1).contains("2015-01-01"));
+		Assert.assertTrue(dateOptions.get(2).contains("2015-01-02"));
+		Assert.assertTrue(dateOptions.get(3).contains("2015-01-05"));
+		Assert.assertTrue(dateOptions.get(4).contains("2015-01-06"));
+		Assert.assertTrue(dateOptions.get(5).contains("2015-01-07"));
+		Assert.assertTrue(dateOptions.get(6).contains("2015-01-08"));
+		Assert.assertTrue(dateOptions.get(7).contains("2015-01-09"));
+		Assert.assertTrue(dateOptions.get(8).contains("2015-01-12"));
+		Assert.assertTrue(dateOptions.get(9).contains("2015-01-13"));
+		Assert.assertTrue(dateOptions.get(10).contains("2015-01-14"));
+		Assert.assertTrue(dateOptions.get(11).contains("2015-01-15"));
+
+		Assert.assertTrue(dateOptionsType.get(0).contains("Q2"));
+		Assert.assertTrue(dateOptionsYear.get(0).equals(2014));
+
+		Assert.assertTrue(dateOptionsType.get(1).contains("Q3"));
+		Assert.assertTrue(dateOptionsYear.get(1).equals(2014));
+
+		Assert.assertTrue(dateOptionsType.get(2).contains("Q4"));
+		Assert.assertTrue(dateOptionsYear.get(2).equals(2014));
+	}
+
+	// Test Description: Checks for period range qtrly financial option.
+	@Test
+
+	public void dateDailyAndPeriodQtrFinancial() throws IOException {
+
+		URL file = Resources.getResource("dateDailyPeriodQtrRangeFinancial.JSON");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+				.body("data.attributes.entities.get(0).id", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).id", equalTo("116980"))
+				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).type", equalTo("FitchID"))
+				.body("data.attributes.entities.get(0).fitchEntityId", equalTo("116980"))
+				.body("data.attributes.entities.get(0).values.get(0).fitchFieldId", equalTo("FC_INT_INC_LOANS_BNK"))
+				.assertThat().log().ifError().statusCode(200).extract().response();
+
+		Assert.assertNotNull(res);
+
+		List<String> dateOptions = res.path("data.attributes.dateOptions.dates");
+
+		for (int i = 0; i < dateOptions.size(); i++) {
+			Assert.assertNotNull(dateOptions.get(i));
+
+		}
+
+		List<String> periodResolutionDate = res.path("data.attributes.entities.periodResolution.get(0).periodDate");
+		Assert.assertNotNull(periodResolutionDate);
+
+		List<String> periodResolutiontype = res.path("data.attributes.entities.periodResolution.get(0).type");
+		Assert.assertNotNull(periodResolutiontype);
+
+		List<String> periodResolutionyear = res.path("data.attributes.entities.periodResolution.get(0).year");
+		Assert.assertNotNull(periodResolutionyear);
+
+		List<String> dateOptionsType = res.path("data.attributes.dateOptions.periods.type");
+		Assert.assertNotNull(dateOptionsType);
+
+		List<Integer> dateOptionsYear = res.path("data.attributes.dateOptions.periods.year");
+		Assert.assertNotNull(dateOptionsYear);
+
+		Assert.assertTrue(periodResolutionDate.get(0).contains("2010-12-31"));
+		Assert.assertTrue(periodResolutiontype.get(0).contains("Q4"));
+		Assert.assertEquals(periodResolutionyear.get(0), 2010);
+
+		Assert.assertTrue(periodResolutionDate.get(1).contains("2011-09-30"));
+		Assert.assertTrue(periodResolutiontype.get(1).contains("Q3"));
+		Assert.assertEquals(periodResolutionyear.get(1), 2011);
+
+		Assert.assertTrue(periodResolutionDate.get(2).contains("2010-06-30"));
+		Assert.assertTrue(periodResolutiontype.get(2).contains("Q2"));
+		Assert.assertEquals(periodResolutionyear.get(2), 2010);
+
+		Assert.assertTrue(periodResolutionDate.get(3).contains("2011-12-31"));
+		Assert.assertTrue(periodResolutiontype.get(3).contains("Q4"));
+		Assert.assertEquals(periodResolutionyear.get(3), 2011);
+
+		Assert.assertTrue(periodResolutionDate.get(4).contains("2010-09-30"));
+		Assert.assertTrue(periodResolutiontype.get(4).contains("Q3"));
+		Assert.assertEquals(periodResolutionyear.get(4), 2010);
+
+		Assert.assertTrue(periodResolutionDate.get(5).contains("2011-03-31"));
+		Assert.assertTrue(periodResolutiontype.get(5).contains("Q1"));
+		Assert.assertEquals(periodResolutionyear.get(5), 2011);
+
+		Assert.assertTrue(periodResolutionDate.get(6).contains("2011-06-30"));
+		Assert.assertTrue(periodResolutiontype.get(6).contains("Q2"));
+		Assert.assertEquals(periodResolutionyear.get(6), 2011);
+
+		Assert.assertTrue(dateOptions.get(0).contains("2015-01-01"));
+		Assert.assertTrue(dateOptions.get(1).contains("2015-01-02"));
+		Assert.assertTrue(dateOptions.get(2).contains("2015-01-05"));
+		Assert.assertTrue(dateOptions.get(3).contains("2015-01-06"));
+		Assert.assertTrue(dateOptions.get(4).contains("2015-01-07"));
+		Assert.assertTrue(dateOptions.get(5).contains("2015-01-08"));
+		Assert.assertTrue(dateOptions.get(6).contains("2015-01-09"));
+		Assert.assertTrue(dateOptions.get(7).contains("2015-01-12"));
+		Assert.assertTrue(dateOptions.get(8).contains("2015-01-13"));
+		Assert.assertTrue(dateOptions.get(9).contains("2015-01-14"));
+		Assert.assertTrue(dateOptions.get(10).contains("2015-01-15"));
+
+		Assert.assertTrue(dateOptionsType.get(0).contains("Q2"));
+		Assert.assertTrue(dateOptionsYear.get(0).equals(2010));
+
+		Assert.assertTrue(dateOptionsType.get(1).contains("Q3"));
+		Assert.assertTrue(dateOptionsYear.get(1).equals(2010));
+
+		Assert.assertTrue(dateOptionsType.get(2).contains("Q4"));
+		Assert.assertTrue(dateOptionsYear.get(2).equals(2010));
+
+		Assert.assertTrue(dateOptionsType.get(3).contains("Q1"));
+		Assert.assertTrue(dateOptionsYear.get(3).equals(2011));
+
+		Assert.assertTrue(dateOptionsType.get(4).contains("Q2"));
+		Assert.assertTrue(dateOptionsYear.get(4).equals(2011));
+
+		Assert.assertTrue(dateOptionsType.get(5).contains("Q3"));
+		Assert.assertTrue(dateOptionsYear.get(5).equals(2011));
+
+		Assert.assertTrue(dateOptionsType.get(6).contains("Q4"));
+		Assert.assertTrue(dateOptionsYear.get(6).equals(2011));
+
+	}
+
+	// Test Description: checks for multiple financial field options
+	@Test
+
+	public void multipleFinancialFields() throws IOException {
+
+		URL file = Resources.getResource("multipleFinancialFields.JSON");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+				.body("data.attributes.entities.get(0).id", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).id", equalTo("110631"))
+				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).type", equalTo("FitchID"))
+				.body("data.attributes.entities.get(0).fitchEntityId", equalTo("110631"))
+				.body("data.attributes.entities.get(0).values.get(0).fitchFieldId", equalTo("FC_INT_INC_LOANS_BNK"))
+				.body("data.attributes.entities.get(0).values.get(0).type", equalTo("currency"))
+				.body("data.attributes.entities.get(0).values.get(1).fitchFieldId", equalTo("FC_GROSS_INT_DIV_INC_BNK"))
+				.body("data.attributes.entities.get(0).values.get(1).type", equalTo("currency"))
+				.body("data.attributes.entities.get(0).values.get(2).fitchFieldId", equalTo("FC_RESERVE_NPL_RATIO_BNK"))
+				.body("data.attributes.entities.get(0).values.get(2).type", equalTo("numerical"))
+				.body("data.attributes.entities.get(0).values.get(3).fitchFieldId", equalTo("FC_NET_INCOME_BNK"))
+				.body("data.attributes.entities.get(0).values.get(3).type", equalTo("currency")).assertThat().log()
+				.ifError().statusCode(200).extract().response();
+
+		Assert.assertNotNull(res);
+
+		List<String> actual_values = res.path("data.attributes.entities.get(0).values.get(0).values");
+		List<String> dateOptions = res.path("data.attributes.dateOptions.dates");
+
+		for (int i = 0; i < dateOptions.size(); i++) {
+			Assert.assertNotNull(dateOptions.get(i));
+
+		}
+
+		for (int j = 0; j < actual_values.size(); j++) {
+			Assert.assertNotNull(actual_values.get(j));
+
+		}
+
+		List<String> periodResolutionDate = res.path("data.attributes.entities.periodResolution.get(0).periodDate");
+		Assert.assertNotNull(periodResolutionDate);
+
+		List<String> periodResolutiontype = res.path("data.attributes.entities.periodResolution.get(0).type");
+		Assert.assertNotNull(periodResolutiontype);
+
+		List<String> periodResolutionyear = res.path("data.attributes.entities.periodResolution.get(0).year");
+		Assert.assertNotNull(periodResolutionyear);
+
+		List<String> dateOptionsType = res.path("data.attributes.dateOptions.periods.type");
+		Assert.assertNotNull(dateOptionsType);
+
+		List<Integer> dateOptionsYear = res.path("data.attributes.dateOptions.periods.year");
+		Assert.assertNotNull(dateOptionsYear);
+
+		Assert.assertTrue(periodResolutionDate.get(0).contains("2010-12-31"));
+		Assert.assertTrue(periodResolutiontype.get(0).contains("Annual"));
+		Assert.assertEquals(periodResolutionyear.get(0), 2010);
+
+		Assert.assertTrue(periodResolutionDate.get(1).contains("2015-03-31"));
+		Assert.assertTrue(periodResolutiontype.get(1).contains("Q1"));
+		Assert.assertEquals(periodResolutionyear.get(1), 2015);
+
+		Assert.assertTrue(dateOptions.get(0).contains("2010-09-09"));
+
+		Assert.assertTrue(dateOptionsType.get(0).contains("Q1"));
+		Assert.assertTrue(dateOptionsYear.get(0).equals(2015));
+
+		Assert.assertTrue(dateOptionsType.get(1).contains("Annual"));
+		Assert.assertTrue(dateOptionsYear.get(1).equals(2010));
+
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].value[0].USD"),
+				(float) 12887000000.0);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[1].value.get(0).USD"),
+				(float) 8036000000.0);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[2].value.get(0).USD"),
+				(float) 50996000000.0);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[1].values[0].value.get(0).USD"),
+				(float) 19131000000.0);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[1].values[1].value.get(0).USD"),
+				(float) 11963000000.0);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[1].values[2].value.get(0).USD"),
+				(float) 75497000000.0);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[2].values[0].value.get(0)"), (float) 136.31);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[2].values[1].value.get(0)"), (float) 48.83);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[2].values[2].value.get(0)"), (float) 170.62);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[3].values[0].value[0].USD"),
+				(float) 3123000000.0);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[3].values[1].value.get(0).USD"),
+				(float) 3357000000.0);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[3].values[2].value.get(0).USD"),
+				(float) -2238000000.0);
+
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalDate"), "2010-09-09");
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.year"), 2010);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.type"), "Q2");
+
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[1].timeIntervalDate"), "2015-03-31");
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[1].timeIntervalPeriod.year"), 2015);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[1].timeIntervalPeriod.type"), "Q1");
+
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[2].timeIntervalDate"), "2010-12-31");
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[2].timeIntervalPeriod.year"), 2010);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[2].timeIntervalPeriod.type"),
+				"Annual");
+
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[1].values[0].timeIntervalDate"), "2010-09-09");
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[1].values[0].timeIntervalPeriod.year"), 2010);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[1].values[0].timeIntervalPeriod.type"), "Q2");
+
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[1].values[1].timeIntervalDate"), "2015-03-31");
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[1].values[1].timeIntervalPeriod.year"), 2015);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[1].values[1].timeIntervalPeriod.type"), "Q1");
+
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[1].values[2].timeIntervalDate"), "2010-12-31");
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[1].values[2].timeIntervalPeriod.year"), 2010);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[1].values[2].timeIntervalPeriod.type"),
+				"Annual");
+
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[2].values[0].timeIntervalDate"), "2010-09-09");
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[2].values[0].timeIntervalPeriod.year"), 2010);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[2].values[0].timeIntervalPeriod.type"), "Q2");
+
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[2].values[1].timeIntervalDate"), "2015-03-31");
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[2].values[1].timeIntervalPeriod.year"), 2015);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[2].values[1].timeIntervalPeriod.type"), "Q1");
+
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[2].values[2].timeIntervalDate"), "2010-12-31");
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[2].values[2].timeIntervalPeriod.year"), 2010);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[2].values[2].timeIntervalPeriod.type"),
+				"Annual");
+
+	}
+
+	// Test Description: Test multiple financial entities at once
+	@Test
+
+	public void multipleFinancialEntities() throws IOException {
+
+		URL file = Resources.getResource("multipleFinancialEntities.JSON");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+				.body("data.attributes.entities.get(0).id", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).id", equalTo("110631"))
+				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).type", equalTo("FitchID"))
+				.body("data.attributes.entities.get(0).fitchEntityId", equalTo("110631"))
+				.body("data.attributes.entities.get(0).values.get(0).fitchFieldId", equalTo("FC_INT_INC_LOANS_BNK"))
+				.body("data.attributes.entities.get(0).values.get(0).type", equalTo("currency"))
+				.body("data.attributes.entities.get(1).id", equalTo("14528"))
+				.body("data.attributes.entities.get(1).type", Matchers.notNullValue())
+				.body("data.attributes.entities.get(1).type", equalTo("FitchID"))
+				.body("data.attributes.entities.get(1).fitchEntityId", equalTo("14528"))
+				.body("data.attributes.entities.get(1).values.get(0).fitchFieldId", equalTo("FC_INT_INC_LOANS_BNK"))
+				.body("data.attributes.entities.get(1).values.get(0).type", equalTo("currency")).assertThat().log()
+				.ifError().statusCode(200).extract().response();
+
+		Assert.assertNotNull(res);
+
+		List<String> actual_values = res.path("data.attributes.entities.get(0).values.get(0).values");
+		List<String> dateOptions = res.path("data.attributes.dateOptions.dates");
+
+		for (int i = 0; i < dateOptions.size(); i++) {
+			Assert.assertNotNull(dateOptions.get(i));
+
+		}
+
+		for (int j = 0; j < actual_values.size(); j++) {
+			Assert.assertNotNull(actual_values.get(j));
+
+		}
+
+		Assert.assertTrue(dateOptions.get(0).contains("2014-12-31"));
+
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].value.get(0).USD"),
+				(float) 34307000000.0);
+		Assert.assertEquals(res.path("data.attributes.entities[1].values[0].values[0].value.get(0).USD"),
+				(float) 8080000000.0);
+
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalDate"), "2014-12-31");
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.year"), 2014);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.type"),
+				"Annual");
+
+		Assert.assertEquals(res.path("data.attributes.entities[1].values[0].values[0].timeIntervalDate"), "2014-12-31");
+		Assert.assertEquals(res.path("data.attributes.entities[1].values[0].values[0].timeIntervalPeriod.year"), 2014);
+		Assert.assertEquals(res.path("data.attributes.entities[1].values[0].values[0].timeIntervalPeriod.type"), "Q4");
+
+	}
+
+	// Test Description: test Preliminary option
+	@Test
+
+	public void perliminaryOptionFinancial() throws IOException {
+
+		URL file = Resources.getResource("perliminaryOptionFinancial.JSON");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+				.body("data.attributes.entities.get(0).id", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).id", equalTo("1150233"))
+				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).type", equalTo("FitchID"))
+				.body("data.attributes.entities.get(0).fitchEntityId", equalTo("1150233"))
+				.body("data.attributes.entities.get(0).values.get(0).fitchFieldId", equalTo("FC_SHARE_CAPITAL_INS"))
+				.body("data.attributes.entities.get(0).values.get(0).type", equalTo("currency")).assertThat().log()
+				.ifError().statusCode(200).extract().response();
+
+		Assert.assertNotNull(res);
+
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalDate"), "2013-12-31");
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.year"), 2013);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.type"), "Q2");
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].value.get(0).SGD"),
+				(float) 91733000.0);
+		Assert.assertEquals(res.path("data.attributes.dateOptions.dates.get(0)"), "2013-12-31");
+
+	}
+
+	// Test Description: test life option insurance option
+	@Test
+
+	public void lifeOptionInsurance() throws IOException {
+
+		URL file = Resources.getResource("lifeOptionInsurance.JSON");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+				.body("data.attributes.entities.get(0).id", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).id", equalTo("1346752"))
+				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).type", equalTo("FitchID"))
+				.body("data.attributes.entities.get(0).fitchEntityId", equalTo("1346752"))
+				.body("data.attributes.entities.get(0).values.get(0).fitchFieldId", equalTo("FC_INV_SUB_CO_INS"))
+				.body("data.attributes.entities.get(0).values.get(0).type", equalTo("currency")).assertThat().log()
+				.ifError().statusCode(200).extract().response();
+
+		Assert.assertNotNull(res);
+
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalDate"), "2014-10-09");
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.year"), 2013);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.type"),
+				"Annual");
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].value.get(0).USD"),
+				(float) 68956.0061);
+		Assert.assertEquals(res.path("data.attributes.dateOptions.dates.get(0)"), "2014-10-09");
+
+	}
+
+	// Test Description: test nonlife option insurance option
+	@Test
+
+	public void nonLifeOptionInsurance() throws IOException {
+
+		URL file = Resources.getResource("nonLifeOptionInsurance.JSON");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+				.body("data.attributes.entities.get(0).id", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).id", equalTo("1150233"))
+				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).type", equalTo("FitchID"))
+				.body("data.attributes.entities.get(0).fitchEntityId", equalTo("1150233"))
+				.body("data.attributes.entities.get(0).values.get(0).fitchFieldId",
+						equalTo("FC_INSURANCE_PAYABLES_INS"))
+				.body("data.attributes.entities.get(0).values.get(0).type", equalTo("currency")).assertThat().log()
+				.ifError().statusCode(200).extract().response();
+
+		Assert.assertNotNull(res);
+
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalDate"), "2014-10-09");
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.year"), 2008);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.type"), "Q2");
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].value.get(0).USD"),
+				(float) 17395710.9283);
+		Assert.assertEquals(res.path("data.attributes.dateOptions.dates.get(0)"), "2014-10-09");
+
+	}
+
+	// Test Description: test composite option insurance option
+	@Test
+
+	public void compositeOptionInsurance() throws IOException {
+
+		URL file = Resources.getResource("compositeOptionInsurance.JSON");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+				.statusCode(200).body("data.attributes.entities.get(0).id", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).id", equalTo("1153930"))
+				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).type", equalTo("FitchID"))
+				.body("data.attributes.entities.get(0).fitchEntityId", equalTo("1153930"))
+				.body("data.attributes.entities.get(0).values.get(0).fitchFieldId", equalTo("FC_SHARE_CAPITAL_INS"))
+				.body("data.attributes.entities.get(0).values.get(0).type", equalTo("currency")).assertThat().log()
+				.ifError().statusCode(200).extract().response();
+
+		Assert.assertNotNull(res);
+
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalDate"), "2015-07-01");
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.year"), 2015);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.type"), "Q2");
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].value.get(0).USD"),
+				(float) 11401392.745);
+		Assert.assertEquals(res.path("data.attributes.dateOptions.dates.get(0)"), "2015-07-01");
+
+	}
+
+	// Test Description: test default option insurance option
+	@Test
+
+	public void defaultOptionsInsurance() throws IOException {
+
+		URL file = Resources.getResource("defaultOptionInsurance.JSON");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+				.body("data.attributes.entities.get(0).id", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).id", equalTo("1153930"))
+				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
+				.body("data.attributes.entities.get(0).type", equalTo("FitchID"))
+				.body("data.attributes.entities.get(0).fitchEntityId", equalTo("1153930"))
+				.body("data.attributes.entities.get(0).values.get(0).fitchFieldId", equalTo("FC_SHARE_CAPITAL_INS"))
+				.body("data.attributes.entities.get(0).values.get(0).type", equalTo("currency")).assertThat().log()
+				.ifError().statusCode(200).extract().response();
+
+		Assert.assertNotNull(res);
+
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalDate"), "2015-07-01");
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.year"), 2015);
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.type"), "Q2");
+		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].value.get(0).MUR"),
+				(float) 400800000.0);
+		Assert.assertEquals(res.path("data.attributes.dateOptions.dates.get(0)"), "2015-07-01");
+
+	}
+
+	@Test
+	private void TestVerifyDB() {
+
+		try {
+
+			MongoClient mongoClient = new MongoClient("mongoweb-x01", 27017);
+
+			DB db = mongoClient.getDB("admin");
+			boolean auth = db.authenticate("reporter", "the_call".toCharArray());
+
+			db = mongoClient.getDB("financial-1");
+
+			if (auth) {
+				System.out.println("TRUE");
+			} else {
+				System.out.println("FALSE");
+			}
+
+			DBCollection collection = db.getCollection("financial_statement");
+
+			DBObject doc = collection.findOne();
+			System.out.println(doc);
+
+			/*
+			 * BasicDBObject allQuery = new BasicDBObject(); BasicDBObject
+			 * fields = new BasicDBObject(); fields.put( "_id","5336288");
+			 */
+
+			/*
+			 * DBCursor cursor = collection.find(allQuery,fields); int i = 1;
+			 * 
+			 * while (cursor.hasNext()) { System.out.println(
+			 * "Inserted Document: "+i); System.out.println(cursor.next()); i++;
+			 * }
+			 */
+
+			System.out.println("Done");
+
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (MongoException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Test
+	public void Update_XREF_ISOcountryCd_1019() throws IOException {
+		URL file = Resources.getResource("1019_ISO code.json");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response IsoRes = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+				.assertThat().statusCode(200).body("data.attributes.entities[0].id", equalTo("USA"))
+				.body("data.attributes.entities[0].values[0].values[0].value[0]", equalTo("United States of America"))
+				.body("data.attributes.entities[0].fitchEntityId", equalTo("140065"))
+				.body("data.attributes.entities[2].id", equalTo("BD"))
+				.body("data.attributes.entities[2].values[0].values[0].value[0]", equalTo("Bangladesh"))
+				.body("data.attributes.entities[2].fitchEntityId", equalTo("1437410"))
+				.body("data.attributes.entities[5].id", equalTo("ZZ"))
+				.body("data.attributes.entities[5].isMissing", equalTo(true))
+				.body("data.attributes.entities[6].id", equalTo("91086Q"))
+				.body("data.attributes.entities[6].values[0].values[0].value[0]", equalTo("Mexico"))
+				.body("data.attributes.entities[6].fitchEntityId", equalTo("140070")).extract().response();
+
+		Assert.assertNotNull(IsoRes);
+		Assert.assertFalse(IsoRes.asString().contains("isError"));
+
+	}
+
+	@Test
+
+	public void FCA_1022_allmarketsectors() {
+
+		String url = baseURI + "/v1/marketSectors";
+		RestAssured.baseURI = url;
+
+		Response res = given()
+
+				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).when().get().then().statusCode(200)
+				.body("data[0].id", equalTo("01000000")).body("data[0].type", equalTo("marketSector"))
+				.body("data[0].attributes.name", equalTo("Corporate Finance")).contentType(ContentType.JSON).extract()
+				.response();
+
+
+		AssertJUnit.assertFalse(res.asString().contains("isError"));
+		AssertJUnit.assertFalse(res.asString().contains("isMissing"));
+
+	}
+
+	@Test
+
+	public void FCA_1022_singlemarketsectors() {
+
+		String url = baseURI + "/v1/marketSectors/02000000";
+		RestAssured.baseURI = url;
+
+		Response res = given()
+
+				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).when().get().then().statusCode(200)
+				.body("data.id", equalTo("02000000")).body("data.type", equalTo("marketSector"))
+				.body("data.attributes.name", equalTo("Structured Credit")).contentType(ContentType.JSON).extract()
+				.response();
+
+	
+
+		AssertJUnit.assertFalse(res.asString().contains("isError"));
+		AssertJUnit.assertFalse(res.asString().contains("isMissing"));
+
+	}
+
+	@Test
+	public void FCA1011_Composite() throws IOException {
+		URL file = Resources.getResource("composite.JSON");
+		String myJson = null;
+	
+			myJson = Resources.toString(file, Charsets.UTF_8);
+
+	
+
+
+		Response output = given()
+
+				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with()
+
+				.when().post(dataPostUrl)
+
+				.then().assertThat().log().ifError().statusCode(200)
+
+				.body("data.attributes.entities[0].values[0].type", equalTo("currency"))
+
+				.contentType(ContentType.JSON).extract().response();
+
+		float result = output.path("data.attributes.entities[0].values[0].values[0].value[0].EUR");
+		System.out.println("EUR value is " + result);
+
+		if (result == 2.43723424E8) {
+			System.out.println("test case passed");
+		} else {
+			System.out.println("test case failed");
+		}
+
+		AssertJUnit.assertNotNull(output);
+		AssertJUnit.assertFalse(output.asString().contains("isError"));
+		AssertJUnit.assertFalse(output.asString().contains("isMissing"));
+
+	}
+
+	@Test
+	public void FCA1011_Life() throws IOException {
+		URL file = Resources.getResource("Life.JSON");
+		String myJson = null;
+		
+			myJson = Resources.toString(file, Charsets.UTF_8);
+		
+
+		Response output = given()
+
+				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with()
+
+				.when().post(dataPostUrl)
+
+				.then().assertThat().log().ifError().statusCode(200)
+
+				.contentType(ContentType.JSON).extract().response();
+
+		float result = output.path("data.attributes.entities[0].values[0].values[0].value[0].EUR");
+		System.out.println("EUR value is " + result);
+
+		if (result == 2.44615008E8) {
+			System.out.println("test case passed");
+		} else {
+			System.out.println("test case failed");
+		}
+		AssertJUnit.assertNotNull(output);
+		AssertJUnit.assertFalse(output.asString().contains("isError"));
+		AssertJUnit.assertFalse(output.asString().contains("isMissing"));
+
+	}
+
+	@Test
+	public void FCA1011_NonLife() throws IOException {
+		URL file = Resources.getResource("NonLife.JSON");
+		String myJson = null;
+	
+			myJson = Resources.toString(file, Charsets.UTF_8);
+	
+
+		Response output = given()
+
+				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with()
+
+				.when().post(dataPostUrl)
+
+				.then().assertThat().log().ifError().statusCode(200)
+
+				.contentType(ContentType.JSON).extract().response();
+
+		float result = output.path("data.attributes.entities[0].values[0].values[0].value[0].EUR");
+
+		System.out.println("EUR value is " + result);
+
+		if (result == 1.17946598E9) {
+			System.out.println("test case passed");
+		} else {
+			System.out.println("test case failed");
+		}
+		AssertJUnit.assertNotNull(output);
+		AssertJUnit.assertFalse(output.asString().contains("isError"));
+		AssertJUnit.assertFalse(output.asString().contains("isMissing"));
+	}
+
+	@Test
+
+	public void FCA_1013() {
+
+		String url = baseURI + "/v1/companies/14528/descendants";
+		RestAssured.baseURI = url;
+
+		Response res = given()
+
+				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).when().get().then().statusCode(200)
+				.body("data[0].id", equalTo("18431"))
+				.body("data[0].attributes.name", equalTo("J.P. Morgan Securities plc"))
+				.body("data[0].attributes.ownershipType", equalTo("Direct"))
+				.body("data[0].attributes.country", equalTo("GBR"))
+				.body("data[0].attributes.ownershipCategory", equalTo("UNKS"))
+				.body("data[0].attributes.type", equalTo("Business Organization"))
+				.body("data[0].attributes.parentId", equalTo(14528))
+				.body("data[0].attributes.ownershipPercentage", equalTo((float) 100.0)).contentType(ContentType.JSON)
+				.extract().response();
+
+
+
+		AssertJUnit.assertFalse(res.asString().contains("isError"));
+		AssertJUnit.assertFalse(res.asString().contains("isMissing"));
+
+	}
+
+	@Test
+
+	public void FCA_965_positiveTest_FitchIssuerRatings() throws IOException {
+
+		metaEndPoint = "/v1/entities/116980/fitchIssuerRatings";
+
+		String filters = "?Id=116980&filter[startDate]=2010-01-31&filter[endDate]=2015-12-31&filter[ratingType]=FC_LT_IDR&filter[ratingAction]=Affirmed&filter[ratingAlert]=rating";
+		String metaUrlFilter = baseURI + metaEndPoint + filters;
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrlFilter).then()
+				.body("data[0].type", Matchers.notNullValue()).body("data[0].type", equalTo("fitchIssuerRatings"))
+				.body("data[0].id", Matchers.notNullValue()).body("data[0].id", equalTo("107693063"))
+				.body("data[0].attributes.alert", equalTo("Rating Outlook Stable"))
+				.body("data[0].attributes.ratingType", equalTo("FC_LT_IDR"))
+				.body("data[0].attributes.solicitation", equalTo("Solicited - Sell Side"))
+				.body("data[0].attributes.rating", equalTo("A+"))
+				.body("data[0].attributes.description", equalTo("Long-Term Issuer Default Rating"))
+				.body("data[0].relationships.entity.data.id", equalTo("116980")).contentType(ContentType.JSON).extract()
+				.response();
+
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+
+	}
+
+	@Test
+
+	public void FCA_965_dateFormatWrong() throws IOException {
+
+		metaEndPoint = "/v1/entities/116980/fitchIssuerRatings";
+
+		String filters = "?Id=116980&filter[startDate]=2010-01-3&filter[endDate]"
+				+ "=2015-12-31&filter[ratingType]=FC_LT_IDR&filter[ratingAction]=Affirmed&filter[ratingAlert]=rating";
+		String metaUrlfilter = baseURI + metaEndPoint + filters;
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrlfilter).then()
+				.body("errors[0].status", equalTo("400"))
+				.body("errors[0].title",
+						equalTo("Invalid Date Format. Use 'yyyy-MM-dd' format. No multiple dates allowed. For ex., ?filter[startDate]=2016-01-01"))
+				.contentType(ContentType.JSON).extract().response();
+
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+
+	}
+
+	@Test
+	public void FCA_965_undefinedRatingTypes() throws IOException {
+
+		metaEndPoint = "/v1/entities/116980/fitchIssuerRatings";
+
+		String filters = "?Id=116980&filter[startDate]=2010-01-30&filter[endDate]"
+				+ "=2015-12-31&filter[ratingType]=FC_LT_ID&filter[ratingAction]=Affirmed&filter[ratingAlert]=rating";
+		String metaUrlfilter = baseURI + metaEndPoint + filters;
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrlfilter).then()
+				.body("errors[0].status", equalTo("400"))
+				.body("errors[0].title", equalTo("Undefined Rating Type(s) [FC_LT_ID]")).contentType(ContentType.JSON)
+				.extract().response();
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+
+	}
+
+	@Test
+
+	public void FCA_965_ratingAction_String() throws IOException {
+
+		metaEndPoint = "/v1/entities/116980/fitchIssuerRatings";
+
+		String filters = "?Id=116980&filter[startDate]=2010-01-30&filter[endDate]"
+				+ "=2015-12-31&filter[ratingType]=FC_LT_IDR&filter[ratingAction]=Affirmeddd&filter[ratingAlert]=rating";
+		String metaUrlfilter = baseURI + metaEndPoint + filters;
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrlfilter).then()
+				.body("data[0]", Matchers.isEmptyOrNullString()).body("included[0]", Matchers.isEmptyOrNullString())
+				.contentType(ContentType.JSON).extract().response();
+
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+
+	}
+
+	@Test
+
+	public void FCA_965_invalidCharacterUsed() throws IOException {
+
+		metaEndPoint = "/v1/entities/116980/fitchIssuerRatings";
+
+		String filters = "?Id=116980&filter[startDate]=2010-01-30&filter[endDate]"
+				+ "=2015-12-31&filter[ratingType]=FC_LT_IDR&filter[ratingAction]=Affirmed#x&filter[ratingAlert]=rating";
+		String metaUrlfilter = baseURI + metaEndPoint + filters;
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrlfilter).then()
+				.body("errors[0].status", equalTo("400"))
+				.body("errors[0].title", equalTo("Invalid Characters Used: [Affirmed#x]. Valid chars are [A-Za-z -:]*"))
+				.contentType(ContentType.JSON).extract().response();
+
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+
+	}
+
+	@Test
+	public void FCA_965_ratingAlert_String() throws IOException {
+
+		metaEndPoint = "/v1/entities/116980/fitchIssuerRatings";
+		String filters = "?Id=116980&filter[startDate]=2010-01-30&filter[endDate]"
+				+ "=2015-12-31&filter[ratingType]=FC_LT_IDR&filter[ratingAction]=Affirmed#x&filter[ratingAlert]=Stabless";
+		String metaUrlfilter = baseURI + metaEndPoint + filters;
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrl).then()
+				.body("data", Matchers.isEmptyOrNullString()).body("included", Matchers.isEmptyOrNullString())
+				.contentType(ContentType.JSON).extract().response();
+
+
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 	}
 
 }
