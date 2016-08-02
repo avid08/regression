@@ -1,0 +1,27 @@
+{
+   "data":{
+      "type":"valueResponse",
+      "attributes":{
+         "dateOptions":{
+            "dates":[
+               "2015-07-01"
+            ],
+            "periods":[
+
+            ]
+         },
+         "entities":[
+            {
+               "id":"1153930",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[
+            "FC_SHARE_CAPITAL_INS"
+         ],
+         "options":[
+            
+         ]
+      }
+   }
+}

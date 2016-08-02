@@ -1,0 +1,46 @@
+{  
+   "data":{  
+      "type":"valueResponse",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+           "2015-12-31"
+            ],
+            "periods":[  
+
+
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"1147017",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+    
+       
+            "FC_GROSS_PREM_WRITTEN_DIRECT_INS",
+            "FC_COMPANY_NAME"
+         ],
+         "options":[  
+           {  
+               "name":"linesOfBusiness",
+               "value":"Composite"
+            },
+            {  
+               "name":"consolidation",
+               "value":"noncon"
+            },
+            {  
+               "name":"accountingStandard",
+               "value":"Local"
+            },
+             {  
+               "name":"currency",
+               "value":"EUR"
+            }
+         ]
+      }
+   }
+}

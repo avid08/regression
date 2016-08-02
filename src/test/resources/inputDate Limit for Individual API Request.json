@@ -1,0 +1,39 @@
+{
+"data": {
+"type": "valueRequest",
+"attributes": {
+"dateOptions": {
+"dateRanges":[
+	{
+	"startDate":"2014-01-01",
+	"endDate":"2014-01-15", 
+	"frequency":"Daily"
+	}
+	]
+},
+"entities": [
+		{
+		     "id": "111716",
+		     "type": "FitchID"
+		}
+      ],
+      "fitchFieldIds" : [
+        "FC_LT_IDR"
+      ],
+ "options": [
+ {
+               "name":"consolidation",
+               "value":"combined"
+            },
+            {
+               "name":"accountingStandard",
+               "value":"IFRS"
+            },
+            {
+               "name":"filingType",
+               "value":"Original"
+            }
+ ]
+    }
+  }
+}

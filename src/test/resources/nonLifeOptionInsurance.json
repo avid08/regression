@@ -1,0 +1,46 @@
+{
+   "data":{
+      "type":"valueResponse",
+      "attributes":{
+         "dateOptions":{
+            "dates":[
+               "2014-10-09"
+            ],
+            "periods":[
+
+            ]
+         },
+         "entities":[
+            {
+               "id":"1150233",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[
+            "FC_INSURANCE_PAYABLES_INS"
+         ],
+         "options":[
+            {
+               "name":"consolidation",
+               "value":"combined"
+            },
+            {
+               "name":"accountingStandard",
+               "value":"Local"
+            },
+            {
+               "name":"filingType",
+               "value":"Original"
+            },
+            {
+               "name":"currency",
+               "value":"USD"
+            },
+			{
+               "name":"linesOfBusiness",
+               "value":"NonLife"
+            }
+         ]
+      }
+   }
+}

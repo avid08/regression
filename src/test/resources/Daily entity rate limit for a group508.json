@@ -1,0 +1,45 @@
+{
+   "data":{
+      "type":"valueRequest",
+      "attributes":{
+         "dateOptions":{
+         	"dates":[
+        
+            ],
+         "periods":[
+            ],
+            "dateRanges":[
+              
+            ],
+            "periodRanges":[
+              
+            ]
+         },
+         "entities":[
+            {
+               "id":"1012179",
+               "type":"FitchID"
+            },
+            {
+               "id":"IBM",
+               "type":"companyTicker"
+            },
+            {
+               "id":"432748",
+               "type":"CUSIP6"
+            },
+            {
+               "id":"80089138",
+               "type":"fitchGroupId"
+            }
+         ],
+         "fitchFieldIds":[
+		"FC_LT_IDR"
+	
+         ],
+         "options":[
+		
+         ]
+      }
+   }
+}

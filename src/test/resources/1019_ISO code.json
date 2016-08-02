@@ -1,0 +1,40 @@
+{  
+   "data":{  
+      "type":"entities",
+      "attributes":{  
+         "entities":[  
+            {  
+               "id":"USA",
+               "type":"isoCountryCode3"
+            },
+            {  
+               "id":"US",
+               "type":"isoCountryCode2"
+            },
+
+            { "id": "BD",
+              "type":"isoCountryCode2"
+            },
+            {  
+               "id":"MEX",
+               "type":"isoCountryCode3"
+            },
+            {  
+               "id":"PHL",
+               "type":"isoCountryCode3"
+            },
+            {  
+               "id":"ZZ",
+               "type":"isoCountryCode2"
+            },
+            {  
+               "id":"91086Q",
+               "type":"CUSIP6"
+            }
+         ],
+         "fitchFieldIds":[  
+            "FC_COMPANY_NAME"
+         ]
+      }
+   }
+}

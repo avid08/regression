@@ -1,0 +1,46 @@
+{
+ "data":{
+    "type":"valueResponse",
+    "attributes":{
+       "dateOptions":{
+          "dates":[
+"2013-12-31"
+          ],
+          "periods":[
+
+          ]
+       },
+       "entities":[
+          {
+             "id":"1150233",
+             "type":"FitchID"
+          }
+       ],
+       "fitchFieldIds":[
+          "FC_SHARE_CAPITAL_INS"
+       ],
+       "options":[
+          {
+             "name":"consolidation",
+             "value":"noncon"
+          },
+           {
+             "name":"linesOfBusiness",
+             "value":"NonLife"
+          },
+          {
+             "name":"accountingStandard",
+             "value":"IFRS"
+          },
+          {
+             "name":"filingType",
+             "value":"Preliminary"
+          },
+          {
+             "name":"currency",
+             "value":"Local"
+          }
+       ]
+    }
+ }
+}
