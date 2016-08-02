@@ -18,7 +18,8 @@
             }
          ],
          "fitchFieldIds":[
-            "FC_INT_INC_LOANS_BNK"
+            "FC_INT_INC_LOANS_BNK",
+            "FC_COMPANY_NAME"
          ],
          "options":[
                                 {

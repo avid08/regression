@@ -59,8 +59,8 @@ public class ApIsmokeTestSuite {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api-dev.fitchconnect.com";
-			this.AuthrztionValue = ("Basic NTA4Rk44V1BKTUdGVVI5VFpOREFEV0NCSzpvMVY5bkRCMG8yM3djSHp2eVlHNnZZb01GSkJWdG1KZmEwS20vbUczVWVV");
+			baseURI = "https://api-int.fitchconnect.com";
+			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
 			dataBaseServer = "mongoweb-x01";
 		} else if (env.equals("dev")) {
 			baseURI = "https://api-dev.fitchconnect.com";
@@ -630,7 +630,7 @@ public class ApIsmokeTestSuite {
 	@Test
 	public void FCA401USD() throws IOException {
 
-		URL file = Resources.getResource("FCA 401.JSON");
+		URL file = Resources.getResource("FCA 401.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -650,7 +650,7 @@ public class ApIsmokeTestSuite {
 	@Test
 	public void FCA401Local() throws IOException {
 
-		URL file = Resources.getResource("FCA 401.JSON");
+		URL file = Resources.getResource("FCA 401.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -670,7 +670,7 @@ public class ApIsmokeTestSuite {
 	@Test
 	public void FCA401EUR() throws IOException {
 
-		URL file = Resources.getResource("FCA 401.JSON");
+		URL file = Resources.getResource("FCA 401.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -690,7 +690,7 @@ public class ApIsmokeTestSuite {
 	@Test
 	public void FCA401GBP() throws IOException {
 
-		URL file = Resources.getResource("FCA 401.JSON");
+		URL file = Resources.getResource("FCA 401.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -710,7 +710,7 @@ public class ApIsmokeTestSuite {
 	@Test
 	public void FCA401JPY() throws IOException {
 
-		URL file = Resources.getResource("FCA 401.JSON");
+		URL file = Resources.getResource("FCA 401.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -730,7 +730,7 @@ public class ApIsmokeTestSuite {
 
 	public void entityLimit() throws IOException {
 
-		URL file = Resources.getResource("Entity Limit.JSON");
+		URL file = Resources.getResource("Entity Limit.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -751,7 +751,7 @@ public class ApIsmokeTestSuite {
 
 	public void fieldLimit() throws IOException {
 
-		URL file = Resources.getResource("field limit.JSON");
+		URL file = Resources.getResource("field limit.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -771,7 +771,7 @@ public class ApIsmokeTestSuite {
 
 	public void missingEntityAndMissingField() throws IOException {
 
-		URL file = Resources.getResource("Missing Entity.JSON");
+		URL file = Resources.getResource("Missing Entity.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -791,7 +791,7 @@ public class ApIsmokeTestSuite {
 	@Test
 	public void invalidDate() throws IOException {
 
-		URL file = Resources.getResource("Invalid Date.JSON");
+		URL file = Resources.getResource("Invalid Date.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -814,7 +814,7 @@ public class ApIsmokeTestSuite {
 
 	public void invalidPeriod() throws IOException {
 
-		URL file = Resources.getResource("Invalid period.JSON");
+		URL file = Resources.getResource("Invalid period.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -835,7 +835,7 @@ public class ApIsmokeTestSuite {
 
 	public void noEntity() throws IOException {
 
-		URL file = Resources.getResource("no entity.JSON");
+		URL file = Resources.getResource("no entity.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -855,7 +855,7 @@ public class ApIsmokeTestSuite {
 
 	public void noField() throws IOException {
 
-		URL file = Resources.getResource("no field.JSON");
+		URL file = Resources.getResource("no field.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -875,7 +875,7 @@ public class ApIsmokeTestSuite {
 
 	public void noRequest() throws IOException {
 
-		URL file = Resources.getResource("no request.JSON");
+		URL file = Resources.getResource("no request.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -918,7 +918,7 @@ public class ApIsmokeTestSuite {
 
 	public void wrongMediaType() throws IOException {
 
-		URL file = Resources.getResource("wrong media.JSON");
+		URL file = Resources.getResource("wrong media.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -936,7 +936,7 @@ public class ApIsmokeTestSuite {
 	@Test
 	public void unauthorization() throws IOException {
 
-		URL file = Resources.getResource("wrong media.JSON");
+		URL file = Resources.getResource("wrong media.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", "").header("X-App-Client-Id", XappClintIDvalue)
@@ -957,7 +957,7 @@ public class ApIsmokeTestSuite {
 	@Test
 	public void regression_testing_Single() throws IOException {
 
-		URL file = Resources.getResource("single_rating.JSON");
+		URL file = Resources.getResource("single_rating.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Date dNow = new Date();
@@ -1011,7 +1011,7 @@ public class ApIsmokeTestSuite {
 
 	public void singleEntitySummary() throws IOException {
 
-		URL file = Resources.getResource("Single Entity Summary.JSON");
+		URL file = Resources.getResource("Single Entity Summary.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Date dNow = new Date();
@@ -1047,7 +1047,7 @@ public class ApIsmokeTestSuite {
 	@Test
 	public void dateMoodys() throws IOException {
 
-		URL file = Resources.getResource("dateMoodys.JSON");
+		URL file = Resources.getResource("dateMoodys.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1071,7 +1071,7 @@ public class ApIsmokeTestSuite {
 	@Test
 	public void dataEntitySummary() throws IOException {
 
-		URL file = Resources.getResource("data entity Summary.JSON");
+		URL file = Resources.getResource("data entity Summary.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1095,7 +1095,7 @@ public class ApIsmokeTestSuite {
 
 	public void dateRatings() throws IOException {
 
-		URL file = Resources.getResource("date rating.JSON");
+		URL file = Resources.getResource("date rating.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1120,7 +1120,7 @@ public class ApIsmokeTestSuite {
 
 	public void daterangeDefaultFrequency() throws IOException {
 
-		URL file = Resources.getResource("dateRangeDefaultFrequency.JSON");
+		URL file = Resources.getResource("dateRangeDefaultFrequency.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1148,7 +1148,7 @@ public class ApIsmokeTestSuite {
 	@Test
 	public void dateRangeWeekly() throws IOException {
 
-		URL file = Resources.getResource("dateRangeWeekly.JSON");
+		URL file = Resources.getResource("dateRangeWeekly.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1177,7 +1177,7 @@ public class ApIsmokeTestSuite {
 
 	public void dateRangeMonthly() throws IOException {
 
-		URL file = Resources.getResource("dateRangeMonthly.JSON");
+		URL file = Resources.getResource("dateRangeMonthly.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1205,7 +1205,7 @@ public class ApIsmokeTestSuite {
 
 	public void dateRanteQTR() throws IOException {
 
-		URL file = Resources.getResource("dateRangeQtr.JSON");
+		URL file = Resources.getResource("dateRangeQtr.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1233,7 +1233,7 @@ public class ApIsmokeTestSuite {
 
 	public void dateRangeAnnually() throws IOException {
 
-		URL file = Resources.getResource("dateRangeAnnually.JSON");
+		URL file = Resources.getResource("dateRangeAnnually.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1261,7 +1261,7 @@ public class ApIsmokeTestSuite {
 
 	public void dateRangeNullendDate() throws IOException {
 
-		URL file = Resources.getResource("dateRangeNullEndDate.JSON");
+		URL file = Resources.getResource("dateRangeNullEndDate.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1289,7 +1289,7 @@ public class ApIsmokeTestSuite {
 
 	public void multipleEnttiesandFields() throws IOException {
 
-		URL file = Resources.getResource("mulitpleRatingFields.JSON");
+		URL file = Resources.getResource("mulitpleRatingFields.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1311,7 +1311,7 @@ public class ApIsmokeTestSuite {
 
 	public void muitpleRatingEntites() throws IOException {
 
-		URL file = Resources.getResource("mulitpleRatingEntities.JSON");
+		URL file = Resources.getResource("mulitpleRatingEntities.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1338,7 +1338,7 @@ public class ApIsmokeTestSuite {
 
 	public void mulitpleEntitySummaryField() throws IOException {
 
-		URL file = Resources.getResource("multipleEntitySummaryField.JSON");
+		URL file = Resources.getResource("multipleEntitySummaryField.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1359,7 +1359,7 @@ public class ApIsmokeTestSuite {
 
 	public void mulitpleEntitySummaryEntites() throws IOException {
 
-		URL file = Resources.getResource("mulitpleEntitySummaryEntities.JSON");
+		URL file = Resources.getResource("mulitpleEntitySummaryEntities.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1393,7 +1393,7 @@ public class ApIsmokeTestSuite {
 
 	public void mulitpleMoodsField() throws IOException {
 
-		URL file = Resources.getResource("mulitpleMoodysField.JSON");
+		URL file = Resources.getResource("mulitpleMoodysField.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1414,7 +1414,7 @@ public class ApIsmokeTestSuite {
 
 	public void mulitpleMoodsEntities() throws IOException {
 
-		URL file = Resources.getResource("multipleMoodysEntities.JSON");
+		URL file = Resources.getResource("multipleMoodysEntities.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1434,7 +1434,7 @@ public class ApIsmokeTestSuite {
 	@Test
 	public void conOptionFinancial() throws IOException {
 
-		URL file = Resources.getResource("conOption.JSON");
+		URL file = Resources.getResource("conOption.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1459,7 +1459,7 @@ public class ApIsmokeTestSuite {
 	@Test
 	public void nonConOptionFinancial() throws IOException {
 
-		URL file = Resources.getResource("nonconOption.JSON");
+		URL file = Resources.getResource("nonconOption.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1487,7 +1487,7 @@ public class ApIsmokeTestSuite {
 	@Test
 	public void combinedOptionFinancial() throws IOException {
 
-		URL file = Resources.getResource("combinedOption.JSON");
+		URL file = Resources.getResource("combinedOption.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1513,7 +1513,7 @@ public class ApIsmokeTestSuite {
 	@Test
 	public void localOptionFinancial() throws IOException {
 
-		URL file = Resources.getResource("localOption.JSON");
+		URL file = Resources.getResource("localOption.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1540,7 +1540,7 @@ public class ApIsmokeTestSuite {
 
 	public void IFRSOptionFinancial() throws IOException {
 
-		URL file = Resources.getResource("IFRS option.JSON");
+		URL file = Resources.getResource("IFRS option.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1566,7 +1566,7 @@ public class ApIsmokeTestSuite {
 	@Test
 	public void HGBOptionFinancial() throws IOException {
 
-		URL file = Resources.getResource("HBG option.JSON");
+		URL file = Resources.getResource("HBG option.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1589,7 +1589,7 @@ public class ApIsmokeTestSuite {
 
 	public void latestOptionFinancial() throws IOException {
 
-		URL file = Resources.getResource("latestOption.JSON");
+		URL file = Resources.getResource("latestOption.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1610,7 +1610,7 @@ public class ApIsmokeTestSuite {
 
 	public void restatedOptionFinancial() throws IOException {
 
-		URL file = Resources.getResource("restatedOption.JSON");
+		URL file = Resources.getResource("restatedOption.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -1814,7 +1814,7 @@ public class ApIsmokeTestSuite {
 
 	public void UpdateFinalcial_microSrvice_595() throws IOException {
 
-		URL file = Resources.getResource("financial Micro Servce.JSON");
+		URL file = Resources.getResource("financial Micro Servce.json");
 
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
@@ -1977,7 +1977,7 @@ public class ApIsmokeTestSuite {
 				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrl).then()
 				.contentType(ContentType.JSON).extract().response();
 
-	      System.out.println(response.asString());
+	    
 
 		List<String> Id = response.path("data.id");
 		List<String> displayNme = response.path("data.attributes.displayName");
@@ -2029,7 +2029,7 @@ public class ApIsmokeTestSuite {
 	@Test
 	public void fillingtype_515() {
 
-		String url = baseURI + "/v1/statements/5454931/filings";
+		String url = baseURI + "/v1/statements/5581722/filings";
 		RestAssured.baseURI = url;
 
 		Response res = given()
@@ -2042,7 +2042,7 @@ public class ApIsmokeTestSuite {
 				.body("data.type[0]", equalTo("filings"))
 				.body("data.attributes.fileName[0]", containsString(".pdf"))
 				.body("data.attributes.fileType[0]", equalTo("pdf"))
-				.body("data.relationships.statement.data.id[0]", equalTo("5454931"))
+				.body("data.relationships.statement.data.id[0]", equalTo("5581722"))
 				.body("data.links.download[0]", containsString("https:")).contentType(ContentType.JSON).extract()
 				.response();
 
@@ -2095,7 +2095,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertFalse(Rspnse.asString().contains("isMissing"));
 
 		List<String> datesOption = Rspnse.path("data.attributes.dateOptions.dates");
-		System.out.println(datesOption);
+		
 
 		for (int i = 0; i < datesOption.size(); i++) {
 
@@ -2108,7 +2108,7 @@ public class ApIsmokeTestSuite {
 	@Test
 	public void periodRating() throws IOException {
 
-		URL file = Resources.getResource("periodRating.JSON");
+		URL file = Resources.getResource("periodRating.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -2159,7 +2159,7 @@ public class ApIsmokeTestSuite {
 
 	public void periodFinancial() throws IOException {
 
-		URL file = Resources.getResource("periodFinancial.JSON");
+		URL file = Resources.getResource("periodFinancial.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -2180,7 +2180,7 @@ public class ApIsmokeTestSuite {
 
 	public void periodEntitySummary() throws IOException {
 
-		URL file = Resources.getResource("periodEntitySummary.JSON");
+		URL file = Resources.getResource("periodEntitySummary.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -2230,7 +2230,7 @@ public class ApIsmokeTestSuite {
 
 	public void periodMoodys() throws IOException {
 
-		URL file = Resources.getResource("periodMoodys.JSON");
+		URL file = Resources.getResource("periodMoodys.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -2285,7 +2285,7 @@ public class ApIsmokeTestSuite {
 
 	public void dateAndPeriodRating() throws IOException {
 
-		URL file = Resources.getResource("datePeriodRating.JSON");
+		URL file = Resources.getResource("datePeriodRating.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -2320,19 +2320,14 @@ public class ApIsmokeTestSuite {
 
 	public void dateAndPeriodFinancial() throws IOException {
 
-		URL file = Resources.getResource("dateAndPeriodFinancial.JSON");
+		URL file = Resources.getResource("dateAndPeriodFinancial.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
-
-		String dataPostUrl = "https://api-qa.fitchconnect.com" + dataEndPoint; // Data
-																				// Aggregator
-																				// -EndPoint
-
+		
 		Response res = given()
-				.header("Authorization",
-						"Basic MUlLVk1SMjlJS1lIMllPSjFUQkdGQ0tKSDpFN1Y2Z1FJY3RPeG5KbG8rSVBHaGY0K0tTSGc3LzFpOFJsbVo1Tmd6NUpB")
+				.header("Authorization",AuthrztionValue)
 				.header("X-App-Client-Id", XappClintIDvalue).contentType("application/vnd.api+json").body(myJson).with()
 				.when().post(dataPostUrl).then().body("data.attributes.entities.get(0).id", Matchers.notNullValue())
-				.body("data.attributes.entities.get(0).id", equalTo("116980"))
+				.body("data.attributes.entities[0].id", equalTo("116980"))
 				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
 				.body("data.attributes.entities.get(0).type", equalTo("FitchID")).assertThat().log().ifError()
 				.statusCode(200).extract().response();
@@ -2360,7 +2355,7 @@ public class ApIsmokeTestSuite {
 
 	public void dateAndPeriodEntitySummary() throws IOException {
 
-		URL file = Resources.getResource("dateAndPeriodEntitySummary.JSON");
+		URL file = Resources.getResource("dateAndPeriodEntitySummary.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -2402,7 +2397,7 @@ public class ApIsmokeTestSuite {
 
 	public void dateAndPeriodMoodys() throws IOException {
 
-		URL file = Resources.getResource("dateAndPeriodMoodys.JSON");
+		URL file = Resources.getResource("dateAndPeriodMoodys.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -2445,7 +2440,7 @@ public class ApIsmokeTestSuite {
 
 	public void periodRangeQtr() throws IOException {
 
-		URL file = Resources.getResource("periodRangeQRT.JSON");
+		URL file = Resources.getResource("periodRangeQRT.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -2510,7 +2505,7 @@ public class ApIsmokeTestSuite {
 
 	public void periodRangeAnnually() throws IOException {
 
-		URL file = Resources.getResource("periodRangeAnnually.JSON");
+		URL file = Resources.getResource("periodRangeAnnually.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -2569,7 +2564,7 @@ public class ApIsmokeTestSuite {
 
 	public void periodRangeNullEndPoint() throws IOException {
 
-		URL file = Resources.getResource("periodRangeNullEndpoint.JSON");
+		URL file = Resources.getResource("periodRangeNullEndpoint.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -2644,7 +2639,7 @@ public class ApIsmokeTestSuite {
 
 	public void dateDailyAndPeriodQtrRating() throws IOException {
 
-		URL file = Resources.getResource("date daily and period.JSON");
+		URL file = Resources.getResource("date daily and period.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -2756,7 +2751,7 @@ public class ApIsmokeTestSuite {
 
 	public void dateDailyAndPeriodQtrFinancial() throws IOException {
 
-		URL file = Resources.getResource("dateDailyPeriodQtrRangeFinancial.JSON");
+		URL file = Resources.getResource("dateDailyPeriodQtrRangeFinancial.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -2861,7 +2856,7 @@ public class ApIsmokeTestSuite {
 
 	public void multipleFinancialFields() throws IOException {
 
-		URL file = Resources.getResource("multipleFinancialFields.JSON");
+		URL file = Resources.getResource("multipleFinancialFields.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -2995,7 +2990,7 @@ public class ApIsmokeTestSuite {
 
 	public void multipleFinancialEntities() throws IOException {
 
-		URL file = Resources.getResource("multipleFinancialEntities.JSON");
+		URL file = Resources.getResource("multipleFinancialEntities.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -3053,7 +3048,7 @@ public class ApIsmokeTestSuite {
 
 	public void perliminaryOptionFinancial() throws IOException {
 
-		URL file = Resources.getResource("perliminaryOptionFinancial.JSON");
+		URL file = Resources.getResource("perliminaryOptionFinancial.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -3083,7 +3078,7 @@ public class ApIsmokeTestSuite {
 
 	public void lifeOptionInsurance() throws IOException {
 
-		URL file = Resources.getResource("lifeOptionInsurance.JSON");
+		URL file = Resources.getResource("lifeOptionInsurance.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -3114,7 +3109,7 @@ public class ApIsmokeTestSuite {
 
 	public void nonLifeOptionInsurance() throws IOException {
 
-		URL file = Resources.getResource("nonLifeOptionInsurance.JSON");
+		URL file = Resources.getResource("nonLifeOptionInsurance.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -3145,7 +3140,7 @@ public class ApIsmokeTestSuite {
 
 	public void compositeOptionInsurance() throws IOException {
 
-		URL file = Resources.getResource("compositeOptionInsurance.JSON");
+		URL file = Resources.getResource("compositeOptionInsurance.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -3175,7 +3170,7 @@ public class ApIsmokeTestSuite {
 
 	public void defaultOptionsInsurance() throws IOException {
 
-		URL file = Resources.getResource("defaultOptionInsurance.JSON");
+		URL file = Resources.getResource("defaultOptionInsurance.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -3331,7 +3326,7 @@ public void comparingData_535() throws IOException{
 
 	@Test
 	public void FCA1011_Composite() throws IOException {
-		URL file = Resources.getResource("composite.JSON");
+		URL file = Resources.getResource("composite.json");
 		String myJson = null;
 	
 			myJson = Resources.toString(file, Charsets.UTF_8);
@@ -3369,7 +3364,7 @@ public void comparingData_535() throws IOException{
 
 	@Test
 	public void FCA1011_Life() throws IOException {
-		URL file = Resources.getResource("Life.JSON");
+		URL file = Resources.getResource("Life.json");
 		String myJson = null;
 		
 			myJson = Resources.toString(file, Charsets.UTF_8);
@@ -3402,7 +3397,7 @@ public void comparingData_535() throws IOException{
 
 	@Test
 	public void FCA1011_NonLife() throws IOException {
-		URL file = Resources.getResource("NonLife.JSON");
+		URL file = Resources.getResource("NonLife.json");
 		String myJson = null;
 	
 			myJson = Resources.toString(file, Charsets.UTF_8);
@@ -3415,19 +3410,14 @@ public void comparingData_535() throws IOException{
 
 				.when().post(dataPostUrl)
 
-				.then().assertThat().log().ifError().statusCode(200)
+				.then().assertThat().statusCode(200)
+				.body("data.attributes.entities[0].values[0].values[0].value[0].EUR",equalTo((float) 1.17946598E9))
 
 				.contentType(ContentType.JSON).extract().response();
 
-		float result = output.path("data.attributes.entities[0].values[0].values[0].value[0].EUR");
+		
 
-		System.out.println("EUR value is " + result);
-
-		if (result == 1.17946598E9) {
-			System.out.println("test case passed");
-		} else {
-			System.out.println("test case failed");
-		}
+		
 		AssertJUnit.assertNotNull(output);
 		AssertJUnit.assertFalse(output.asString().contains("isError"));
 		AssertJUnit.assertFalse(output.asString().contains("isMissing"));
