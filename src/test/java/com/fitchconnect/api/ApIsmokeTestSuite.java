@@ -1862,7 +1862,7 @@ public class ApIsmokeTestSuite {
 
 	public void defaultLOB_570() throws IOException {
 
-		URL xfile = Resources.getResource("Default_LOB.json ");
+		URL xfile = Resources.getResource("Default_LOB.json");
 
 		String jsonbody = Resources.toString(xfile, Charsets.UTF_8);
 
