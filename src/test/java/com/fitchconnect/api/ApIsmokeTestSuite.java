@@ -1793,7 +1793,7 @@ public class ApIsmokeTestSuite {
 
 	public void unRated_928() throws IOException {
 
-		URL file = Resources.getResource("928_Request_UnRated.Json");
+		URL file = Resources.getResource("928_Request_UnRated.json");
 
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
@@ -1862,7 +1862,7 @@ public class ApIsmokeTestSuite {
 
 	public void defaultLOB_570() throws IOException {
 
-		URL xfile = Resources.getResource("Default_LOB.Json");
+		URL xfile = Resources.getResource("Default_LOB.json");
 
 		String jsonbody = Resources.toString(xfile, Charsets.UTF_8);
 
