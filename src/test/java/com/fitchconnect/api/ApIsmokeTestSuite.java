@@ -217,54 +217,6 @@ public class ApIsmokeTestSuite {
 	// Test Description : User wild card search return everything that match
 	// with the input data along iwth all the relationships information
 
-	@Test(enabled = true)
-	public void Entity_Search_921() {
-
-		String searchStringEnd = "/v1/entities?filter[name]=Brazil";
-		String SerchUrl = baseURI + searchStringEnd;
-
-		given().header("Authorization", AuthrztionValue)
-
-				.header("content", contentValue).header("'Accept", acceptValue)
-				.header("X-App-Client-Id", XappClintIDvalue).when().get(SerchUrl).then().assertThat().log().ifError()
-				.statusCode(200).body(containsString("Brazil")).body(containsString("ultimateParent"))
-				.body("data[0].attributes.name", equalTo("Algorithmics Brazil do Brazil Ltda"))
-				.body(containsString("directors"));
-
-	}
-
-	// Test Description : User wild card search does not return everything if
-	// it's does not satisfy the search criteria
-
-	@Test(enabled = true)
-	public void Entity_Search_921_Negative() {
-
-		String searchStringEnd = "/v1/entities?filter[name]=aAAd";
-		String SerchUrl = baseURI + searchStringEnd;
-
-		given().header("Authorization", AuthrztionValue)
-
-				.header("content", contentValue).header("'Accept", acceptValue)
-				.header("X-App-Client-Id", XappClintIDvalue).when().get(SerchUrl).then().assertThat().log().ifError()
-				.statusCode(200).body("data", Matchers.empty()).body("data.included", Matchers.hasSize(0));
-
-	}
-
-	// Test Description :
-	@Test(enabled = true)
-	public void Entity_Search_922() {
-
-		String enTityendPoint = "/v1/entities/1047648/"; // PublishFlag = True
-		String enTityUrl = baseURI + enTityendPoint;
-
-		given().header("Authorization", AuthrztionValue).header("content", contentValue).header("'Accept", acceptValue)
-				.header("X-App-Client-Id", XappClintIDvalue).when().get(enTityUrl)
-
-				.then().assertThat().log().ifError().statusCode(200).body(containsString("directors"))
-				.body(containsString("officers")).body(containsString("shareholders"))
-				.body("data.attributes.name", equalTo("Banco Santander Totta SA"));
-
-	}
 
 	@Test(enabled = true)
 	public void entity_search_976_statement() {
