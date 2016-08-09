@@ -110,7 +110,7 @@ public class Sprint23 {
 	}
 
 	@Test
-	public void remveCHReference_1047() throws IOException {
+	public void remveCH_Reference_1047() throws IOException {
 
 		URL file = Resources.getResource("1047 LegalAgent Name.json");
 
