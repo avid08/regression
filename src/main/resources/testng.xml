@@ -4,6 +4,9 @@
   <test name="API Test Cases">
     <classes>
       <class name="com.fitchconnect.api.ApIsmokeTestSuite"/>
-    </classes>
+             <class name="com.fitchconnect.api.Sprint21"/>
+          <class name="com.fitchconnect.api.Sprint22"/>
+        <class name="com.fitchconnect.api.Sprint23"/>
+      </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

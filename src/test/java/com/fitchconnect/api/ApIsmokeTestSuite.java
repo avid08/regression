@@ -21,7 +21,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
-import org.testng.AssertJUnit;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -40,15 +39,15 @@ import groovy.json.internal.Charsets;
 
 public class ApIsmokeTestSuite {
 	public Response response;
-	
+
 	String myjson;
 	String AuthrztionValue;
 	String baseURI;
 	String env;
 	String metaEndPoint = "/v1/metadata/fields"; // Metadata-EndPoint
-	String metaUrl ;
+	String metaUrl;
 	String dataEndPoint = "/v1/data/valueRequest";
-	String dataPostUrl ; // 
+	String dataPostUrl; //
 	String XappClintIDvalue = "3dab0f06-eb00-4bee-8966-268a0ee27ba0";
 	String acceptValue = "application/vnd.api+json";
 	String contentValue = "application/vnd.api+json";
@@ -105,8 +104,6 @@ public class ApIsmokeTestSuite {
 	// in the Entity Summary
 	@Test()
 	public void metaDataResponse_with_PF_US897() {
-		
-	
 
 		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrl).then().assertThat()
@@ -118,8 +115,6 @@ public class ApIsmokeTestSuite {
 		Assert.assertFalse(response.asString().contains("isMissing"));
 		Assert.assertTrue(response.asString().contains("FC_CH_PUBLISH_FLAG"));
 
-
-
 		List<String> attributes = response.path("data.attributes");
 		assertNotNull(attributes);
 
@@ -129,13 +124,10 @@ public class ApIsmokeTestSuite {
 	// from corporateHierarchy.PublishFlag
 	@Test()
 	public void FC_CH_Publish_Flag_EntitySummary_US889() throws InterruptedException {
-		
+
 		given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("Accept", acceptValue).header("content", contentValue)
-				.when().get(metaUrl)
-				.then().log()
-				.ifError().assertThat()
-				.statusCode(200).body("data.id", hasItem("FC_CH_PUBLISH_FLAG")).and()
+				.header("Accept", acceptValue).header("content", contentValue).when().get(metaUrl).then().log()
+				.ifError().assertThat().statusCode(200).body("data.id", hasItem("FC_CH_PUBLISH_FLAG")).and()
 				.body("data.attributes.type", hasItem("CURRENCY"));
 
 	}
@@ -196,7 +188,6 @@ public class ApIsmokeTestSuite {
 	@Test(enabled = true)
 	public void ModyNewFields_775() throws IOException {
 
-        
 		URL file = Resources.getResource("ModyNewFieldsReq.json");
 		String myRequest = Resources.toString(file, Charsets.UTF_8);
 
@@ -213,7 +204,6 @@ public class ApIsmokeTestSuite {
 				.body(containsString("FC_LT_FC_BANK_DEPOSITS_WATCHLIST_DT_MDY"))
 
 				.extract().response();
-	
 
 		Assert.assertFalse(fieldResponse.asString().contains("isError"));
 		Assert.assertFalse(fieldResponse.asString().contains("isMissing"));
@@ -238,7 +228,7 @@ public class ApIsmokeTestSuite {
 				.header("content", contentValue).header("'Accept", acceptValue)
 				.header("X-App-Client-Id", XappClintIDvalue).when().get(SerchUrl).then().assertThat().log().ifError()
 				.statusCode(200).body(containsString("Brazil")).body(containsString("ultimateParent"))
-				.body("data.attributes.name", hasItem("Algorithmics Brazil do Brazil Ltda"))
+				.body("data[0].attributes.name", equalTo("Algorithmics Brazil do Brazil Ltda"))
 				.body(containsString("directors"));
 
 	}
@@ -306,10 +296,10 @@ public class ApIsmokeTestSuite {
 				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get().then().statusCode(200)
 				.body("data.id", equalTo("107444")).body("data.attributes.name", equalTo("Banco Bradesco S.A."))
-				.body("data.relationships.shareholders.links.self", containsString("http:"))
-				.body("data.relationships.officers.links.self", containsString("http:"))
-				.body("data.relationships.statements.links.self", containsString("http:"))
-				.body("data.relationships.company.links.self", containsString("http:")).contentType(ContentType.JSON)
+				.body("data.relationships.shareholders.links.self", Matchers.anything("http:"))
+				.body("data.relationships.officers.links.self", Matchers.notNullValue())
+				.body("data.relationships.statements.links.self", Matchers.anything("http:"))
+				.body("data.relationships.company.links.self", Matchers.anything("http:")).contentType(ContentType.JSON)
 				.extract().response();
 
 		Assert.assertFalse(res.asString().contains("isError"));
@@ -342,8 +332,8 @@ public class ApIsmokeTestSuite {
 				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
 				.when().get(url).then().body("data.id", equalTo("1025444")).body("data.type", equalTo("companies"))
 				.body("data.attributes.name", equalTo("Wuestenrot & Wuerttembergische AG"))
-				.body("data.relationships.entity.links.self", containsString("http:"))
-				.body("data.relationships.descendants.links.self", containsString("http:")).extract().response();
+				.body("data.relationships.entity.links.self", Matchers.notNullValue())
+				.body("data.relationships.descendants.links.self", Matchers.anything("http:")).extract().response();
 
 		Assert.assertFalse(res.asString().contains("isError"));
 
@@ -435,7 +425,7 @@ public class ApIsmokeTestSuite {
 	// response about Mody's fields with proper permission in MongoDB
 	@Test(enabled = true)
 	public void ModyNewFields_775_withPermission() throws IOException {
-		
+
 		URL file = Resources.getResource("ModyNewFieldsReq.json");
 		String myRequest = Resources.toString(file, Charsets.UTF_8);
 
@@ -450,8 +440,6 @@ public class ApIsmokeTestSuite {
 				.body(containsString("FC_MQ_AMR_WATCHLIST_DIR_MDY"))
 				.body(containsString("FC_NIFSR_FC_WATCHLIST_DT_MDY"))
 				.body(containsString("FC_LT_FC_BANK_DEPOSITS_WATCHLIST_DT_MDY")).extract().response();
-
-
 
 		Assert.assertFalse(fieldResponse.asString().contains("isError"));
 		Assert.assertFalse(fieldResponse.asString().contains("isMissing"));
@@ -495,7 +483,7 @@ public class ApIsmokeTestSuite {
 	// Test Description : Verifies all the financialService fitch fields are
 	// available through Data aggregator and response displays their values as
 	// well
-	@Test(enabled=false)
+	@Test(enabled = false)
 	public void financialServiceData_Verification_807_dataAggregator() throws IOException {
 
 		URL file = Resources.getResource("financial Mnemonics Data fields.json");
@@ -515,35 +503,6 @@ public class ApIsmokeTestSuite {
 
 		List<String> data = fieldsResponse.path("data.attributes.entities");
 		assertNotNull(data);
-
-	}
-
-	// Test Description :
-	@Test(enabled = true)
-
-	public void Testing_940_FCURL_Rated() {
-
-		String newEndPoint = "/v1/entities/108273";
-		String newUrl = baseURI + newEndPoint;
-
-		// Rated Entity should return GRP within FitchconnectURl
-		given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("Accept", acceptValue).header("content", contentValue).when().get(newUrl).then().log().ifError()
-				.assertThat().statusCode(200).body("data.attributes.name", equalTo("Mizuho Bank, Ltd.")).and()
-				.body("data.attributes.fitchConnectUrl", containsString("GRP_"));
-
-	}
-
-	@Test(enabled = true)
-	public void Testing_940_FCURL_UnRated() {
-		// Testing out not Rated Entity and Expected Result a Fitch Agent ID
-		String newEndPoint2 = "/v1/entities/1133670";
-		String newUrl2 = baseURI + newEndPoint2;
-
-		given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("Accept", acceptValue).header("content", contentValue).when().get(newUrl2).then().log()
-				.ifError().assertThat().statusCode(200).body("data.attributes.name", equalTo("Citibank N.A."))
-				.body("data.attributes.fitchConnectUrl", containsString("AGNT_"));
 
 	}
 
@@ -585,43 +544,6 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(dataResponse.asString().contains("isError"));
 		Assert.assertFalse(dataResponse.asString().contains("isMissing"));
-
-	}
-
-	@Test(enabled = true)
-	public void FitchRating_957_Entity_Resource() {
-
-		String fitchRatingEndpnt = "/v1/entities/110631/fitchIssuerRatings";
-		String fRatingURL = baseURI + fitchRatingEndpnt;
-
-		Response fitchData = given().header("Authorization", AuthrztionValue)
-				.header("X-App-Client-Id", XappClintIDvalue).header("Accept", acceptValue)
-				.header("content", contentValue).when().get(fRatingURL).then().assertThat().statusCode(200).log()
-				.ifError().body("data.get(0).type", equalTo("fitchIssuerRatings"))
-				// .body(data.get(0). arg1)
-				.contentType(ContentType.JSON).extract().response();
-
-		List<String> alert = fitchData.path("data.attributes.alert");
-		List<String> ratinType = fitchData.path("data.attributes.ratingType");
-		List<String> rating = fitchData.path("data.attributes.rating");
-		List<String> action = fitchData.path("data.attributes.action");
-		List<String> effectiveDate = fitchData.path("data.attributes.effectiveDate");
-		List<String> relationship = fitchData.path("data.relationships");
-
-		int totalattributes = alert.size();
-
-		System.out.println(totalattributes);
-
-		for (int i = 0; i < totalattributes; i++) {
-
-			Assert.assertNotNull(alert.get(i));
-			Assert.assertNotNull(ratinType.get(i));
-			Assert.assertNotNull(rating.get(i));
-			Assert.assertNotNull(action.get(i));
-			Assert.assertNotNull(effectiveDate.get(i));
-			Assert.assertNotNull(relationship.get(i));
-
-		}
 
 	}
 
@@ -895,7 +817,7 @@ public class ApIsmokeTestSuite {
 
 	public void wrongMethod() {
 
-		try{
+		try {
 
 			given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 					.header("accept", acceptValue).header("content", contentValue).when().get(dataPostUrl)
@@ -905,12 +827,11 @@ public class ApIsmokeTestSuite {
 					.body("errors.get(0).status", equalTo(405)).body("errors.get(0).code", equalTo("21005"))
 					.body("errors.get(0).detail", equalTo("A request was made using a request method not supported."))
 					.extract().response();
-			
-			
-		   } catch(IllegalArgumentException e){
-			    assertTrue(true);
-			    
-		   }
+
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
+
+		}
 
 	}
 
@@ -1627,79 +1548,6 @@ public class ApIsmokeTestSuite {
 	}
 
 	// Test Description :FCA 975 Metadata Service with links to Fitch Field IDs
-	@Test()
-	public void MetaDataWithLinks_975() {
-
-		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrl).then().assertThat()
-				.statusCode(200).contentType(ContentType.JSON).extract().response();
-
-		Assert.assertFalse(response.asString().contains("isError"));
-		Assert.assertFalse(response.asString().contains("isMissing"));
-
-		
-
-		List<String> link = response.path("data.links.self");
-		List<String> selfCaterogies = response.path("data.relationships.categories.links.self");
-		List<String> reltedCaterogies = response.path("data.relationships.categories.links.self");
-
-		int linkcounts = link.size();
-
-		for (int i = 0; i < linkcounts; i++) {
-
-			assertNotNull(link.get(i));
-			assertNotNull(selfCaterogies.get(i));
-			assertNotNull(reltedCaterogies.get(i));
-
-		}
-
-	}
-
-	@Test()
-
-	public void additional_FC_ConnectURl_934() {
-
-		given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrl).then().assertThat()
-				.log().ifError().statusCode(200).body("data.id", hasItem("FC_CONNECT_URL"))
-				.body("data.attributes.displayName", hasItem("WebURL"));
-
-	}
-
-	@Test(enabled = true)
-
-	public void GroupingsByCatergoryID_802() {
-
-		String catGoryendPoint = "/v1/metadata/categories/2";
-		String catGoryURl = baseURI + catGoryendPoint;
-
-		given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue)
-
-				.when().get(catGoryURl).then().assertThat().log().ifError().statusCode(200)
-				.body("data.type", equalTo("categories")).body("data.attributes.name", equalTo("Financials"))
-				.body("data.relationships.children.data.id", hasItem("13"))
-				.body("data.relationships.children.data.id", hasItem("12"))
-				.body("data.relationships.children.data.id", hasItem("11"));
-
-	}
-
-	@Test(enabled = true)
-	public void singleField_974_fromMetaData() {
-
-		String sngleFildEndpoint = "/v1/metadata/fields/FC_ST_LC_FER_SP";
-		String fieldUrl = baseURI + sngleFildEndpoint;
-
-		given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue)
-
-				.when().get(fieldUrl).then().statusCode(200)
-				.body("data.attributes.displayName", equalTo("S&P ST LC Financial Enhancement Rating"))
-				.body("data.attributes.fitchFieldDesc",
-						equalTo("S&P Short-term Local Currency Financial Enhancement Rating"))
-				.body("data.links.self", equalTo("http://meta-service:8080/v1/metadata/fields/FC_ST_LC_FER_SP"));
-
-	}
 
 	@Test
 	public void directors_788() {
@@ -1786,27 +1634,6 @@ public class ApIsmokeTestSuite {
 			Assert.assertNotNull(position.get(i));
 
 		}
-
-	}
-
-	@Test
-
-	public void unRated_928() throws IOException {
-
-		URL file = Resources.getResource("928_Request_UnRated.json");
-
-		String myJson = Resources.toString(file, Charsets.UTF_8);
-
-		Response dataResponse = given().header("Authorization", AuthrztionValue)
-				.header("X-App-Client-Id", XappClintIDvalue).contentType(contentValue).body(myJson).with()
-
-				.when().post(dataPostUrl)
-
-				.then().assertThat().log().ifError().statusCode(200).body(containsString("FC_COMPANY_NAME"))
-				.body(containsString("AGNT_")).extract().response();
-
-		Assert.assertFalse(dataResponse.asString().contains("isError"));
-		Assert.assertFalse(dataResponse.asString().contains("isMissing"));
 
 	}
 
@@ -1949,9 +1776,8 @@ public class ApIsmokeTestSuite {
 		URL xfile = Resources.getResource("enForce Date_Period limit.json");
 
 		String myjson = null;
-	
-			myjson = Resources.toString(xfile, Charsets.UTF_8);
-	
+
+		myjson = Resources.toString(xfile, Charsets.UTF_8);
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.contentType(contentValue).body(myjson).with().when().post(dataPostUrl).then().assertThat()
@@ -1970,14 +1796,10 @@ public class ApIsmokeTestSuite {
 
 	@Test()
 	public void MetaData_Issue_1026() {
-		
 
-		
 		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrl).then()
 				.contentType(ContentType.JSON).extract().response();
-
-	    
 
 		List<String> Id = response.path("data.id");
 		List<String> displayNme = response.path("data.attributes.displayName");
@@ -2027,31 +1849,6 @@ public class ApIsmokeTestSuite {
 	}
 
 	@Test
-	public void fillingtype_515() {
-
-		String url = baseURI + "/v1/statements/5581722/filings";
-		RestAssured.baseURI = url;
-
-		Response res = given()
-
-				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue)
-
-				.when().get().then().statusCode(200)
-
-				.body("data.type[0]", equalTo("filings"))
-				.body("data.attributes.fileName[0]", containsString(".pdf"))
-				.body("data.attributes.fileType[0]", equalTo("pdf"))
-				.body("data.relationships.statement.data.id[0]", equalTo("5581722"))
-				.body("data.links.download[0]", containsString("https:")).contentType(ContentType.JSON).extract()
-				.response();
-
-		Assert.assertFalse(res.asString().contains("isError"));
-		Assert.assertFalse(res.asString().contains("isMissing"));
-
-	}
-
-	@Test
 	public void currencyoption_716() throws IOException {
 
 		URL file = Resources.getResource("currency_716.json");
@@ -2095,7 +1892,6 @@ public class ApIsmokeTestSuite {
 		Assert.assertFalse(Rspnse.asString().contains("isMissing"));
 
 		List<String> datesOption = Rspnse.path("data.attributes.dateOptions.dates");
-		
 
 		for (int i = 0; i < datesOption.size(); i++) {
 
@@ -2322,11 +2118,10 @@ public class ApIsmokeTestSuite {
 
 		URL file = Resources.getResource("dateAndPeriodFinancial.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
-		
-		Response res = given()
-				.header("Authorization",AuthrztionValue)
-				.header("X-App-Client-Id", XappClintIDvalue).contentType("application/vnd.api+json").body(myJson).with()
-				.when().post(dataPostUrl).then().body("data.attributes.entities.get(0).id", Matchers.notNullValue())
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+				.body("data.attributes.entities.get(0).id", Matchers.notNullValue())
 				.body("data.attributes.entities[0].id", equalTo("116980"))
 				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
 				.body("data.attributes.entities.get(0).type", equalTo("FitchID")).assertThat().log().ifError()
@@ -3195,386 +2990,64 @@ public class ApIsmokeTestSuite {
 
 	}
 
-@Test
-public void comparingData_535() throws IOException{
-            
-	          boolean failure =false ;
-            
-              try{
-
-                  MongoClient mongoClient = new MongoClient(dataBaseServer,27017);
-                     
-                      DB db = mongoClient.getDB("admin");
-                      boolean auth = db.authenticate("reporter","the_call".toCharArray());
-                      
-                       db = mongoClient.getDB("core-1");
-                       
-                       
-                       DBCollection collection = db.getCollection("market_sector");
-                       
-                       String id = "01010103";
-
-                       DBObject match = new BasicDBObject("$match", new BasicDBObject("MRKT_SCTR_ID", id));
-                       
-                       DBObject project = new BasicDBObject("$project", new BasicDBObject("MRKT_SCTR_ID", 1).append("MRKT_SCTR_DESC", 1));
-
-
-                       AggregationOutput output = collection.aggregate(match,project);
-                                              
-                       String MRKT_SCTR_DESC= null; 
-                       
-                       for (DBObject result : output.results()) {
-                           MRKT_SCTR_DESC = (String) result.get("MRKT_SCTR_DESC");
-                           System.out.println("**" +result);
-                           }
-                       
-                       db = mongoClient.getDB("fcapidb");
-                       collection = db.getCollection("marketSector");
-                       
-                       
-                        match = new BasicDBObject("$match", new BasicDBObject("_id", id));
-                       
-                        project = new BasicDBObject("$project", new BasicDBObject("_id", 1).append("name", 1));
-                        
-                        output = collection.aggregate(match,project);
-                        
-                        String name = null; 
-                        
-                        for (DBObject result : output.results()) {
-                               name = (String) result.get("name");
-                               System.out.println(result);
-                               }
-                     
-                        System.out.println(MRKT_SCTR_DESC);
-                        System.out.println(name);
-                        
-                        if(!MRKT_SCTR_DESC.equals(name)){
-                        	failure =true ; 
-                        }
-                    	Assert.assertFalse(failure);
-              }catch(Exception e){
-                     System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-           }
-        }
-
 	@Test
-	public void Update_XREF_ISOcountryCd_1019() throws IOException {
-		URL file = Resources.getResource("1019_ISO code.json");
-		String myJson = Resources.toString(file, Charsets.UTF_8);
+	public void comparingData_535() throws IOException {
 
-		Response IsoRes = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
-				.assertThat().statusCode(200).body("data.attributes.entities[0].id", equalTo("USA"))
-				.body("data.attributes.entities[0].values[0].values[0].value[0]", equalTo("United States of America"))
-				.body("data.attributes.entities[0].fitchEntityId", equalTo("140065"))
-				.body("data.attributes.entities[2].id", equalTo("BD"))
-				.body("data.attributes.entities[2].values[0].values[0].value[0]", equalTo("Bangladesh"))
-				.body("data.attributes.entities[2].fitchEntityId", equalTo("1437410"))
-				.body("data.attributes.entities[5].id", equalTo("ZZ"))
-				.body("data.attributes.entities[5].isMissing", equalTo(true))
-				.body("data.attributes.entities[6].id", equalTo("91086Q"))
-				.body("data.attributes.entities[6].values[0].values[0].value[0]", equalTo("Mexico"))
-				.body("data.attributes.entities[6].fitchEntityId", equalTo("140070")).extract().response();
+		boolean failure = false;
 
-		Assert.assertNotNull(IsoRes);
-		Assert.assertFalse(IsoRes.asString().contains("isError"));
+		try {
 
-	}
+			MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
 
-	@Test
+			DB db = mongoClient.getDB("admin");
+			boolean auth = db.authenticate("reporter", "the_call".toCharArray());
 
-	public void FCA_1022_allmarketsectors() {
+			db = mongoClient.getDB("core-1");
 
-		String url = baseURI + "/v1/marketSectors";
-		RestAssured.baseURI = url;
+			DBCollection collection = db.getCollection("market_sector");
 
-		Response res = given()
+			String id = "01010103";
 
-				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).when().get().then().statusCode(200)
-				.body("data[0].id", equalTo("01000000")).body("data[0].type", equalTo("marketSector"))
-				.body("data[0].attributes.name", equalTo("Corporate Finance")).contentType(ContentType.JSON).extract()
-				.response();
+			DBObject match = new BasicDBObject("$match", new BasicDBObject("MRKT_SCTR_ID", id));
 
+			DBObject project = new BasicDBObject("$project",
+					new BasicDBObject("MRKT_SCTR_ID", 1).append("MRKT_SCTR_DESC", 1));
 
-		AssertJUnit.assertFalse(res.asString().contains("isError"));
-		AssertJUnit.assertFalse(res.asString().contains("isMissing"));
+			AggregationOutput output = collection.aggregate(match, project);
 
-	}
+			String MRKT_SCTR_DESC = null;
 
-	@Test
+			for (DBObject result : output.results()) {
+				MRKT_SCTR_DESC = (String) result.get("MRKT_SCTR_DESC");
+				System.out.println("**" + result);
+			}
 
-	public void FCA_1022_singlemarketsectors() {
+			db = mongoClient.getDB("fcapidb");
+			collection = db.getCollection("marketSector");
 
-		String url = baseURI + "/v1/marketSectors/02000000";
-		RestAssured.baseURI = url;
+			match = new BasicDBObject("$match", new BasicDBObject("_id", id));
 
-		Response res = given()
+			project = new BasicDBObject("$project", new BasicDBObject("_id", 1).append("name", 1));
 
-				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).when().get().then().statusCode(200)
-				.body("data.id", equalTo("02000000")).body("data.type", equalTo("marketSector"))
-				.body("data.attributes.name", equalTo("Structured Credit")).contentType(ContentType.JSON).extract()
-				.response();
+			output = collection.aggregate(match, project);
 
-	
+			String name = null;
 
-		AssertJUnit.assertFalse(res.asString().contains("isError"));
-		AssertJUnit.assertFalse(res.asString().contains("isMissing"));
+			for (DBObject result : output.results()) {
+				name = (String) result.get("name");
+				System.out.println(result);
+			}
 
-	}
+			System.out.println(MRKT_SCTR_DESC);
+			System.out.println(name);
 
-	@Test
-	public void FCA1011_Composite() throws IOException {
-		URL file = Resources.getResource("composite.json");
-		String myJson = null;
-	
-			myJson = Resources.toString(file, Charsets.UTF_8);
-
-	
-
-
-		Response output = given()
-
-				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.contentType("application/vnd.api+json").body(myJson).with()
-
-				.when().post(dataPostUrl)
-
-				.then().assertThat().log().ifError().statusCode(200)
-
-				.body("data.attributes.entities[0].values[0].type", equalTo("currency"))
-
-				.contentType(ContentType.JSON).extract().response();
-
-		float result = output.path("data.attributes.entities[0].values[0].values[0].value[0].EUR");
-		System.out.println("EUR value is " + result);
-
-		if (result == 2.43723424E8) {
-			System.out.println("test case passed");
-		} else {
-			System.out.println("test case failed");
+			if (!MRKT_SCTR_DESC.equals(name)) {
+				failure = true;
+			}
+			Assert.assertFalse(failure);
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		}
-
-		AssertJUnit.assertNotNull(output);
-		AssertJUnit.assertFalse(output.asString().contains("isError"));
-		AssertJUnit.assertFalse(output.asString().contains("isMissing"));
-
-	}
-
-	@Test
-	public void FCA1011_Life() throws IOException {
-		URL file = Resources.getResource("Life.json");
-		String myJson = null;
-		
-			myJson = Resources.toString(file, Charsets.UTF_8);
-		
-
-		Response output = given()
-
-				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.contentType("application/vnd.api+json").body(myJson).with()
-
-				.when().post(dataPostUrl)
-
-				.then().assertThat().log().ifError().statusCode(200)
-
-				.contentType(ContentType.JSON).extract().response();
-
-		float result = output.path("data.attributes.entities[0].values[0].values[0].value[0].EUR");
-		System.out.println("EUR value is " + result);
-
-		if (result == 2.44615008E8) {
-			System.out.println("test case passed");
-		} else {
-			System.out.println("test case failed");
-		}
-		AssertJUnit.assertNotNull(output);
-		AssertJUnit.assertFalse(output.asString().contains("isError"));
-		AssertJUnit.assertFalse(output.asString().contains("isMissing"));
-
-	}
-
-	@Test
-	public void FCA1011_NonLife() throws IOException {
-		URL file = Resources.getResource("NonLife.json");
-		String myJson = null;
-	
-			myJson = Resources.toString(file, Charsets.UTF_8);
-	
-
-		Response output = given()
-
-				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.contentType("application/vnd.api+json").body(myJson).with()
-
-				.when().post(dataPostUrl)
-
-				.then().assertThat().statusCode(200)
-				.body("data.attributes.entities[0].values[0].values[0].value[0].EUR",equalTo((float) 1.17946598E9))
-
-				.contentType(ContentType.JSON).extract().response();
-
-		
-
-		
-		AssertJUnit.assertNotNull(output);
-		AssertJUnit.assertFalse(output.asString().contains("isError"));
-		AssertJUnit.assertFalse(output.asString().contains("isMissing"));
-	}
-
-	@Test(enabled=false)
-
-	public void FCA_1013() {
-
-		String url = baseURI + "/v1/companies/14528/descendants";
-		RestAssured.baseURI = url;
-
-		Response res = given()
-
-				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).when().get().then().statusCode(200)
-				.body("data[0].id", equalTo("18431"))
-				.body("data[0].attributes.name", equalTo("J.P. Morgan Securities plc"))
-				.body("data[0].attributes.ownershipType", equalTo("Direct"))
-				.body("data[0].attributes.country", equalTo("GBR"))
-				.body("data[0].attributes.ownershipCategory", equalTo("UNKS"))
-				.body("data[0].attributes.type", equalTo("Business Organization"))
-				.body("data[0].attributes.parentId", equalTo(14528))
-				.body("data[0].attributes.ownershipPercentage", equalTo((float) 100.0)).contentType(ContentType.JSON)
-				.extract().response();
-
-
-
-		AssertJUnit.assertFalse(res.asString().contains("isError"));
-		AssertJUnit.assertFalse(res.asString().contains("isMissing"));
-
-	}
-
-	@Test
-
-	public void FCA_965_positiveTest_FitchIssuerRatings() throws IOException {
-
-		metaEndPoint = "/v1/entities/116980/fitchIssuerRatings";
-
-		String filters = "?Id=116980&filter[startDate]=2010-01-31&filter[endDate]=2015-12-31&filter[ratingType]=FC_LT_IDR&filter[ratingAction]=Affirmed&filter[ratingAlert]=rating";
-		String metaUrlFilter = baseURI + metaEndPoint + filters;
-
-		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrlFilter).then()
-				.body("data[0].type", Matchers.notNullValue()).body("data[0].type", equalTo("fitchIssuerRatings"))
-				.body("data[0].id", Matchers.notNullValue()).body("data[0].id", equalTo("107693063"))
-				.body("data[0].attributes.alert", equalTo("Rating Outlook Stable"))
-				.body("data[0].attributes.ratingType", equalTo("FC_LT_IDR"))
-				.body("data[0].attributes.solicitation", equalTo("Solicited - Sell Side"))
-				.body("data[0].attributes.rating", equalTo("A+"))
-				.body("data[0].attributes.description", equalTo("Long-Term Issuer Default Rating"))
-				.body("data[0].relationships.entity.data.id", equalTo("116980")).contentType(ContentType.JSON).extract()
-				.response();
-
-		Assert.assertFalse(res.asString().contains("isError"));
-		Assert.assertFalse(res.asString().contains("isMissing"));
-
-	}
-
-	@Test
-
-	public void FCA_965_dateFormatWrong() throws IOException {
-
-		metaEndPoint = "/v1/entities/116980/fitchIssuerRatings";
-
-		String filters = "?Id=116980&filter[startDate]=2010-01-3&filter[endDate]"
-				+ "=2015-12-31&filter[ratingType]=FC_LT_IDR&filter[ratingAction]=Affirmed&filter[ratingAlert]=rating";
-		String metaUrlfilter = baseURI + metaEndPoint + filters;
-
-		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrlfilter).then()
-				.body("errors[0].status", equalTo("400"))
-				.body("errors[0].title",
-						equalTo("Invalid Date Format. Use 'yyyy-MM-dd' format. No multiple dates allowed. For ex., ?filter[startDate]=2016-01-01"))
-				.contentType(ContentType.JSON).extract().response();
-
-		Assert.assertFalse(res.asString().contains("isError"));
-		Assert.assertFalse(res.asString().contains("isMissing"));
-
-	}
-
-	@Test
-	public void FCA_965_undefinedRatingTypes() throws IOException {
-
-		metaEndPoint = "/v1/entities/116980/fitchIssuerRatings";
-
-		String filters = "?Id=116980&filter[startDate]=2010-01-30&filter[endDate]"
-				+ "=2015-12-31&filter[ratingType]=FC_LT_ID&filter[ratingAction]=Affirmed&filter[ratingAlert]=rating";
-		String metaUrlfilter = baseURI + metaEndPoint + filters;
-
-		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrlfilter).then()
-				.body("errors[0].status", equalTo("400"))
-				.body("errors[0].title", equalTo("Undefined Rating Type(s) [FC_LT_ID]")).contentType(ContentType.JSON)
-				.extract().response();
-		Assert.assertFalse(res.asString().contains("isError"));
-		Assert.assertFalse(res.asString().contains("isMissing"));
-
-	}
-
-	@Test
-
-	public void FCA_965_ratingAction_String() throws IOException {
-
-		metaEndPoint = "/v1/entities/116980/fitchIssuerRatings";
-
-		String filters = "?Id=116980&filter[startDate]=2010-01-30&filter[endDate]"
-				+ "=2015-12-31&filter[ratingType]=FC_LT_IDR&filter[ratingAction]=Affirmeddd&filter[ratingAlert]=rating";
-		String metaUrlfilter = baseURI + metaEndPoint + filters;
-
-		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrlfilter).then()
-				.body("data[0]", Matchers.isEmptyOrNullString()).body("included[0]", Matchers.isEmptyOrNullString())
-				.contentType(ContentType.JSON).extract().response();
-
-		Assert.assertFalse(res.asString().contains("isError"));
-		Assert.assertFalse(res.asString().contains("isMissing"));
-
-	}
-
-	@Test
-
-	public void FCA_965_invalidCharacterUsed() throws IOException {
-
-		metaEndPoint = "/v1/entities/116980/fitchIssuerRatings";
-
-		String filters = "?Id=116980&filter[startDate]=2010-01-30&filter[endDate]"
-				+ "=2015-12-31&filter[ratingType]=FC_LT_IDR&filter[ratingAction]=Affirmed#x&filter[ratingAlert]=rating";
-		String metaUrlfilter = baseURI + metaEndPoint + filters;
-
-		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrlfilter).then()
-				.body("errors[0].status", equalTo("400"))
-				.body("errors[0].title", equalTo("Invalid Characters Used: [Affirmed#x]. Valid chars are [A-Za-z -:]*"))
-				.contentType(ContentType.JSON).extract().response();
-
-		Assert.assertFalse(res.asString().contains("isError"));
-		Assert.assertFalse(res.asString().contains("isMissing"));
-
-	}
-
-	@Test
-	public void FCA_965_ratingAlert_String() throws IOException {
-
-		metaEndPoint = "/v1/entities/116980/fitchIssuerRatings";
-		String filters = "?Id=116980&filter[startDate]=2010-01-30&filter[endDate]"
-				+ "=2015-12-31&filter[ratingType]=FC_LT_IDR&filter[ratingAction]=Affirmed#x&filter[ratingAlert]=Stabless";
-		String metaUrlfilter = baseURI + metaEndPoint + filters;
-
-		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrlfilter).then()
-				.body("data", Matchers.isEmptyOrNullString()).body("included", Matchers.isEmptyOrNullString())
-				.contentType(ContentType.JSON).extract().response();
-
-
-		Assert.assertFalse(res.asString().contains("isError"));
-		Assert.assertFalse(res.asString().contains("isMissing"));
 	}
 
 }
