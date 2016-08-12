@@ -41,7 +41,7 @@ public class Sprint20 {
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
 			baseURI = "https://api-int.fitchconnect.com";
-			this.AuthrztionValue = ("Basic MUtQNk1DVVk0WkU1SDFXVlVBWlJUVjNUSjpPM0owV0orUGVhZ3JqMis1bTBTMkdvdnZKRDBrQUd1R3F6Q0M5REIydjRv");
+			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
 		} else if (env.equals("dev")) {
 			baseURI = "https://api-dev.fitchconnect.com";
 			this.AuthrztionValue = ("Basic NTA4Rk44V1BKTUdGVVI5VFpOREFEV0NCSzpvMVY5bkRCMG8yM3djSHp2eVlHNnZZb01GSkJWdG1KZmEwS20vbUczVWVV");
@@ -170,5 +170,70 @@ public class Sprint20 {
 
 	}
 
-	
+   @Test
+   
+   public void MetaDataService_withLinks_975 () {
+		Response fieldsRes =given().header("Authorization", AuthrztionValue).header("content", contentValue).header("'Accept", acceptValue)
+		.header("X-App-Client-Id", XappClintIDvalue).when().get(metaUrl)
+		.then().assertThat().log().ifError().statusCode(200)
+		.extract().response();
+		
+		Assert.assertFalse(fieldsRes.asString().contains("isError"));
+		Assert.assertFalse(fieldsRes.asString().contains("isMissing"));	
+		
+	 List <String> relationship=fieldsRes.path("data.relationships.categories.links.self");
+	 List <String> Links = fieldsRes.path("data.links.self");
+
+	 
+	 for (int i =0;i>Links.size();i++){
+		Assert.assertNotNull(Links.get(i));
+		Assert.assertNotNull(relationship.get(i));
+		 
+	 }
+		
+   }
+   
+   @Test
+  public void categories2_802() {
+	    
+	   String categoryUri = "/v1/metadata/categories/2";
+       String cteGorYUrl =baseURI+categoryUri ;
+	   
+	   Response cateGories =given().header("Authorization", AuthrztionValue).header("content", contentValue).header("'Accept", acceptValue)
+				.header("X-App-Client-Id", XappClintIDvalue)
+				.when().get(cteGorYUrl)
+				.then()
+				.assertThat().statusCode(200)
+				.body("data.attributes.name",equalTo("Financials"))
+				.body("data.links.self",containsString("http:"))
+				.body("data.relationships.children.data[0].id",equalTo("11"))
+				.body("data.relationships.children.data[0].type",equalTo("categories"))
+				.body("data.relationships.children.data[1].id",equalTo("12"))
+				.body("data.relationships.children.data[2].id",equalTo("13"))
+				.extract().response();
+				
+				Assert.assertFalse(cateGories.asString().contains("isError"));
+				Assert.assertFalse(cateGories.asString().contains("isMissing"));
+   }
+
+	@Test(enabled = true)
+	public void FCURL_928() throws IOException {
+
+		URL file = Resources.getResource("928_Request.json");
+
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response dataResponse = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).contentType(contentValue).body(myJson).with()
+
+				.when().post(dataPostUrl)
+
+				.then().assertThat().log().ifError().statusCode(200).body(containsString("FC_COMPANY_NAME"))
+				.body(containsString("GRP_")).extract().response();
+
+		Assert.assertFalse(dataResponse.asString().contains("isError"));
+		Assert.assertFalse(dataResponse.asString().contains("isMissing"));
+
+	}
+
 }
