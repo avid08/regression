@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -15,6 +16,12 @@ import org.testng.annotations.Test;
 import com.google.common.io.Resources;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
+import com.mongodb.AggregationOutput;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
+import com.mongodb.MongoClient;
 
 import groovy.json.internal.Charsets;
 
@@ -32,6 +39,11 @@ public class Sprint23 {
 	String XappClintIDvalue = "3dab0f06-eb00-4bee-8966-268a0ee27ba0";
 	String acceptValue = "application/vnd.api+json";
 	String contentValue = "application/vnd.api+json";
+    public static int id = 1010077;
+    public static boolean publishFlag = true;
+    public static ArrayList<String> DBRes = new ArrayList<String>();
+    public static ArrayList<String> APIRes = new ArrayList<String>();
+
 
 	@BeforeClass
 	public void executionSetup() {
@@ -249,9 +261,177 @@ public class Sprint23 {
 		Assert.assertFalse(res.asString().contains("isMissing"));
 	}
 	
+    @Test
+    public void driver_1034() throws IOException {
+           
+           String FileName = "FCA_1034_FlgTrue.json";
+
+           getDBResponsePubFlag_true_1034();
+           getAPIResponsePubFlag_true_1034(FileName);
+
+           System.out.println("Ulimate ParentIDs");
+           if (DBRes.get(0).equals(APIRes.get(0))) {
+                  System.out.println("DB Response: " + DBRes.get(0));
+                  System.out.println("API Response: " + APIRes.get(0));
+                  System.out.println("Parent IDs are a match.");
+           } else {
+                  System.out.println("DB Response: " + DBRes.get(0));
+                  System.out.println("API Response: " + APIRes.get(0));
+                  System.out.println("Parent IDs are not match.");
+
+               
+           }
+
+           System.out.println("Ulimate Parents Names");
+           if (DBRes.get(1).equals(APIRes.get(1))) {
+                  System.out.println("DB Response: " + DBRes.get(1));
+                  System.out.println("API Response: " + APIRes.get(1));
+                  System.out.println("Parent Names are a match.");
+           } else {
+                  System.out.println("DB Response: " + DBRes.get(1));
+                  System.out.println("API Response: " + APIRes.get(1));
+                  System.out.println("Parent Names are not a match.");
+                
+           }
+           
+           id = 100024;
+        FileName = "FCA_1034_FlgFalse.json";
+           DBRes.clear();
+           APIRes.clear();
+           getDBResponsePubFlag_true_1034();
+           getAPIResponsePubFlag_true_1034(FileName);
+           
+           System.out.println("Ulimate ParentIDs");
+           if (DBRes.get(0).equals(APIRes.get(0))) {
+                  System.out.println("DB Response: " + DBRes.get(0));
+                  System.out.println("API Response: " + APIRes.get(0));
+                  System.out.println("Parent IDs are a match.");
+           } else {
+                  System.out.println("DB Response: " + DBRes.get(0));
+                  System.out.println("API Response: " + APIRes.get(0));
+                  System.out.println("Parent IDs are not match.");
+
+                 
+           }
+
+           System.out.println("Ulimate Parents Names");
+           if (DBRes.get(1).equals(APIRes.get(1))) {
+                  System.out.println("DB Response: " + DBRes.get(1));
+                  System.out.println("API Response: " + APIRes.get(1));
+                  System.out.println("Parent Names are a match.");
+           } else {
+                  System.out.println("DB Response: " + DBRes.get(1));
+                  System.out.println("API Response: " + APIRes.get(1));
+                  System.out.println("Parent Names are not a match.");
+                 
+           }
+           
+
+    }
+
+
+
+    public void getDBResponsePubFlag_true_1034() {
+    
+
+
+           try {
+
+                  MongoClient mongoClient = new MongoClient("mongoweb-x01", 27017);
+
+                  DB db = mongoClient.getDB("admin");
+                  db.authenticate("reporter", "the_call".toCharArray());
+
+                  db = mongoClient.getDB("esp-dev-9");
+
+                  DBCollection collection = db.getCollection("corpHierarchy");
+
+                  DBObject match = new BasicDBObject("$match", new BasicDBObject("agentID", id));
+
+                  DBObject project = new BasicDBObject("$project",
+                               new BasicDBObject("agentID", 1).append("uParentAgentID", 1));
+
+                  AggregationOutput output = collection.aggregate(match, project);
+
+                  for (DBObject result : output.results()) {
+                        DBRes.add((String) result.get("uParentAgentID").toString());
+                  }
+
+                  int parentId = Integer.parseInt(DBRes.get(0));
+
+                  db = mongoClient.getDB("esp-dev-9");
+
+                  collection = db.getCollection("fitch_entity");
+
+                  match = new BasicDBObject("$match", new BasicDBObject("agentID", parentId));
+
+                  project = new BasicDBObject("$project", new BasicDBObject("agentID", 1).append("agentLegalName", 1));
+
+                  output = collection.aggregate(match, project);
+
+                  for (DBObject result : output.results()) {
+                        DBRes.add((String) result.get("agentLegalName").toString());
+                  }
+
+           } catch (Exception e) {
+                  System.err.println(e.getClass().getName() + ": " + e.getMessage());
+           }
+
+
+    }
+
+   
+    public void getAPIResponsePubFlag_true_1034(String name) throws IOException {
+           
+           
+        URL file = Resources.getResource(name);
+           String myJson = Resources.toString(file,Charsets.UTF_8);
+           
+           Response res =  given ()
+                        .header("Authorization", AuthrztionValue)
+                        .header("X-App-Client-Id", XappClintIDvalue)
+                        .contentType("application/vnd.api+json")
+                        .body(myJson).with()
+                  .when()
+                        .post(dataPostUrl)
+                  .then()
+
+                  .assertThat().log().ifError().statusCode(200)
+                  .extract().response();
+           Assert.assertNotNull(res);
+           int temp = res.path("data.attributes.entities[0].values[1].values[0].value[0]");
+           String tmp; 
+           tmp = Integer.toString(temp); 
+           APIRes.add(tmp);
+           tmp = res.path("data.attributes.entities[0].values[0].values[0].value[0]");
+           APIRes.add(tmp);
+
+           
+    
+}
+           
+
+	
 	
 }
 	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	/*@Test
 	public void driver_FCA_1034() throws IOException {
 		int id = 1010077;
