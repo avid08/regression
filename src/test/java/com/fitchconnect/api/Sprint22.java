@@ -40,7 +40,7 @@ public class Sprint22 {
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
 			baseURI = "https://api-int.fitchconnect.com";
-			this.AuthrztionValue = ("Basic MUtQNk1DVVk0WkU1SDFXVlVBWlJUVjNUSjpPM0owV0orUGVhZ3JqMis1bTBTMkdvdnZKRDBrQUd1R3F6Q0M5REIydjRv");
+			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
 		} else if (env.equals("dev")) {
 			baseURI = "https://api-dev.fitchconnect.com";
 			this.AuthrztionValue = ("Basic NTA4Rk44V1BKTUdGVVI5VFpOREFEV0NCSzpvMVY5bkRCMG8yM3djSHp2eVlHNnZZb01GSkJWdG1KZmEwS20vbUczVWVV");
@@ -117,9 +117,9 @@ public class Sprint22 {
 
 		Response IsoRes = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
-				.assertThat().statusCode(200).body("data.attributes.entities[0].id", equalTo("GBR"))
-				.body("data.attributes.entities[0].values[0].values[0].value[0]", equalTo("United Kingdom"))
-				.body("data.attributes.entities[0].fitchEntityId", equalTo("140064"))
+				.assertThat().statusCode(200).body("data.attributes.entities[0].id", equalTo("BRA"))
+				.body("data.attributes.entities[0].values[0].values[0].value[0]", equalTo("Brazil"))
+				.body("data.attributes.entities[0].fitchEntityId", equalTo("140046"))
 				.body("data.attributes.entities[2].id", equalTo("BD"))
 				.body("data.attributes.entities[2].values[0].values[0].value[0]", equalTo("Bangladesh"))
 				.body("data.attributes.entities[2].fitchEntityId", equalTo("1437410"))
@@ -265,7 +265,7 @@ public class Sprint22 {
 		AssertJUnit.assertFalse(output.asString().contains("isMissing"));
 	}
 
-	@Test(enabled =true)
+	@Test(enabled =false)
 
 	public void FCA_1013() {
 
