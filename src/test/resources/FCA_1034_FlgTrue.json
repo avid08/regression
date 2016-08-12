@@ -1,0 +1,19 @@
+{  
+  "data":{  
+     "type":"entities",
+     "attributes":{  
+        "entities":
+            {
+              "id":"1010077",
+              "type":"fitchId"
+           },
+      
+           
+        
+        "fitchFieldIds":[  
+           "FC_ULT_PARENT",
+           "FC_ULT_PARENT_ID"
+        ]
+     }
+  }
+}
