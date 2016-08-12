@@ -58,8 +58,8 @@ public class ApIsmokeTestSuite {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api-int.fitchconnect.com";
-			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
+			baseURI = "https://api.fitchconnect.com";
+			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
 			dataBaseServer = "mongoweb-x01";
 		} else if (env.equals("dev")) {
 			baseURI = "https://api-dev.fitchconnect.com";
@@ -158,7 +158,7 @@ public class ApIsmokeTestSuite {
 	// which are not published or Publishflag = NO
 	@Test
 	public void Shareholder_869_without_Data() {
-		String endpoint1 = "/v1/entities/1025444/shareholders";
+		String endpoint1 = "/v1/entities/108273/shareholders";
 		String DirectrUrl = baseURI + endpoint1;
 
 		given().header("Authorization", AuthrztionValue).header("Id", "1025444").header("content", contentValue)
@@ -172,14 +172,14 @@ public class ApIsmokeTestSuite {
 	// with entities for entity which are published or Publishflag =Yes
 	@Test
 	public void Officers_869_With_Data() {
-		String officerEnd = "/v1/entities/108273/officers";
+		String officerEnd = "/v1/entities/107444/officers";
 		String OfficerUrl = baseURI + officerEnd;
 
 		given().header("Authorization", AuthrztionValue)
 
 				.header("content", contentValue).header("'Accept", acceptValue)
 				.header("X-App-Client-Id", XappClintIDvalue).when().get(OfficerUrl).then().assertThat().log().ifError()
-				.statusCode(200).body("data", Matchers.empty()).body("data.included", Matchers.hasSize(0));
+				.statusCode(200).body(containsString("officers"));
 
 	}
 
@@ -248,10 +248,10 @@ public class ApIsmokeTestSuite {
 				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get().then().statusCode(200)
 				.body("data.id", equalTo("107444")).body("data.attributes.name", equalTo("Banco Bradesco S.A."))
-				.body("data.relationships.shareholders.links.self", Matchers.anything("http:"))
-				.body("data.relationships.officers.links.self", Matchers.notNullValue())
-				.body("data.relationships.statements.links.self", Matchers.anything("http:"))
-				.body("data.relationships.company.links.self", Matchers.anything("http:")).contentType(ContentType.JSON)
+				.body("data.relationships.shareholders.links.self", Matchers.containsString("https:"))
+				.body("data.relationships.officers.links.self", containsString("https:"))
+				.body("data.relationships.statements.links.self", containsString("https:"))
+				.body("data.relationships.company.links.self", containsString("https:")).contentType(ContentType.JSON)
 				.extract().response();
 
 		Assert.assertFalse(res.asString().contains("isError"));
@@ -285,7 +285,7 @@ public class ApIsmokeTestSuite {
 				.when().get(url).then().body("data.id", equalTo("1025444")).body("data.type", equalTo("companies"))
 				.body("data.attributes.name", equalTo("Wuestenrot & Wuerttembergische AG"))
 				.body("data.relationships.entity.links.self", Matchers.notNullValue())
-				.body("data.relationships.descendants.links.self", Matchers.anything("http:")).extract().response();
+				.body("data.relationships.descendants.links.self", Matchers.containsString("https:")).extract().response();
 
 		Assert.assertFalse(res.asString().contains("isError"));
 
@@ -302,23 +302,21 @@ public class ApIsmokeTestSuite {
 
 	}
 
-	// Test Description :ultimate parent, test checks to see if the entity has
-	// an ultimate parent, and if the parents has valid data.
-	// Also checks other relationships and data attributes and sees if the data
-	// is there and valid
+	
 	@Test
 	public void ticket_FCA_774_companies() {
 
-		String url = baseURI + "/v1/companies/1025444/descendants";
+		String url = baseURI + "/v1/companies/107444/descendants";
 
 		Response res = given().header("Authorization", (AuthrztionValue)).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).when().get(url).then()
-				.body("data", Matchers.empty()).body("included", Matchers.empty())
-
-				.contentType(ContentType.JSON).extract().response();
+				.header("accept", acceptValue).header("content", contentValue).contentType(ContentType.JSON).when().get(url).then()
+				.body("data[0].relationships.descendants.links.self",containsString("https:"))
+				.statusCode(200)
+			    .extract().response();
 
 		assertNotNull(res);
-
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 	}
 
 	// Test Description : Verify that all fields within MetaData Response
@@ -478,26 +476,7 @@ public class ApIsmokeTestSuite {
 
 	}
 
-	@Test(enabled = true)
 
-	public void FCURL_928() throws IOException {
-
-		URL file = Resources.getResource("928_Request.json");
-
-		String myJson = Resources.toString(file, Charsets.UTF_8);
-
-		Response dataResponse = given().header("Authorization", AuthrztionValue)
-				.header("X-App-Client-Id", XappClintIDvalue).contentType(contentValue).body(myJson).with()
-
-				.when().post(dataPostUrl)
-
-				.then().assertThat().log().ifError().statusCode(200).body(containsString("FC_COMPANY_NAME"))
-				.body(containsString("GRP_")).extract().response();
-
-		Assert.assertFalse(dataResponse.asString().contains("isError"));
-		Assert.assertFalse(dataResponse.asString().contains("isMissing"));
-
-	}
 
 	// Test Description: returns a single currency, depending on the currency
 	// option
@@ -828,7 +807,7 @@ public class ApIsmokeTestSuite {
 
 	// Test Description :
 	@Test
-	public void regression_testing_Single() throws IOException {
+	public void regression_testing_SingleRating() throws IOException {
 
 		URL file = Resources.getResource("single_rating.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
@@ -961,6 +940,8 @@ public class ApIsmokeTestSuite {
 				.body("data.attributes.dateOptions.dates", contains("2015-08-09")).extract().response();
 
 		assertNotNull(res);
+		
+
 	}
 
 	// Test Description:
@@ -1499,7 +1480,7 @@ public class ApIsmokeTestSuite {
 
 	}
 
-	// Test Description :FCA 975 Metadata Service with links to Fitch Field IDs
+	
 
 	@Test
 	public void directors_788() {
@@ -1546,6 +1527,7 @@ public class ApIsmokeTestSuite {
 		List<String> wonrshipType = shreholder.path("data.attributes.ownershipType");
 		List<String> country = shreholder.path("data.attributes.country");
 		List<String> name = shreholder.path("data.attributes.name");
+		System.out.println(country.size());
 
 		Assert.assertFalse(shreholder.asString().contains("isError"));
 		Assert.assertFalse(shreholder.asString().contains("isMissing"));
@@ -3002,4 +2984,7 @@ public class ApIsmokeTestSuite {
 		}
 	}
 
+// We have avoided adding few test cases it has been taken care off as part smoke test or some other Sprint	
+	
+	
 }
