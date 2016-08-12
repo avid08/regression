@@ -416,21 +416,7 @@ public class Sprint23 {
 }
 	
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ // some JDBC work======================================================================================!!
 
 	/*@Test
 	public void driver_FCA_1034() throws IOException {
