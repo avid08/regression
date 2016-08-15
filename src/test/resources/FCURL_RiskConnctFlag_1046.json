@@ -1,0 +1,44 @@
+{
+   "data":{
+      "type":"valueRequest",
+      "attributes":{
+         "dateOptions":{
+            "dates":[
+               
+            ],
+         "periods":[
+          
+            
+         ]},
+         "entities":[
+            {
+               "id":"1064795",
+               "type":"fitchId"
+            },
+             {
+               "id":"129688",
+               "type":"fitchId"
+            }
+            
+         ],
+         "fitchFieldIds":[
+            "FC_COMPANY_NAME",
+            "FC_CONNECT_URL"
+         ],
+         "options":[
+		{
+               "name":"consolidation",
+               "value":"combined"
+            },
+            {
+               "name":"accountingStandard",
+               "value":"USGAAP"
+            },
+            {
+               "name":"filingType",
+               "value":"Original"
+            }
+         ]
+      }
+   }
+}
