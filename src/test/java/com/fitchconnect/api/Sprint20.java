@@ -205,11 +205,10 @@ public class Sprint20 {
 				.then()
 				.assertThat().statusCode(200)
 				.body("data.attributes.name",equalTo("Financials"))
-				.body("data.links.self",containsString("http:"))
-				.body("data.relationships.children.data[0].id",Matchers.anything("11"))
+				.body("data.links.self",containsString("http:"))				
 				.body("data.relationships.children.data[0].type",equalTo("categories"))
 				.body("data.relationships.children.data[1].id",Matchers.anything("12"))
-				.body("data.relationships.children.data[2].id",Matchers.anything("13"))
+				
 				.extract().response();
 				
 				Assert.assertFalse(cateGories.asString().contains("isError"));
