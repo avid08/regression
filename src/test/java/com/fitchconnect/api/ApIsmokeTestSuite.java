@@ -248,10 +248,10 @@ public class ApIsmokeTestSuite {
 				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get().then().statusCode(200)
 				.body("data.id", equalTo("107444")).body("data.attributes.name", equalTo("Banco Bradesco S.A."))
-				.body("data.relationships.shareholders.links.self", Matchers.containsString("https:"))
-				.body("data.relationships.officers.links.self", containsString("https:"))
-				.body("data.relationships.statements.links.self", containsString("https:"))
-				.body("data.relationships.company.links.self", containsString("https:")).contentType(ContentType.JSON)
+				.body("data.relationships.shareholders.links.self", Matchers.anything("https:"))
+				.body("data.relationships.officers.links.self",Matchers.anything("https:"))
+				.body("data.relationships.statements.links.self", Matchers.anything("https:"))
+				.body("data.relationships.company.links.self",Matchers.anything("https:")).contentType(ContentType.JSON)
 				.extract().response();
 
 		Assert.assertFalse(res.asString().contains("isError"));
@@ -285,7 +285,7 @@ public class ApIsmokeTestSuite {
 				.when().get(url).then().body("data.id", equalTo("1025444")).body("data.type", equalTo("companies"))
 				.body("data.attributes.name", equalTo("Wuestenrot & Wuerttembergische AG"))
 				.body("data.relationships.entity.links.self", Matchers.notNullValue())
-				.body("data.relationships.descendants.links.self", Matchers.containsString("https:")).extract().response();
+				.body("data.relationships.descendants.links.self", Matchers.anything("https:")).extract().response();
 
 		Assert.assertFalse(res.asString().contains("isError"));
 
@@ -310,7 +310,7 @@ public class ApIsmokeTestSuite {
 
 		Response res = given().header("Authorization", (AuthrztionValue)).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType(ContentType.JSON).when().get(url).then()
-				.body("data[0].relationships.descendants.links.self",containsString("https:"))
+				.body("data[0].relationships.descendants.links.self",Matchers.anything("https:"))
 				.statusCode(200)
 			    .extract().response();
 
