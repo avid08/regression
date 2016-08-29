@@ -50,8 +50,8 @@ public class Sprint23 {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api-qa.fitchconnect.com";
-			this.AuthrztionValue = ("Basic MUlLVk1SMjlJS1lIMllPSjFUQkdGQ0tKSDpFN1Y2Z1FJY3RPeG5KbG8rSVBHaGY0K0tTSGc3LzFpOFJsbVo1Tmd6NUpB");
+			baseURI = "https://api-int.fitchconnect.com";
+			this.AuthrztionValue = ("Basic MUtQNk1DVVk0WkU1SDFXVlVBWlJUVjNUSjpPM0owV0orUGVhZ3JqMis1bTBTMkdvdnZKRDBrQUd1R3F6Q0M5REIydjRv");
 		} else if (env.equals("dev")) {
 			baseURI = "https://api-dev.fitchconnect.com";
 			this.AuthrztionValue = ("Basic NTA4Rk44V1BKTUdGVVI5VFpOREFEV0NCSzpvMVY5bkRCMG8yM3djSHp2eVlHNnZZb01GSkJWdG1KZmEwS20vbUczVWVV");
@@ -166,7 +166,7 @@ public class Sprint23 {
 	
 	@Test
 	public void FlagIsTrueValueFromCH_FCA_1037() {
-		String url = baseURI + "/v1/entities/1000685/ultimateParent";
+		String url = baseURI + "/v1/entities/107559/ultimateParent";
 
 		Response res = given().header("Authorization", (AuthrztionValue)).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(url).then()
@@ -225,7 +225,7 @@ public class Sprint23 {
 				.header("accept", acceptValue).header("content", contentValue).when().get(url).then()
 				.body("data.type", equalTo("entities"))
 				.body("data.id", equalTo("110630"))
-				.body("data.attributes.name", equalTo("Bank of New York Mellon Corporation (The)"))
+				
 				.body("included[0].id", equalTo("110630"))
 				.body("included[0].attributes.name", equalTo("The Bank of New York Mellon"))
 				.body("included[0].attributes.ownershipType", equalTo("Direct"))
@@ -400,19 +400,15 @@ public class Sprint23 {
                   .extract().response();
            Assert.assertNotNull(res);
            int temp = res.path("data.attributes.entities[0].values[1].values[0].value[0]");
+           System.out.println("data is "+temp);
            String tmp; 
            tmp = Integer.toString(temp); 
            APIRes.add(tmp);
            tmp = res.path("data.attributes.entities[0].values[0].values[0].value[0]");
            APIRes.add(tmp);
-
-           
-    
-}
-           
-
-	
-	
+   
+      }
+  	
 }
 	
 

@@ -1,0 +1,20 @@
+{
+    "data":{
+        "type":"viewfields",
+        "attributes":{
+            "displayName":"Aminul QA Test VD",
+            "suppressColumn":"true",
+            "dataMask":"12"
+        },
+        "relationships":{
+            "fields":{
+                "data":{
+                    "type":"fields",
+                    "id":"FC_OTHER_NON_EARN_ASSETS_BNK"
+                }
+                 
+            }
+        }
+    }
+     
+}
