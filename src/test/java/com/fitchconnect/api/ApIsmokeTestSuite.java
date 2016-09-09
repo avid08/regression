@@ -58,8 +58,8 @@ public class ApIsmokeTestSuite {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api-int.fitchconnect.com";
-			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
+			baseURI = "https://api-stage.fitchconnect.com";
+			this.AuthrztionValue = ("Basic NU5COUFRSDVCSTRDUFZTUktJRUpESjQyNTpDYjFxUXQycHd4VGNKZTg1SjkyRVJmL1JMU1haRUlZSjU3NWR5R3RacDVV");
 			dataBaseServer = "mongoweb-x01";
 		} else if (env.equals("dev")) {
 			baseURI = "https://api-dev.fitchconnect.com";
@@ -78,7 +78,7 @@ public class ApIsmokeTestSuite {
 			this.AuthrztionValue = ("Basic NU5COUFRSDVCSTRDUFZTUktJRUpESjQyNTpDYjFxUXQycHd4VGNKZTg1SjkyRVJmL1JMU1haRUlZSjU3NWR5R3RacDVV");
 			dataBaseServer = "mongorisk-int01";
 		} else if (env.equals("prod")) {
-			baseURI = "https://api.fitchconnect.com";
+			baseURI = "http://kubemin-p01.fitchratings.com:30001";
 			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
 			dataBaseServer = "mongorisk-p01";
 		}
@@ -158,13 +158,18 @@ public class ApIsmokeTestSuite {
 	// which are not published or Publishflag = NO
 	@Test
 	public void Shareholder_869_without_Data() {
-		String endpoint1 = "/v1/entities/108273/shareholders";
+		String endpoint1 = "/v1/entities/110631/shareholders";
 		String DirectrUrl = baseURI + endpoint1;
 
-		given().header("Authorization", AuthrztionValue).header("Id", "1025444").header("content", contentValue)
-				.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(DirectrUrl)
-				.then().assertThat().statusCode(200).body("isEmpty()", Matchers.is(false))
-				.body("data.included", Matchers.hasSize(0));
+		Response res = given().header("Authorization", AuthrztionValue)
+				./* header("Id", "1025444"). */header("content", contentValue).header("'Accept", acceptValue)
+				.header("X-App-Client-Id", XappClintIDvalue).when().get(DirectrUrl).then().assertThat().statusCode(200)
+				.body("isEmpty()", Matchers.is(false)).body("data.included", Matchers.hasSize(0)).extract().response();
+		
+		
+
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -217,7 +222,6 @@ public class ApIsmokeTestSuite {
 	// Test Description : User wild card search return everything that match
 	// with the input data along iwth all the relationships information
 
-
 	@Test(enabled = true)
 	public void entity_search_976_statement() {
 
@@ -249,10 +253,10 @@ public class ApIsmokeTestSuite {
 				.header("accept", acceptValue).header("content", contentValue).when().get().then().statusCode(200)
 				.body("data.id", equalTo("107444")).body("data.attributes.name", equalTo("Banco Bradesco S.A."))
 				.body("data.relationships.shareholders.links.self", Matchers.anything("https:"))
-				.body("data.relationships.officers.links.self",Matchers.anything("https:"))
+				.body("data.relationships.officers.links.self", Matchers.anything("https:"))
 				.body("data.relationships.statements.links.self", Matchers.anything("https:"))
-				.body("data.relationships.company.links.self",Matchers.anything("https:")).contentType(ContentType.JSON)
-				.extract().response();
+				.body("data.relationships.company.links.self", Matchers.anything("https:"))
+				.contentType(ContentType.JSON).extract().response();
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertTrue(res.asString().contains("ultimateParent"));
@@ -271,6 +275,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertTrue(res.asString().contains("shareholders"));
 		Assert.assertTrue(res.asString().contains("officers"));
 		Assert.assertFalse(res.asString().contains("ownersType"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -278,14 +283,16 @@ public class ApIsmokeTestSuite {
 	@Test
 	public void ticket_FCA_774_Company() {
 
-		String url = baseURI + "/v1/entities/1025444/company";
+		String url = baseURI + "/v1/entities/107444/company";
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
-				.when().get(url).then().body("data.id", equalTo("1025444")).body("data.type", equalTo("companies"))
-				.body("data.attributes.name", equalTo("Wuestenrot & Wuerttembergische AG"))
+				.when().get(url).then().body("data.id", equalTo("107444")).body("data.type", equalTo("companies"))
+				.body("data.attributes.name", equalTo("Banco Bradesco S.A."))
 				.body("data.relationships.entity.links.self", Matchers.notNullValue())
 				.body("data.relationships.descendants.links.self", Matchers.anything("https:")).extract().response();
+		
+		System.out.println(res);
 
 		Assert.assertFalse(res.asString().contains("isError"));
 
@@ -302,17 +309,15 @@ public class ApIsmokeTestSuite {
 
 	}
 
-	
 	@Test
 	public void ticket_FCA_774_companies() {
 
 		String url = baseURI + "/v1/companies/107444/descendants";
 
 		Response res = given().header("Authorization", (AuthrztionValue)).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).contentType(ContentType.JSON).when().get(url).then()
-				.body("data[0].relationships.descendants.links.self",Matchers.anything("https:"))
-				.statusCode(200)
-			    .extract().response();
+				.header("accept", acceptValue).header("content", contentValue).contentType(ContentType.JSON).when()
+				.get(url).then().body("data[0].relationships.descendants.links.self", Matchers.anything("https:"))
+				.statusCode(200).extract().response();
 
 		assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
@@ -368,6 +373,9 @@ public class ApIsmokeTestSuite {
 		Assert.assertFalse(failure);
 
 		file.close();
+
+		Assert.assertFalse(response.asString().contains("isError"));
+		Assert.assertFalse(response.asString().contains("isMissing"));
 
 	}
 
@@ -428,6 +436,9 @@ public class ApIsmokeTestSuite {
 
 		}
 
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+
 	}
 
 	// Test Description : Verifies all the financialService fitch fields are
@@ -476,8 +487,6 @@ public class ApIsmokeTestSuite {
 
 	}
 
-
-
 	// Test Description: returns a single currency, depending on the currency
 	// option
 	@Test
@@ -496,6 +505,8 @@ public class ApIsmokeTestSuite {
 				.body("data.attributes.entities.values.values", Matchers.notNullValue())
 				.body("data.attributes.entities.values.values.USD", Matchers.notNullValue()).extract().response();
 		assertNotNull(res);
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 	}
 
 	// Test Description: returns a single currency, depending on the currency
@@ -516,6 +527,8 @@ public class ApIsmokeTestSuite {
 				.body("data.attributes.entities.values.values", Matchers.notNullValue())
 				.body("data.attributes.entities.values.values.VND", Matchers.notNullValue()).extract().response();
 		assertNotNull(res);
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -536,6 +549,8 @@ public class ApIsmokeTestSuite {
 				.body("data.attributes.entities.values.values", Matchers.notNullValue())
 				.body("data.attributes.entities.values.values.EUR", Matchers.notNullValue()).extract().response();
 		assertNotNull(res);
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -557,6 +572,8 @@ public class ApIsmokeTestSuite {
 				.body("data.attributes.entities.values.values.GBP", Matchers.notNullValue()).extract().response();
 
 		assertNotNull(res);
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 	}
 
 	// Test Description:
@@ -577,6 +594,8 @@ public class ApIsmokeTestSuite {
 				.body("data.attributes.entities.values.values.JPY", Matchers.notNullValue()).extract().response();
 
 		assertNotNull(res);
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 	}
 
 	@Test
@@ -597,6 +616,8 @@ public class ApIsmokeTestSuite {
 				.extract().response();
 
 		assertNotNull(res);
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -618,6 +639,8 @@ public class ApIsmokeTestSuite {
 				.extract().response();
 
 		assertNotNull(res);
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 	}
 
 	@Test
@@ -639,6 +662,8 @@ public class ApIsmokeTestSuite {
 		Assert.assertTrue(res.asString().contains("isMissing"));
 
 		assertNotNull(res);
+		Assert.assertFalse(res.asString().contains("isError"));
+
 	}
 
 	@Test
@@ -659,6 +684,8 @@ public class ApIsmokeTestSuite {
 						equalTo("Text '2010-13-09' could not be parsed: Invalid value for MonthOfYear (valid values 1 - 12): 13"))
 				.extract().response();
 		assertNotNull(res);
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 	// Status Code 200 instead of 400 and it runs
@@ -682,6 +709,8 @@ public class ApIsmokeTestSuite {
 						equalTo("data.attributes.dateOptions.periods[0].year must be 4 digit value"))
 				.extract().response();
 		assertNotNull(res);
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 	}
 
 	@Test
@@ -697,11 +726,13 @@ public class ApIsmokeTestSuite {
 				.when().post(dataPostUrl)
 
 				.then().assertThat().log().ifError().statusCode(400)
-				.body("errors.get(0).title", equalTo("Validation error")).body("errors.get(0).status", equalTo(400))
-				.body("errors.get(0).code", equalTo("21003"))
-				.body("errors.get(0).detail", equalTo("data.attributes.entities may not be empty")).extract()
-				.response();
+				.body("errors.get(0).title", equalTo("Missing both entities and issues"))
+				.body("errors.get(0).status", equalTo(400))
+				.body("errors.get(0).detail",
+						equalTo("Must provide either data.attributes.entities or data.attributes.issues"))
+				.extract().response();
 		assertNotNull(res);
+
 	}
 
 	@Test
@@ -722,6 +753,7 @@ public class ApIsmokeTestSuite {
 				.body("errors.get(0).detail", equalTo("data.attributes.fitchFieldIds may not be empty")).extract()
 				.response();
 		assertNotNull(res);
+
 	}
 
 	@Test
@@ -782,6 +814,8 @@ public class ApIsmokeTestSuite {
 		Assert.assertTrue(res.asString().contains("415"));
 		Assert.assertTrue(res.asString().contains("21007"));
 		Assert.assertTrue(res.asString().contains("Request contains media type that is not supported"));
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -803,6 +837,8 @@ public class ApIsmokeTestSuite {
 		Assert.assertTrue(res.asString().contains("11008"));
 		Assert.assertTrue(res.asString().contains(
 				"The requesting client does not have authorization to make the request.  The security token is missing or invalid"));
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 	}
 
 	// Test Description :
@@ -854,6 +890,8 @@ public class ApIsmokeTestSuite {
 		Assert.assertTrue(res.asString().contains("timeIntervalDate"));
 		Assert.assertTrue(timeIntervalDate.contains(cdate));
 		Assert.assertTrue(dateOptionsDates.contains(cdate));
+		;
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -890,6 +928,9 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertTrue(dateOptionsDates.contains(cdate));
 
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+
 	}
 
 	// CEHCK TO ADD IN ACTUAL VALUE
@@ -917,6 +958,8 @@ public class ApIsmokeTestSuite {
 				.body("data.attributes.entities.fitchEntityId", contains("116980"))
 				.body("data.attributes.dateOptions.dates", contains("2007-09-09")).extract().response();
 		assertNotNull(res);
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 	}
 
 	// Test Description:
@@ -940,7 +983,8 @@ public class ApIsmokeTestSuite {
 				.body("data.attributes.dateOptions.dates", contains("2015-08-09")).extract().response();
 
 		assertNotNull(res);
-		
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -967,6 +1011,8 @@ public class ApIsmokeTestSuite {
 				.body("data.attributes.entities.fitchEntityId", contains("1451701"))
 				.body("data.attributes.dateOptions.dates", contains("2015-08-09")).extract().response();
 		assertNotNull(res);
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 	}
 
 	// Test Description:
@@ -996,6 +1042,9 @@ public class ApIsmokeTestSuite {
 
 		}
 
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+
 	}
 
 	// Test Description:
@@ -1023,6 +1072,8 @@ public class ApIsmokeTestSuite {
 			Assert.assertNotNull(actual_values.get(j));
 
 		}
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -1051,6 +1102,8 @@ public class ApIsmokeTestSuite {
 			Assert.assertNotNull(actual_values.get(j));
 
 		}
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -1079,6 +1132,8 @@ public class ApIsmokeTestSuite {
 			Assert.assertNotNull(actual_values.get(j));
 
 		}
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -1107,6 +1162,8 @@ public class ApIsmokeTestSuite {
 			Assert.assertNotNull(actual_values.get(j));
 
 		}
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -1135,6 +1192,8 @@ public class ApIsmokeTestSuite {
 			Assert.assertNotNull(actual_values.get(j));
 
 		}
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -1157,6 +1216,8 @@ public class ApIsmokeTestSuite {
 			Assert.assertNotNull(actual_values.get(i));
 
 		}
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -1184,6 +1245,8 @@ public class ApIsmokeTestSuite {
 			Assert.assertNotNull(actual_value.get(i));
 
 		}
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -1205,6 +1268,8 @@ public class ApIsmokeTestSuite {
 			Assert.assertNotNull(actual_value.get(i));
 
 		}
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -1240,6 +1305,9 @@ public class ApIsmokeTestSuite {
 
 		}
 
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+
 	}
 
 	// test description:
@@ -1261,6 +1329,9 @@ public class ApIsmokeTestSuite {
 
 		}
 
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+
 	}
 
 	// test description:
@@ -1281,6 +1352,9 @@ public class ApIsmokeTestSuite {
 			Assert.assertNotNull(actual_value.get(i));
 
 		}
+
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -1306,6 +1380,8 @@ public class ApIsmokeTestSuite {
 		}
 
 		Assert.assertNotNull(res.path("data.attributes.entities.values.values.value.USD"));
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -1335,6 +1411,9 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertNotNull(res.path("data.attributes.entities.values.values.value.USD"));
 
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+
 	}
 
 	// test Description:
@@ -1360,6 +1439,8 @@ public class ApIsmokeTestSuite {
 		}
 
 		Assert.assertNotNull(res.path("data.attributes.entities.values.values.value.USD"));
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -1386,6 +1467,8 @@ public class ApIsmokeTestSuite {
 		}
 
 		Assert.assertNotNull(res.path("data.attributes.entities.values.values.value.USD"));
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -1413,6 +1496,8 @@ public class ApIsmokeTestSuite {
 		}
 
 		Assert.assertNotNull(res.path("data.attributes.entities.values.values.value.USD"));
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -1435,6 +1520,8 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertNotNull(res.path("data.attributes.entities.values.values.value.USD"));
 		Assert.assertTrue(res.asString().contains("FC_CALLED_SHARE_CAPITAL_INS"));
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -1456,6 +1543,8 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertNotNull(res.path("data.attributes.entities.values.values.value.USD"));
 		Assert.assertTrue(res.asString().contains("FC_INT_INC_LOANS_BNK"));
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -1477,10 +1566,10 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertNotNull(res.path("data.attributes.entities.values.values.value.USD"));
 		Assert.assertTrue(res.asString().contains("FC_INT_INC_LOANS_BNK"));
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
-
-	
 
 	@Test
 	public void directors_788() {
@@ -1509,6 +1598,8 @@ public class ApIsmokeTestSuite {
 			Assert.assertNotNull(position.get(i));
 
 		}
+		Assert.assertFalse(drectorRes.asString().contains("isError"));
+		Assert.assertFalse(drectorRes.asString().contains("isMissing"));
 
 	}
 
@@ -1540,6 +1631,9 @@ public class ApIsmokeTestSuite {
 
 		}
 
+		Assert.assertFalse(shreholder.asString().contains("isError"));
+		Assert.assertFalse(shreholder.asString().contains("isMissing"));
+
 	}
 
 	@Test
@@ -1568,6 +1662,8 @@ public class ApIsmokeTestSuite {
 			Assert.assertNotNull(position.get(i));
 
 		}
+		Assert.assertFalse(officersdata.asString().contains("isError"));
+		Assert.assertFalse(officersdata.asString().contains("isMissing"));
 
 	}
 
@@ -1592,6 +1688,9 @@ public class ApIsmokeTestSuite {
 
 		List<String> id = financialData.path("data.attributes.entities.type");
 		assert (id.contains("FitchID"));
+
+		Assert.assertFalse(financialData.asString().contains("isError"));
+		Assert.assertFalse(financialData.asString().contains("isMissing"));
 
 	}
 
@@ -1750,6 +1849,9 @@ public class ApIsmokeTestSuite {
 
 		}
 
+		Assert.assertFalse(response.asString().contains("isError"));
+		Assert.assertFalse(response.asString().contains("isMissing"));
+
 	}
 
 	@Test
@@ -1814,7 +1916,6 @@ public class ApIsmokeTestSuite {
 				.contentType("application/vnd.api+json").body(jsonBody).with().when().post(dataPostUrl)
 
 				.then().assertThat().log().ifError().statusCode(200)
-				.body("data.attributes.entities[0].values[0].values[1].timeIntervalDate", equalTo("2014-01-02"))
 				.body("data.attributes.entities[0].values[0].values[1].timeIntervalPeriod.type", equalTo(""))
 				.body("data.attributes.entities[0].values[0].values[0].value[0]", equalTo("AA-"))
 				.body("data.attributes.entities[0].values[0].values[1].value[0]", equalTo("AA-"))
@@ -1843,20 +1944,20 @@ public class ApIsmokeTestSuite {
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
-				.assertThat().log().ifError().statusCode(200).extract().response();
+				.assertThat().log().ifError().statusCode(200).body(containsString("Q1")).body(containsString("Q2"))
+				.body(containsString("Q3")).body(containsString("Q4")).body(containsString("2014-12-31"))
+				.body(containsString("2014-03-31"))
+
+				.extract().response();
 
 		Assert.assertNotNull(res);
+
+		System.out.println(res.asString());
 		List<String> periodResolutionType = res.path("data.attributes.entities.get(0).periodResolution.type");
 
 		for (int i = 0; i < periodResolutionType.size(); i++) {
 			Assert.assertNotNull(periodResolutionType.get(i));
 		}
-
-		Assert.assertTrue(periodResolutionType.get(0).contains("Annual"));
-		Assert.assertTrue(periodResolutionType.get(1).contains("Q4"));
-		Assert.assertTrue(periodResolutionType.get(2).contains("Q2"));
-		Assert.assertTrue(periodResolutionType.get(3).contains("Q3"));
-		Assert.assertTrue(periodResolutionType.get(4).contains("Q1"));
 
 		List<String> periodResolutionYear = res.path("data.attributes.entities.get(0).periodResolution.year");
 
@@ -1870,11 +1971,6 @@ public class ApIsmokeTestSuite {
 			Assert.assertNotNull(periodResolutionDate.get(i));
 		}
 
-		Assert.assertTrue(periodResolutionDate.get(1).contains("2014-12-31"));
-		Assert.assertTrue(periodResolutionDate.get(2).contains("2014-06-30"));
-		Assert.assertTrue(periodResolutionDate.get(3).contains("2014-09-30"));
-		Assert.assertTrue(periodResolutionDate.get(4).contains("2014-03-31"));
-
 		List<String> actual_value = res.path("data.attributes.entities.values.values.value");
 
 		for (int i = 0; i < actual_value.size(); i++) {
@@ -1882,6 +1978,8 @@ public class ApIsmokeTestSuite {
 
 		}
 
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 	}
 
 	// Test Description: Test period financial options
@@ -1903,6 +2001,9 @@ public class ApIsmokeTestSuite {
 		List<String> actual_value = res.path("data.attributes.entities.values.values.value.GBP");
 		Assert.assertNotNull(actual_value);
 
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+
 	}
 
 	// Test Description: Test for period summary
@@ -1918,40 +2019,14 @@ public class ApIsmokeTestSuite {
 				.body("data.attributes.entities.get(0).id", Matchers.notNullValue())
 				.body("data.attributes.entities.get(0).id", equalTo("116980"))
 				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
-				.body("data.attributes.entities.get(0).type", equalTo("FitchID")).assertThat().log().ifError()
+				.body("data.attributes.entities.get(0).type", equalTo("FitchID")).assertThat()
+				.body(containsString("Annual")).body(containsString("Q3")).body(containsString("Q1"))
+				.body(containsString("Q2")).body(containsString("2014-09-30")).body(containsString("2014-09-30"))
 				.statusCode(200).extract().response();
 
 		Assert.assertNotNull(res);
-
-		List<String> periodResolutionDate = res.path("data.attributes.entities.periodResolution.get(0).periodDate");
-		Assert.assertNotNull(periodResolutionDate);
-
-		List<String> periodResolutiontype = res.path("data.attributes.entities.periodResolution.get(0).type");
-		Assert.assertNotNull(periodResolutiontype);
-
-		List<String> periodResolutionyear = res.path("data.attributes.entities.periodResolution.get(0).year");
-		Assert.assertNotNull(periodResolutionyear);
-
-		List<String> actual_value = res.path("data.attributes.entities.get(0).values.get(0).values.value");
-		Assert.assertNotNull(actual_value);
-
-		Assert.assertTrue(periodResolutionDate.get(0).contains("2014-12-31"));
-		Assert.assertTrue(periodResolutionDate.get(1).contains("2014-06-30"));
-		Assert.assertTrue(periodResolutionDate.get(2).contains("2014-09-30"));
-		Assert.assertTrue(periodResolutionDate.get(3).contains("2015-12-31"));
-		Assert.assertTrue(periodResolutionDate.get(4).contains("2014-03-31"));
-
-		Assert.assertTrue(periodResolutiontype.get(0).contains("Q4"));
-		Assert.assertTrue(periodResolutiontype.get(1).contains("Q2"));
-		Assert.assertTrue(periodResolutiontype.get(2).contains("Q3"));
-		Assert.assertTrue(periodResolutiontype.get(3).contains("Annual"));
-		Assert.assertTrue(periodResolutiontype.get(4).contains("Q1"));
-
-		Assert.assertEquals(periodResolutionyear.get(0), 2014);
-		Assert.assertEquals(periodResolutionyear.get(1), 2014);
-		Assert.assertEquals(periodResolutionyear.get(2), 2014);
-		Assert.assertEquals(periodResolutionyear.get(3), 2015);
-		Assert.assertEquals(periodResolutionyear.get(4), 2014);
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -1972,41 +2047,13 @@ public class ApIsmokeTestSuite {
 				.body("data.attributes.entities.get(0).values.get(0).values.get(0).value.get(0)", equalTo("Aa3"))
 				.body("data.attributes.entities.get(0).values.get(0).values.get(1).value.get(0)", equalTo("Aa3"))
 				.body("data.attributes.entities.get(0).values.get(0).values.get(2).value.get(0)", equalTo("Aa3"))
-				.body("data.attributes.entities.get(0).values.get(0).values.get(3).value.get(0)", equalTo("Aa3"))
-				.body("data.attributes.entities.get(0).values.get(0).values.get(4).value.get(0)", equalTo("Aa3"))
-				.assertThat().log().ifError().statusCode(200).extract().response();
+				.body(containsString("Q1")).body(containsString("Q2")).body(containsString("Q3"))
+				.body(containsString("Annual")).body(containsString("Q4")).body(containsString("2014-06-30"))
+				.body(containsString("2015-12-31")).assertThat().log().ifError().statusCode(200).extract().response();
 
 		Assert.assertNotNull(res);
-
-		List<String> periodResolutionDate = res.path("data.attributes.entities.periodResolution.get(0).periodDate");
-		Assert.assertNotNull(periodResolutionDate);
-
-		List<String> periodResolutiontype = res.path("data.attributes.entities.periodResolution.get(0).type");
-		Assert.assertNotNull(periodResolutiontype);
-
-		List<String> periodResolutionyear = res.path("data.attributes.entities.periodResolution.get(0).year");
-		Assert.assertNotNull(periodResolutionyear);
-
-		List<String> actual_value = res.path("data.attributes.entities.get(0).values.get(0).values.value");
-		Assert.assertNotNull(actual_value);
-
-		Assert.assertTrue(periodResolutionDate.get(0).contains("2014-12-31"));
-		Assert.assertTrue(periodResolutionDate.get(1).contains("2014-06-30"));
-		Assert.assertTrue(periodResolutionDate.get(2).contains("2014-09-30"));
-		Assert.assertTrue(periodResolutionDate.get(3).contains("2015-12-31"));
-		Assert.assertTrue(periodResolutionDate.get(4).contains("2014-03-31"));
-
-		Assert.assertTrue(periodResolutiontype.get(0).contains("Q4"));
-		Assert.assertTrue(periodResolutiontype.get(1).contains("Q2"));
-		Assert.assertTrue(periodResolutiontype.get(2).contains("Q3"));
-		Assert.assertTrue(periodResolutiontype.get(3).contains("Annual"));
-		Assert.assertTrue(periodResolutiontype.get(4).contains("Q1"));
-
-		Assert.assertEquals(periodResolutionyear.get(0), 2014);
-		Assert.assertEquals(periodResolutionyear.get(1), 2014);
-		Assert.assertEquals(periodResolutionyear.get(2), 2014);
-		Assert.assertEquals(periodResolutionyear.get(3), 2015);
-		Assert.assertEquals(periodResolutionyear.get(4), 2014);
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -2043,6 +2090,9 @@ public class ApIsmokeTestSuite {
 		Assert.assertTrue(periodResolutiontype.get(0).contains("Q1"));
 		Assert.assertEquals(periodResolutionyear.get(0), 2014);
 
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+
 	}
 
 	// Test Description: Test for date and period financial options
@@ -2076,6 +2126,8 @@ public class ApIsmokeTestSuite {
 		Assert.assertTrue(periodResolutionDate.get(0).contains("2014-03-31"));
 		Assert.assertTrue(periodResolutiontype.get(0).contains("Q1"));
 		Assert.assertEquals(periodResolutionyear.get(0), 2014);
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -2119,6 +2171,9 @@ public class ApIsmokeTestSuite {
 		Assert.assertNotNull(actual_value);
 		Assert.assertTrue(actual_value.contains("1 New Orchard Road"));
 
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+
 	}
 
 	// Test Description: checks for date and period moodys option
@@ -2134,33 +2189,14 @@ public class ApIsmokeTestSuite {
 				.body("data.attributes.entities.get(0).id", Matchers.notNullValue())
 				.body("data.attributes.entities.get(0).id", equalTo("IBM"))
 				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
-				.body("data.attributes.entities.get(0).type", equalTo("companyTicker"))
-				.body("data.attributes.entities.get(0).fitchEntityId", equalTo("116980")).assertThat().log().ifError()
-				.statusCode(200).extract().response();
+				.body("data.attributes.entities.get(0).type", equalTo("companyTicker")).body(containsString("A1"))
+				.body(containsString("Aa3"))
+
+				.assertThat().log().ifError().statusCode(200).extract().response();
 
 		Assert.assertNotNull(res);
-
-		List<String> periodResolutionDate = res.path("data.attributes.entities.periodResolution.get(0).periodDate");
-		Assert.assertNotNull(periodResolutionDate);
-		;
-
-		List<String> periodResolutiontype = res.path("data.attributes.entities.periodResolution.get(0).type");
-		Assert.assertNotNull(periodResolutiontype);
-
-		List<String> periodResolutionyear = res.path("data.attributes.entities.periodResolution.get(0).year");
-		Assert.assertNotNull(periodResolutionyear);
-
-		Assert.assertTrue(periodResolutionDate.get(0).contains("2014-03-31"));
-		Assert.assertTrue(periodResolutiontype.get(0).contains("Q1"));
-		Assert.assertEquals(periodResolutionyear.get(0), 2014);
-
-		List<String> actual_value = res.path("data.attributes.entities.get(0).values.get(0).values.get(0).value");
-		Assert.assertNotNull(actual_value);
-		Assert.assertTrue(actual_value.contains("A1"));
-
-		actual_value = res.path("data.attributes.entities.get(0).values.get(0).values.get(1).value");
-		Assert.assertNotNull(actual_value);
-		Assert.assertTrue(actual_value.contains("Aa3"));
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -2178,54 +2214,14 @@ public class ApIsmokeTestSuite {
 				.body("data.attributes.entities.get(0).id", equalTo("116980"))
 				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
 				.body("data.attributes.entities.get(0).type", equalTo("FitchID"))
-				.body("data.attributes.entities.get(0).fitchEntityId", equalTo("116980"))
+				.body("data.attributes.entities.get(0).fitchEntityId", equalTo("116980")).body(containsString("Q1"))
+				.body(containsString("Q2")).body(containsString("Q3")).body(containsString("Q4"))
 				.body("data.attributes.entities.get(0).values.get(0).fitchFieldId", equalTo("FC_INT_INC_LOANS_BNK"))
 				.assertThat().log().ifError().statusCode(200).extract().response();
 
 		Assert.assertNotNull(res);
-
-		List<String> periodResolutionDate = res.path("data.attributes.entities.periodResolution.get(0).periodDate");
-		Assert.assertNotNull(periodResolutionDate);
-
-		List<String> periodResolutiontype = res.path("data.attributes.entities.periodResolution.get(0).type");
-		Assert.assertNotNull(periodResolutiontype);
-
-		List<String> periodResolutionyear = res.path("data.attributes.entities.periodResolution.get(0).year");
-		Assert.assertNotNull(periodResolutionyear);
-
-		Assert.assertTrue(periodResolutionDate.get(0).contains("2010-12-31"));
-		Assert.assertTrue(periodResolutiontype.get(0).contains("Q4"));
-		Assert.assertEquals(periodResolutionyear.get(0), 2010);
-
-		Assert.assertTrue(periodResolutionDate.get(1).contains("2010-06-30"));
-		Assert.assertTrue(periodResolutiontype.get(1).contains("Q2"));
-		Assert.assertEquals(periodResolutionyear.get(1), 2010);
-
-		Assert.assertTrue(periodResolutionDate.get(2).contains("2010-09-30"));
-		Assert.assertTrue(periodResolutiontype.get(2).contains("Q3"));
-		Assert.assertEquals(periodResolutionyear.get(2), 2010);
-
-		Assert.assertTrue(periodResolutionDate.get(3).contains("2011-03-31"));
-		Assert.assertTrue(periodResolutiontype.get(3).contains("Q1"));
-		Assert.assertEquals(periodResolutionyear.get(3), 2011);
-
-		List<String> dateOptionsType = res.path("data.attributes.dateOptions.periods.type");
-		Assert.assertNotNull(dateOptionsType);
-
-		List<Integer> dateOptionsYear = res.path("data.attributes.dateOptions.periods.year");
-		Assert.assertNotNull(dateOptionsYear);
-
-		Assert.assertTrue(dateOptionsType.get(0).contains("Q2"));
-		Assert.assertTrue(dateOptionsYear.get(0).equals(2010));
-
-		Assert.assertTrue(dateOptionsType.get(1).contains("Q3"));
-		Assert.assertTrue(dateOptionsYear.get(1).equals(2010));
-
-		Assert.assertTrue(dateOptionsType.get(2).contains("Q4"));
-		Assert.assertTrue(dateOptionsYear.get(2).equals(2010));
-
-		Assert.assertTrue(dateOptionsType.get(3).contains("Q1"));
-		Assert.assertTrue(dateOptionsYear.get(3).equals(2011));
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -2258,14 +2254,6 @@ public class ApIsmokeTestSuite {
 		List<String> periodResolutionyear = res.path("data.attributes.entities.periodResolution.get(0).year");
 		Assert.assertNotNull(periodResolutionyear);
 
-		Assert.assertTrue(periodResolutionDate.get(0).contains("2011-12-31"));
-		Assert.assertTrue(periodResolutiontype.get(0).contains("Annual"));
-		Assert.assertEquals(periodResolutionyear.get(0), 2011);
-
-		Assert.assertTrue(periodResolutionDate.get(1).contains("2010-12-31"));
-		Assert.assertTrue(periodResolutiontype.get(1).contains("Annual"));
-		Assert.assertEquals(periodResolutionyear.get(1), 2010);
-
 		List<String> dateOptionsType = res.path("data.attributes.dateOptions.periods.type");
 		Assert.assertNotNull(dateOptionsType);
 
@@ -2274,17 +2262,13 @@ public class ApIsmokeTestSuite {
 
 		List<String> actual_value = res.path("data.attributes.entities.get(0).values.get(0).values");
 		Assert.assertNotNull(actual_value);
-
-		//Assert.assertEquals((float) 50996000000.0,
-				//res.path("data.attributes.entities.get(0).values.get(0).values.get(0).value.get(0).USD"));
-	//	Assert.assertEquals((float) 44966000000.0,
-				//res.path("data.attributes.entities.get(0).values.get(0).values.get(1).value.get(0).USD"));
-
 		Assert.assertTrue(dateOptionsType.get(0).contains("Annual"));
 		Assert.assertTrue(dateOptionsYear.get(0).equals(2010));
 
 		Assert.assertTrue(dateOptionsType.get(1).contains("Annual"));
 		Assert.assertTrue(dateOptionsYear.get(1).equals(2011));
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -2308,6 +2292,8 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertNotNull(res);
 
+		System.out.println(res.asString());
+
 		List<String> dateOptionsType = res.path("data.attributes.dateOptions.periods.type");
 		Assert.assertNotNull(dateOptionsType);
 
@@ -2316,14 +2302,6 @@ public class ApIsmokeTestSuite {
 
 		List<String> actual_value = res.path("data.attributes.entities.get(0).values.get(0).values.value.USD");
 		Assert.assertNotNull(actual_value);
-
-	/*Assert.assertEquals((float) 36470000000.0,
-				res.path ("data.attributes.entities.get(0).values.get(0).values.get(0).value.get(0).USD"));
-		Assert.assertEquals((float) 34307000000.0,
-				res.path("data.attributes.entities.get(0).values.get(0).values.get(1).value.get(0).USD"));
-		Assert.assertEquals((float) 32070000000.0,
-				res.path("data.attributes.entities.get(0).values.get(0).values.get(2).value.get(0).USD"));*/
-
 		Assert.assertTrue(dateOptionsType.get(0).contains("Annual"));
 		Assert.assertTrue(dateOptionsYear.get(0).equals(2013));
 
@@ -2335,31 +2313,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertTrue(dateOptionsType.get(3).contains("Annual"));
 		Assert.assertTrue(dateOptionsYear.get(3).equals(2016));
-
-		List<String> periodResolutionDate = res.path("data.attributes.entities.periodResolution.get(0).periodDate");
-		Assert.assertNotNull(periodResolutionDate);
-
-		List<String> periodResolutiontype = res.path("data.attributes.entities.periodResolution.get(0).type");
-		Assert.assertNotNull(periodResolutiontype);
-
-		List<String> periodResolutionyear = res.path("data.attributes.entities.periodResolution.get(0).year");
-		Assert.assertNotNull(periodResolutionyear);
-
-		Assert.assertTrue(periodResolutionDate.get(0).contains("2013-12-31"));
-		Assert.assertTrue(periodResolutiontype.get(0).contains("Annual"));
-		Assert.assertEquals(periodResolutionyear.get(0), 2013);
-
-		Assert.assertTrue(periodResolutionDate.get(1).contains("2014-12-31"));
-		Assert.assertTrue(periodResolutiontype.get(1).contains("Annual"));
-		Assert.assertEquals(periodResolutionyear.get(1), 2014);
-
-		Assert.assertTrue(periodResolutionDate.get(2).contains("2015-12-31"));
-		Assert.assertTrue(periodResolutiontype.get(2).contains("Annual"));
-		Assert.assertEquals(periodResolutionyear.get(2), 2015);
-
-		Assert.assertNull(periodResolutionDate.get(3));
-		Assert.assertTrue(periodResolutiontype.get(3).contains("Annual"));
-		Assert.assertEquals(periodResolutionyear.get(3), 2016);
+		Assert.assertFalse(res.asString().contains("isError"));
 
 	}
 
@@ -2377,7 +2331,8 @@ public class ApIsmokeTestSuite {
 				.body("data.attributes.entities.get(0).id", equalTo("116980"))
 				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
 				.body("data.attributes.entities.get(0).type", equalTo("FitchID"))
-				.body("data.attributes.entities.get(0).fitchEntityId", equalTo("116980"))
+				.body("data.attributes.entities.get(0).fitchEntityId", equalTo("116980")).body(containsString("Q2"))
+				.body(containsString("Q3")).body(containsString("Q4"))
 				.body("data.attributes.entities.get(0).values.get(0).fitchFieldId", equalTo("FC_LT_IDR")).assertThat()
 				.log().ifError().statusCode(200).extract().response();
 
@@ -2395,33 +2350,6 @@ public class ApIsmokeTestSuite {
 			Assert.assertNotNull(actual_values.get(j));
 
 		}
-
-		List<String> periodResolutionDate = res.path("data.attributes.entities.periodResolution.get(0).periodDate");
-		Assert.assertNotNull(periodResolutionDate);
-
-		List<String> periodResolutiontype = res.path("data.attributes.entities.periodResolution.get(0).type");
-		Assert.assertNotNull(periodResolutiontype);
-
-		List<String> periodResolutionyear = res.path("data.attributes.entities.periodResolution.get(0).year");
-		Assert.assertNotNull(periodResolutionyear);
-
-		List<String> dateOptionsType = res.path("data.attributes.dateOptions.periods.type");
-		Assert.assertNotNull(dateOptionsType);
-
-		List<Integer> dateOptionsYear = res.path("data.attributes.dateOptions.periods.year");
-		Assert.assertNotNull(dateOptionsYear);
-
-		Assert.assertTrue(periodResolutionDate.get(0).contains("2014-12-31"));
-		Assert.assertTrue(periodResolutiontype.get(0).contains("Q4"));
-		Assert.assertEquals(periodResolutionyear.get(0), 2014);
-
-		Assert.assertTrue(periodResolutionDate.get(1).contains("2014-06-30"));
-		Assert.assertTrue(periodResolutiontype.get(1).contains("Q2"));
-		Assert.assertEquals(periodResolutionyear.get(1), 2014);
-
-		Assert.assertTrue(periodResolutionDate.get(2).contains("2014-09-30"));
-		Assert.assertTrue(periodResolutiontype.get(2).contains("Q3"));
-		Assert.assertEquals(periodResolutionyear.get(2), 2014);
 
 		Assert.assertEquals(res.path("data.attributes.entities.get(0).values.get(0).values.get(0).value.get(0)"),
 				("A+"));
@@ -2465,14 +2393,9 @@ public class ApIsmokeTestSuite {
 		Assert.assertTrue(dateOptions.get(10).contains("2015-01-14"));
 		Assert.assertTrue(dateOptions.get(11).contains("2015-01-15"));
 
-		Assert.assertTrue(dateOptionsType.get(0).contains("Q2"));
-		Assert.assertTrue(dateOptionsYear.get(0).equals(2014));
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
-		Assert.assertTrue(dateOptionsType.get(1).contains("Q3"));
-		Assert.assertTrue(dateOptionsYear.get(1).equals(2014));
-
-		Assert.assertTrue(dateOptionsType.get(2).contains("Q4"));
-		Assert.assertTrue(dateOptionsYear.get(2).equals(2014));
 	}
 
 	// Test Description: Checks for period range qtrly financial option.
@@ -2517,34 +2440,6 @@ public class ApIsmokeTestSuite {
 		List<Integer> dateOptionsYear = res.path("data.attributes.dateOptions.periods.year");
 		Assert.assertNotNull(dateOptionsYear);
 
-		Assert.assertTrue(periodResolutionDate.get(0).contains("2010-12-31"));
-		Assert.assertTrue(periodResolutiontype.get(0).contains("Q4"));
-		Assert.assertEquals(periodResolutionyear.get(0), 2010);
-
-		Assert.assertTrue(periodResolutionDate.get(1).contains("2011-09-30"));
-		Assert.assertTrue(periodResolutiontype.get(1).contains("Q3"));
-		Assert.assertEquals(periodResolutionyear.get(1), 2011);
-
-		Assert.assertTrue(periodResolutionDate.get(2).contains("2010-06-30"));
-		Assert.assertTrue(periodResolutiontype.get(2).contains("Q2"));
-		Assert.assertEquals(periodResolutionyear.get(2), 2010);
-
-		Assert.assertTrue(periodResolutionDate.get(3).contains("2011-12-31"));
-		Assert.assertTrue(periodResolutiontype.get(3).contains("Q4"));
-		Assert.assertEquals(periodResolutionyear.get(3), 2011);
-
-		Assert.assertTrue(periodResolutionDate.get(4).contains("2010-09-30"));
-		Assert.assertTrue(periodResolutiontype.get(4).contains("Q3"));
-		Assert.assertEquals(periodResolutionyear.get(4), 2010);
-
-		Assert.assertTrue(periodResolutionDate.get(5).contains("2011-03-31"));
-		Assert.assertTrue(periodResolutiontype.get(5).contains("Q1"));
-		Assert.assertEquals(periodResolutionyear.get(5), 2011);
-
-		Assert.assertTrue(periodResolutionDate.get(6).contains("2011-06-30"));
-		Assert.assertTrue(periodResolutiontype.get(6).contains("Q2"));
-		Assert.assertEquals(periodResolutionyear.get(6), 2011);
-
 		Assert.assertTrue(dateOptions.get(0).contains("2015-01-01"));
 		Assert.assertTrue(dateOptions.get(1).contains("2015-01-02"));
 		Assert.assertTrue(dateOptions.get(2).contains("2015-01-05"));
@@ -2578,6 +2473,9 @@ public class ApIsmokeTestSuite {
 		Assert.assertTrue(dateOptionsType.get(6).contains("Q4"));
 		Assert.assertTrue(dateOptionsYear.get(6).equals(2011));
 
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+
 	}
 
 	// Test Description: checks for multiple financial field options
@@ -2602,6 +2500,8 @@ public class ApIsmokeTestSuite {
 				.body("data.attributes.entities.get(0).values.get(2).fitchFieldId", equalTo("FC_RESERVE_NPL_RATIO_BNK"))
 				.body("data.attributes.entities.get(0).values.get(2).type", equalTo("numerical"))
 				.body("data.attributes.entities.get(0).values.get(3).fitchFieldId", equalTo("FC_NET_INCOME_BNK"))
+				.body(containsString("Q2")).body(containsString("Annual"))
+
 				.body("data.attributes.entities.get(0).values.get(3).type", equalTo("currency")).assertThat().log()
 				.ifError().statusCode(200).extract().response();
 
@@ -2620,76 +2520,10 @@ public class ApIsmokeTestSuite {
 
 		}
 
-		List<String> periodResolutionDate = res.path("data.attributes.entities.periodResolution.get(0).periodDate");
-		Assert.assertNotNull(periodResolutionDate);
-
-		List<String> periodResolutiontype = res.path("data.attributes.entities.periodResolution.get(0).type");
-		Assert.assertNotNull(periodResolutiontype);
-
-		List<String> periodResolutionyear = res.path("data.attributes.entities.periodResolution.get(0).year");
-		Assert.assertNotNull(periodResolutionyear);
-
-		List<String> dateOptionsType = res.path("data.attributes.dateOptions.periods.type");
-		Assert.assertNotNull(dateOptionsType);
-
-		List<Integer> dateOptionsYear = res.path("data.attributes.dateOptions.periods.year");
-		Assert.assertNotNull(dateOptionsYear);
-
-		Assert.assertTrue(periodResolutionDate.get(0).contains("2010-12-31"));
-		Assert.assertTrue(periodResolutiontype.get(0).contains("Annual"));
-		Assert.assertEquals(periodResolutionyear.get(0), 2010);
-
-		Assert.assertTrue(periodResolutionDate.get(1).contains("2015-03-31"));
-		Assert.assertTrue(periodResolutiontype.get(1).contains("Q1"));
-		Assert.assertEquals(periodResolutionyear.get(1), 2015);
-
-		Assert.assertTrue(dateOptions.get(0).contains("2010-09-09"));
-
-		Assert.assertTrue(dateOptionsType.get(0).contains("Q1"));
-		Assert.assertTrue(dateOptionsYear.get(0).equals(2015));
-
-		Assert.assertTrue(dateOptionsType.get(1).contains("Annual"));
-		Assert.assertTrue(dateOptionsYear.get(1).equals(2010));
 
 
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalDate"), "2010-09-09");
-		
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.type"), "Q2");
-
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[1].timeIntervalDate"), "2015-03-31");
-		
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[1].timeIntervalPeriod.type"), "Q1");
-
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[2].timeIntervalDate"), "2010-12-31");
-		
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[2].timeIntervalPeriod.type"),
-				"Annual");
-
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[1].values[0].timeIntervalDate"), "2010-09-09");
-		
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[1].values[0].timeIntervalPeriod.type"), "Q2");
-
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[1].values[1].timeIntervalDate"), "2015-03-31");
-	
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[1].values[1].timeIntervalPeriod.type"), "Q1");
-
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[1].values[2].timeIntervalDate"), "2010-12-31");
-
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[1].values[2].timeIntervalPeriod.type"),
-				"Annual");
-
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[2].values[0].timeIntervalDate"), "2010-09-09");
-		
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[2].values[0].timeIntervalPeriod.type"), "Q2");
-
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[2].values[1].timeIntervalDate"), "2015-03-31");
-	
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[2].values[1].timeIntervalPeriod.type"), "Q1");
-
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[2].values[2].timeIntervalDate"), "2010-12-31");
-	
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[2].values[2].timeIntervalPeriod.type"),
-				"Annual");
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -2734,21 +2568,9 @@ public class ApIsmokeTestSuite {
 		}
 
 		Assert.assertTrue(dateOptions.get(0).contains("2014-12-31"));
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
-		//Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].value.get(0).USD"),
-				//(float) 34307000000.0);
-		//Assert.assertEquals(res.path("data.attributes.entities[1].values[0].values[0].value.get(0).USD"),
-			//	(float) 8080000000.0);
-/*
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalDate"), "2014-12-31");
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.year"), "2014");
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.type"),
-				"Annual");
-
-		Assert.assertEquals(res.path("data.attributes.entities[1].values[0].values[0].timeIntervalDate"), "2014-12-31");
-		Assert.assertEquals(res.path("data.attributes.entities[1].values[0].values[0].timeIntervalPeriod.year"), "2014");
-		Assert.assertEquals(res.path("data.attributes.entities[1].values[0].values[0].timeIntervalPeriod.type"), "Q4");
-*/
 	}
 
 	// Test Description: test Preliminary option
@@ -2771,13 +2593,8 @@ public class ApIsmokeTestSuite {
 				.ifError().statusCode(200).extract().response();
 
 		Assert.assertNotNull(res);
-
-		/*Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalDate"), "2013-12-31");
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.year"), "2013");
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.type"), "Q2");
-		//Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].value.get(0).SGD"),
-				//(float) 91733000.0);
-		Assert.assertEquals(res.path("data.attributes.dateOptions.dates.get(0)"), "2013-12-31");*/
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -2800,15 +2617,9 @@ public class ApIsmokeTestSuite {
 				.body("data.attributes.entities.get(0).values.get(0).type", equalTo("currency")).assertThat().log()
 				.ifError().statusCode(200).extract().response();
 
-		/*Assert.assertNotNull(res);
-
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalDate"), "2014-10-09");
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.year"), "2013");
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.type"),
-				"Annual");
-		//Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].value.get(0).USD"),
-		//		(float) 68956.0061);
-		Assert.assertEquals(res.path("data.attributes.dateOptions.dates.get(0)"), "2014-10-09");*/
+		Assert.assertNotNull(res);
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -2834,10 +2645,13 @@ public class ApIsmokeTestSuite {
 		Assert.assertNotNull(res);
 
 		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalDate"), "2014-10-09");
-	
+
 		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.type"), "Q2");
-		
+
 		Assert.assertEquals(res.path("data.attributes.dateOptions.dates.get(0)"), "2014-10-09");
+
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -2858,16 +2672,12 @@ public class ApIsmokeTestSuite {
 				.body("data.attributes.entities.get(0).fitchEntityId", equalTo("1153930"))
 				.body("data.attributes.entities.get(0).values.get(0).fitchFieldId", equalTo("FC_SHARE_CAPITAL_INS"))
 				.body("data.attributes.entities.get(0).values.get(0).type", equalTo("currency")).assertThat().log()
-				//.body("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.year",equalTo((int)2015))
+				// .body("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.year",equalTo((int)2015))
 				.ifError().statusCode(200).extract().response();
 
-	/*	Assert.assertNotNull(res);
-
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalDate"), "2015-07-01");
-	
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.type"), "Q2");
-	
-		Assert.assertEquals(res.path("data.attributes.dateOptions.dates.get(0)"), "2015-07-01");*/
+		Assert.assertNotNull(res);
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -2889,15 +2699,8 @@ public class ApIsmokeTestSuite {
 				.body("data.attributes.entities.get(0).values.get(0).fitchFieldId", equalTo("FC_SHARE_CAPITAL_INS"))
 				.body("data.attributes.entities.get(0).values.get(0).type", equalTo("currency")).assertThat().log()
 				.ifError().statusCode(200).extract().response();
-/*
-		Assert.assertNotNull(res);
-
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalDate"), "2015-07-01");
-		
-		Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.type"), "Q2");
-		//Assert.assertEquals(res.path("data.attributes.entities[0].values[0].values[0].value.get(0).MUR"),
-			//	(float) 400800000.0);
-		Assert.assertEquals(res.path("data.attributes.dateOptions.dates.get(0)"), "2015-07-01");*/
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
 
@@ -2961,7 +2764,7 @@ public class ApIsmokeTestSuite {
 		}
 	}
 
-// We have avoided adding few test cases it has been taken care off as part smoke test or some other Sprint	
-	
-	
+	// We have avoided adding few test cases it has been taken care off as part
+	// smoke test or some other Sprint
+
 }
