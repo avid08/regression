@@ -21,7 +21,7 @@ import groovy.json.internal.Charsets;
 
 public class Sprint24 {
 
-	public Response response;
+	
 	String myjson;
 	String AuthrztionValue;
 	String baseURI;
@@ -42,8 +42,8 @@ public class Sprint24 {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api.fitchconnect.com";
-			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
+			baseURI = "https://api-int.fitchconnect.com";
+			this.AuthrztionValue = ("Basic MUtQNk1DVVk0WkU1SDFXVlVBWlJUVjNUSjpPM0owV0orUGVhZ3JqMis1bTBTMkdvdnZKRDBrQUd1R3F6Q0M5REIydjRv");
 		} else if (env.equals("dev")) {
 			baseURI = "https://api-dev.fitchconnect.com";
 			this.AuthrztionValue = ("Basic NTA4Rk44V1BKTUdGVVI5VFpOREFEV0NCSzpvMVY5bkRCMG8yM3djSHp2eVlHNnZZb01GSkJWdG1KZmEwS20vbUczVWVV");
@@ -60,7 +60,7 @@ public class Sprint24 {
 			this.AuthrztionValue = ("Basic NU5COUFRSDVCSTRDUFZTUktJRUpESjQyNTpDYjFxUXQycHd4VGNKZTg1SjkyRVJmL1JMU1haRUlZSjU3NWR5R3RacDVV");
 
 		} else if (env.equals("prod")) {
-			baseURI = "https://api.fitchconnect.com";
+			baseURI = "http://kubemin-p01.fitchratings.com:30001";
 			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
 
 		}
@@ -68,6 +68,7 @@ public class Sprint24 {
 		System.out.println(baseURI);
 		metaUrl = baseURI + metaEndPoint;
 		dataPostUrl = baseURI + dataEndPoint;
+	
 	}
 
 	@Test
@@ -84,7 +85,7 @@ public class Sprint24 {
 
 		List<String> value = res.path("data.attributes.detail.value.value");
 
-		// data.attributes.detail.value.value
+
 
 		for (int i = 0; i < value.size(); i++) {
 
@@ -113,21 +114,21 @@ public class Sprint24 {
 
 		this.id = res.path("data.id");
 
-		System.out.println(id);
+		System.out.println("id"+id);
 
 		String jsonString = null;
 
 		JSONObject obj = new JSONObject();
 		JSONObject data = new JSONObject();
 		JSONObject type = new JSONObject();
-		// obj.put("data", data);
+
 		obj.put("data", data);
 
 		data.put("type", "viewdefs");
 
 		JSONObject attributes = new JSONObject();
 		getClass();
-		JSONObject fields = new JSONObject();
+		JSONObject field = new JSONObject();
 		getClass();
 
 		type.put("attributes", attributes);
@@ -136,7 +137,7 @@ public class Sprint24 {
 		JSONObject relationships = new JSONObject();
 		JSONObject data1 = new JSONObject();
 		JSONObject data2 = new JSONObject();
-		// relationships.put("type", "123464");
+		
 
 		attributes.put("name", "CorporateViewdef");
 		attributes.put("suppressColumn", "true");
@@ -145,14 +146,14 @@ public class Sprint24 {
 		data.put("relationships", relationships);
 
 		data.put("attributes", attributes);
-		relationships.put("viewfields", fields);
-		fields.put("data", list2);
+		relationships.put("viewfields", field);
+		field.put("data", list2);
 		list2.add(data2);
 		data2.put("type", "viewfields");
 		data2.put("id", id);
 		jsonString = obj.toString();
 
-		System.out.println(jsonString);
+		System.out.println("json"+jsonString);
 
 		Response resViewDef = given()
 
@@ -162,6 +163,8 @@ public class Sprint24 {
 				.body("data.relationships.viewfields.data[0].id", equalTo(id)).extract().response();
 
 		this.id1 = resViewDef.path("data.id");
+		
+		System.out.println("id1"+id1);
 
 	}
 
@@ -192,8 +195,8 @@ public class Sprint24 {
 		Assert.assertNotNull(viewDef);
 
 	}
-
-	@Test
+	
+  	@Test
 
 	public void FCA_1116_chTree_Descendants() throws IOException {
 
@@ -209,7 +212,7 @@ public class Sprint24 {
 
 	}
 
-	@Test
+	@Test(enabled=false)
 
 	public void FCA_1104_Filter() throws IOException {
 
@@ -223,7 +226,7 @@ public class Sprint24 {
 		Assert.assertFalse(res.asString().contains("isMissing"));
 	}
 
-	@Test
+	@Test(enabled=false)
 
 	public void FCA_1104_Filterstatments() throws IOException {
 

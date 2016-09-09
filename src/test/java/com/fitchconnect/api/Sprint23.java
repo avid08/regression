@@ -50,8 +50,8 @@ public class Sprint23 {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api-int.fitchconnect.com";
-			this.AuthrztionValue = ("Basic MUtQNk1DVVk0WkU1SDFXVlVBWlJUVjNUSjpPM0owV0orUGVhZ3JqMis1bTBTMkdvdnZKRDBrQUd1R3F6Q0M5REIydjRv");
+			baseURI = "https://api-qa.fitchconnect.com";
+			this.AuthrztionValue = ("Basic MUlLVk1SMjlJS1lIMllPSjFUQkdGQ0tKSDpFN1Y2Z1FJY3RPeG5KbG8rSVBHaGY0K0tTSGc3LzFpOFJsbVo1Tmd6NUpB");
 		} else if (env.equals("dev")) {
 			baseURI = "https://api-dev.fitchconnect.com";
 			this.AuthrztionValue = ("Basic NTA4Rk44V1BKTUdGVVI5VFpOREFEV0NCSzpvMVY5bkRCMG8yM3djSHp2eVlHNnZZb01GSkJWdG1KZmEwS20vbUczVWVV");
@@ -68,7 +68,7 @@ public class Sprint23 {
 			this.AuthrztionValue = ("Basic NU5COUFRSDVCSTRDUFZTUktJRUpESjQyNTpDYjFxUXQycHd4VGNKZTg1SjkyRVJmL1JMU1haRUlZSjU3NWR5R3RacDVV");
 
 		} else if (env.equals("prod")) {
-			baseURI = "https://api.fitchconnect.com";
+			baseURI = "http://kubemin-p01.fitchratings.com:30001";
 			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
 
 		}
@@ -173,9 +173,8 @@ public class Sprint23 {
 				.body("data.type", equalTo("entities"))
 				.body("data.id", equalTo("107559"))
 				.body("data.attributes.name", equalTo("Barclays plc"))
-				.body("included[0].type", equalTo("companies"))
-				.body("included[0].id", equalTo("107559"))
-				.body("included[0].attributes.name", equalTo("Barclays plc"))
+				.statusCode(200)
+				
 				.contentType(ContentType.JSON).extract().response();
 
 
@@ -192,9 +191,8 @@ public class Sprint23 {
 				.body("data.type", equalTo("entities"))
 				.body("data.id", equalTo("100042"))
 				.body("data.attributes.name", equalTo("Capital One Financial Corporation"))
-				.body("included[0].type", equalTo("companies"))
-				.body("included[0].id", equalTo("100042"))
-				.body("included[0].attributes.name", equalTo("Capital One Financial Corporation"))
+				.statusCode(200)
+				
 				.contentType(ContentType.JSON).extract().response();
 
 		Assert.assertFalse(res.asString().contains("isError"));
@@ -210,6 +208,7 @@ public class Sprint23 {
 				.header("accept", acceptValue).header("content", contentValue).when().get(url).then()
 				.body("data.type", equalTo("entities"))
 				.body("data.id", equalTo("1064795"))
+				.statusCode(200)
 				.body("data.attributes.name", equalTo("Korea Hydro & Nuclear Power Co., Ltd."))
 				.contentType(ContentType.JSON).extract().response();
 
@@ -219,26 +218,16 @@ public class Sprint23 {
 
 	@Test
 	public void FlagIsFalse_1037() {
-		String url = baseURI + "/v1/entities/110630";
+		String url = baseURI + "/v1/entities/1181314";
 
 		Response res = given().header("Authorization", (AuthrztionValue)).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(url).then()
 				.body("data.type", equalTo("entities"))
-				.body("data.id", equalTo("110630"))
-				
-				.body("included[0].id", equalTo("110630"))
-				.body("included[0].attributes.name", equalTo("The Bank of New York Mellon"))
-				.body("included[0].attributes.ownershipType", equalTo("Direct"))
-				.body("included[0].attributes.country", equalTo("USA"))
-				.body("included[0].attributes.type", equalTo("Business Organization"))
-				.body("included[0].attributes.parentId", equalTo(110630))
-
-
-
+				.body("data.id", equalTo("1181314"))	
+				.statusCode(200)								
 				.contentType(ContentType.JSON).extract().response();
-
-
-		Assert.assertFalse(res.asString().contains("isError"));
+		
+      	Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
 	}
 
@@ -255,6 +244,7 @@ public class Sprint23 {
 				.body("data.attributes.fitchFieldDesc", equalTo("Ultimate Parent ID"))
 				.body("data.relationships.service.data.id", equalTo("entitySummary"))
 				.body("data.relationships.service.data.type", equalTo("dataService"))
+				.statusCode(200)
 				.contentType(ContentType.JSON).extract().response();
 
 		Assert.assertFalse(res.asString().contains("isError"));

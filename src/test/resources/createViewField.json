@@ -7,9 +7,9 @@
             "dataMask":"12"
         },
         "relationships":{
-            "fields":{
+            "field":{
                 "data":{
-                    "type":"fields",
+                    "type":"field",
                     "id":"FC_OTHER_NON_EARN_ASSETS_BNK"
                 }
                  
