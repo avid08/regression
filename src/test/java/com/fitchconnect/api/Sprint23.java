@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.equalTo;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -22,6 +23,8 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 
 import groovy.json.internal.Charsets;
 
@@ -308,13 +311,15 @@ public class Sprint23 {
 	public void getDBResponsePubFlag_true_1034() {
 
 		try {
+			MongoCredential credential = MongoCredential.createCredential("reporter", "admin", "the_call".toCharArray());
+			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer, 27017), Arrays.asList(credential));
 
-			MongoClient mongoClient = new MongoClient("mongoweb-x01", 27017);
+			/*MongoClient mongoClient = new MongoClient("mongoweb-x01", 27017);
 
 			DB db = mongoClient.getDB("admin");
-			db.authenticate("reporter", "the_call".toCharArray());
+			db.authenticate("reporter", "the_call".toCharArray());*/
 
-			db = mongoClient.getDB("esp-dev-9");
+			DB db = mongoClient.getDB("esp-dev-9");
 
 			DBCollection collection = db.getCollection("corpHierarchy");
 

@@ -41,8 +41,8 @@ public class Sprint25{
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api-int.fitchconnect.com";
-			this.AuthrztionValue = ("Basic MUtQNk1DVVk0WkU1SDFXVlVBWlJUVjNUSjpPM0owV0orUGVhZ3JqMis1bTBTMkdvdnZKRDBrQUd1R3F6Q0M5REIydjRv");
+			baseURI = "https://api-stage.fitchconnect.com";
+			this.AuthrztionValue = ("Basic NU5COUFRSDVCSTRDUFZTUktJRUpESjQyNTpDYjFxUXQycHd4VGNKZTg1SjkyRVJmL1JMU1haRUlZSjU3NWR5R3RacDVV");
 		} else if (env.equals("dev")) {
 			baseURI = "https://api-dev.fitchconnect.com";
 			this.AuthrztionValue = ("Basic NTA4Rk44V1BKTUdGVVI5VFpOREFEV0NCSzpvMVY5bkRCMG8yM3djSHp2eVlHNnZZb01GSkJWdG1KZmEwS20vbUczVWVV");

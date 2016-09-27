@@ -156,7 +156,7 @@ public class ApIsmokeTestSuite {
 		String DirectrUrl = baseURI + endpoint1;
 
 		Response res = given().header("Authorization", AuthrztionValue)
-				./* header("Id", "1025444"). */header("content", contentValue).header("'Accept", acceptValue)
+				.header("content", contentValue).header("'Accept", acceptValue)
 				.header("X-App-Client-Id", XappClintIDvalue).when().get(DirectrUrl).then().assertThat().statusCode(200)
 				.body("isEmpty()", Matchers.is(false)).body("data.included", Matchers.hasSize(0)).extract().response();
 

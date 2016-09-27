@@ -3,6 +3,7 @@ package com.fitchconnect.api;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.junit.Assert;
 import org.testng.annotations.BeforeClass;
@@ -15,6 +16,8 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 
 public class BatchService_Testing {
 
@@ -86,13 +89,15 @@ public class BatchService_Testing {
 		boolean failure = false;
 
 		try {
-
+			MongoCredential credential = MongoCredential.createCredential("reporter", "admin", "the_call".toCharArray());
+			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer, 27017), Arrays.asList(credential));
+/*
 			MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
 
 			DB db = mongoClient.getDB("admin");
 			boolean auth = db.authenticate("reporter", "the_call".toCharArray());
-
-			db = mongoClient.getDB("core-1");
+*/
+			DB db = mongoClient.getDB("core-1");
 
 			DBCollection collection = db.getCollection("market_sector");
 
@@ -111,7 +116,7 @@ public class BatchService_Testing {
 				MRKT_SCTR_DESC = (String) result.get("MRKT_SCTR_DESC");
 				//System.out.println("**" + result);
 			}
-
+            
 			db = mongoClient.getDB("fcapidb");
 			collection = db.getCollection("marketSector");
 
@@ -149,12 +154,14 @@ public class BatchService_Testing {
 		ArrayList<String> CompanyId = new ArrayList();
 
 		try {
-			MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
+			MongoCredential credential = MongoCredential.createCredential("reporter", "admin", "the_call".toCharArray());
+			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer, 27017), Arrays.asList(credential));
+			/*MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
 
 			DB db = mongoClient.getDB("admin");
 			boolean auth = db.authenticate("reporter", "the_call".toCharArray());
-
-			db = mongoClient.getDB("xrefdb");
+*/
+			DB db = mongoClient.getDB("xrefdb");
 
 			DBCollection collection = db.getCollection("fitchEntity");
 
@@ -166,7 +173,7 @@ public class BatchService_Testing {
 				CompanyId.add((String) result.get("fitchCompanyId"));
 			}
 			System.out.println("Number of company ID " + CompanyId.size());
-			// System.out.println("Company Id :" + CompanyId);
+			 //System.out.println("Company Id :" + CompanyId);
 
 		} catch (Exception e) {
 			System.err.println("try catch error " + e.getClass().getName() + ": " + e.getMessage());
@@ -175,12 +182,14 @@ public class BatchService_Testing {
 		ArrayList<Long> AgentID = new ArrayList();
 
 		try {
-			MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
+			MongoCredential credential = MongoCredential.createCredential("reporter", "admin", "the_call".toCharArray());
+			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer, 27017), Arrays.asList(credential));
+			/*MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
 
 			DB db = mongoClient.getDB("admin");
 			boolean auth = db.authenticate("reporter", "the_call".toCharArray());
-
-			db = mongoClient.getDB(databaseFitchEnty);
+*/
+			DB db = mongoClient.getDB(databaseFitchEnty);
 
 			DBCollection collection = db.getCollection("fitch_entity");
 
@@ -191,7 +200,7 @@ public class BatchService_Testing {
 			for (DBObject result : output.results()) {
 				AgentID.add((Long) result.get("agentID"));
 			}
-
+			 System.out.println("Agent Id :" + AgentID);
 			System.out.println("Number of Agent Id "+ AgentID.size());
 
 			for (String ID : CompanyId) {
@@ -221,12 +230,16 @@ public class BatchService_Testing {
 
 		try {
 			for (int i = 0; i < MRKT_SCTR_ID.size(); i++) {
-				MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
+				
+				MongoCredential credential = MongoCredential.createCredential("reporter", "admin", "the_call".toCharArray());
+				MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer, 27017), Arrays.asList(credential));
+				
+				//MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
 
-				DB db = mongoClient.getDB("admin");
-				boolean auth = db.authenticate("reporter", "the_call".toCharArray());
+				//DB db = mongoClient.getDB("admin");
+				//boolean auth = db.authenticate("reporter", "the_call".toCharArray());
 
-				db = mongoClient.getDB("core-1");
+				DB db = mongoClient.getDB("core-1");
 
 				DBCollection collection = db.getCollection("market_sector");
 
@@ -277,12 +290,15 @@ public class BatchService_Testing {
 	public void getList(ArrayList<String> MRKT_SCTR_ID) throws IOException {
 
 		try {
-			MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
+			MongoCredential credential = MongoCredential.createCredential("reporter", "admin", "the_call".toCharArray());
+			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer, 27017), Arrays.asList(credential));
+			
+		/*	MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
 
 			DB db = mongoClient.getDB("admin");
-			boolean auth = db.authenticate("reporter", "the_call".toCharArray());
+			boolean auth = db.authenticate("reporter", "the_call".toCharArray());*/
 
-			db = mongoClient.getDB("core-1");
+			DB db = mongoClient.getDB("core-1");
 
 			DBCollection collection = db.getCollection("market_sector");
 
@@ -308,12 +324,14 @@ public class BatchService_Testing {
 		ArrayList<Long> ModyisId = new ArrayList();
 
 		try {
-			MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
+			MongoCredential credential = MongoCredential.createCredential("reporter", "admin", "the_call".toCharArray());
+			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer, 27017), Arrays.asList(credential));
+			//MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
 
-			DB db = mongoClient.getDB("admin");
-			boolean auth = db.authenticate("reporter", "the_call".toCharArray());
+			//DB db = mongoClient.getDB("admin");
+			//boolean auth = db.authenticate("reporter", "the_call".toCharArray());
 
-			db = mongoClient.getDB(databaseFitchEnty);
+			DB db = mongoClient.getDB(databaseFitchEnty);
 
 			DBCollection collection = db.getCollection("fitch_entity");
 			
@@ -343,7 +361,7 @@ public class BatchService_Testing {
 						
 			}
 			System.out.println("Number of Mody's Entity "+ ModyisId.size());
-			  System.out.println(ModyisId);
+			  //System.out.println(ModyisId);
 
 		} catch (Exception e) {
 			System.err.println("try catch error " + e.getClass().getName() + ": " + e.getMessage());
@@ -352,12 +370,15 @@ public class BatchService_Testing {
 		   ArrayList<String>CompanyIds = new ArrayList();
 
 		try {
-			MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
+			
+			MongoCredential credential = MongoCredential.createCredential("reporter", "admin", "the_call".toCharArray());
+			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer, 27017), Arrays.asList(credential));
+			//MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
 
-			DB db = mongoClient.getDB("admin");
-			boolean auth = db.authenticate("reporter", "the_call".toCharArray());
+			//DB db = mongoClient.getDB("admin");
+			//boolean auth = db.authenticate("reporter", "the_call".toCharArray());
 
-			db = mongoClient.getDB("xrefdb");
+			DB db = mongoClient.getDB("xrefdb");
 
 			DBCollection collection = db.getCollection("fitchEntity");
 
@@ -365,6 +386,7 @@ public class BatchService_Testing {
 				
 			DBObject match = new BasicDBObject("$match", new BasicDBObject("entities.idType","LEI")
 					.append("entities.idType","CUSIP6")
+					
 					.append("entities.idType","moodys"));
 					/*
 					.append("entities.idType","sandp")
@@ -383,7 +405,7 @@ public class BatchService_Testing {
 			}
             
 			System.out.println("Number of Company id "+ CompanyIds.size());
-			System.out.println(CompanyIds);
+			//System.out.println(CompanyIds);
 			
 
 			for (String compare : CompanyIds) {
@@ -407,6 +429,8 @@ public class BatchService_Testing {
 		
 		
 	}
+	
+	
 	
 	
 }
