@@ -60,7 +60,7 @@ public class Sprint24 {
 			this.AuthrztionValue = ("Basic NU5COUFRSDVCSTRDUFZTUktJRUpESjQyNTpDYjFxUXQycHd4VGNKZTg1SjkyRVJmL1JMU1haRUlZSjU3NWR5R3RacDVV");
 
 		} else if (env.equals("prod")) {
-			baseURI = "http://kubemin-p01.fitchratings.com:30001";
+			baseURI = "https://api.fitchconnect.com";
 			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
 
 		}
@@ -221,7 +221,7 @@ public class Sprint24 {
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
-				.when().get(fitchIdendpoint).then().body("data[0].id", equalTo("8600031")).extract().response();
+				.when().get(fitchIdendpoint).then().body("data[0].id", equalTo("115915")).extract().response();
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
 	}
@@ -235,7 +235,7 @@ public class Sprint24 {
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
-				.when().get(stmtendpoint).then().body("data[0].id", equalTo("8600031")).extract().response();
+				.when().get(stmtendpoint).then().body("data[0].id", equalTo("115915")).extract().response();
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
 	}

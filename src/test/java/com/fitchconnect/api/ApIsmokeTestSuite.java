@@ -28,12 +28,6 @@ import com.google.common.io.Resources;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
-import com.mongodb.AggregationOutput;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBObject;
-import com.mongodb.MongoClient;
 
 import groovy.json.internal.Charsets;
 
@@ -58,8 +52,8 @@ public class ApIsmokeTestSuite {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api-stage.fitchconnect.com";
-			this.AuthrztionValue = ("Basic NU5COUFRSDVCSTRDUFZTUktJRUpESjQyNTpDYjFxUXQycHd4VGNKZTg1SjkyRVJmL1JMU1haRUlZSjU3NWR5R3RacDVV");
+			baseURI = "https://api-int.fitchconnect.com";
+			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
 			dataBaseServer = "mongoweb-x01";
 		} else if (env.equals("dev")) {
 			baseURI = "https://api-dev.fitchconnect.com";
@@ -78,7 +72,7 @@ public class ApIsmokeTestSuite {
 			this.AuthrztionValue = ("Basic NU5COUFRSDVCSTRDUFZTUktJRUpESjQyNTpDYjFxUXQycHd4VGNKZTg1SjkyRVJmL1JMU1haRUlZSjU3NWR5R3RacDVV");
 			dataBaseServer = "mongorisk-int01";
 		} else if (env.equals("prod")) {
-			baseURI = "http://kubemin-p01.fitchratings.com:30001";
+			baseURI = "https://api.fitchconnect.com";
 			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
 			dataBaseServer = "mongorisk-p01";
 		}
@@ -162,11 +156,9 @@ public class ApIsmokeTestSuite {
 		String DirectrUrl = baseURI + endpoint1;
 
 		Response res = given().header("Authorization", AuthrztionValue)
-				./* header("Id", "1025444"). */header("content", contentValue).header("'Accept", acceptValue)
+				.header("content", contentValue).header("'Accept", acceptValue)
 				.header("X-App-Client-Id", XappClintIDvalue).when().get(DirectrUrl).then().assertThat().statusCode(200)
 				.body("isEmpty()", Matchers.is(false)).body("data.included", Matchers.hasSize(0)).extract().response();
-		
-		
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
@@ -291,8 +283,6 @@ public class ApIsmokeTestSuite {
 				.body("data.attributes.name", equalTo("Banco Bradesco S.A."))
 				.body("data.relationships.entity.links.self", Matchers.notNullValue())
 				.body("data.relationships.descendants.links.self", Matchers.anything("https:")).extract().response();
-		
-		System.out.println(res);
 
 		Assert.assertFalse(res.asString().contains("isError"));
 
@@ -1618,21 +1608,28 @@ public class ApIsmokeTestSuite {
 		List<String> wonrshipType = shreholder.path("data.attributes.ownershipType");
 		List<String> country = shreholder.path("data.attributes.country");
 		List<String> name = shreholder.path("data.attributes.name");
-		System.out.println(country.size());
+		
+
+		//System.out.println(shreholder.asString());
+		
+		
 
 		Assert.assertFalse(shreholder.asString().contains("isError"));
 		Assert.assertFalse(shreholder.asString().contains("isMissing"));
 
 		for (int i = 0; i < wonrshipType.size(); i++) {
 
-			Assert.assertNotNull(wonrshipType.get(i));
-			Assert.assertNotNull(country.get(i));
-			Assert.assertNotNull(name.get(i));
+			
+			
+			//Assert.assertNotNull(wonrshipType.get(i));
+
+			//Assert.assertNotNull(country.get(i));
+
+			//Assert.assertNotNull(name.get(i));
 
 		}
 
-		Assert.assertFalse(shreholder.asString().contains("isError"));
-		Assert.assertFalse(shreholder.asString().contains("isMissing"));
+	
 
 	}
 
@@ -1952,7 +1949,6 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertNotNull(res);
 
-		System.out.println(res.asString());
 		List<String> periodResolutionType = res.path("data.attributes.entities.get(0).periodResolution.type");
 
 		for (int i = 0; i < periodResolutionType.size(); i++) {
@@ -2292,8 +2288,6 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertNotNull(res);
 
-		System.out.println(res.asString());
-
 		List<String> dateOptionsType = res.path("data.attributes.dateOptions.periods.type");
 		Assert.assertNotNull(dateOptionsType);
 
@@ -2520,8 +2514,6 @@ public class ApIsmokeTestSuite {
 
 		}
 
-
-
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
 
@@ -2702,66 +2694,6 @@ public class ApIsmokeTestSuite {
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
 
-	}
-
-	@Test
-	public void comparingData_535() throws IOException {
-
-		boolean failure = false;
-
-		try {
-
-			MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
-
-			DB db = mongoClient.getDB("admin");
-			boolean auth = db.authenticate("reporter", "the_call".toCharArray());
-
-			db = mongoClient.getDB("core-1");
-
-			DBCollection collection = db.getCollection("market_sector");
-
-			String id = "01010103";
-
-			DBObject match = new BasicDBObject("$match", new BasicDBObject("MRKT_SCTR_ID", id));
-
-			DBObject project = new BasicDBObject("$project",
-					new BasicDBObject("MRKT_SCTR_ID", 1).append("MRKT_SCTR_DESC", 1));
-
-			AggregationOutput output = collection.aggregate(match, project);
-
-			String MRKT_SCTR_DESC = null;
-
-			for (DBObject result : output.results()) {
-				MRKT_SCTR_DESC = (String) result.get("MRKT_SCTR_DESC");
-				System.out.println("**" + result);
-			}
-
-			db = mongoClient.getDB("fcapidb");
-			collection = db.getCollection("marketSector");
-
-			match = new BasicDBObject("$match", new BasicDBObject("_id", id));
-
-			project = new BasicDBObject("$project", new BasicDBObject("_id", 1).append("name", 1));
-
-			output = collection.aggregate(match, project);
-
-			String name = null;
-
-			for (DBObject result : output.results()) {
-				name = (String) result.get("name");
-				System.out.println(result);
-			}
-
-			System.out.println(MRKT_SCTR_DESC);
-			System.out.println(name);
-
-			if (!MRKT_SCTR_DESC.equals(name)) {
-				failure = true;
-			}
-			Assert.assertFalse(failure);
-		} catch (Exception e) {
-			System.err.println(e.getClass().getName() + ": " + e.getMessage());
-		}
 	}
 
 	// We have avoided adding few test cases it has been taken care off as part

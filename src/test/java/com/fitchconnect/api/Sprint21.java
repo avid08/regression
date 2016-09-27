@@ -26,6 +26,7 @@ public class Sprint21 {
 	String AuthrztionValue;
 	String baseURI;
 	String env;
+	String dataBaseServer;
 	String metaEndPoint = "/v1/metadata/fields"; // Metadata-EndPoint
 	String metaUrl = baseURI + metaEndPoint;
 	String dataEndPoint = "/v1/data/valueRequest";
@@ -39,8 +40,9 @@ public class Sprint21 {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api-qa.fitchconnect.com";
-			this.AuthrztionValue = ("Basic MUlLVk1SMjlJS1lIMllPSjFUQkdGQ0tKSDpFN1Y2Z1FJY3RPeG5KbG8rSVBHaGY0K0tTSGc3LzFpOFJsbVo1Tmd6NUpB");
+			baseURI = "https://api-int.fitchconnect.com";
+			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
+			dataBaseServer = "mongoweb-x01";
 		} else if (env.equals("dev")) {
 			baseURI = "https://api-dev.fitchconnect.com";
 			this.AuthrztionValue = ("Basic NTA4Rk44V1BKTUdGVVI5VFpOREFEV0NCSzpvMVY5bkRCMG8yM3djSHp2eVlHNnZZb01GSkJWdG1KZmEwS20vbUczVWVV");
@@ -57,7 +59,7 @@ public class Sprint21 {
 			this.AuthrztionValue = ("Basic NU5COUFRSDVCSTRDUFZTUktJRUpESjQyNTpDYjFxUXQycHd4VGNKZTg1SjkyRVJmL1JMU1haRUlZSjU3NWR5R3RacDVV");
 
 		} else if (env.equals("prod")) {
-			baseURI = "http://kubemin-p01.fitchratings.com:30001";
+			baseURI = "https://api.fitchconnect.com";
 			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
 
 		}
@@ -134,8 +136,8 @@ public class Sprint21 {
 				.when().get(fieldUrl).then().statusCode(200)
 				.body("data.attributes.displayName", equalTo("S&P ST LC Financial Enhancement Rating"))
 				.body("data.attributes.fitchFieldDesc",
-						equalTo("S&P Short-term Local Currency Financial Enhancement Rating"))
-				.body("data.links.self", equalTo("http://meta-service:8080/v1/metadata/fields/FC_ST_LC_FER_SP"));
+						equalTo("S&P Short-term Local Currency Financial Enhancement Rating"));
+				
 
 	}
 

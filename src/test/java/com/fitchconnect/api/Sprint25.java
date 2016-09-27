@@ -41,8 +41,8 @@ public class Sprint25{
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "http://kubemin-p01.fitchratings.com:30001";
-			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
+			baseURI = "https://api-stage.fitchconnect.com";
+			this.AuthrztionValue = ("Basic NU5COUFRSDVCSTRDUFZTUktJRUpESjQyNTpDYjFxUXQycHd4VGNKZTg1SjkyRVJmL1JMU1haRUlZSjU3NWR5R3RacDVV");
 		} else if (env.equals("dev")) {
 			baseURI = "https://api-dev.fitchconnect.com";
 			this.AuthrztionValue = ("Basic NTA4Rk44V1BKTUdGVVI5VFpOREFEV0NCSzpvMVY5bkRCMG8yM3djSHp2eVlHNnZZb01GSkJWdG1KZmEwS20vbUczVWVV");
@@ -55,11 +55,11 @@ public class Sprint25{
 			baseURI = "https://api-qa.fitchconnect.com";
 			this.AuthrztionValue = ("Basic MUlLVk1SMjlJS1lIMllPSjFUQkdGQ0tKSDpFN1Y2Z1FJY3RPeG5KbG8rSVBHaGY0K0tTSGc3LzFpOFJsbVo1Tmd6NUpB");
 		} else if (env.equals("stage")) {
-			baseURI = "http://kubemin-p01.fitchratings.com:30001";
+			baseURI = "https://api-stage.fitchconnect.com";
 			this.AuthrztionValue = ("Basic NU5COUFRSDVCSTRDUFZTUktJRUpESjQyNTpDYjFxUXQycHd4VGNKZTg1SjkyRVJmL1JMU1haRUlZSjU3NWR5R3RacDVV");
 
 		} else if (env.equals("prod")) {
-			baseURI = "http://kubemin-p01.fitchratings.com:30001";
+			baseURI = "https://api.fitchconnect.com";
 			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
 
 		}
@@ -109,7 +109,7 @@ public class Sprint25{
 
 	public void relative_period_ref() throws IOException {
 
-		URL file = Resources.getResource("relative Period_ref.json");
+		URL file = Resources.getResource("relative_Period_ref.json");
 		myjson = Resources.toString(file, Charsets.UTF_8);
 
 		Response res = given()
@@ -190,7 +190,7 @@ public class Sprint25{
 		data2.put("id", id);
 		jsonString = obj.toString();
 
-		System.out.println("json"+jsonString);
+		//System.out.println("json"+jsonString);
 
 		Response resViewDef = given()
 
@@ -251,7 +251,7 @@ public class Sprint25{
 		list2.put("type", "viewfields");
 		list2.put("id", "FC_CONNECT_URL");
 		jsonString1 = obj.toString();
-		System.out.println("json1"+jsonString1);
+		//System.out.println("json1"+jsonString1);
 		
 		
 		
