@@ -92,10 +92,7 @@ public class BatchService_Testing {
 			MongoCredential credential = MongoCredential.createCredential("reporter", "admin", "the_call".toCharArray());
 			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer, 27017), Arrays.asList(credential));
 /*
-			MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
-
-			DB db = mongoClient.getDB("admin");
-			boolean auth = db.authenticate("reporter", "the_call".toCharArray());
+		
 */
 			DB db = mongoClient.getDB("core-1");
 
@@ -216,7 +213,7 @@ public class BatchService_Testing {
 			}
 
 		} catch (Exception e) {
-			System.err.println("try catch error " + e.getClass().getName() + ": " + e.getMessage());
+			System.err.println("try catch error " + e.getClass().getName() + " : " + e.getMessage());
 		}
 
 	}

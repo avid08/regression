@@ -150,7 +150,7 @@ public class ApIsmokeTestSuite {
 
 	// Test Description: verify that system display empty response for entity
 	// which are not published or Publishflag = NO
-	@Test
+	@Test(enabled=false) 
 	public void Shareholder_869_without_Data() {
 		String endpoint1 = "/v1/entities/110631/shareholders";
 		String DirectrUrl = baseURI + endpoint1;
