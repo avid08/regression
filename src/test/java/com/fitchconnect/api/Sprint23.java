@@ -83,8 +83,8 @@ public class Sprint23 {
 		} else if (env.equals("prod")) {
 			baseURI = "https://api.fitchconnect.com";
 			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
-			databaseFitchEnty = "esp-9";
 			dataBaseServer = "mongorisk-p01";
+			databaseFitchEnty = "esp-9";
 
 		}
 
@@ -254,7 +254,7 @@ public class Sprint23 {
 		Assert.assertFalse(res.asString().contains("isMissing"));
 	}
 
-	@Test
+	@Test(enabled=false)
 	public void driver_1034() throws IOException {
 
 		String FileName = "FCA_1034_FlgTrue.json";
