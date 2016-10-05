@@ -44,10 +44,10 @@ public class BatchService_Testing {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api-int.fitchconnect.com";
-			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
-			dataBaseServer = "mongoweb-x01";
-			databaseFitchEnty="esp-dev-9";
+			baseURI = "https://api-qa.fitchconnect.com";
+			this.AuthrztionValue = ("Basic MUlLVk1SMjlJS1lIMllPSjFUQkdGQ0tKSDpFN1Y2Z1FJY3RPeG5KbG8rSVBHaGY0K0tTSGc3LzFpOFJsbVo1Tmd6NUpB");
+			dataBaseServer = "mongorisk-q01";
+			databaseFitchEnty="esp-9";
 	
 		} else if (env.equals("dev")) {
 			baseURI = "https://api-dev.fitchconnect.com";
