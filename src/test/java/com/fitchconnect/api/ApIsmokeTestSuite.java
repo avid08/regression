@@ -1942,41 +1942,17 @@ public class ApIsmokeTestSuite {
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
 				.assertThat().log().ifError().statusCode(200).body(containsString("Q1")).body(containsString("Q2"))
-				.body(containsString("Q3")).body(containsString("Q4")).body(containsString("2014-12-31"))
-				.body(containsString("2014-03-31"))
-
-				.extract().response();
-
-		Assert.assertNotNull(res);
-
-		List<String> periodResolutionType = res.path("data.attributes.entities.get(0).periodResolution.type");
-
-		for (int i = 0; i < periodResolutionType.size(); i++) {
-			Assert.assertNotNull(periodResolutionType.get(i));
-		}
-
-		List<String> periodResolutionYear = res.path("data.attributes.entities.get(0).periodResolution.year");
-
-		for (int i = 0; i < periodResolutionYear.size(); i++) {
-			Assert.assertNotNull(periodResolutionYear.get(i));
-		}
-
-		List<String> periodResolutionDate = res.path("data.attributes.entities.get(0).periodResolution.periodDate");
-
-		for (int i = 1; i < periodResolutionDate.size(); i++) {
-			Assert.assertNotNull(periodResolutionDate.get(i));
-		}
-
-		List<String> actual_value = res.path("data.attributes.entities.values.values.value");
-
-		for (int i = 0; i < actual_value.size(); i++) {
-			Assert.assertNotNull(actual_value.get(i));
-
-		}
-
+				.body(containsString("Q3")).body(containsString("Q4")).body(containsString("2015"))
+				.body("data.attributes.entities[0].values[0].values[0].value[0]",equalTo("A+")).extract().response();
+		
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
 	}
+
+		
+		
+		
+
 
 	// Test Description: Test period financial options
 	@Test
