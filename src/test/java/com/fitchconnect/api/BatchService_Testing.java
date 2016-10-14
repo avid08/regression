@@ -44,43 +44,34 @@ public class BatchService_Testing {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api-qa.fitchconnect.com";
-			this.AuthrztionValue = ("Basic MUlLVk1SMjlJS1lIMllPSjFUQkdGQ0tKSDpFN1Y2Z1FJY3RPeG5KbG8rSVBHaGY0K0tTSGc3LzFpOFJsbVo1Tmd6NUpB");
-			dataBaseServer = "mongorisk-q01";
-			databaseFitchEnty="esp-9";
-	
-		} else if (env.equals("dev")) {
-			baseURI = "https://api-dev.fitchconnect.com";
-			this.AuthrztionValue = ("Basic NTA4Rk44V1BKTUdGVVI5VFpOREFEV0NCSzpvMVY5bkRCMG8yM3djSHp2eVlHNnZZb01GSkJWdG1KZmEwS20vbUczVWVV");
-			dataBaseServer = "mongoweb-x01";
-			databaseFitchEnty="esp-dev-9";
-		} else if (env.equals("int")) {
-			baseURI = "https://api-int.fitchconnect.com";
+			baseURI = "https://api.fitchconnect-int.com";
 			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
 			dataBaseServer = "mongoweb-x01";
-			databaseFitchEnty="esp-dev-9";
+		} else if (env.equals("dev")) {
+			baseURI = "https://api.fitchconnect-dev.com";
+			this.AuthrztionValue = ("Basic NTA4Rk44V1BKTUdGVVI5VFpOREFEV0NCSzpvMVY5bkRCMG8yM3djSHp2eVlHNnZZb01GSkJWdG1KZmEwS20vbUczVWVV");
+			dataBaseServer = "mongoweb-x01";
+		} else if (env.equals("int")) {
+			baseURI = "https://api.fitchconnect-int.com";
+			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
+			dataBaseServer = "mongoweb-x01";
 		} else if (env.equals("qa")) {
-			baseURI = "https://api-qa.fitchconnect.com";
+			baseURI = "https://api.fitchconnect-qa.com";
 			this.AuthrztionValue = ("Basic MUlLVk1SMjlJS1lIMllPSjFUQkdGQ0tKSDpFN1Y2Z1FJY3RPeG5KbG8rSVBHaGY0K0tTSGc3LzFpOFJsbVo1Tmd6NUpB");
 			dataBaseServer = "mongorisk-q01";
-			databaseFitchEnty="esp-9";
 		} else if (env.equals("stage")) {
 			baseURI = "https://api-stage.fitchconnect.com";
 			this.AuthrztionValue = ("Basic NU5COUFRSDVCSTRDUFZTUktJRUpESjQyNTpDYjFxUXQycHd4VGNKZTg1SjkyRVJmL1JMU1haRUlZSjU3NWR5R3RacDVV");
 			dataBaseServer = "mongorisk-int01";
-			databaseFitchEnty="esp-9";
 		} else if (env.equals("prod")) {
 			baseURI = "https://api.fitchconnect.com";
 			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
-			
 			dataBaseServer = "mongorisk-p01";
-			databaseFitchEnty="esp-9";
 		}
 
 		System.out.println(baseURI);
 		metaUrl = baseURI + metaEndPoint;
 		dataPostUrl = baseURI + dataEndPoint;
-
 	}
 
 	@Test
@@ -91,9 +82,7 @@ public class BatchService_Testing {
 		try {
 			MongoCredential credential = MongoCredential.createCredential("reporter", "admin", "the_call".toCharArray());
 			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer, 27017), Arrays.asList(credential));
-/*
-		
-*/
+
 			DB db = mongoClient.getDB("core-1");
 
 			DBCollection collection = db.getCollection("market_sector");

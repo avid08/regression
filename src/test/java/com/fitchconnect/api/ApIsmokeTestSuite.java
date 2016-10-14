@@ -52,19 +52,19 @@ public class ApIsmokeTestSuite {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api-int.fitchconnect.com";
+			baseURI = "https://api.fitchconnect-int.com";
 			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
 			dataBaseServer = "mongoweb-x01";
 		} else if (env.equals("dev")) {
-			baseURI = "https://api-dev.fitchconnect.com";
+			baseURI = "https://api.fitchconnect-dev.com";
 			this.AuthrztionValue = ("Basic NTA4Rk44V1BKTUdGVVI5VFpOREFEV0NCSzpvMVY5bkRCMG8yM3djSHp2eVlHNnZZb01GSkJWdG1KZmEwS20vbUczVWVV");
 			dataBaseServer = "mongoweb-x01";
 		} else if (env.equals("int")) {
-			baseURI = "https://api-int.fitchconnect.com";
+			baseURI = "https://api.fitchconnect-int.com";
 			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
 			dataBaseServer = "mongoweb-x01";
 		} else if (env.equals("qa")) {
-			baseURI = "https://api-qa.fitchconnect.com";
+			baseURI = "https://api.fitchconnect-qa.com";
 			this.AuthrztionValue = ("Basic MUlLVk1SMjlJS1lIMllPSjFUQkdGQ0tKSDpFN1Y2Z1FJY3RPeG5KbG8rSVBHaGY0K0tTSGc3LzFpOFJsbVo1Tmd6NUpB");
 			dataBaseServer = "mongorisk-q01";
 		} else if (env.equals("stage")) {
@@ -1705,7 +1705,7 @@ public class ApIsmokeTestSuite {
 				.when().post(dataPostUrl)
 
 				.then().assertThat().log().ifError().statusCode(200).body(containsString("VND"))
-				.body(containsString("2014")).body(containsString("784530000000")).extract().response();
+				.body(containsString("2014")).body(containsString("VND")).extract().response();
 
 		Assert.assertFalse(defaultCurrncyData.asString().contains("isError"));
 		Assert.assertFalse(defaultCurrncyData.asString().contains("isMissing"));
