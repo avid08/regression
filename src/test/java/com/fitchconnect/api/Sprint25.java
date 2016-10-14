@@ -6,6 +6,8 @@ import static org.hamcrest.Matchers.equalTo;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.json.simple.JSONArray;
@@ -16,6 +18,14 @@ import org.testng.annotations.Test;
 
 import com.google.common.io.Resources;
 import com.jayway.restassured.response.Response;
+import com.mongodb.AggregationOutput;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 
 import groovy.json.internal.Charsets;
 
@@ -25,6 +35,8 @@ public class Sprint25{
 	String AuthrztionValue;
 	String baseURI;
 	String env;
+	String databaseFitchEnty;
+	String dataBaseServer;
 	String id;
 	String id1;
 	String jsonresponse;
@@ -41,34 +53,37 @@ public class Sprint25{
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api-stage.fitchconnect.com";
-			this.AuthrztionValue = ("Basic NU5COUFRSDVCSTRDUFZTUktJRUpESjQyNTpDYjFxUXQycHd4VGNKZTg1SjkyRVJmL1JMU1haRUlZSjU3NWR5R3RacDVV");
+			baseURI = "https://api.fitchconnect-int.com";
+			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
+			dataBaseServer = "mongoweb-x01";
 		} else if (env.equals("dev")) {
-			baseURI = "https://api-dev.fitchconnect.com";
+			baseURI = "https://api.fitchconnect-dev.com";
 			this.AuthrztionValue = ("Basic NTA4Rk44V1BKTUdGVVI5VFpOREFEV0NCSzpvMVY5bkRCMG8yM3djSHp2eVlHNnZZb01GSkJWdG1KZmEwS20vbUczVWVV");
-
+			dataBaseServer = "mongoweb-x01";
 		} else if (env.equals("int")) {
-			baseURI = "https://api-int.fitchconnect.com";
-			this.AuthrztionValue = ("Basic MUtQNk1DVVk0WkU1SDFXVlVBWlJUVjNUSjpPM0owV0orUGVhZ3JqMis1bTBTMkdvdnZKRDBrQUd1R3F6Q0M5REIydjRv");
-
+			baseURI = "https://api.fitchconnect-int.com";
+			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
+			dataBaseServer = "mongoweb-x01";
 		} else if (env.equals("qa")) {
-			baseURI = "https://api-qa.fitchconnect.com";
+			baseURI = "https://api.fitchconnect-qa.com";
 			this.AuthrztionValue = ("Basic MUlLVk1SMjlJS1lIMllPSjFUQkdGQ0tKSDpFN1Y2Z1FJY3RPeG5KbG8rSVBHaGY0K0tTSGc3LzFpOFJsbVo1Tmd6NUpB");
+			dataBaseServer = "mongorisk-q01";
 		} else if (env.equals("stage")) {
 			baseURI = "https://api-stage.fitchconnect.com";
 			this.AuthrztionValue = ("Basic NU5COUFRSDVCSTRDUFZTUktJRUpESjQyNTpDYjFxUXQycHd4VGNKZTg1SjkyRVJmL1JMU1haRUlZSjU3NWR5R3RacDVV");
-
+			dataBaseServer = "mongorisk-int01";
 		} else if (env.equals("prod")) {
 			baseURI = "https://api.fitchconnect.com";
 			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
-
+			dataBaseServer = "mongorisk-p01";
 		}
 
 		System.out.println(baseURI);
 		metaUrl = baseURI + metaEndPoint;
 		dataPostUrl = baseURI + dataEndPoint;
-		
 	}
+
+
 
 	@Test
 	public void entity_includedShareHolders_() {
@@ -341,14 +356,48 @@ public class Sprint25{
 
  public void FCA_1191() throws IOException {
 
-       String statementID = baseURI + "/v1/statements/5454931";
+		List<DBObject> pipeline = new ArrayList<>();
+		DBObject match = new BasicDBObject("$match", new BasicDBObject("accntSys.accntSysDesc","U.S. GAAP"));
+		/*\ .append("ratings", new BasicDBObject("$exists", true)) */
+		pipeline.add(match);
+
+		ArrayList<Integer> myArray = new ArrayList();
+
+		try {
+			MongoCredential credential = MongoCredential.createCredential("reporter", "admin",
+					"the_call".toCharArray());
+			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer, 27017),
+					Arrays.asList(credential));
+
+			DB db = mongoClient.getDB("financial-1");
+			DBCollection collection = db.getCollection("financial_statement");
+
+			DBObject project = new BasicDBObject("$project", new BasicDBObject("_id", 1));
+			pipeline.add(project);
+			AggregationOutput output = collection.aggregate(pipeline);
+
+			for (DBObject result : output.results()) {
+
+				myArray.add((Integer) result.get("_id"));
+
+			}
+			//System.out.println(myArray.size());
+			
+      for (int i=0;i<1;i++){
+
+       String statementID = baseURI + "/v1/statements/"+myArray.get(i);
 
        Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
                      .header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
-                     .when().get(statementID).then().body("data.id", equalTo("5454931")).body("data.type", equalTo("statements")).extract()
+                     .when().get(statementID).then().statusCode(200).body("data.type", equalTo("statements")).extract()
                      .response();
        Assert.assertFalse(res.asString().contains("isError"));
        Assert.assertFalse(res.asString().contains("isMissing"));
+       
+      }
+		} catch (Exception e) {
+			System.err.println("try catch error " + e.getClass().getName() + ": " + e.getMessage());
+		}
 
  }
  

@@ -49,9 +49,10 @@ public class Entity_Response {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "http://docker-q01.fitchratings.com:30001";
-			this.AuthrztionValue = ("Basic MUlLVk1SMjlJS1lIMllPSjFUQkdGQ0tKSDpFN1Y2Z1FJY3RPeG5KbG8rSVBHaGY0K0tTSGc3LzFpOFJsbVo1Tmd6NUpB");
-			dataBaseServer = "mongorisk-q01";
+			baseURI = "https://api.fitchconnect.com";
+			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
+
+			dataBaseServer = "mongorisk-p01";
 			databaseFitchEnty = "esp-9";
 		} else if (env.equals("dev")) {
 			baseURI = "https://api-dev.fitchconnect.com";
@@ -112,7 +113,7 @@ public class Entity_Response {
 			pipeline.add(match);
 			pipeline.add(project);
 			//pipeline.add(new BasicDBObject("$skip", 0));
-			//pipeline.add(new BasicDBObject("$limit", 10000));
+			//pipeline.add(new BasicDBObject("$limit", 20000));
 
 			System.out.println("findByAgentIds: " + pipeline);
 			AggregationOutput output = collection.aggregate(pipeline);
@@ -166,29 +167,7 @@ public class Entity_Response {
 		}
 		
 		System.out.println("Took: "+(System.currentTimeMillis() - startTime)/1000);
-/*
-		for (int i =0; i < entityID.size(); i++) {
 
-			String entityUri = "/v1/entities/";
-			String enTityUrl = baseURI + entityUri + entityID.get(i);
-
-			// System.out.println(enTityUrl);
-
-			int statuscode = given().header("Authorization", AuthrztionValue)
-					.header("X-App-Client-Id", XappClintIDvalue).header("Accept", acceptValue)
-					.contentType(ContentType.JSON).header("Content", contentValue).when().get(enTityUrl).statusCode();
-
-			if (statuscode != 200) {
-
-				System.err.println("statusCode " + statuscode + " agentID " + entityID.get(i));
-				
-
-			}else{
-				System.out.println((i));
-			}
-
-		}
-*/
 	}
 
 	protected BasicDBList matchRatedOrNonRatedDBList() {

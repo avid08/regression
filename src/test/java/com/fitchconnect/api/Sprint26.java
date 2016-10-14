@@ -36,19 +36,19 @@ public class Sprint26 {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api-int.fitchconnect.com";
+			baseURI = "https://api.fitchconnect-int.com";
 			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
 			dataBaseServer = "mongoweb-x01";
 		} else if (env.equals("dev")) {
-			baseURI = "https://api-dev.fitchconnect.com";
+			baseURI = "https://api.fitchconnect-dev.com";
 			this.AuthrztionValue = ("Basic NTA4Rk44V1BKTUdGVVI5VFpOREFEV0NCSzpvMVY5bkRCMG8yM3djSHp2eVlHNnZZb01GSkJWdG1KZmEwS20vbUczVWVV");
 			dataBaseServer = "mongoweb-x01";
 		} else if (env.equals("int")) {
-			baseURI = "https://api-int.fitchconnect.com";
+			baseURI = "https://api.fitchconnect-int.com";
 			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
 			dataBaseServer = "mongoweb-x01";
 		} else if (env.equals("qa")) {
-			baseURI = "https://api-qa.fitchconnect.com";
+			baseURI = "https://api.fitchconnect-qa.com";
 			this.AuthrztionValue = ("Basic MUlLVk1SMjlJS1lIMllPSjFUQkdGQ0tKSDpFN1Y2Z1FJY3RPeG5KbG8rSVBHaGY0K0tTSGc3LzFpOFJsbVo1Tmd6NUpB");
 			dataBaseServer = "mongorisk-q01";
 		} else if (env.equals("stage")) {
@@ -64,7 +64,6 @@ public class Sprint26 {
 		System.out.println(baseURI);
 		metaUrl = baseURI + metaEndPoint;
 		dataPostUrl = baseURI + dataEndPoint;
-
 	}
 
 
@@ -214,7 +213,6 @@ Response res = given().header("Authorization", AuthrztionValue).header("X-App-Cl
 Assert.assertFalse(res.asString().contains("isError"));
 Assert.assertFalse(res.asString().contains("isMissing"));
 
-}
-
+     }
 
 }
