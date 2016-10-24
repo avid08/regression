@@ -36,7 +36,8 @@ public class Sprint25{
 	String baseURI;
 	String env;
 	String databaseFitchEnty;
-	String dataBaseServer;
+	String dataBaseServer1;
+	String dataBaseServer2;
 	String id;
 	String id1;
 	String jsonresponse;
@@ -53,37 +54,50 @@ public class Sprint25{
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api.fitchconnect-int.com";
-			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
-			dataBaseServer = "mongoweb-x01";
+			baseURI = "https://new-api.fitchconnect.com";
+			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
+			dataBaseServer1 = "mgo-pue1c-cr001.fitchratings.com";
+			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
+			databaseFitchEnty = "esp-9";
 		} else if (env.equals("dev")) {
-			baseURI = "https://api.fitchconnect-dev.com";
-			this.AuthrztionValue = ("Basic NTA4Rk44V1BKTUdGVVI5VFpOREFEV0NCSzpvMVY5bkRCMG8yM3djSHp2eVlHNnZZb01GSkJWdG1KZmEwS20vbUczVWVV");
-			dataBaseServer = "mongoweb-x01";
+			baseURI = "https://api-dev.fitchconnect.com";
+			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
+			// dataBaseServer = "mongoweb-x01";
+			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
+			dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
+			databaseFitchEnty = "esp-dev-9";
 		} else if (env.equals("int")) {
 			baseURI = "https://api.fitchconnect-int.com";
 			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
-			dataBaseServer = "mongoweb-x01";
+			// dataBaseServer = "mongoweb-x01";
+			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
+			dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
+			databaseFitchEnty = "esp-dev-9";
 		} else if (env.equals("qa")) {
 			baseURI = "https://api.fitchconnect-qa.com";
 			this.AuthrztionValue = ("Basic MUlLVk1SMjlJS1lIMllPSjFUQkdGQ0tKSDpFN1Y2Z1FJY3RPeG5KbG8rSVBHaGY0K0tTSGc3LzFpOFJsbVo1Tmd6NUpB");
-			dataBaseServer = "mongorisk-q01";
+			dataBaseServer1 = "mgo-que1a-cr001.fitchratings.com";
+			dataBaseServer2 = "mgo-que1a-ur001.fitchratings.com";
+			databaseFitchEnty = "esp-9";
 		} else if (env.equals("stage")) {
-			baseURI = "https://api-stage.fitchconnect.com";
+			baseURI = "https://api.fitchconnect-stg.com";
 			this.AuthrztionValue = ("Basic NU5COUFRSDVCSTRDUFZTUktJRUpESjQyNTpDYjFxUXQycHd4VGNKZTg1SjkyRVJmL1JMU1haRUlZSjU3NWR5R3RacDVV");
-			dataBaseServer = "mongorisk-int01";
+			dataBaseServer1 = "mongorisk-int01";
+			dataBaseServer2 = "mongorisk-int01";
+			databaseFitchEnty = "esp-9";
 		} else if (env.equals("prod")) {
-			baseURI = "https://api.fitchconnect.com";
+			baseURI = "https://new-api.fitchconnect.com";
 			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
-			dataBaseServer = "mongorisk-p01";
+			dataBaseServer1 ="mgo-pue1c-cr001..fitchratings.com";
+			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
+			databaseFitchEnty = "esp-9";
 		}
 
 		System.out.println(baseURI);
 		metaUrl = baseURI + metaEndPoint;
 		dataPostUrl = baseURI + dataEndPoint;
+
 	}
-
-
 
 	@Test
 	public void entity_includedShareHolders_() {
@@ -366,7 +380,7 @@ public class Sprint25{
 		try {
 			MongoCredential credential = MongoCredential.createCredential("reporter", "admin",
 					"the_call".toCharArray());
-			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer, 27017),
+			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer1, 27017),
 					Arrays.asList(credential));
 
 			DB db = mongoClient.getDB("financial-1");

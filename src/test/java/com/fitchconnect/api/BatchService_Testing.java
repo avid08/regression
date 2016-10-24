@@ -26,8 +26,9 @@ public class BatchService_Testing {
 	String AuthrztionValue;
 	String baseURI;
 	String env;
-    String databaseFitchEnty;
-	String dataBaseServer;
+	String databaseFitchEnty;
+	String dataBaseServer1;
+	String dataBaseServer2;	
 	String id;
 	String id1;
 	String jsonresponse;
@@ -46,42 +47,59 @@ public class BatchService_Testing {
 		if (env == null) {
 			baseURI = "https://api.fitchconnect-int.com";
 			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
-			dataBaseServer = "mongoweb-x01";
+			// dataBaseServer = "mongoweb-x01";
+			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
+			dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
+			databaseFitchEnty = "esp-dev-9";
 		} else if (env.equals("dev")) {
-			baseURI = "https://api.fitchconnect-dev.com";
-			this.AuthrztionValue = ("Basic NTA4Rk44V1BKTUdGVVI5VFpOREFEV0NCSzpvMVY5bkRCMG8yM3djSHp2eVlHNnZZb01GSkJWdG1KZmEwS20vbUczVWVV");
-			dataBaseServer = "mongoweb-x01";
+			baseURI = "https://api-dev.fitchconnect.com";
+			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
+			// dataBaseServer = "mongoweb-x01";
+			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
+			dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
+			databaseFitchEnty = "esp-dev-9";
 		} else if (env.equals("int")) {
 			baseURI = "https://api.fitchconnect-int.com";
 			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
-			dataBaseServer = "mongoweb-x01";
+			// dataBaseServer = "mongoweb-x01";
+			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
+			dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
+			databaseFitchEnty = "esp-dev-9";
 		} else if (env.equals("qa")) {
 			baseURI = "https://api.fitchconnect-qa.com";
 			this.AuthrztionValue = ("Basic MUlLVk1SMjlJS1lIMllPSjFUQkdGQ0tKSDpFN1Y2Z1FJY3RPeG5KbG8rSVBHaGY0K0tTSGc3LzFpOFJsbVo1Tmd6NUpB");
-			dataBaseServer = "mongorisk-q01";
+			dataBaseServer1 = "mgo-que1a-cr001.fitchratings.com";
+			dataBaseServer2 = "mgo-que1a-ur001.fitchratings.com";
+			databaseFitchEnty = "esp-9";
 		} else if (env.equals("stage")) {
-			baseURI = "https://api-stage.fitchconnect.com";
+			baseURI = "https://api.fitchconnect-stg.com";
 			this.AuthrztionValue = ("Basic NU5COUFRSDVCSTRDUFZTUktJRUpESjQyNTpDYjFxUXQycHd4VGNKZTg1SjkyRVJmL1JMU1haRUlZSjU3NWR5R3RacDVV");
-			dataBaseServer = "mongorisk-int01";
+			dataBaseServer1 = "mongorisk-int01";
+			dataBaseServer2 = "mongorisk-int01";
+			databaseFitchEnty = "esp-9";
 		} else if (env.equals("prod")) {
-			baseURI = "https://api.fitchconnect.com";
+			baseURI = "https://new-api.fitchconnect.com";
 			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
-			dataBaseServer = "mongorisk-p01";
+			dataBaseServer1 ="mgo-pue1c-cr001..fitchratings.com";
+			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
+			databaseFitchEnty = "esp-9";
 		}
 
 		System.out.println(baseURI);
 		metaUrl = baseURI + metaEndPoint;
 		dataPostUrl = baseURI + dataEndPoint;
-	}
 
+	}
 	@Test
 	public void comparingData_535() throws IOException {
 
 		boolean failure = false;
 
 		try {
-			MongoCredential credential = MongoCredential.createCredential("reporter", "admin", "the_call".toCharArray());
-			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer, 27017), Arrays.asList(credential));
+			MongoCredential credential = MongoCredential.createCredential("reporter", "admin",
+					"the_call".toCharArray());
+			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer1, 27017),
+					Arrays.asList(credential));
 
 			DB db = mongoClient.getDB("core-1");
 
@@ -100,10 +118,20 @@ public class BatchService_Testing {
 
 			for (DBObject result : output.results()) {
 				MRKT_SCTR_DESC = (String) result.get("MRKT_SCTR_DESC");
-				//System.out.println("**" + result);
+				// System.out.println("**" + result);
 			}
-            
-			db = mongoClient.getDB("fcapidb");
+			
+		
+		
+		
+		
+			   MongoCredential credential1 = MongoCredential.createCredential("reporter", "admin",
+						"the_call".toCharArray());
+					MongoClient mongoClient1 = new MongoClient(new ServerAddress(dataBaseServer2, 27017),
+							Arrays.asList(credential1));	
+					
+
+			db = mongoClient1.getDB("fcapidb");
 			collection = db.getCollection("marketSector");
 
 			match = new BasicDBObject("$match", new BasicDBObject("_id", id));
@@ -116,11 +144,11 @@ public class BatchService_Testing {
 
 			for (DBObject result : output.results()) {
 				name = (String) result.get("name");
-				//System.out.println(result);
+				// System.out.println(result);
 			}
 
-			//System.out.println(MRKT_SCTR_DESC);
-			//System.out.println(name);
+			// System.out.println(MRKT_SCTR_DESC);
+			// System.out.println(name);
 
 			if (!MRKT_SCTR_DESC.equals(name)) {
 				failure = true;
@@ -133,20 +161,18 @@ public class BatchService_Testing {
 
 	@Test
 	public void comparingFitchentity_fromXref_with_Esp9() throws IOException {
-		
+
 		System.out.println("RUNNING THE LONGEST TEST CASE");
 		boolean failure = false;
 
 		ArrayList<String> CompanyId = new ArrayList();
 
 		try {
-			MongoCredential credential = MongoCredential.createCredential("reporter", "admin", "the_call".toCharArray());
-			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer, 27017), Arrays.asList(credential));
-			/*MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
-
-			DB db = mongoClient.getDB("admin");
-			boolean auth = db.authenticate("reporter", "the_call".toCharArray());
-*/
+			MongoCredential credential = MongoCredential.createCredential("reporter", "admin",
+					"the_call".toCharArray());
+			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer2, 27017),
+					Arrays.asList(credential));
+		
 			DB db = mongoClient.getDB("xrefdb");
 
 			DBCollection collection = db.getCollection("fitchEntity");
@@ -159,7 +185,7 @@ public class BatchService_Testing {
 				CompanyId.add((String) result.get("fitchCompanyId"));
 			}
 			System.out.println("Number of company ID " + CompanyId.size());
-			 //System.out.println("Company Id :" + CompanyId);
+			// System.out.println("Company Id :" + CompanyId);
 
 		} catch (Exception e) {
 			System.err.println("try catch error " + e.getClass().getName() + ": " + e.getMessage());
@@ -168,13 +194,12 @@ public class BatchService_Testing {
 		ArrayList<Long> AgentID = new ArrayList();
 
 		try {
-			MongoCredential credential = MongoCredential.createCredential("reporter", "admin", "the_call".toCharArray());
-			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer, 27017), Arrays.asList(credential));
-			/*MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
+			MongoCredential credential = MongoCredential.createCredential("reporter", "admin",
+					"the_call".toCharArray());
+			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer1, 27017),
+					Arrays.asList(credential));		
 
-			DB db = mongoClient.getDB("admin");
-			boolean auth = db.authenticate("reporter", "the_call".toCharArray());
-*/
+			 
 			DB db = mongoClient.getDB(databaseFitchEnty);
 
 			DBCollection collection = db.getCollection("fitch_entity");
@@ -186,8 +211,8 @@ public class BatchService_Testing {
 			for (DBObject result : output.results()) {
 				AgentID.add((Long) result.get("agentID"));
 			}
-			 System.out.println("Agent Id :" + AgentID);
-			System.out.println("Number of Agent Id "+ AgentID.size());
+			System.out.println("Agent Id :" + AgentID);
+			System.out.println("Number of Agent Id " + AgentID.size());
 
 			for (String ID : CompanyId) {
 
@@ -196,7 +221,7 @@ public class BatchService_Testing {
 						// System.out.println("Found Company Id " + ID);
 					} else {
 						System.err.println("Not Found CompanyId :" + ID);
-						failure=true;
+						failure = true;
 					}
 				}
 			}
@@ -209,21 +234,20 @@ public class BatchService_Testing {
 
 	@Test
 	public void compareCore_1marketSector_To_fcapidb_marketSector_Data() throws IOException {
-		boolean failure = false;
+	boolean failure = false;
 
 		ArrayList<String> MRKT_SCTR_ID = new ArrayList<String>();
 		getList(MRKT_SCTR_ID);
+		
+	System.out.println(MRKT_SCTR_ID.size());
 
-		try {
+	try {
 			for (int i = 0; i < MRKT_SCTR_ID.size(); i++) {
-				
-				MongoCredential credential = MongoCredential.createCredential("reporter", "admin", "the_call".toCharArray());
-				MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer, 27017), Arrays.asList(credential));
-				
-				//MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
 
-				//DB db = mongoClient.getDB("admin");
-				//boolean auth = db.authenticate("reporter", "the_call".toCharArray());
+				MongoCredential credential = MongoCredential.createCredential("reporter", "admin",
+						"the_call".toCharArray());
+				MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer1, 27017),
+						Arrays.asList(credential));
 
 				DB db = mongoClient.getDB("core-1");
 
@@ -242,8 +266,16 @@ public class BatchService_Testing {
 					MRKT_SCTR_DESC = (String) result.get("MRKT_SCTR_DESC");
 					// System.out.println("First Database:" + result);
 				}
+				
+				//System.out.println(MRKT_SCTR_DESC);
+		
+		        MongoCredential credential1 = MongoCredential.createCredential("reporter", "admin",
+					"the_call".toCharArray());
+				MongoClient mongoClient1 = new MongoClient(new ServerAddress(dataBaseServer2, 27017),
+						Arrays.asList(credential1));	
+				
 
-				db = mongoClient.getDB("fcapidb");
+				db = mongoClient1.getDB("fcapidb");
 				collection = db.getCollection("marketSector");
 
 				match = new BasicDBObject("$match", new BasicDBObject("_id", MRKT_SCTR_ID.get(i)));
@@ -259,31 +291,34 @@ public class BatchService_Testing {
 					// System.out.println("Second Database" + result);
 				}
 
-				//System.out.println(MRKT_SCTR_DESC);
-				//System.out.println(name);
+				 System.out.println(MRKT_SCTR_DESC);
+				 System.out.println(name);
 
 				if (!MRKT_SCTR_DESC.equals(name)) {
 					failure = true;
 				}
 
+			
 			}
+			
+			} catch (Exception e) {
+				System.err.println("try catch error " + e.getClass().getName() + ": " + e.getMessage());	
+				}	
+			}
+			   	
 
-		} catch (Exception e) {
-			System.err.println("try catch error " + e.getClass().getName() + ": " + e.getMessage());
-		}
-	}
 
+	
+	
 	public void getList(ArrayList<String> MRKT_SCTR_ID) throws IOException {
 
 		try {
-			MongoCredential credential = MongoCredential.createCredential("reporter", "admin", "the_call".toCharArray());
-			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer, 27017), Arrays.asList(credential));
-			
-		/*	MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
+			MongoCredential credential = MongoCredential.createCredential("reporter", "admin",
+					"the_call".toCharArray());
+			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer1, 27017),
+					Arrays.asList(credential));
 
-			DB db = mongoClient.getDB("admin");
-			boolean auth = db.authenticate("reporter", "the_call".toCharArray());*/
-
+		
 			DB db = mongoClient.getDB("core-1");
 
 			DBCollection collection = db.getCollection("market_sector");
@@ -296,112 +331,115 @@ public class BatchService_Testing {
 				MRKT_SCTR_ID.add((String) result.get("MRKT_SCTR_ID"));
 			}
 
-			//System.out.println("all markersector Id :" + MRKT_SCTR_ID);
+			System.out.println("all markersector Id :" + MRKT_SCTR_ID);
 
 		} catch (Exception e) {
 			System.err.println("try catch error " + e.getClass().getName() + ": " + e.getMessage());
 		}
 
 	}
-//++++++++++++++++++++++==============================================================================================================
+
+	// ++++++++++++++++++++++==============================================================================================================
+	
 	@Test
-	public void Comparing_identifierVOList(){
+	public void Comparing_identifierVOList() {
 		boolean failure = false;
 		ArrayList<Long> ModyisId = new ArrayList();
 
 		try {
-			MongoCredential credential = MongoCredential.createCredential("reporter", "admin", "the_call".toCharArray());
-			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer, 27017), Arrays.asList(credential));
-			//MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
+			MongoCredential credential = MongoCredential.createCredential("reporter", "admin",
+					"the_call".toCharArray());
+			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer1, 27017),
+					Arrays.asList(credential));
+			// MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
 
-			//DB db = mongoClient.getDB("admin");
-			//boolean auth = db.authenticate("reporter", "the_call".toCharArray());
+			// DB db = mongoClient.getDB("admin");
+			// boolean auth = db.authenticate("reporter",
+			// "the_call".toCharArray());
 
 			DB db = mongoClient.getDB(databaseFitchEnty);
 
 			DBCollection collection = db.getCollection("fitch_entity");
-			
-			DBObject project = new BasicDBObject("$project", new BasicDBObject("agentID",1));  
-			
-			DBObject match = new BasicDBObject("$match", new BasicDBObject("identifierVOList.name","LEI")
-					.append("identifierVOList.name", "CUSIP")
-					.append("identifierVOList.name", "Moodys ID")
-					//.append("identifierVOList.name", "S&P ID")
-					//.append("identifierVOList.name", "CIK Code")
-					//.append("identifierVOList.name", "Dow Jones Ticker")
-					
-					
-					//.append("identifierVOList.name", "FDIC Cert Number")
-					
-					//.append("identifierVOList.name", "agentId")
-					//.append("identifierVOList.name", "groupId")
-					);
-			
 
-			AggregationOutput output = collection.aggregate(match,project);
-			
-	
+			DBObject project = new BasicDBObject("$project", new BasicDBObject("agentID", 1));
+
+			DBObject match = new BasicDBObject("$match", new BasicDBObject("identifierVOList.name", "LEI")
+					.append("identifierVOList.name", "CUSIP").append("identifierVOList.name", "Moodys ID")
+			// .append("identifierVOList.name", "S&P ID")
+			// .append("identifierVOList.name", "CIK Code")
+			// .append("identifierVOList.name", "Dow Jones Ticker")
+
+			// .append("identifierVOList.name", "FDIC Cert Number")
+
+			// .append("identifierVOList.name", "agentId")
+			// .append("identifierVOList.name", "groupId")
+			);
+
+			AggregationOutput output = collection.aggregate(match, project);
 
 			for (DBObject result : output.results()) {
-				ModyisId.add((Long)result.get("agentID"));
-						
+				ModyisId.add((Long) result.get("agentID"));
+
 			}
-			System.out.println("Number of Mody's Entity "+ ModyisId.size());
-			  //System.out.println(ModyisId);
+			System.out.println("Number of Mody's Entity " + ModyisId.size());
+			// System.out.println(ModyisId);
 
 		} catch (Exception e) {
 			System.err.println("try catch error " + e.getClass().getName() + ": " + e.getMessage());
 		}
 
-		   ArrayList<String>CompanyIds = new ArrayList();
+		ArrayList<String> CompanyIds = new ArrayList();
 
 		try {
-			
-			MongoCredential credential = MongoCredential.createCredential("reporter", "admin", "the_call".toCharArray());
-			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer, 27017), Arrays.asList(credential));
-			//MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
 
-			//DB db = mongoClient.getDB("admin");
-			//boolean auth = db.authenticate("reporter", "the_call".toCharArray());
+			MongoCredential credential = MongoCredential.createCredential("reporter", "admin",
+					"the_call".toCharArray());
+			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer2, 27017),
+					Arrays.asList(credential));
+			// MongoClient mongoClient = new MongoClient(dataBaseServer, 27017);
+
+			// DB db = mongoClient.getDB("admin");
+			// boolean auth = db.authenticate("reporter",
+			// "the_call".toCharArray());
 
 			DB db = mongoClient.getDB("xrefdb");
 
 			DBCollection collection = db.getCollection("fitchEntity");
 
-			 DBObject project = new BasicDBObject("$project", new BasicDBObject("fitchCompanyId",1));
-				
-			DBObject match = new BasicDBObject("$match", new BasicDBObject("entities.idType","LEI")
-					.append("entities.idType","CUSIP6")
-					
-					.append("entities.idType","moodys"));
-					/*
-					.append("entities.idType","sandp")
-					.append("entities.idType","CIK")
-					.append("entities.idType","companyTicker")
-					.append("entities.idType","LEI")
-					.append("entities.idType","FDIC")
-					
-					.append("entities.idType","FitchID")
-					.append("entities.idType","fitchGroupID")*/
+			DBObject project = new BasicDBObject("$project", new BasicDBObject("fitchCompanyId", 1));
 
-			AggregationOutput output = collection.aggregate(match,project);
+			DBObject match = new BasicDBObject("$match",
+					new BasicDBObject("entities.idType", "LEI").append("entities.idType", "CUSIP6")
+
+							.append("entities.idType", "moodys"));
+			/*
+			 * .append("entities.idType","sandp")
+			 * .append("entities.idType","CIK")
+			 * .append("entities.idType","companyTicker")
+			 * .append("entities.idType","LEI")
+			 * .append("entities.idType","FDIC")
+			 * 
+			 * .append("entities.idType","FitchID")
+			 * .append("entities.idType","fitchGroupID")
+			 */
+
+			AggregationOutput output = collection.aggregate(match, project);
 
 			for (DBObject result : output.results()) {
 				CompanyIds.add((String) result.get("fitchCompanyId"));
 			}
-            
-			System.out.println("Number of Company id "+ CompanyIds.size());
-			//System.out.println(CompanyIds);
-			
+
+			System.out.println("Number of Company id " + CompanyIds.size());
+			// System.out.println(CompanyIds);
 
 			for (String compare : CompanyIds) {
 
 				if (compare != null && !compare.trim().isEmpty()) {
 					if (ModyisId.contains(Long.valueOf(compare))) {
-						// System.out.println("Found Company Id " + compare);
+						//System.out.println("Found Company Id " + compare);
 					} else {
 						System.err.println("Not Found CompanyId :" + compare);
-						failure=true;
+						failure = true;
 					}
 				}
 			}
@@ -409,14 +447,7 @@ public class BatchService_Testing {
 		} catch (Exception e) {
 			System.err.println("try catch error " + e.getClass().getName() + ": " + e.getMessage());
 		}
-	
-		
-	
-		
-		
+
 	}
-	
-	
-	
-	
+
 }
