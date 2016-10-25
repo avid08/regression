@@ -6,10 +6,15 @@ import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -28,6 +33,7 @@ import com.mongodb.ServerAddress;
 
 public class Entity_Response {
 	private static final int[] GROUP_TYPES = new int[] { 4, 6, 20, 22, 24, 26, 27, 30, 31, 32, 33, 28 };
+	private static final int[] VISIBLE_INACTIVE_STATUS_IDS = new int[] { 3, 4 };
 	public Response response;
 
 	String myjson;
@@ -41,7 +47,8 @@ public class Entity_Response {
 	String XappClintIDvalue = "3dab0f06-eb00-4bee-8966-268a0ee27ba0";
 	String acceptValue = "application/vnd.api+json";
 	String contentValue = "application/vnd.api+json";
-	String dataBaseServer;
+	String dataBaseServer1;
+	String dataBaseServer2;
 	String databaseFitchEnty;
 
 	@BeforeClass
@@ -49,38 +56,42 @@ public class Entity_Response {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api.fitchconnect.com";
+			baseURI = "https://new-api.fitchconnect.com";
 			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
-
-			dataBaseServer = "mongorisk-p01";
+			dataBaseServer1 = "mgo-pue1c-cr001.fitchratings.com";
+			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-9";
 		} else if (env.equals("dev")) {
 			baseURI = "https://api-dev.fitchconnect.com";
 			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
 			// dataBaseServer = "mongoweb-x01";
-			dataBaseServer = "mgo-due1c-cr001.fitchratings.com";
+			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
+			dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-dev-9";
 		} else if (env.equals("int")) {
-			baseURI = "https://api-int.fitchconnect.com";
+			baseURI = "https://api.fitchconnect-int.com";
 			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
 			// dataBaseServer = "mongoweb-x01";
-			dataBaseServer = "mgo-due1c-cr001.fitchratings.com";
+			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
+			dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-dev-9";
 		} else if (env.equals("qa")) {
-			baseURI = "http://docker-q01.fitchratings.com:30001";
+			baseURI = "https://api.fitchconnect-qa.com";
 			this.AuthrztionValue = ("Basic MUlLVk1SMjlJS1lIMllPSjFUQkdGQ0tKSDpFN1Y2Z1FJY3RPeG5KbG8rSVBHaGY0K0tTSGc3LzFpOFJsbVo1Tmd6NUpB");
-			dataBaseServer = "mongorisk-q01";
+			dataBaseServer1 = "mgo-que1a-cr001.fitchratings.com";
+			dataBaseServer2 = "mgo-que1a-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-9";
 		} else if (env.equals("stage")) {
-			baseURI = "https://api-stage.fitchconnect.com";
+			baseURI = "https://api.fitchconnect-stg.com";
 			this.AuthrztionValue = ("Basic NU5COUFRSDVCSTRDUFZTUktJRUpESjQyNTpDYjFxUXQycHd4VGNKZTg1SjkyRVJmL1JMU1haRUlZSjU3NWR5R3RacDVV");
-			dataBaseServer = "mongorisk-int01";
+			dataBaseServer1 = "mongorisk-int01";
+			dataBaseServer2 = "mongorisk-int01";
 			databaseFitchEnty = "esp-9";
 		} else if (env.equals("prod")) {
-			baseURI = "https://api.fitchconnect.com";
+			baseURI = "https://new-api.fitchconnect.com";
 			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
-
-			dataBaseServer = "mongorisk-p01";
+			dataBaseServer1 ="mgo-pue1c-cr001..fitchratings.com";
+			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-9";
 		}
 
@@ -89,18 +100,16 @@ public class Entity_Response {
 		dataPostUrl = baseURI + dataEndPoint;
 
 	}
-
 	@Test()
 	public void StatusCodeTest() throws FileNotFoundException, UnsupportedEncodingException {
 
-		final ArrayList<Long> entityID = new ArrayList();
+		Set<Long> agentIdSet = new HashSet<>();
 
 		try {
 			MongoCredential credential = MongoCredential.createCredential("reporter", "admin",
 					"the_call".toCharArray());
-			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer, 27017),
+			MongoClient mongoClient = new MongoClient(new ServerAddress(dataBaseServer1, 27017),
 					Arrays.asList(credential));
-			
 
 			DB db = mongoClient.getDB(databaseFitchEnty);
 
@@ -112,18 +121,22 @@ public class Entity_Response {
 
 			pipeline.add(match);
 			pipeline.add(project);
-			//pipeline.add(new BasicDBObject("$skip", 0));
-			//pipeline.add(new BasicDBObject("$limit", 20000));
+			// pipeline.add(new BasicDBObject("$skip", 0));
+			//pipeline.add(new BasicDBObject("$limit", 100000));
 
 			System.out.println("findByAgentIds: " + pipeline);
 			AggregationOutput output = collection.aggregate(pipeline);
 
+			List<Long> entityID = new ArrayList<>();
 			for (DBObject result : output.results()) {
 				entityID.add((Long) result.get("agentID"));
 			}
+			System.out.println("Number of Agent Id in fitch_entity" + entityID.size());
+			
+			agentIdSet = findByAgentIds(db, entityID);
 
-			System.out.println("Number of Agent Id " + entityID.size());
-			System.out.println("agent Id " + entityID);
+			System.out.println("Number of Agent Id fitch_agent" + agentIdSet.size());
+			System.out.println("agent Id " + agentIdSet);
 
 		} catch (Exception e) {
 			System.err.println("try catch error " + e.getClass().getName() + ": " + e.getMessage());
@@ -131,48 +144,76 @@ public class Entity_Response {
 
 		// PrintWriter writer = new PrintWriter("statusCode.txt", "UTF-8");
 		
+		
+
 		long startTime = System.currentTimeMillis();
 		ExecutorService executor = Executors.newFixedThreadPool(150);
-		
-		for (int i =0; i < entityID.size(); i++) {
-			final int idx = i; 
+
+		Iterator<Long> iter = agentIdSet.iterator();
+		final AtomicInteger idx = new AtomicInteger(0);
+		while (iter.hasNext()) {
+			final long agentId = iter.next();
 			executor.submit(() -> {
 				String entityUri = "/v1/entities/";
-				String enTityUrl = baseURI + entityUri + entityID.get(idx);
+				String enTityUrl = baseURI + entityUri + agentId;
 
 				// System.out.println(enTityUrl);
 
 				int statuscode = given().header("Authorization", AuthrztionValue)
 						.header("X-App-Client-Id", XappClintIDvalue).header("Accept", acceptValue)
-						.contentType(ContentType.JSON).header("Content", contentValue).when().get(enTityUrl).statusCode();
+						.contentType(ContentType.JSON).header("Content", contentValue).when().get(enTityUrl)
+						.statusCode();
 
 				if (statuscode != 200) {
 
-					System.err.println("statusCode " + statuscode + " agentID " + entityID.get(idx));
-					
+					System.err.println("statusCode " + statuscode + " agentID " + agentId);
 
-				}else{
-					System.out.println((idx));
+				} else {
+					System.out.println((idx.incrementAndGet()));
 				}
 			});
+			
 		}
-		
-		try {
-		    System.out.println("attempt to shutdown executor");
-		    executor.shutdown();
-		    executor.awaitTermination(12, TimeUnit.HOURS);
-		}
-		catch (InterruptedException e) {
-		    System.err.println("tasks interrupted");
-		}
-		
-		System.out.println("Took: "+(System.currentTimeMillis() - startTime)/1000);
 
+		try {
+			System.out.println("attempt to shutdown executor");
+			executor.shutdown();
+			executor.awaitTermination(15, TimeUnit.HOURS);
+		} catch (InterruptedException e) {
+			System.err.println("tasks interrupted");
+		}
+
+		System.out.println("Took: " + (System.currentTimeMillis() - startTime) / 1000);
+
+	}
+
+	// The one against fitch_agent
+	public Set<Long> findByAgentIds(DB db, Collection<Long> agentIds) {
+		Set<Long> agentIdSet = new HashSet<>();
+
+		List<DBObject> pipeline = buildFindByAgentIdsQuery(agentIds);
+		System.out.println("findByAgentIds in fitch_agent: " + pipeline);
+		DBCollection collection = db.getCollection("fitch_agent");
+		Iterable<DBObject> entitiesRawData = collection.aggregate(pipeline).results();
+
+		if (entitiesRawData == null || !entitiesRawData.iterator().hasNext()) {
+			return agentIdSet;
+		}
+
+		Iterator<DBObject> iterator = entitiesRawData.iterator();
+		while (iterator.hasNext()) {
+			BasicDBObject doc = (BasicDBObject) iterator.next();
+			long agentId = doc.getLong("agentID");
+			agentIdSet.add(agentId);
+		}
+
+		return agentIdSet;
 	}
 
 	protected BasicDBList matchRatedOrNonRatedDBList() {
 		BasicDBList andList = new BasicDBList();
 		andList.add(new BasicDBObject("groupID", new BasicDBObject("$exists", true)));
+
 		andList.add(new BasicDBObject("groupType", new BasicDBObject("$in", GROUP_TYPES)));
 
 		BasicDBList orList = new BasicDBList();
@@ -180,6 +221,32 @@ public class Entity_Response {
 		orList.add(new BasicDBObject("groupID", new BasicDBObject("$exists", false)));
 
 		return orList;
+	}
+
+	protected BasicDBList matchActiveOrVisibleInactiveStatusCodesDBList() {
+		BasicDBList andList = new BasicDBList();
+		andList.add(new BasicDBObject("isActive", false));
+		andList.add(new BasicDBObject("inactiveStatId", new BasicDBObject("$in", VISIBLE_INACTIVE_STATUS_IDS)));
+
+		BasicDBList orList = new BasicDBList();
+		orList.add(new BasicDBObject("$and", andList));
+		orList.add(new BasicDBObject("isActive", true));
+
+		return orList;
+	}
+
+	protected List<DBObject> buildFindByAgentIdsQuery(Collection<Long> agentIds) {
+		List<DBObject> pipeline = new ArrayList<DBObject>();
+
+		BasicDBObject matchCondition = new BasicDBObject("agentID", new BasicDBObject("$in", agentIds)).append("$or",
+				matchActiveOrVisibleInactiveStatusCodesDBList());
+		pipeline.add(new BasicDBObject("$match", matchCondition));
+
+		DBObject projectCondition = new BasicDBObject("$project",
+				new BasicDBObject("agentID", 1));
+		pipeline.add(projectCondition);
+
+		return pipeline;
 	}
 
 }
