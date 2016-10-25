@@ -54,14 +54,14 @@ public class ApIsmokeTestSuite {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api.fitchconnect-int.com";
+			baseURI = "https://api.fitchconnect-dev.com";
 			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
 			// dataBaseServer = "mongoweb-x01";
 			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
 			dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-dev-9";
 		} else if (env.equals("dev")) {
-			baseURI = "https://api-dev.fitchconnect.com";
+			baseURI = "https://api.fitchconnect-dev.com";
 			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
 			// dataBaseServer = "mongoweb-x01";
 			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
