@@ -54,12 +54,11 @@ public class ApIsmokeTestSuite {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api.fitchconnect-dev.com";
-			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
-			// dataBaseServer = "mongoweb-x01";
-			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
-			dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
-			databaseFitchEnty = "esp-dev-9";
+			baseURI = "https://api.fitchconnect.com";
+			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
+			dataBaseServer1 ="mgo-pue1c-cr001..fitchratings.com";
+			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
+			databaseFitchEnty = "esp-9";
 		} else if (env.equals("dev")) {
 			baseURI = "https://api.fitchconnect-dev.com";
 			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
@@ -69,7 +68,7 @@ public class ApIsmokeTestSuite {
 			databaseFitchEnty = "esp-dev-9";
 		} else if (env.equals("int")) {
 			baseURI = "https://api.fitchconnect-int.com";
-			this.AuthrztionValue = ("Basic MVNCRFI4MzVTQ1lOVU5CSDJSVk1TU0MxOTpHTExaUlR3QUpRdjVTazV1cXRyZWlqZE9SK01yQTZrU2plVmNuZXdlekow");
+			this.AuthrztionValue = ("Basic WkRCSkg4WkpPWEg0S0dQNkZaRE9MVUpDWDp3VTlYWHpjakxsMWZYbldwM1lZaXBhU0VUcXZMTmtIY3hCK09ydXdRSHJB");
 			// dataBaseServer = "mongoweb-x01";
 			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
 			dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
@@ -87,7 +86,7 @@ public class ApIsmokeTestSuite {
 			dataBaseServer2 = "mongorisk-int01";
 			databaseFitchEnty = "esp-9";
 		} else if (env.equals("prod")) {
-			baseURI = "https://new-api.fitchconnect.com";
+			baseURI = "https://api.fitchconnect.com";
 			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
 			dataBaseServer1 ="mgo-pue1c-cr001..fitchratings.com";
 			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
@@ -1682,11 +1681,11 @@ public class ApIsmokeTestSuite {
 
 	}
 
-	@Test
+	@Test(enabled=false)
 
 	public void UpdateFinalcial_microSrvice_595() throws IOException {
 
-		URL file = Resources.getResource("financial Micro Servce.json");
+		URL file = Resources.getResource("financial_Micro_Servce.json");
 
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
