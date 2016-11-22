@@ -65,7 +65,7 @@ public class DeskTop_TestCases {
 
 		findingBank_oF_AC_Entity();
 		verifyingCHdata();
-        //driver.quit();
+        driver.quit();
 	
 	}
 

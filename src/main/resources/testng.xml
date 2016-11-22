@@ -15,10 +15,13 @@
 			<class name="com.fitchconnect.api.Sprint26" />
 			<class name="com.fitchconnect.api.Sprint27" />
 			<class name="com.fitchconnect.api.Sprint28" />
-
-
-		</classes>
+			<class name="com.fitchconnect.api.Sprint29" />
+			<class name="com.fitchconnect.api.Sprint30" />
+			
+	  </classes>
 	</test> <!-- Test -->
 </suite> <!-- Suite -->
+
+	
 
 
