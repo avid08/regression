@@ -1,0 +1,24 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+
+         },
+         "entities":[  
+            {  
+               "id":"1002546",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+     
+            "FC_SWIFT_CD"
+
+         ],
+         "options":[  
+
+         ]
+      }
+   }
+}

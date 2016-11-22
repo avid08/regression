@@ -1,0 +1,35 @@
+{  
+  "data":{  
+     "type":"entities",
+     "attributes":{  
+        "entities":[  
+         {
+               "id" : "111981",
+               "type" : "fitchID"
+           }
+        ],
+        "fitchFieldIds":[  
+           "FC_MRKT_SECTOR_4_ID",
+           "FC_MRKT_SECTOR_4_DESC",
+           "FC_INSURANCE_BUSINESS_TYPE"
+    
+       
+
+        ],
+                  "options":[
+                             {
+              "name":"consolidation",
+              "value":"noncon"
+           },
+           {
+              "name":"accountingStandard",
+              "value":"Local"
+           },
+                 
+          { "name": "includeStatementLink", "value": "true" }
+     
+        ]
+
+     }
+  }
+}

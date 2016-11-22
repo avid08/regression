@@ -43,7 +43,7 @@ public class Sprint21 {
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
 			baseURI = "https://new-api.fitchconnect.com";
-			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
+			this.AuthrztionValue = ("Basic MUc4TTJCUzVIUTdGTVE5RVlNWTdWWVlUWTpoeU51d2lIYUVtOEpaSnF1RzVsRmM0TnRrTXpMMjdqcVFFczVwSDlUdEZJ");
 			dataBaseServer1 = "mgo-pue1c-cr001.fitchratings.com";
 			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-9";
@@ -63,7 +63,7 @@ public class Sprint21 {
 			databaseFitchEnty = "esp-dev-9";
 		} else if (env.equals("qa")) {
 			baseURI = "https://api.fitchconnect-qa.com";
-			this.AuthrztionValue = ("Basic MUlLVk1SMjlJS1lIMllPSjFUQkdGQ0tKSDpFN1Y2Z1FJY3RPeG5KbG8rSVBHaGY0K0tTSGc3LzFpOFJsbVo1Tmd6NUpB");
+			this.AuthrztionValue = ("Basic MU1HUjNXOFJCV0ZJNFlJMzNEV000MDk2WTpGYXp5Y3E4MHd1M0hpSlFzNVVhZDlJa3E1dEIyZ1YzcnA1OVB4UmowV2pJ");
 			dataBaseServer1 = "mgo-que1a-cr001.fitchratings.com";
 			dataBaseServer2 = "mgo-que1a-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-9";
