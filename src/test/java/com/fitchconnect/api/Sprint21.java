@@ -96,6 +96,7 @@ public class Sprint21 {
 
 		Assert.assertFalse(response.asString().contains("isError"));
 		Assert.assertFalse(response.asString().contains("isMissing"));
+		Assert.assertFalse(response.asString().contains("isRestricted"));
 
 		List<String> link = response.path("data.links.self");
 		List<String> selfCaterogies = response.path("data.relationships.categories.links.self");
@@ -177,6 +178,7 @@ public class Sprint21 {
 
 		Assert.assertFalse(dataResponse.asString().contains("isError"));
 		Assert.assertFalse(dataResponse.asString().contains("isMissing"));
+		Assert.assertFalse(dataResponse.asString().contains("isRestricted"));
 
 	}
 
@@ -214,6 +216,10 @@ public class Sprint21 {
 			Assert.assertNotNull(relationship.get(i));
 
 		}
+		
+		Assert.assertFalse(fitchData.asString().contains("isError"));
+		Assert.assertFalse(fitchData.asString().contains("isMissing"));
+		Assert.assertFalse(fitchData.asString().contains("isRestricted"));
 
 	}
 

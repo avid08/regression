@@ -41,11 +41,12 @@ public class Sprint29 {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api.fitchconnect-qa.com";
-			this.AuthrztionValue = ("Basic MUlLVk1SMjlJS1lIMllPSjFUQkdGQ0tKSDpFN1Y2Z1FJY3RPeG5KbG8rSVBHaGY0K0tTSGc3LzFpOFJsbVo1Tmd6NUpB");
-			dataBaseServer1 ="mgo-pue1c-cr001..fitchratings.com";
-			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
-			databaseFitchEnty = "esp-9";
+			baseURI = "https://api.fitchconnect-int.com";
+			this.AuthrztionValue = ("Basic WkRCSkg4WkpPWEg0S0dQNkZaRE9MVUpDWDp3VTlYWHpjakxsMWZYbldwM1lZaXBhU0VUcXZMTmtIY3hCK09ydXdRSHJB");
+			// dataBaseServer = "mongoweb-x01";
+			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
+			dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
+			databaseFitchEnty = "esp-dev-9";
 		} else if (env.equals("dev")) {
 			baseURI = "https://api.fitchconnect-dev.com";
 			this.AuthrztionValue = ("Basic MUc4TTJCUzVIUTdGTVE5RVlNWTdWWVlUWTpoeU51d2lIYUVtOEpaSnF1RzVsRmM0TnRrTXpMMjdqcVFFczVwSDlUdEZJ");
@@ -104,10 +105,13 @@ public class Sprint29 {
 				.body(containsString("01010306"))
 				.body(containsString("FC_MRKT_SECTOR_4_DESC"))
 				.body(containsString("Annual"))
+				.body(containsString("Composite Insurers"))
+				.body(containsString("Composite"))
 				.extract().response();
 
 		Assert.assertFalse(responsedata.asString().contains("isError"));
 		Assert.assertFalse(responsedata.asString().contains("isMissing"));
+		Assert.assertFalse(responsedata.asString().contains("isRestricted"));
 
 	}
 	
@@ -128,7 +132,9 @@ public class Sprint29 {
 				.body(containsString("statementLink"))
 				.extract().response();
 		
-		
+		Assert.assertFalse(responsedata.asString().contains("isError"));
+		Assert.assertFalse(responsedata.asString().contains("isMissing"));
+		Assert.assertFalse(responsedata.asString().contains("isRestricted"));
 		
 	}
 

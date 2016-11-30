@@ -54,11 +54,12 @@ public class ApIsmokeTestSuite {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api.fitchconnect.com";
-			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
-			dataBaseServer1 ="mgo-pue1c-cr001..fitchratings.com";
-			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
-			databaseFitchEnty = "esp-9";
+			baseURI = "https://api.fitchconnect-int.com";
+			this.AuthrztionValue = ("Basic WkRCSkg4WkpPWEg0S0dQNkZaRE9MVUpDWDp3VTlYWHpjakxsMWZYbldwM1lZaXBhU0VUcXZMTmtIY3hCK09ydXdRSHJB");
+			// dataBaseServer = "mongoweb-x01";
+			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
+			dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
+			databaseFitchEnty = "esp-dev-9";
 		} else if (env.equals("dev")) {
 			baseURI = "https://api.fitchconnect-dev.com";  
 			this.AuthrztionValue = ("Basic MUc4TTJCUzVIUTdGTVE5RVlNWTdWWVlUWTpoeU51d2lIYUVtOEpaSnF1RzVsRmM0TnRrTXpMMjdqcVFFczVwSDlUdEZJ");
@@ -124,7 +125,10 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(response.asString().contains("isError"));
 		Assert.assertFalse(response.asString().contains("isMissing"));
+		Assert.assertFalse(response.asString().contains("isRestricted"));
+	
 		Assert.assertTrue(response.asString().contains("FC_CH_PUBLISH_FLAG"));
+		
 
 		List<String> attributes = response.path("data.attributes");
 		assertNotNull(attributes);
@@ -159,6 +163,7 @@ public class ApIsmokeTestSuite {
 				.then().assertThat().log().ifError().statusCode(200).extract().response();
 
 		Assert.assertFalse(responsedata.asString().contains("isError"));
+		Assert.assertFalse(responsedata.asString().contains("isRestricted"));
 
 		List<String> data = responsedata.path("data.attributes.entities");
 		assertNotNull(data);
@@ -179,6 +184,8 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
+		
 
 	}
 
@@ -221,6 +228,8 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(fieldResponse.asString().contains("isError"));
 		Assert.assertFalse(fieldResponse.asString().contains("isMissing"));
+		Assert.assertFalse(fieldResponse.asString().contains("isRestricted"));
+		
 		Assert.assertTrue(fieldResponse.asString().contains("FC_ST_DERIVED_ISSR_MDY"));
 
 		List<String> values = fieldResponse.path("data.attributes.entities.values.fitchFieldId");
@@ -285,6 +294,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertTrue(res.asString().contains("officers"));
 		Assert.assertFalse(res.asString().contains("ownersType"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -313,6 +323,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertFalse(res.asString().contains("asOfDate"));
 		Assert.assertTrue(res.asString().contains("descendants"));
 		Assert.assertFalse(res.asString().contains("ownersType"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -329,6 +340,7 @@ public class ApIsmokeTestSuite {
 		assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 	}
 
 	// Test Description : Verify that all fields within MetaData Response
@@ -383,6 +395,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(response.asString().contains("isError"));
 		Assert.assertFalse(response.asString().contains("isMissing"));
+		Assert.assertFalse(response.asString().contains("isRestricted"));
 
 	}
 
@@ -408,6 +421,8 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(fieldResponse.asString().contains("isError"));
 		Assert.assertFalse(fieldResponse.asString().contains("isMissing"));
+		Assert.assertFalse(fieldResponse.asString().contains("isRestricted"));
+		
 		Assert.assertTrue(fieldResponse.asString().contains("FC_ST_DERIVED_ISSR_MDY"));
 
 	}
@@ -445,6 +460,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -468,6 +484,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(fieldsResponse.asString().contains("isError"));
 		Assert.assertFalse(fieldsResponse.asString().contains("isMissing"));
+		Assert.assertFalse(fieldsResponse.asString().contains("isRestricted"));
 
 		List<String> data = fieldsResponse.path("data.attributes.entities");
 		assertNotNull(data);
@@ -491,6 +508,7 @@ public class ApIsmokeTestSuite {
 		assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -514,6 +532,7 @@ public class ApIsmokeTestSuite {
 		assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 	}
 
 	// Test Description: returns a single currency, depending on the currency
@@ -536,6 +555,7 @@ public class ApIsmokeTestSuite {
 		assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -558,6 +578,7 @@ public class ApIsmokeTestSuite {
 		assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -581,6 +602,7 @@ public class ApIsmokeTestSuite {
 		assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 	}
 
 	// Test Description:
@@ -603,6 +625,7 @@ public class ApIsmokeTestSuite {
 		assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 	}
 
 	@Test
@@ -625,6 +648,7 @@ public class ApIsmokeTestSuite {
 		assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -648,6 +672,7 @@ public class ApIsmokeTestSuite {
 		assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 	}
 
 	@Test
@@ -670,6 +695,7 @@ public class ApIsmokeTestSuite {
 
 		assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -693,6 +719,7 @@ public class ApIsmokeTestSuite {
 		assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 	// Status Code 200 instead of 400 and it runs
@@ -718,6 +745,7 @@ public class ApIsmokeTestSuite {
 		assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 	}
 
 	@Test
@@ -739,6 +767,9 @@ public class ApIsmokeTestSuite {
 						equalTo("Must provide either data.attributes.entities or data.attributes.issues"))
 				.extract().response();
 		assertNotNull(res);
+		
+		Assert.assertFalse(res.asString().contains("isRestricted"));
+		Assert.assertFalse(res.asString().contains("isError"));
 
 	}
 
@@ -760,6 +791,9 @@ public class ApIsmokeTestSuite {
 				.body("errors.get(0).detail", equalTo("data.attributes.fitchFieldIds may not be empty")).extract()
 				.response();
 		assertNotNull(res);
+		
+		Assert.assertFalse(res.asString().contains("isRestricted"));
+		Assert.assertFalse(res.asString().contains("isError"));
 
 	}
 
@@ -781,6 +815,8 @@ public class ApIsmokeTestSuite {
 				.body("errors.get(0).detail", equalTo("Request body contains content that is unparsable")).extract()
 				.response();
 		assertNotNull(res);
+		Assert.assertFalse(res.asString().contains("isRestricted"));
+		Assert.assertFalse(res.asString().contains("isError"));
 	}
 
 	@Test
@@ -937,6 +973,8 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
+
 
 	}
 
@@ -967,6 +1005,7 @@ public class ApIsmokeTestSuite {
 		assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 	}
 
 	// Test Description:
@@ -992,6 +1031,7 @@ public class ApIsmokeTestSuite {
 		assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -1020,6 +1060,7 @@ public class ApIsmokeTestSuite {
 		assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 	}
 
 	// Test Description:
@@ -1051,6 +1092,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -1081,6 +1123,7 @@ public class ApIsmokeTestSuite {
 		}
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -1111,6 +1154,7 @@ public class ApIsmokeTestSuite {
 		}
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -1141,6 +1185,7 @@ public class ApIsmokeTestSuite {
 		}
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -1171,6 +1216,7 @@ public class ApIsmokeTestSuite {
 		}
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -1201,6 +1247,7 @@ public class ApIsmokeTestSuite {
 		}
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -1254,6 +1301,7 @@ public class ApIsmokeTestSuite {
 		}
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -1277,6 +1325,7 @@ public class ApIsmokeTestSuite {
 		}
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -1314,6 +1363,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -1338,6 +1388,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -1362,6 +1413,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -1389,6 +1441,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertNotNull(res.path("data.attributes.entities.values.values.value.USD"));
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -1420,6 +1473,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -1448,6 +1502,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertNotNull(res.path("data.attributes.entities.values.values.value.USD"));
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -1476,6 +1531,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertNotNull(res.path("data.attributes.entities.values.values.value.USD"));
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -1505,6 +1561,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertNotNull(res.path("data.attributes.entities.values.values.value.USD"));
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));;
 
 	}
 
@@ -1529,6 +1586,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertTrue(res.asString().contains("FC_CALLED_SHARE_CAPITAL_INS"));
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -1552,6 +1610,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertTrue(res.asString().contains("FC_INT_INC_LOANS_BNK"));
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -1575,6 +1634,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertTrue(res.asString().contains("FC_INT_INC_LOANS_BNK"));
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -1597,6 +1657,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(drectorRes.asString().contains("isError"));
 		Assert.assertFalse(drectorRes.asString().contains("isMissing"));
+		Assert.assertFalse(drectorRes.asString().contains("isRestricted"));
 
 		for (int i = 0; i < role.size(); i++) {
 
@@ -1607,6 +1668,7 @@ public class ApIsmokeTestSuite {
 		}
 		Assert.assertFalse(drectorRes.asString().contains("isError"));
 		Assert.assertFalse(drectorRes.asString().contains("isMissing"));
+		Assert.assertFalse(drectorRes.asString().contains("isRestricted"));
 
 	}
 
@@ -1633,6 +1695,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(shreholder.asString().contains("isError"));
 		Assert.assertFalse(shreholder.asString().contains("isMissing"));
+		Assert.assertFalse(shreholder.asString().contains("isRestricted"));
 
 		for (int i = 0; i < wonrshipType.size(); i++) {
 
@@ -1678,6 +1741,7 @@ public class ApIsmokeTestSuite {
 		}
 		Assert.assertFalse(officersdata.asString().contains("isError"));
 		Assert.assertFalse(officersdata.asString().contains("isMissing"));
+		Assert.assertFalse(officersdata.asString().contains("isRestricted"));
 
 	}
 
@@ -1705,6 +1769,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(financialData.asString().contains("isError"));
 		Assert.assertFalse(financialData.asString().contains("isMissing"));
+		Assert.assertFalse(financialData.asString().contains("isRestricted"));
 
 	}
 
@@ -1726,6 +1791,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(defaultCurrncyData.asString().contains("isError"));
 		Assert.assertFalse(defaultCurrncyData.asString().contains("isMissing"));
+		Assert.assertFalse(defaultCurrncyData.asString().contains("isRestricted"));
 
 		List<String> id = defaultCurrncyData.path("data.attributes.entities.id");
 		assert (id.contains("1466804"));
@@ -1750,6 +1816,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(dataResponse.asString().contains("isError"));
 		Assert.assertFalse(dataResponse.asString().contains("isMissing"));
+		Assert.assertFalse(dataResponse.asString().contains("isRestricted"));
 
 	}
 
@@ -1784,6 +1851,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertFalse(failure);
 		Assert.assertFalse(responseData.asString().contains("isError"));
 		Assert.assertFalse(responseData.asString().contains("isMissing"));
+		Assert.assertFalse(responseData.asString().contains("isRestricted"));
 
 	}
 
@@ -1816,6 +1884,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertFalse(faildata);
 		Assert.assertFalse(dataRespnse.asString().contains("isError"));
 		Assert.assertFalse(dataRespnse.asString().contains("isMissing"));
+		Assert.assertFalse(dataRespnse.asString().contains("isRestricted"));
 	}
 
 	@Test
@@ -1838,6 +1907,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -1865,6 +1935,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(response.asString().contains("isError"));
 		Assert.assertFalse(response.asString().contains("isMissing"));
+		Assert.assertFalse(response.asString().contains("isRestricted"));
 
 	}
 
@@ -1895,6 +1966,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(entityResponse.asString().contains("isError"));
 		Assert.assertFalse(entityResponse.asString().contains("isMissing"));
+		Assert.assertFalse(entityResponse.asString().contains("isRestricted"));
 
 	}
 
@@ -1918,6 +1990,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertNotNull(output);
 		Assert.assertFalse(output.asString().contains("isError"));
 		Assert.assertFalse(output.asString().contains("isMissing"));
+		Assert.assertFalse(output.asString().contains("isRestricted"));
 
 	}
 
@@ -1939,6 +2012,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertNotNull(Rspnse);
 		Assert.assertFalse(Rspnse.asString().contains("isError"));
 		Assert.assertFalse(Rspnse.asString().contains("isMissing"));
+		Assert.assertFalse(Rspnse.asString().contains("isRestricted"));
 
 		List<String> datesOption = Rspnse.path("data.attributes.dateOptions.dates");
 
@@ -1964,6 +2038,7 @@ public class ApIsmokeTestSuite {
 		
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 	}
 
 		
@@ -1992,6 +2067,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -2016,6 +2092,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -2043,6 +2120,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -2081,6 +2159,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -2117,6 +2196,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertEquals(periodResolutionyear.get(0), 2014);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -2162,6 +2242,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -2186,6 +2267,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -2211,6 +2293,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -2258,6 +2341,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertTrue(dateOptionsYear.get(1).equals(2011));
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -2301,6 +2385,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertTrue(dateOptionsType.get(3).contains("Annual"));
 		Assert.assertTrue(dateOptionsYear.get(3).equals(2016));
 		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -2382,6 +2467,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -2462,6 +2548,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -2509,6 +2596,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -2555,6 +2643,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertTrue(dateOptions.get(0).contains("2014-12-31"));
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -2580,6 +2669,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -2605,6 +2695,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -2637,6 +2728,7 @@ public class ApIsmokeTestSuite {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -2663,6 +2755,7 @@ public class ApIsmokeTestSuite {
 		Assert.assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -2686,6 +2779,7 @@ public class ApIsmokeTestSuite {
 				.ifError().statusCode(200).extract().response();
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 

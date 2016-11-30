@@ -108,6 +108,7 @@ public class Sprint22 {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -127,6 +128,7 @@ public class Sprint22 {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -151,6 +153,7 @@ public class Sprint22 {
 
 		Assert.assertNotNull(IsoRes);
 		Assert.assertFalse(IsoRes.asString().contains("isError"));
+		Assert.assertFalse(IsoRes.asString().contains("isRestricted"));
 
 	}
 
@@ -171,6 +174,7 @@ public class Sprint22 {
 
 		AssertJUnit.assertFalse(res.asString().contains("isError"));
 		AssertJUnit.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -191,6 +195,7 @@ public class Sprint22 {
 
 		AssertJUnit.assertFalse(res.asString().contains("isError"));
 		AssertJUnit.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -226,6 +231,7 @@ public class Sprint22 {
 		AssertJUnit.assertNotNull(output);
 		AssertJUnit.assertFalse(output.asString().contains("isError"));
 		AssertJUnit.assertFalse(output.asString().contains("isMissing"));
+		Assert.assertFalse(output.asString().contains("isRestricted"));
 
 	}
 
@@ -258,6 +264,8 @@ public class Sprint22 {
 		AssertJUnit.assertNotNull(output);
 		AssertJUnit.assertFalse(output.asString().contains("isError"));
 		AssertJUnit.assertFalse(output.asString().contains("isMissing"));
+		Assert.assertFalse(output.asString().contains("isRestricted"));
+
 
 	}
 
@@ -283,6 +291,7 @@ public class Sprint22 {
 		AssertJUnit.assertNotNull(output);
 		AssertJUnit.assertFalse(output.asString().contains("isError"));
 		AssertJUnit.assertFalse(output.asString().contains("isMissing"));
+		Assert.assertFalse(output.asString().contains("isRestricted"));
 	}
 
 	@Test(enabled =false)
@@ -332,6 +341,7 @@ public class Sprint22 {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -354,6 +364,7 @@ public class Sprint22 {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -373,6 +384,7 @@ public class Sprint22 {
 				.extract().response();
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -393,6 +405,7 @@ public class Sprint22 {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -414,6 +427,7 @@ public class Sprint22 {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -432,6 +446,7 @@ public class Sprint22 {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 	}
 
 	@Test
@@ -455,6 +470,7 @@ public class Sprint22 {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 

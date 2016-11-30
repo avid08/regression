@@ -195,6 +195,9 @@ public class Sprint24 {
 				.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
 				.header("content", contentValue).contentType("application/vnd.api+json").when().get(CrteViewDefUrl)
 				.then().assertThat().statusCode(200).body(containsString(id)).extract().response();
+		Assert.assertFalse(listofViewDef.asString().contains("isError"));
+		Assert.assertFalse(listofViewDef.asString().contains("isMissing"));
+		Assert.assertFalse(listofViewDef.asString().contains("isRestricted"));
 
 	}
 
@@ -211,6 +214,11 @@ public class Sprint24 {
 				.body("data.id", equalTo(id1)).extract().response();
 
 		Assert.assertNotNull(viewDef);
+		
+		Assert.assertFalse(viewDef.asString().contains("isError"));
+		Assert.assertFalse(viewDef.asString().contains("isMissing"));
+		Assert.assertFalse(viewDef.asString().contains("isRestricted"));
+		
 
 	}
 	
@@ -227,6 +235,7 @@ public class Sprint24 {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -242,6 +251,7 @@ public class Sprint24 {
 				.when().get(fitchIdendpoint).then().body("data[0].id", equalTo("115915")).extract().response();
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 	}
 
 	@Test(enabled=false)
@@ -256,6 +266,7 @@ public class Sprint24 {
 				.when().get(stmtendpoint).then().body("data[0].id", equalTo("115915")).extract().response();
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 	}
 
 	@Test
@@ -270,6 +281,7 @@ public class Sprint24 {
 				.body("data[0].id", equalTo("FC_REAL_ESTATE_ACQ_SATISFACTION_DEBT_LIFE_US_INS")).extract().response();
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 	}
 
 	@Test
@@ -284,6 +296,7 @@ public class Sprint24 {
 				.response();
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 

@@ -125,6 +125,7 @@ public class Sprint23 {
 
 		Assert.assertFalse(FcUrlrespnse.asString().contains("isError"));
 		Assert.assertFalse(FcUrlrespnse.asString().contains("isMissing"));
+		Assert.assertFalse(FcUrlrespnse.asString().contains("isRestricted"));
 
 	}
 
@@ -142,6 +143,7 @@ public class Sprint23 {
 				.extract().response();
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 	}
 
 	@Test
@@ -167,6 +169,7 @@ public class Sprint23 {
 
 		Assert.assertFalse(leglAgnetresponse.asString().contains("isError"));
 		Assert.assertFalse(leglAgnetresponse.asString().contains("isMissing"));
+		Assert.assertFalse(leglAgnetresponse.asString().contains("isRestricted"));
 	}
 
 	@Test(enabled = true)
@@ -198,6 +201,7 @@ public class Sprint23 {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 	}
 
 	@Test
@@ -213,6 +217,7 @@ public class Sprint23 {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -228,6 +233,7 @@ public class Sprint23 {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 	}
 
 	@Test
@@ -241,6 +247,7 @@ public class Sprint23 {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 	}
 
 	@Test
@@ -259,6 +266,7 @@ public class Sprint23 {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 	}
 
 	@Test(enabled=false)
