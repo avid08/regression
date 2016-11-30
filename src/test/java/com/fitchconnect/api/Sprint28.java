@@ -66,11 +66,12 @@ public class Sprint28 {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api.fitchconnect.com";
-			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
-			dataBaseServer1 = "mgo-pue1c-cr001.fitchratings.com";
-			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
-			databaseFitchEnty = "esp-9";
+			baseURI = "https://api.fitchconnect-int.com";
+			this.AuthrztionValue = ("Basic WkRCSkg4WkpPWEg0S0dQNkZaRE9MVUpDWDp3VTlYWHpjakxsMWZYbldwM1lZaXBhU0VUcXZMTmtIY3hCK09ydXdRSHJB");
+			// dataBaseServer = "mongoweb-x01";
+			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
+			dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
+			databaseFitchEnty = "esp-dev-9";
 		} else if (env.equals("dev")) {
 			baseURI = "https://api.fitchconnect-dev.com";
 			this.AuthrztionValue = ("Basic MUc4TTJCUzVIUTdGTVE5RVlNWTdWWVlUWTpoeU51d2lIYUVtOEpaSnF1RzVsRmM0TnRrTXpMMjdqcVFFczVwSDlUdEZJ");
@@ -128,6 +129,8 @@ public class Sprint28 {
 				.extract().response();
 
 		Assert.assertFalse(response.asString().contains("isError"));
+		Assert.assertFalse(response.asString().contains("isMissing"));
+		Assert.assertFalse(response.asString().contains("isRestricted"));
 
 	}
 
@@ -146,6 +149,7 @@ public class Sprint28 {
 				.then().assertThat().log().ifError().statusCode(200).extract().response();
 
 		Assert.assertFalse(responsedata.asString().contains("isError"));
+		Assert.assertFalse(responsedata.asString().contains("isRestricted"));
 
 	}
 

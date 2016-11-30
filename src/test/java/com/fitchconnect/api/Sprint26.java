@@ -99,6 +99,7 @@ public class Sprint26 {
                         .response();
            Assert.assertFalse(res.asString().contains("isError"));
            Assert.assertFalse(res.asString().contains("isMissing"));
+           Assert.assertFalse(res.asString().contains("isRestricted"));
 
     }
     
@@ -115,6 +116,7 @@ public class Sprint26 {
                         .response();
            Assert.assertFalse(res.asString().contains("isError"));
            Assert.assertFalse(res.asString().contains("isMissing"));
+           Assert.assertFalse(res.asString().contains("isRestricted"));
 
     }
 @Test        
@@ -130,6 +132,7 @@ public class Sprint26 {
                         .response();
            Assert.assertFalse(res.asString().contains("isError"));
            Assert.assertFalse(res.asString().contains("isMissing"));
+           Assert.assertFalse(res.asString().contains("isRestricted"));
 
     }
 
@@ -147,6 +150,7 @@ Response res = given().header("Authorization", AuthrztionValue).header("X-App-Cl
            .response();
 Assert.assertFalse(res.asString().contains("isError"));
 Assert.assertFalse(res.asString().contains("isMissing"));
+Assert.assertFalse(res.asString().contains("isRestricted"));
 
 }
 
@@ -164,6 +168,7 @@ Response res = given().header("Authorization", AuthrztionValue).header("X-App-Cl
            .response();
 Assert.assertFalse(res.asString().contains("isError"));
 Assert.assertFalse(res.asString().contains("isMissing"));
+Assert.assertFalse(res.asString().contains("isRestricted"));
 
 }
 
@@ -180,6 +185,7 @@ Response res = given().header("Authorization", AuthrztionValue).header("X-App-Cl
            .response();
 Assert.assertFalse(res.asString().contains("isError"));
 Assert.assertFalse(res.asString().contains("isMissing"));
+Assert.assertFalse(res.asString().contains("isRestricted"));
 
 }
 
@@ -196,6 +202,7 @@ Response res = given().header("Authorization", AuthrztionValue).header("X-App-Cl
            .response();
 Assert.assertFalse(res.asString().contains("isError"));
 Assert.assertFalse(res.asString().contains("isMissing"));
+Assert.assertFalse(res.asString().contains("isRestricted"));
 
 }
 
@@ -213,6 +220,7 @@ Response res = given().header("Authorization", AuthrztionValue).header("X-App-Cl
            .response();
 Assert.assertFalse(res.asString().contains("isError"));
 Assert.assertFalse(res.asString().contains("isMissing"));
+Assert.assertFalse(res.asString().contains("isRestricted"));
 
 }
 @Test
@@ -230,6 +238,7 @@ Response res = given().header("Authorization", AuthrztionValue).header("X-App-Cl
            .response();
 Assert.assertFalse(res.asString().contains("isError"));
 Assert.assertFalse(res.asString().contains("isMissing"));
+Assert.assertFalse(res.asString().contains("isRestricted"));
 
      }
 

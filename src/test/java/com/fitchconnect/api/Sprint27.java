@@ -187,6 +187,7 @@ public class Sprint27 {
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
 
@@ -205,6 +206,7 @@ public class Sprint27 {
 
 		Assert.assertFalse(responsedata.asString().contains("isError"));
 		Assert.assertFalse(responsedata.asString().contains("isMissing"));
+		Assert.assertFalse(responsedata.asString().contains("isRestricted"));
 
 	}
 
@@ -224,6 +226,8 @@ public class Sprint27 {
 
 		Assert.assertFalse(responsedata.asString().contains("isError"));
 		Assert.assertFalse(responsedata.asString().contains("isMissing"));
+		Assert.assertFalse(responsedata.asString().contains("isRestricted"));
+		
 
 	}
 

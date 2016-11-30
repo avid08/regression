@@ -108,6 +108,7 @@ public void FCA_1580_SWIFT_CD () throws IOException {
 
 	Assert.assertFalse(financialData.asString().contains("isError"));
 	Assert.assertFalse(financialData.asString().contains("isMissing"));
+	Assert.assertFalse(financialData.asString().contains("isRestricted"));
 	
  }
 public void FCA_1497test1() {

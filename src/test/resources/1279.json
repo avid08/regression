@@ -1,58 +1,81 @@
-
 {
- "data": {
-   "type": "entities",
-   "attributes": {
-     "entities": [
-   
-       {
-         "id": "1011594",
-         "type": "FitchID"
-       },
-         {  
-              "id":"111954",
-              "type":"FitchID"
-           },
-
+  "data": {
+    "type": "entities",
+    "attributes": {
+      "entities": [
+    
         {
-           "id" : "80362369",
-           "type" : "fitchGroupId"
-       }, 
-       {
-           "id" : "80371413",
-           "type" : "fitchGroupId"
-       }, 
-       {
-           "id" : "2495E0",
-           "type" : "CUSIP6"
-       }, 
-      
-       {
-           "id" : "25647V",
-           "type" : "CUSIP6"
-       }
-     ],
-         
+          "id": "1011594",
+          "type": "FitchID"
+        },
+           
+           
+             {  
+               "id":"1011594",
+               "type":"FitchID"
+            },
+            {  
+               "id":"1011594",
+               "type":"FitchID"
+            },
+            {  
+               "id":"111954",
+               "type":"FitchID"
+            },
 
-     "fitchFieldIds": [
-     "FC_INSURANCE_BUSINESS_TYPE",
-        "FC_STATEMENT_ID",
- 
-        "FC_OFF_BALANCE_SHEET_ITEMS_GS_BNK"
-      
-     ],
-     "options": [
-       {
-         "name": "consolidation",
-         "value": "noncon"
-       },
-       {
-         "name": "accountingStandard",
-         "value": "Local"
-       },
+		{
+            "id" : "80362369",
+            "type" : "fitchGroupId"
+        }, 
        
-      { "name": "includeStatementLink", "value": "true" }
-     ]
-   }
- }
+        {
+            "id" : "2495E0",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E1",
+            "type" : "CUSIP6"
+        }, 
+{
+            "id" : "2495E4",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495E5",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "2495EP",
+            "type" : "CUSIP6"
+        }, 
+        {
+            "id" : "25647V",
+            "type" : "CUSIP6"
+        }
+      ],
+           
+
+      "fitchFieldIds": [
+      "FC_INSURANCE_BUSINESS_TYPE",
+         "FC_STATEMENT_ID",
+        "FC_NET_LOANS_BNK",
+        "FC_OFF_BALANCE_SHEET_ITEMS_GS_BNK",
+        "FC_NET_LOANS_TOTAL_ASSETS_BNK",
+         "FC_OFF_BALANCE_SHEET_ITEMS_GS_BNK"
+       
+      ],
+      "options": [
+        {
+          "name": "consolidation",
+          "value": "noncon"
+        },
+        {
+          "name": "accountingStandard",
+          "value": "Local"
+        },
+        
+       { "name": "includeStatementLink", "value": "true" }
+      ]
+    }
+  }
 }
