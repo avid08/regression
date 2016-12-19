@@ -54,10 +54,10 @@ public class Sprint25{
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://new-api.fitchconnect.com";
-			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
-			dataBaseServer1 = "mgo-pue1c-cr001.fitchratings.com";
-			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
+			baseURI = "https://api.fitchconnect-qa.com";
+			this.AuthrztionValue = ("Basic MU1HUjNXOFJCV0ZJNFlJMzNEV000MDk2WTpGYXp5Y3E4MHd1M0hpSlFzNVVhZDlJa3E1dEIyZ1YzcnA1OVB4UmowV2pJ");
+			dataBaseServer1 = "mgo-que1a-cr001.fitchratings.com";
+			dataBaseServer2 = "mgo-que1a-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-9";
 		} else if (env.equals("dev")) {
 			baseURI = "https://api.fitchconnect-dev.com";
@@ -81,7 +81,7 @@ public class Sprint25{
 			databaseFitchEnty = "esp-9";
 		} else if (env.equals("stage")) {
 			baseURI = "https://api.fitchconnect-stg.com";
-			this.AuthrztionValue = ("Basic NU5COUFRSDVCSTRDUFZTUktJRUpESjQyNTpDYjFxUXQycHd4VGNKZTg1SjkyRVJmL1JMU1haRUlZSjU3NWR5R3RacDVV");
+			this.AuthrztionValue = ("Basic NTZORlhGTkJOOEdPWVk0Uk41UFdBTTdYVDp5c1FxNEtwazJza1UyVXU4TE1lbytLVVltTEhKMG1COFo5ZWczT0JZTStr");
 			dataBaseServer1 = "mongorisk-int01";
 			dataBaseServer2 = "mongorisk-int01";
 			databaseFitchEnty = "esp-9";

@@ -94,7 +94,7 @@ public class Sprint28 {
 			databaseFitchEnty = "esp-9";
 		} else if (env.equals("stage")) {
 			baseURI = "https://api.fitchconnect-stg.com";
-			this.AuthrztionValue = ("Basic NU5COUFRSDVCSTRDUFZTUktJRUpESjQyNTpDYjFxUXQycHd4VGNKZTg1SjkyRVJmL1JMU1haRUlZSjU3NWR5R3RacDVV");
+			this.AuthrztionValue = ("Basic NTZORlhGTkJOOEdPWVk0Uk41UFdBTTdYVDp5c1FxNEtwazJza1UyVXU4TE1lbytLVVltTEhKMG1COFo5ZWczT0JZTStr");
 			dataBaseServer1 = "mongorisk-int01";
 			dataBaseServer2 = "mongorisk-int01";
 			databaseFitchEnty = "esp-9";
