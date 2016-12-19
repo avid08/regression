@@ -1,0 +1,35 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+          
+
+            ],
+            "periods":[  
+
+            ],
+            "dateRanges":[  
+
+            ],
+            "periodRanges":[  
+
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"1409010",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+           "FC_ST_IDR",
+           "FC_LT_IDR"
+         ],
+         "options":[  
+
+         ]
+      }
+   }
+}

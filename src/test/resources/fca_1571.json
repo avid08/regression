@@ -1,0 +1,26 @@
+{  
+  "data":{  
+     "type":"valueRequest",
+     "attributes":{  
+                  
+        "entities":[  
+           {  
+              "id":"1112870",
+              "type":"FitchID"
+           },
+           {  
+              "id":"1159110",
+              "type":"FitchID"
+           }
+        ],
+        "fitchFieldIds":[  
+           "FC_LT_IDR",
+           "FC_ST_LC_IDR"
+           
+        ],
+        "options":[  
+          
+        ]
+     }
+  }
+}]

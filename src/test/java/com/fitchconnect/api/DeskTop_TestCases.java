@@ -24,7 +24,7 @@ public class DeskTop_TestCases {
 	public void setUp() throws Exception {
 		// driver = new FirefoxDriver();
 		System.setProperty("webdriver.chrome.driver",
-				"C://Users//aislam//Desktop//AutomatoinWorkSpace//regression//chromedriver.exe");
+				"C://Users//aislam//Desktop//AutomatoinWorkSpace//regression//src//test//resources//chromedriver.exe");
 		driver = new ChromeDriver();
 		baseUrl = "https://login.fitchconnect.com/jsp/fitchconnect/FitchConnectLoginController.faces";
 		driver.get(baseUrl);
