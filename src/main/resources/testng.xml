@@ -3,7 +3,6 @@
 <suite name="ApIsmokeTestSuite.xml">
 	<test name="API Test Cases">
 		<classes>
-
 			<class name="com.fitchconnect.api.ApIsmokeTestSuite" />
 			<class name="com.fitchconnect.api.BatchService_Testing" />
 			<class name="com.fitchconnect.api.Sprint20" />
@@ -19,7 +18,7 @@
 			<class name="com.fitchconnect.api.Sprint30" />
 			<class name="com.fitchconnect.api.Sprint31" />
 			<class name="com.fitchconnect.api.Sprint32" />
-			<class name="com.fitchconnect.api.DeskTop_TestCases" />
+			
 	  </classes>	
 			
 	</test> <!-- Test -->
