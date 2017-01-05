@@ -55,9 +55,8 @@
       ],
            
 
-      "fitchFieldIds": [
-      "FC_INSURANCE_BUSINESS_TYPE",
-         "FC_STATEMENT_ID",
+      "fitchFieldIds": [      
+        "FC_STATEMENT_ID",
         "FC_NET_LOANS_BNK",
         "FC_OFF_BALANCE_SHEET_ITEMS_GS_BNK",
         "FC_NET_LOANS_TOTAL_ASSETS_BNK",
