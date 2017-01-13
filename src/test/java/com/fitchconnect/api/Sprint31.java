@@ -38,10 +38,10 @@ public class Sprint31 {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api.fitchconnect-qa.com";
-			this.AuthrztionValue = ("Basic MU1HUjNXOFJCV0ZJNFlJMzNEV000MDk2WTpGYXp5Y3E4MHd1M0hpSlFzNVVhZDlJa3E1dEIyZ1YzcnA1OVB4UmowV2pJ");
-			dataBaseServer1 = "mgo-que1a-cr001.fitchratings.com";
-			dataBaseServer2 = "mgo-que1a-ur001.fitchratings.com";
+			baseURI = "https://api.fitchconnect.com";
+			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
+			dataBaseServer1 ="mgo-pue1c-cr001.fitchratings.com";
+			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-9";
 		} else if (env.equals("dev")) {
 			baseURI = "https://api.fitchconnect-dev.com";
@@ -96,10 +96,10 @@ public class Sprint31 {
 			.body(containsString("Fitch Ratings"))
 			.body(containsString("Moody's Issuer Rating"))
 			.body(containsString("Sovereign Data"))
-			.body(containsString("Registered Office Address"))
-			.body(containsString("Head Office Address"))
-			.body(containsString("Identifiers"))
-			.body(containsString("Industry Classification"))
+			//.body(containsString("Registered Office Address"))
+			//.body(containsString("Head Office Address"))
+			//.body(containsString("Identifiers"))
+			//.body(containsString("Industry Classification"))
 			.extract().response();
 	
 	

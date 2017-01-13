@@ -3,14 +3,7 @@
       "type":"entities",
       "attributes":{  
          "entities":[  
-            {  
-               "id":"1230051",
-               "type":"FitchID"
-            },
-            {  
-               "id":"108286",
-               "type":"FitchID"
-            },
+            
             {  
                "id":"111676",
                "type":"FitchID"
