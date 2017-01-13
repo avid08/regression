@@ -55,10 +55,10 @@ public class Sprint23 {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://new-api.fitchconnect.com";
-			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
-			dataBaseServer1 = "mgo-pue1c-cr001.fitchratings.com";
-			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
+			baseURI = "https://api.fitchconnect-stg.com";
+			this.AuthrztionValue = ("Basic NTZORlhGTkJOOEdPWVk0Uk41UFdBTTdYVDp5c1FxNEtwazJza1UyVXU4TE1lbytLVVltTEhKMG1COFo5ZWczT0JZTStr");
+			dataBaseServer1 = "mongorisk-int01";
+			dataBaseServer2 = "mongorisk-int01";
 			databaseFitchEnty = "esp-9";
 		} else if (env.equals("dev")) {
 			baseURI = "https://api.fitchconnect-dev.com";
@@ -160,10 +160,11 @@ public class Sprint23 {
 
 				.when().post(dataPostUrl)
 
-				.then().assertThat().statusCode(200).body("data.attributes.entities[0].id", equalTo("1230051"))
-				.body("data.attributes.entities[0].values[0].values[0].value[0]", equalTo("Montagu Evans LLP"))
-				.body("data.attributes.entities[5].id", equalTo("1003619"))
-				.body("data.attributes.entities[5].values[0].values[0].value[0]", equalTo("Ecobank Nigeria Ltd"))
+				.then().assertThat().statusCode(200)
+				.body(containsString("The Standard Bank of South Africa Limited"))
+				.body(containsString("Republic Financial Holdings Limited"))
+				.body(containsString("JSC Citibank Kazakhstan"))
+				
 
 				.extract().response();
 
