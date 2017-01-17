@@ -189,14 +189,14 @@ public class Sprint32 {
    public void fca_1571() {
 	   
 	   
-	   String fitchIssuerUrl = baseURI + "/v1/entities/140051/fitchIssuerRatings?filter[ratingType]=FC_ST_LC_IDR";
+	   String fitchIssuerUrl = baseURI + "/v1/entities/107477/fitchIssuerRatings?filter[ratingType]=FC_LT_IDR";
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
 				.when().get(fitchIssuerUrl).then()
 				.body(containsString("description"))
-				.body(containsString("Short-Term LC Issuer Default Rating"))
-				.body(containsString("rating"))					
+				.body(containsString("Long-Term Issuer Default Rating"))
+				.body(containsString("fitchIssuerRatings"))					
 				.extract().response();
 		
 		
