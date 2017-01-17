@@ -183,15 +183,15 @@ public class Sprint22 {
 
 	public void FCA_1022_singlemarketsectors() {
 
-		String url = baseURI + "/v1/marketSectors/02000000";
+		String url = baseURI + "/v1/marketSectors/01000000";
 		RestAssured.baseURI = url;
 
 		Response res = given()
 
 				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get().then().statusCode(200)
-				.body("data.id", equalTo("02000000")).body("data.type", equalTo("marketSector"))
-				.body("data.attributes.name", equalTo("Structured Credit")).contentType(ContentType.JSON).extract()
+				.body("data.id", equalTo("01000000")).body("data.type", equalTo("marketSector"))
+				.body("data.attributes.name", equalTo("Corporate Finance")).contentType(ContentType.JSON).extract()
 				.response();
 
 		AssertJUnit.assertFalse(res.asString().contains("isError"));
