@@ -61,7 +61,7 @@ public class Sprint23 {
 			dataBaseServer2 = "mongorisk-int01";
 			databaseFitchEnty = "esp-9";
 		} else if (env.equals("dev")) {
-			baseURI = "https://api.fitchconnect-dev.com";
+			baseURI = "https://api.fitchconnect-dev.com";  
 			this.AuthrztionValue = ("Basic MUc4TTJCUzVIUTdGTVE5RVlNWTdWWVlUWTpoeU51d2lIYUVtOEpaSnF1RzVsRmM0TnRrTXpMMjdqcVFFczVwSDlUdEZJ");
 			// dataBaseServer = "mongoweb-x01";
 			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
@@ -89,7 +89,7 @@ public class Sprint23 {
 		} else if (env.equals("prod")) {
 			baseURI = "https://api.fitchconnect.com";
 			this.AuthrztionValue = ("Basic M1FEREJQODMyQ1NKTlMwM1ZQT0NSQ0VFQjpENk9PUWtJVW5uaXhVZlZmL3loVnJhbHNDU1dzaGd0L1NJOGFTSFZEVTJR");
-			dataBaseServer1 ="mgo-pue1c-cr001.fitchratings.com";
+			dataBaseServer1 ="mgo-pue1c-cr001..fitchratings.com";
 			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-9";
 		}
@@ -99,6 +99,7 @@ public class Sprint23 {
 		dataPostUrl = baseURI + dataEndPoint;
 
 	}
+
 
 	@Test
 

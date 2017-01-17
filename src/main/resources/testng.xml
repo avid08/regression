@@ -19,6 +19,7 @@
 			<class name="com.fitchconnect.api.Sprint31" />
 			<class name="com.fitchconnect.api.Sprint32" />
 			<class name="com.fitchconnect.api.Sprint33" />
+			<class name="com.fitchconnect.api.DeskTop_TestCases" />
 			
 			
 	  </classes>	

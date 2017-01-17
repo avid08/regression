@@ -43,14 +43,13 @@ public class Sprint20 {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api.fitchconnect-int.com";
-			this.AuthrztionValue = ("Basic WkRCSkg4WkpPWEg0S0dQNkZaRE9MVUpDWDp3VTlYWHpjakxsMWZYbldwM1lZaXBhU0VUcXZMTmtIY3hCK09ydXdRSHJB");
-			// dataBaseServer = "mongoweb-x01";
-			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
-			dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
-			databaseFitchEnty = "esp-dev-9";
+			baseURI = "https://api.fitchconnect-stg.com";
+			this.AuthrztionValue = ("Basic NTZORlhGTkJOOEdPWVk0Uk41UFdBTTdYVDp5c1FxNEtwazJza1UyVXU4TE1lbytLVVltTEhKMG1COFo5ZWczT0JZTStr");
+			dataBaseServer1 = "mongorisk-int01";
+			dataBaseServer2 = "mongorisk-int01";
+			databaseFitchEnty = "esp-9";
 		} else if (env.equals("dev")) {
-			baseURI = "https://api.fitchconnect-dev.com";
+			baseURI = "https://api.fitchconnect-dev.com";  
 			this.AuthrztionValue = ("Basic MUc4TTJCUzVIUTdGTVE5RVlNWTdWWVlUWTpoeU51d2lIYUVtOEpaSnF1RzVsRmM0TnRrTXpMMjdqcVFFczVwSDlUdEZJ");
 			// dataBaseServer = "mongoweb-x01";
 			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
@@ -88,6 +87,7 @@ public class Sprint20 {
 		dataPostUrl = baseURI + dataEndPoint;
 
 	}
+
 	@Test(enabled = true)
 	public void ModyNewFields_775() throws IOException {
 
