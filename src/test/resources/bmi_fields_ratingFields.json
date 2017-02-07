@@ -12,9 +12,15 @@
          },
          "entities":[  
             {  
+               "id":"1437410",
+               "type":"fitchId"
+            }
+            ,
+            {  
                "id":"29766L",
                "type":"CUSIP6"
             }
+            
          ],
          "fitchFieldIds":[  
             "BMI_GDP_NOM_LCU",

@@ -16,6 +16,9 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -31,7 +34,6 @@ import com.jayway.restassured.response.Response;
 import groovy.json.internal.Charsets;
 
 public class ApIsmokeTestSuite extends Configuration {
-	
 
 	@Test()
 	public void StatusCodeTest() {
@@ -59,9 +61,8 @@ public class ApIsmokeTestSuite extends Configuration {
 		Assert.assertFalse(response.asString().contains("isError"));
 		Assert.assertFalse(response.asString().contains("isMissing"));
 		Assert.assertFalse(response.asString().contains("isRestricted"));
-	
+
 		Assert.assertTrue(response.asString().contains("FC_CH_PUBLISH_FLAG"));
-		
 
 		List<String> attributes = response.path("data.attributes");
 		assertNotNull(attributes);
@@ -105,20 +106,19 @@ public class ApIsmokeTestSuite extends Configuration {
 
 	// Test Description: verify that system display empty response for entity
 	// which are not published or Publishflag = NO
-	@Test(enabled=false) 
+	@Test(enabled = false)
 	public void Shareholder_869_without_Data() {
 		String endpoint1 = "/v1/entities/110631/shareholders";
 		String DirectrUrl = baseURI + endpoint1;
 
-		Response res = given().header("Authorization", AuthrztionValue)
-				.header("content", contentValue).header("'Accept", acceptValue)
-				.header("X-App-Client-Id", XappClintIDvalue).when().get(DirectrUrl).then().assertThat().statusCode(200)
-				.body("isEmpty()", Matchers.is(false)).body("data.included", Matchers.hasSize(0)).extract().response();
+		Response res = given().header("Authorization", AuthrztionValue).header("content", contentValue)
+				.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(DirectrUrl)
+				.then().assertThat().statusCode(200).body("isEmpty()", Matchers.is(false))
+				.body("data.included", Matchers.hasSize(0)).extract().response();
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
 		Assert.assertFalse(res.asString().contains("isRestricted"));
-		
 
 	}
 
@@ -162,7 +162,7 @@ public class ApIsmokeTestSuite extends Configuration {
 		Assert.assertFalse(fieldResponse.asString().contains("isError"));
 		Assert.assertFalse(fieldResponse.asString().contains("isMissing"));
 		Assert.assertFalse(fieldResponse.asString().contains("isRestricted"));
-		
+
 		Assert.assertTrue(fieldResponse.asString().contains("FC_ST_DERIVED_ISSR_MDY"));
 
 		List<String> values = fieldResponse.path("data.attributes.entities.values.fitchFieldId");
@@ -284,7 +284,7 @@ public class ApIsmokeTestSuite extends Configuration {
 
 		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrl).then()
-				.contentType(ContentType.JSON).extract().response();
+				.contentType(ContentType.JSON).statusCode(200).extract().response();
 
 		jsonAsString = response.asString();
 
@@ -355,7 +355,7 @@ public class ApIsmokeTestSuite extends Configuration {
 		Assert.assertFalse(fieldResponse.asString().contains("isError"));
 		Assert.assertFalse(fieldResponse.asString().contains("isMissing"));
 		Assert.assertFalse(fieldResponse.asString().contains("isRestricted"));
-		
+
 		Assert.assertTrue(fieldResponse.asString().contains("FC_ST_DERIVED_ISSR_MDY"));
 
 	}
@@ -700,7 +700,7 @@ public class ApIsmokeTestSuite extends Configuration {
 						equalTo("Must provide either data.attributes.entities or data.attributes.issues"))
 				.extract().response();
 		assertNotNull(res);
-		
+
 		Assert.assertFalse(res.asString().contains("isRestricted"));
 		Assert.assertFalse(res.asString().contains("isError"));
 
@@ -724,7 +724,7 @@ public class ApIsmokeTestSuite extends Configuration {
 				.body("errors.get(0).detail", equalTo("data.attributes.fitchFieldIds may not be empty")).extract()
 				.response();
 		assertNotNull(res);
-		
+
 		Assert.assertFalse(res.asString().contains("isRestricted"));
 		Assert.assertFalse(res.asString().contains("isError"));
 
@@ -907,7 +907,6 @@ public class ApIsmokeTestSuite extends Configuration {
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
 		Assert.assertFalse(res.asString().contains("isRestricted"));
-
 
 	}
 
@@ -1494,7 +1493,8 @@ public class ApIsmokeTestSuite extends Configuration {
 		Assert.assertNotNull(res.path("data.attributes.entities.values.values.value.USD"));
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
-		Assert.assertFalse(res.asString().contains("isRestricted"));;
+		Assert.assertFalse(res.asString().contains("isRestricted"));
+		;
 
 	}
 
@@ -1620,11 +1620,8 @@ public class ApIsmokeTestSuite extends Configuration {
 		List<String> wonrshipType = shreholder.path("data.attributes.ownershipType");
 		List<String> country = shreholder.path("data.attributes.country");
 		List<String> name = shreholder.path("data.attributes.name");
-		
 
-		//System.out.println(shreholder.asString());
-		
-		
+		// System.out.println(shreholder.asString());
 
 		Assert.assertFalse(shreholder.asString().contains("isError"));
 		Assert.assertFalse(shreholder.asString().contains("isMissing"));
@@ -1632,17 +1629,13 @@ public class ApIsmokeTestSuite extends Configuration {
 
 		for (int i = 0; i < wonrshipType.size(); i++) {
 
-			
-			
-			//Assert.assertNotNull(wonrshipType.get(i));
+			// Assert.assertNotNull(wonrshipType.get(i));
 
-			//Assert.assertNotNull(country.get(i));
+			// Assert.assertNotNull(country.get(i));
 
-			//Assert.assertNotNull(name.get(i));
+			// Assert.assertNotNull(name.get(i));
 
 		}
-
-	
 
 	}
 
@@ -1678,7 +1671,7 @@ public class ApIsmokeTestSuite extends Configuration {
 
 	}
 
-	@Test(enabled=false)
+	@Test(enabled = false)
 
 	public void UpdateFinalcial_microSrvice_595() throws IOException {
 
@@ -1872,7 +1865,7 @@ public class ApIsmokeTestSuite extends Configuration {
 
 	}
 
-	@Test(enabled=false)
+	@Test(enabled = false)
 	public void with_500_entitiscall_1039() throws IOException {
 
 		URL xfile = Resources.getResource("1039_request with 500 entity.json");
@@ -1967,17 +1960,12 @@ public class ApIsmokeTestSuite extends Configuration {
 				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
 				.assertThat().log().ifError().statusCode(200).body(containsString("Q1")).body(containsString("Q2"))
 				.body(containsString("Q3")).body(containsString("Q4")).body(containsString("2015"))
-				.body("data.attributes.entities[0].values[0].values[0].value[0]",equalTo("A+")).extract().response();
-		
+				.body("data.attributes.entities[0].values[0].values[0].value[0]", equalTo("A+")).extract().response();
+
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
 		Assert.assertFalse(res.asString().contains("isRestricted"));
 	}
-
-		
-		
-		
-
 
 	// Test Description: Test period financial options
 	@Test
@@ -2716,16 +2704,60 @@ public class ApIsmokeTestSuite extends Configuration {
 
 	}
 
+	@Test
+
+	public void All_metaData_fields() {
+		
+		String metaDataURI = baseURI + "/v1/metadata/fields";
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).when().get(metaDataURI).then()
+				.statusCode(200).extract().response();
+
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
+
+		List<String> MetafildId = res.path("data.id");
+		
+		System.out.println(MetafildId.size());
+		ExecutorService executor = Executors.newFixedThreadPool(50);
+
+		for (int i = 0; i < MetafildId.size(); i++) {
+			
+			final int idx = i;
+			executor.submit(() -> {
+
+				String PerMetaDataUri = metaDataURI + "/" + MetafildId.get(idx);
+
+				int statusCode = given().header("Authorization", AuthrztionValue)
+						.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
+						.header("content", contentValue).when().get(PerMetaDataUri)
+						.statusCode();
+								       
+				if (statusCode != 200) {
+					System.err.println("MetaData Field Name   " + MetafildId.get(idx));
+					failure = true ; 
+					
+				} else {
+					System.out.println(idx + " fields are completed");
+				}
+
+			});
+
+		}
+
+		try {
+			System.out.println("attempt to shutdown executor");
+			executor.shutdown();
+			executor.awaitTermination(12, TimeUnit.HOURS);
+		} catch (InterruptedException e) {
+			System.err.println("tasks interrupted");
+		}
+
+	}
+
 	// We have avoided adding few test cases it has been taken care off as part
 	// smoke test or some other Sprint
-	
-/*	
-  @Test
-  
-  public void trying () throws IOException{
-	  
-	  Desktop dt = Desktop.getDesktop();
-	  dt.open(new File(("C://Users//aislam//Desktop//fitchfieldID.xlsx")));
-  }*/
 
 }
