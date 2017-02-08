@@ -300,7 +300,7 @@ public class Sprint25 extends Configuration{
 
  
  
- @Test(enabled=false)
+ @Test()
 
  public void FCA_1191() throws IOException {
 
