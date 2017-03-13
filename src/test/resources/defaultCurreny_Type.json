@@ -4,7 +4,7 @@
       "attributes":{
          "dateOptions":{
             "dates":[
-               
+		
             ],
             "periods":[
 
@@ -12,13 +12,13 @@
          },
          "entities":[
             {
-               "id":"1150233",
+               "id":"1466804",
                "type":"FitchID"
             }
          ],
          "fitchFieldIds":[
-            "FC_INSURANCE_PAYABLES_INS"
-         ],
+            "FC_INT_INC_LOANS_BNK"
+          ],
          "options":[
             {
                "name":"consolidation",
@@ -31,15 +31,8 @@
             {
                "name":"filingType",
                "value":"Original"
-            },
-            {
-               "name":"currency",
-               "value":"USD"
-            },
-			{
-               "name":"linesOfBusiness",
-               "value":"NonLife"
             }
+          
          ]
       }
    }

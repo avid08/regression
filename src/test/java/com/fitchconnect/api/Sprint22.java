@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -20,7 +21,6 @@ import com.jayway.restassured.response.Response;
 import groovy.json.internal.Charsets;
 
 public class Sprint22 extends Configuration {
-	
 
 	public void regions_mulitple_524() throws IOException {
 
@@ -201,7 +201,6 @@ public class Sprint22 extends Configuration {
 		AssertJUnit.assertFalse(output.asString().contains("isMissing"));
 		Assert.assertFalse(output.asString().contains("isRestricted"));
 
-
 	}
 
 	@Test
@@ -229,7 +228,7 @@ public class Sprint22 extends Configuration {
 		Assert.assertFalse(output.asString().contains("isRestricted"));
 	}
 
-	@Test(enabled =false)
+	@Test(enabled = false)
 
 	public void FCA_1013() {
 
@@ -244,9 +243,7 @@ public class Sprint22 extends Configuration {
 				.body("data[0].attributes.country", equalTo("USA"))
 				.body("data[0].attributes.ownershipCategory", equalTo("UNKS"))
 				.body("data[0].attributes.type", equalTo("Business Organization"))
-				.body("data[0].attributes.parentId", equalTo(14528))
-				.contentType(ContentType.JSON)
-				.extract().response();
+				.body("data[0].attributes.parentId", equalTo(14528)).contentType(ContentType.JSON).extract().response();
 
 		AssertJUnit.assertFalse(res.asString().contains("isError"));
 		AssertJUnit.assertFalse(res.asString().contains("isMissing"));
@@ -387,7 +384,7 @@ public class Sprint22 extends Configuration {
 	@Test
 	public void fillingtype_515() {
 
-		String url = baseURI + "/v1/statements/5581722/filings";
+		String url = baseURI + "/v1/statements/5454931/filings";
 		RestAssured.baseURI = url;
 
 		Response res = given()
@@ -399,13 +396,44 @@ public class Sprint22 extends Configuration {
 
 				.body("data.type[0]", equalTo("filings")).body("data.attributes.fileName[0]", containsString(".pdf"))
 				.body("data.attributes.fileType[0]", equalTo("pdf"))
-				.body("data.relationships.statement.data.id[0]", equalTo("5581722"))
+
 				.body("data.links.download[0]", containsString("https:")).contentType(ContentType.JSON).extract()
 				.response();
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
 		Assert.assertFalse(res.asString().contains("isRestricted"));
+
+	}
+
+	@Test()
+	public void with_500_entitiscall_1039() throws IOException {
+
+		URL xfile = Resources.getResource("1039_request with 500 entity.json");
+
+		String myjson = Resources.toString(xfile, Charsets.UTF_8);
+
+		Response entityResponse = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).contentType(contentValue).body(myjson).with().when()
+				.post(dataPostUrl).then().assertThat().statusCode(200).contentType(ContentType.JSON).extract()
+				.response();
+
+		List<String> type = entityResponse.path("data.attributes.entities.id");
+		List<String> FitchId = entityResponse.path("data.attributes.entities.values.fitchFieldId");
+		List<String> value = entityResponse.path("data.attributes.entities.values.values.value");
+
+		System.out.println("Number of Entities:" + value.size());
+
+		for (int i = 0; i > value.size(); i++) {
+			Assert.assertNotNull(type.get(i));
+			Assert.assertNotNull(FitchId.get(i));
+			Assert.assertNotNull(value.get(i));
+
+		}
+
+		Assert.assertFalse(entityResponse.asString().contains("isError"));
+		//Assert.assertFalse(entityResponse.asString().contains("isMissing"));
+		Assert.assertFalse(entityResponse.asString().contains("isRestricted"));
 
 	}
 

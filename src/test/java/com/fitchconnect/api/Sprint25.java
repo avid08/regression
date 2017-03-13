@@ -368,7 +368,7 @@ public class Sprint25 extends Configuration{
 
  }
  
- @Test
+ @Test()
  public void FCA_467() throws IOException {
 
        URL file = Resources.getResource("FCA_467.json");
