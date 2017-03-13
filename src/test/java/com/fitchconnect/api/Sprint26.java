@@ -1,6 +1,7 @@
 package com.fitchconnect.api;
 
 import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
 import java.io.IOException;
@@ -92,7 +93,11 @@ String case1url = baseURI + "/v1/entities?filter[name]=bank";
 
 Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
            .header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
-           .when().get(case1url).then().body("data[0].attributes.name", equalTo(" Bank ICBC (JSC)"))
+           .when().get(case1url).then().body(containsString("Asia"))
+           .body(containsString("1880 Bank"))
+           .body(containsString("North America"))
+           .body(containsString("Cambridge"))
+           .body(containsString("United States"))
            .extract()
            .response();
 Assert.assertFalse(res.asString().contains("isError"));

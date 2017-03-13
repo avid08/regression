@@ -74,8 +74,7 @@ public class Sprint35 extends Configuration {
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(nickNamesURl).then()
-				.contentType(ContentType.JSON).statusCode(200).body(containsString("type"))
-				.body(containsString("permission")).body(containsString("viewdefs")).extract().response();
+				.contentType(ContentType.JSON).statusCode(200).extract().response();
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
