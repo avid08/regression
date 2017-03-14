@@ -401,7 +401,7 @@ public class ApIsmokeTestSuite extends Configuration {
 	@Test()
 	public void financialServiceData_Verification_807_dataAggregator() throws IOException {
 
-		URL file = Resources.getResource("financial Mnemonics Data fields.json");
+		URL file = Resources.getResource("financial_Mnemonics_Data_fields.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
 
 		Response fieldsResponse = given().header("Authorization", AuthrztionValue)
