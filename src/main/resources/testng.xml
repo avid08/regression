@@ -23,9 +23,9 @@
 			<class name="com.fitchconnect.api.Sprint35" />
 			<class name="com.fitchconnect.api.Sprint36" />
 			<class name="com.fitchconnect.api.Sprint37" />
+			<class name="com.fitchconnect.api.Sprint38" />
 			
-			
-			
+					
 	  </classes>	
 			
 	</test> <!-- Test -->
