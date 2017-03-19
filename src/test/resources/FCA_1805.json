@@ -1,0 +1,49 @@
+
+{  
+  "data":{  
+     "type":"valueRequest",
+     "attributes":{  
+        "dateOptions":{  
+        	
+           "periods":[  
+              {  
+                 "type":"Q3",
+                 "year":2020
+              },
+              {  
+                 "type":"M1",
+                 "year":2015
+              }
+           ]
+        },
+        "entities":[  
+           {  
+              "id":"140064",
+              "type":"fitchid"
+           },
+           {  
+               "id":"C",
+               "type":"CompanyTicker"
+             },
+
+            {  
+               "id":"G463NB",
+               "type":"CUSIP6"
+             }
+        ],
+        "fitchFieldIds":[ 
+        "FC_LT_FC_ISSR_SP", 
+        "FC_LT_LC_ISSR_MDY", 
+        "FC_NET_LOANS_BNK",
+        "BMI_GDP_NOM_LCU",
+        "FC_CITY",
+        "FC_LT_IDR",
+        "FC_company_Name"        
+                           
+        ],
+        "options":[  
+         
+        ]
+     }
+  }
+}
