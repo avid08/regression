@@ -19,7 +19,7 @@ import com.jayway.restassured.response.Response;
 import groovy.json.internal.Charsets;
 
 public class Sprint20 extends Configuration {
-	
+
 	
 	@Test(enabled = true)
 	public void ModyNewFields_775() throws IOException {

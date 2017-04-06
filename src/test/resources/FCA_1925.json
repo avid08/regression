@@ -1,0 +1,35 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+     
+              
+            ]
+         },
+         "entities":[            
+            {  
+               "id":"1409010",
+               "type":"fitchId"
+            },
+              {  
+               "id":"29766L",
+               "type":"CUSIP6"
+            }
+                        
+         ],
+         "fitchFieldIds":[             
+          "FC_NIMQR",
+		"FC_NIMQR_ACTN",
+		"FC_NIMQR_DT",
+		"FC_NIMQR_ALRT",
+		"FC_NIMQR_SOLST"        
+            
+         ],
+         "options":[  
+           
+         ]
+      }
+   }
+}

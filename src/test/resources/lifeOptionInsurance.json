@@ -3,12 +3,7 @@
       "type":"valueResponse",
       "attributes":{
          "dateOptions":{
-            "dates":[
-               "2014-10-09"
-            ],
-            "periods":[
-
-            ]
+          
          },
          "entities":[
             {
@@ -17,7 +12,9 @@
             }
          ],
          "fitchFieldIds":[
-            "FC_INV_SUB_CO_INS"
+         "FC_NET_INSURANCE_INC_BNK"
+
+
          ],
          "options":[
             {
