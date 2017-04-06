@@ -31,6 +31,8 @@ import com.jayway.restassured.response.Response;
 import groovy.json.internal.Charsets;
 
 public class ApIsmokeTestSuite extends Configuration {
+	
+
 
 	@Test()
 	public void StatusCodeTest() {
@@ -43,7 +45,7 @@ public class ApIsmokeTestSuite extends Configuration {
 		assertTrue(statuscode == 200);
 
 	}
-
+	
 	// Test Description : Verify that Pulish_Flag added to metadata service and
 	// in the Entity Summary
 	@Test()
@@ -1681,8 +1683,7 @@ public class ApIsmokeTestSuite extends Configuration {
 
 				.then().assertThat().log().ifError().statusCode(200).extract().response();
 
-		Assert.assertFalse(financialData.asString().contains("isError"));
-		Assert.assertFalse(financialData.asString().contains("isMissing"));
+		Assert.assertTrue(financialData.asString().contains("currency"));
 
 		List<String> id = financialData.path("data.attributes.entities.type");
 		assert (id.contains("FitchID"));
@@ -2544,7 +2545,7 @@ public class ApIsmokeTestSuite extends Configuration {
 				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
 				.body("data.attributes.entities.get(0).type", equalTo("FitchID"))
 				.body("data.attributes.entities.get(0).fitchEntityId", equalTo("1346752"))
-				.body("data.attributes.entities.get(0).values.get(0).fitchFieldId", equalTo("FC_INV_SUB_CO_INS"))
+			
 				.body("data.attributes.entities.get(0).values.get(0).type", equalTo("currency")).assertThat().log()
 				.ifError().statusCode(200).extract().response();
 
@@ -2631,7 +2632,7 @@ public class ApIsmokeTestSuite extends Configuration {
 
 	}
 
-	@Test(enabled =false)
+	@Test(enabled=false)
 
 	public void All_metaData_fields() {
 	    

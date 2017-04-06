@@ -1,0 +1,42 @@
+{  
+  "data":{  
+     "type":"entities",
+     "attributes":{
+     	"dateOptions":{  
+     		"dates":[
+     	"2015-12-31"
+           ]
+         },  
+        "entities":[  
+          {  
+              "id":"110631",
+              "type":"FitchID"
+           }
+        ],
+        "issues": [
+               {
+                   "id": "US69348LE547",
+                   "type": "ISIN"
+               },
+               {
+                   "id": "20417971",
+                   "type": "FitchIssueId"
+               },
+               {
+                   "id": "69348LE54",
+                   "type": "CUSIP9"
+               }
+           ],
+        "fitchFieldIds":[  
+           "FC_IRR",
+           "FC_LT_IR",
+           "FC_LT_LC_ISSR_MDY",
+           "FC_LT_FC_ISSR_SP",
+           "FC_CITY",
+           "FC_INT_INC_LOANS_BNK"
+           
+        ]
+     }
+  }
+}
+

@@ -387,6 +387,11 @@ public class Sprint25 extends Configuration{
                      .then().assertThat().log().ifError().statusCode(200).body("data.attributes.issues[0].id", equalTo("US69348LE547"))
                      .body("data.attributes.issues[0].type", equalTo("ISIN"))
                      .body("data.attributes.issues[0].values[0].fitchFieldId", equalTo("FC_IRR"))
+                     .body(containsString("value"))
+                     .body(containsString("timeIntervalDate"))
+                     .body(containsString("type"))
+                     .body(containsString("year"))                   
+                     
               .extract().response();
 
        Assert.assertFalse(XREF.asString().contains("isError"));
