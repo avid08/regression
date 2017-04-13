@@ -62,7 +62,7 @@ public class Sprint39 extends Configuration {
 
 	}
 
-	@Test
+	@Test(enabled=false)
 	public void FCA_1925() throws IOException {
 
 		URL file = Resources.getResource("FCA_1925.json");
@@ -86,7 +86,7 @@ public class Sprint39 extends Configuration {
 
 	@Test
 
-	public void FCA_1295_entityRanking() {
+	public void FCA_2031_entityRanking() {
 
 		String entiYrankings = "/v1/entityRankings?filter[rankType]=operatingProfitRanks&filter[countryISOCode3]=JPN&sort[globalRank]=desc";
 		String entiTyRnkinURI = baseURI + entiYrankings;
@@ -133,7 +133,7 @@ public class Sprint39 extends Configuration {
 
 	@Test
 
-	public void FCA_1295_ISOCountryCode() {
+	public void FCA_2031_ISOCountryCode() {
 
 	
 		String entityIDRankingURi = baseURI +"/v1/entities/100188/entityRankings";
@@ -186,5 +186,11 @@ public void FCA_1800_categories() {
 			
 			
    }
+
+
+
+
+
+
 
 }

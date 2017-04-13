@@ -96,16 +96,45 @@ public void FCA_1789_DA_greaterthan_2018 () throws IOException {
 public void FCA_1853() throws IOException {
 
       String userresult = baseURI + "/v2/users";
+  	  boolean failure = false;
 
-      Response userres = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+      Response users = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
                     .header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
                     .when().get(userresult).then()
-                    .body(containsString("webUserId")).statusCode(200)
+                    .body(containsString("firstName")).statusCode(200)                 
                     .extract()
                     .response();
-      Assert.assertFalse(userres.asString().contains("isError"));
-      Assert.assertFalse(userres.asString().contains("isMissing"));
-      Assert.assertFalse(userres.asString().contains("isRestricted"));
+      
+      String groupsSelflink = users.path("data[2].relationships.groups.links.related");
+      int metaCount = users.path("meta.totalResourceCount");                
+      
+      System.out.println(metaCount);
+      
+      if (metaCount>=1) {
+      
+    	  System.out.println(groupsSelflink);
+     
+    	 
+    	  Response group = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+                  .header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
+                  .when().get(groupsSelflink).then()
+                  .body(containsString("name"))
+                  .body(containsString("status"))
+                  .body(containsString("ENABLED"))
+                  .statusCode(200)                 
+                  .extract()
+                  .response();
+       	
+
+		} else {
+			
+			System.out.println((metaCount));
+			failure = true;
+		}
+      
+      Assert.assertFalse(users.asString().contains("isError"));
+      Assert.assertFalse(users.asString().contains("isMissing"));
+   
 
 }
 @Test
