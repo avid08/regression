@@ -2,7 +2,7 @@
     "data":{
         "type":"viewfields",
         "attributes":{
-            "displayName":"Aminul QA Test VD",
+            "displayName":"testing1_QA",
             "suppressColumn":"true",
             "dataMask":"12"
         },

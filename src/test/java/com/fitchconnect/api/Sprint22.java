@@ -265,7 +265,7 @@ public class Sprint22 extends Configuration {
 				.body("data[0].id", Matchers.notNullValue()).body("data[0].id", equalTo("107693063"))
 				.body("data[0].attributes.alert", equalTo("Rating Outlook Stable"))
 				.body("data[0].attributes.ratingType", equalTo("FC_LT_IDR"))
-				.body("data[0].attributes.solicitation", equalTo("Solicited - Sell Side"))
+				
 				.body("data[0].attributes.rating", equalTo("A+"))
 				.body("data[0].attributes.description", equalTo("Long-Term Issuer Default Rating"))
 				.body("data[0].relationships.entity.data.id", equalTo("116980")).contentType(ContentType.JSON).extract()

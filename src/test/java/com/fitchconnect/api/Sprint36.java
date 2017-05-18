@@ -82,7 +82,7 @@ public void FCA_1797_datavaluerequest () throws IOException{
         
    }
 
- @Test                
+ @Test()                
  public void FCA_1383() {
      String userurl = baseURI + "/v2/users";
      Response userres = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)

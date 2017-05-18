@@ -164,7 +164,7 @@ public class BatchService_Testing extends Configuration {
 
 	}
 
-	@Test
+	@Test(enabled=false)
 	public void compareCore_1marketSector_To_fcapidb_marketSector_Data() throws IOException {
 	boolean failure = false;
 

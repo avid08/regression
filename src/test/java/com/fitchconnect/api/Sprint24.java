@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.equalTo;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Random;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -49,6 +50,11 @@ public class Sprint24 extends Configuration {
 	@Test(priority = 1)
 
 	public void Create_Viewfields_1063() throws IOException {
+		
+		Random rand = new Random();		
+		int n =rand.nextInt(100)+1;		
+		String randomviewDefname = "CorporateViewdef_QATest"+n;		
+		System.out.println("ViewDef Name "+randomviewDefname);
 
 		String CrteviewfildUri = "/v1/viewfields";
 		String CrteViewfildUrl = baseURI + CrteviewfildUri;
@@ -93,7 +99,7 @@ public class Sprint24 extends Configuration {
 		JSONObject data2 = new JSONObject();
 		
 
-		attributes.put("name", "CorporateViewdef");
+		attributes.put("name", randomviewDefname);
 		attributes.put("suppressColumn", "true");
 		attributes.put("tags", list1);
 		list1.add("Corporate");
@@ -238,5 +244,7 @@ public class Sprint24 extends Configuration {
 		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
+	
+	
 
 }

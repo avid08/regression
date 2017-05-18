@@ -10,22 +10,22 @@ public class Configuration {
 
 	public Response response;
 	String myjson;
-	String AuthrztionValue;
-	String baseURI;
+	protected String AuthrztionValue;
+	protected String baseURI;
 	String env;
 	String databaseFitchEnty;
-	String dataBaseServer1;
-	String dataBaseServer2;
-	String id;
-	String id1;
+	protected String dataBaseServer1;
+	protected String dataBaseServer2;
+	protected String id;
+	protected String id1;
 	String jsonresponse;
 	String metaEndPoint = "/v1/metadata/fields"; // Metadata-EndPoint
 	String metaUrl = baseURI + metaEndPoint;
 	String dataEndPoint = "/v1/data/valueRequest";
-	String dataPostUrl = baseURI + dataEndPoint; // Data Aggregator -EndPoint
-	String XappClintIDvalue = "3dab0f06-eb00-4bee-8966-268a0ee27ba0";
-	String acceptValue = "application/vnd.api+json";
-	String contentValue = "application/vnd.api+json";
+	protected String dataPostUrl = baseURI + dataEndPoint; // Data Aggregator -EndPoint
+	protected String XappClintIDvalue = "3dab0f06-eb00-4bee-8966-268a0ee27ba0";
+	protected String acceptValue = "application/vnd.api+json";
+	protected String contentValue = "application/vnd.api+json";
     public static boolean failure = false ;
 	public static boolean publishFlag = true;
 	public static ArrayList<String> DBRes = new ArrayList<String>();
@@ -36,18 +36,18 @@ public class Configuration {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api.fitchconnect.com";
-			this.AuthrztionValue = ("Basic MjVYUE1PNEowUDNEUjNPUTZCSjhEQVhHNzptdUlzOCs1Z2dJVUxybm1WQlArUmJPcTJwT1kwcnF0UTAvaW50eHlvNGM0");
-			dataBaseServer1 ="mgo-pue1c-cr001.fitchratings.com";
-			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
+			baseURI = "https://api.fitchconnect-qa.com";
+			this.AuthrztionValue = ("Basic NTFFS1MyNUZZRzJTRFVPQUtXWllaWFVXMTowdFRsRlRIOXM0VXBtMG5LZE5ZcDMwWUZjR05qQ1FxQkkydEsrT005Qlpz");
+			dataBaseServer1 = "mgo-que1a-cr001.fitchratings.com";
+			dataBaseServer2 = "mgo-que1a-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-9";
-		} else if (env.equals("dev")) {
-			baseURI = "https://api.fitchconnect-dev.com";  
-			this.AuthrztionValue = ("Basic MUc4TTJCUzVIUTdGTVE5RVlNWTdWWVlUWTpoeU51d2lIYUVtOEpaSnF1RzVsRmM0TnRrTXpMMjdqcVFFczVwSDlUdEZJ");
-			// dataBaseServer = "mongoweb-x01";
-			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
-			dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
-			databaseFitchEnty = "esp-dev-9";
+		} else if (env.equals("dev")) {			
+			 baseURI = "https://api.fitchconnect-dev.com";  
+             this.AuthrztionValue = ("Basic MUc4TTJCUzVIUTdGTVE5RVlNWTdWWVlUWTpoeU51d2lIYUVtOEpaSnF1RzVsRmM0TnRrTXpMMjdqcVFFczVwSDlUdEZJ");
+              // dataBaseServer = "mongoweb-x01";
+              dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
+              dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
+              databaseFitchEnty = "esp-dev-9";
 		} else if (env.equals("int")) {
 			baseURI = "https://api.fitchconnect-int.com";
 			this.AuthrztionValue = ("Basic NVpNU1JZMEMxUFU1SjVZQVJYSFFQRFA0MDpGMldIbG0rNm9OOUUzNUV2UFpPUXhqYzJmeWM0WTlhNHdzRUxpN0FSSzZn");
