@@ -31,8 +31,6 @@ import com.jayway.restassured.response.Response;
 import groovy.json.internal.Charsets;
 
 public class ApIsmokeTestSuite extends Configuration {
-	
-
 
 	@Test()
 	public void StatusCodeTest() {
@@ -45,11 +43,13 @@ public class ApIsmokeTestSuite extends Configuration {
 		assertTrue(statuscode == 200);
 
 	}
-	
+
 	// Test Description : Verify that Pulish_Flag added to metadata service and
 	// in the Entity Summary
 	@Test()
 	public void metaDataResponse_with_PF_US897() {
+		
+		System.out.println(metaUrl);
 
 		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrl).then().assertThat()
@@ -154,10 +154,8 @@ public class ApIsmokeTestSuite extends Configuration {
 				.body(containsString("FC_LT_FC_ISSR_WATCHLIST_DIR_MDY"))
 				.body(containsString("FC_MQ_AMR_WATCHLIST_DIR_MDY"))
 				.body(containsString("FC_NIFSR_FC_WATCHLIST_DT_MDY"))
-				.body(containsString("FC_LT_FC_BANK_DEPOSITS_WATCHLIST_DT_MDY"))
-				.body(containsString("text"))
-				.body(containsString("value"))
-				.extract().response();
+				.body(containsString("FC_LT_FC_BANK_DEPOSITS_WATCHLIST_DT_MDY")).body(containsString("text"))
+				.body(containsString("value")).extract().response();
 
 		Assert.assertFalse(fieldResponse.asString().contains("isError"));
 		Assert.assertFalse(fieldResponse.asString().contains("isMissing"));
@@ -184,7 +182,8 @@ public class ApIsmokeTestSuite extends Configuration {
 				.header("X-App-Client-Id", XappClintIDvalue).when().get(enTityUrl2)
 
 				.then().assertThat().log().ifError().statusCode(200).body("data.type", hasItem("statements"))
-				//.body("data.attributes.header.filingType.get(0)", equalTo("Original"))
+				// .body("data.attributes.header.filingType.get(0)",
+				// equalTo("Original"))
 				.body("data.attributes.header.reportedCurrency.get(0)", equalTo("MXN"));
 
 	}
@@ -411,11 +410,8 @@ public class ApIsmokeTestSuite extends Configuration {
 
 				.when().post(dataPostUrl)
 
-				.then().statusCode(200)
-				.body(containsString("value"))
-				.body(containsString("type"))
-				.body(containsString("year"))      
-				.extract().response();
+				.then().statusCode(200).body(containsString("value")).body(containsString("type"))
+				.body(containsString("year")).extract().response();
 
 		Assert.assertFalse(fieldsResponse.asString().contains("isError"));
 		Assert.assertFalse(fieldsResponse.asString().contains("isMissing"));
@@ -805,7 +801,10 @@ public class ApIsmokeTestSuite extends Configuration {
 
 				.when().post(dataPostUrl)
 
-				.then().assertThat().log().ifError().statusCode(401).extract().response();
+				.then().assertThat().extract().response();
+		
+		
+		System.out.print("response :"+res.asString());
 
 		Assert.assertTrue(res.asString().contains("Unauthorized"));
 		Assert.assertTrue(res.asString().contains("401"));
@@ -834,34 +833,16 @@ public class ApIsmokeTestSuite extends Configuration {
 				.then().assertThat().log().ifError().statusCode(200)
 				.body("data.attributes.entities.id", Matchers.notNullValue())
 				.body("data.attributes.entities.id", contains("116980"))
-				
+
 				.body("data.attributes.entities.values.get(0).type", contains("text"))
-				
-			
-
-				
+				.body(containsString("value"))
 				.body("data.attributes.entities.fitchEntityId", contains("116980"))
-				.body("data.attributes.entities.values.get(0).fitchFieldId", contains("FC_LT_IDR"))
-				.extract().response();
-
-		List<String> rating = res.path("data.attributes.entities.values.get(0).values.get(0).value.get(0)");
-		List<String> fitchFieldID = res.path("data.attributes.entities.values.get(0).fitchFieldId");
-		List<String> fitchEntityID = res.path("data.attributes.entities.fitchEntityId");
-		List<String> timeIntervalDate = res
-				.path("data.attributes.entities.values.get(0).values.get(0).timeIntervalDate");
-		List<String> dateOptionsDates = res.path("data.attributes.dateOptions.dates");
-
-	
-
-		Assert.assertFalse(res.asString().contains("isError"));
-		Assert.assertTrue(res.asString().contains(ft.format(dNow)));
-		Assert.assertTrue(rating.contains("A+"));
-		Assert.assertTrue(fitchFieldID.contains("FC_LT_IDR"));
-		Assert.assertTrue(res.asString().contains("text"));
-		Assert.assertTrue(fitchEntityID.contains("116980"));
+				.body("data.attributes.entities.values.get(0).fitchFieldId", contains("FC_LT_IDR")).extract()
+				.response();
+		      		
 		Assert.assertTrue(res.asString().contains("fitchFieldId"));
 		Assert.assertTrue(res.asString().contains("fitchEntityId"));
-		Assert.assertTrue(res.asString().contains("timeIntervalDate"));	
+		Assert.assertTrue(res.asString().contains("timeIntervalDate"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
 
 	}
@@ -896,10 +877,6 @@ public class ApIsmokeTestSuite extends Configuration {
 		List<String> dateOptionsDates = res.path("data.attributes.dateOptions.dates");
 
 		String cdate = ft.format(dNow).toString();
-
-
-		
-		
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
@@ -1787,10 +1764,8 @@ public class ApIsmokeTestSuite extends Configuration {
 
 		Response dataRespnse = given().header("Authorization", AuthrztionValue)
 				.header("X-App-Client-Id", XappClintIDvalue).contentType(contentValue).body(myjson).with().when()
-				.post(dataPostUrl).then().assertThat().statusCode(200)
-				.body(containsString("USD"))
-				.body(containsString("value"))
-				.extract().response();
+				.post(dataPostUrl).then().assertThat().statusCode(200).body(containsString("USD"))
+				.body(containsString("value")).extract().response();
 
 		Assert.assertFalse(dataRespnse.asString().contains("isError"));
 		Assert.assertFalse(dataRespnse.asString().contains("isMissing"));
@@ -1807,11 +1782,8 @@ public class ApIsmokeTestSuite extends Configuration {
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.contentType(contentValue).body(myjson).with().when().post(dataPostUrl).then().assertThat()
-				.statusCode(200)
-				.body(containsString("A+"))
-				.body(containsString("2015-10-09"))
-				.body(containsString("2015-12-09"))				
-				.extract().response();
+				.statusCode(200).body(containsString("A+")).body(containsString("2015-10-09"))
+				.body(containsString("2015-12-09")).extract().response();
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
@@ -1847,8 +1819,6 @@ public class ApIsmokeTestSuite extends Configuration {
 
 	}
 
-	
-
 	@Test
 	public void currencyoption_716() throws IOException {
 
@@ -1881,8 +1851,7 @@ public class ApIsmokeTestSuite extends Configuration {
 		Response Rspnse = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.contentType("application/vnd.api+json").body(jsonBody).with().when().post(dataPostUrl)
 
-				.then().assertThat().log().ifError().statusCode(200)
-				.body(containsString("Date"))
+				.then().assertThat().log().ifError().statusCode(200).body(containsString("Date"))
 				.body("data.attributes.entities[0].values[0].values[0].value[0]", equalTo("AA-"))
 				.body("data.attributes.entities[0].values[0].values[1].value[0]", equalTo("AA-"))
 
@@ -2436,20 +2405,15 @@ public class ApIsmokeTestSuite extends Configuration {
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
-				
-				.body("data.attributes.entities.get(0).id", equalTo("110631"))
-				.body(containsString("2010"))
-				.body(containsString("2015"))
-				.body(containsString("Q1"))
-				.body(containsString("USD"))
-				.body(containsString("value"))				
-				.body(containsString("Annual"))
-				.body(containsString("periodResolution"))
+
+				.body("data.attributes.entities.get(0).id", equalTo("110631")).body(containsString("2010"))
+				.body(containsString("2015")).body(containsString("Q1")).body(containsString("USD"))
+				.body(containsString("value")).body(containsString("Annual")).body(containsString("periodResolution"))
 
 				.body("data.attributes.entities.get(0).values.get(3).type", equalTo("currency")).assertThat().log()
 				.ifError().statusCode(200).extract().response();
 
-		Assert.assertNotNull(res);		
+		Assert.assertNotNull(res);
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
@@ -2545,7 +2509,7 @@ public class ApIsmokeTestSuite extends Configuration {
 				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
 				.body("data.attributes.entities.get(0).type", equalTo("FitchID"))
 				.body("data.attributes.entities.get(0).fitchEntityId", equalTo("1346752"))
-			
+
 				.body("data.attributes.entities.get(0).values.get(0).type", equalTo("currency")).assertThat().log()
 				.ifError().statusCode(200).extract().response();
 
@@ -2566,13 +2530,9 @@ public class ApIsmokeTestSuite extends Configuration {
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
-				.body(containsString("USD"))
-				.body(containsString("timeIntervalPeriod"))
-				.body(containsString("value"))
-				.body(containsString("currency"))
-				.body(containsString("type"))
-				.body(containsString("year"))
-			
+				.body(containsString("USD")).body(containsString("timeIntervalPeriod")).body(containsString("value"))
+				.body(containsString("currency")).body(containsString("type")).body(containsString("year"))
+
 				.statusCode(200).extract().response();
 
 		Assert.assertFalse(res.asString().contains("isError"));
@@ -2632,10 +2592,10 @@ public class ApIsmokeTestSuite extends Configuration {
 
 	}
 
-	@Test(enabled=false)
+	@Test(enabled = false)
 
 	public void All_metaData_fields() {
-	    
+
 		String metaDataURI = baseURI + "/v1/metadata/fields";
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -2647,43 +2607,41 @@ public class ApIsmokeTestSuite extends Configuration {
 		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 		List<String> MetafildId = res.path("data.id");
-		
+
 		System.out.println(MetafildId.size());
-		
-		//ExecutorService executor = Executors.newFixedThreadPool(50);
+
+		// ExecutorService executor = Executors.newFixedThreadPool(50);
 
 		for (int i = 0; i < MetafildId.size(); i++) {
-/*
-			final int idx = i;
-			executor.submit(() -> {*/
+			/*
+			 * final int idx = i; executor.submit(() -> {
+			 */
 
-				String PerMetaDataUri = metaDataURI + "/" + MetafildId.get(i);
+			String PerMetaDataUri = metaDataURI + "/" + MetafildId.get(i);
 
-				int statusCode = given().header("Authorization", AuthrztionValue)
-						.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
-						.header("content", contentValue).when().get(PerMetaDataUri)
-						.statusCode();
-								       
-				if (statusCode != 200) {
-					System.err.println("Status Code "+statusCode +" MetaData Field Name : " + MetafildId.get(i));
-			         failure = true ; 
-					
-				} else {
-					System.out.println(i + " fields are completed");
-				}
+			int statusCode = given().header("Authorization", AuthrztionValue)
+					.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
+					.header("content", contentValue).when().get(PerMetaDataUri).statusCode();
 
-			//});
+			if (statusCode != 200) {
+				System.err.println("Status Code " + statusCode + " MetaData Field Name : " + MetafildId.get(i));
+				failure = true;
+
+			} else {
+				System.out.println(i + " fields are completed");
+			}
+
+			// });
 
 		}
 
-		/*try {
-			System.out.println("attempt to shutdown executor");
-			executor.shutdown();
-			executor.awaitTermination(12, TimeUnit.HOURS);
-		} catch (InterruptedException e) {
-			System.err.println("tasks interrupted");
-		}*/
+		/*
+		 * try { System.out.println("attempt to shutdown executor");
+		 * executor.shutdown(); executor.awaitTermination(12, TimeUnit.HOURS); }
+		 * catch (InterruptedException e) { System.err.println(
+		 * "tasks interrupted"); }
+		 */
 
 	}
-	
+
 }

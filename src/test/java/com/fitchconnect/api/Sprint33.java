@@ -46,11 +46,14 @@ public class Sprint33 extends Configuration {
 	Assert.assertFalse(res.asString().contains("isRestricted"));
   
   String BMI_Id = res.path("data[8].links.self");
+  System.out.println(BMI_Id);
   
   Response res1 = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 			.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
 			.when().get(BMI_Id).then()
-			.body(containsString("Information Technology"))
+			.body(containsString("name"))
+			.body(containsString("categories"))
+			.body(containsString("relationships"))
 			.extract().response();
   
   Assert.assertFalse(res1.asString().contains("isError"));

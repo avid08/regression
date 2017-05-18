@@ -62,7 +62,7 @@ public class Sprint39 extends Configuration {
 
 	}
 
-	@Test(enabled=false)
+	@Test()
 	public void FCA_1925() throws IOException {
 
 		URL file = Resources.getResource("FCA_1925.json");
