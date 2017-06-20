@@ -15,7 +15,7 @@ import com.jayway.restassured.response.Response;
 
 import groovy.json.internal.Charsets;
 
-public class FisCon_Sprint5 extends Configuration {
+public class fisCon_Sprint5 extends Configuration {
 	
 	
 	@Test
