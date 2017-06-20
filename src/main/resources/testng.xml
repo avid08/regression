@@ -4,7 +4,8 @@
 	<test name="API Test Cases">
 		<classes>
 			<class name="com.fitchconnect.api.ApIsmokeTestSuite" />
-			<class name="com.fitchconnect.api.BatchService_Testing" />							
+			<class name="com.fitchconnect.api.Configuration" />
+			<class name="com.fitchconnect.api.BatchService_Testing" />
 			<class name="com.fitchconnect.api.Sprint20" />
 			<class name="com.fitchconnect.api.Sprint21" />
 			<class name="com.fitchconnect.api.Sprint22" />
@@ -17,22 +18,21 @@
 			<class name="com.fitchconnect.api.Sprint29" />
 			<class name="com.fitchconnect.api.Sprint30" />
 			<class name="com.fitchconnect.api.Sprint31" />
-			<class name="com.fitchconnect.api.Sprint32" />			
+			<class name="com.fitchconnect.api.Sprint32" />
 			<class name="com.fitchconnect.api.Sprint33" />
 			<class name="com.fitchconnect.api.Sprint34" />
 			<class name="com.fitchconnect.api.Sprint35" />
 			<class name="com.fitchconnect.api.Sprint36" />
 			<class name="com.fitchconnect.api.Sprint37" />
 			<class name="com.fitchconnect.api.Sprint38" />
-			<class name="com.fitchconnect.api.Sprint39" />		
-								
-		 </classes>	
-			
+			<class name="com.fitchconnect.api.Sprint39" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint1" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint2" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint4" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint5" />
+
+		</classes>
+
 	</test> <!-- Test -->
 </suite> <!-- Suite -->
 			
-
-
-	
-
-

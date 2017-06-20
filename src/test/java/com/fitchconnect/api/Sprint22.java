@@ -320,7 +320,7 @@ public class Sprint22 extends Configuration {
 
 	}
 
-	@Test
+	@Test(enabled = false) // not effective anymore as we opened up more groupTypes
 
 	public void FCA_965_ratingAction_String() throws IOException {
 

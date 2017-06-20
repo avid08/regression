@@ -57,9 +57,24 @@ public class Sprint26 extends Configuration {
            Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
                         .header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
                          .when().get(entitiesurl).then().body("data[0].type", equalTo("entities"))
-                        .body("data[0].id", equalTo("117522"))
+                 
                         .extract()
                         .response();
+           int numberOfentities = res.path("meta.count");
+           
+           System.out.println(numberOfentities);
+           
+           if (numberOfentities<10000){
+        	   
+        	   
+           }else{
+        	   
+        	   System.err.println("Check out entities");
+        	   
+        	   
+           }
+           
+           
            Assert.assertFalse(res.asString().contains("isError"));
            Assert.assertFalse(res.asString().contains("isMissing"));
            Assert.assertFalse(res.asString().contains("isRestricted"));

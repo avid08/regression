@@ -43,6 +43,7 @@ public void FCA_1580_SWIFT_CD () throws IOException {
 	Assert.assertFalse(financialData.asString().contains("isRestricted"));
 	
  }
+@Test
 public void FCA_1497test1() {
 
 	String shareholderurl1 = baseURI + "/v1/entities/111522/shareholders?include[shareholders]=shareholders.shareholderEntity";

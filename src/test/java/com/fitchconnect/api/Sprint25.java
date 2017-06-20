@@ -214,7 +214,7 @@ public class Sprint25 extends Configuration{
 		list2.put("type", "viewfields");
 		list2.put("id", "FC_CONNECT_URL");
 		jsonString1 = obj.toString();
-		//System.out.println("json1"+jsonString1);
+		System.out.println("json1"+jsonString1);
 		
 		
 		
@@ -235,7 +235,7 @@ public class Sprint25 extends Configuration{
 	   
  }
 	
-	@Test(priority=3)
+	@Test(enabled=false )
   public void updateViewDef () {
 		
 	   String upDteviewDefUri = "/v1/viewdefs/"; 
@@ -300,7 +300,7 @@ public class Sprint25 extends Configuration{
 
  
  
- @Test()
+ @Test(enabled=false)
 
  public void FCA_1191() throws IOException {
 
@@ -350,6 +350,30 @@ public class Sprint25 extends Configuration{
 			System.err.println("try catch error " + e.getClass().getName() + ": " + e.getMessage());
 		}
 
+ }
+ 
+ @Test
+ 
+ public void fca_1191 () {
+	 
+	 String StatmentLinkURI= baseURI+"/v1/entities/1708/statements";
+	 
+	 Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+             .header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
+             .when().get(StatmentLinkURI).then()
+             .body(containsString("stmntId"))
+             .body(containsString("stmntDate"))
+             .body(containsString("periodType"))
+             .body(containsString("inflationAdjusted"))
+             .body(containsString("periodYear"))
+             .body(containsString("detail"))             
+             .body(containsString("consolidation"))
+             
+             .extract().response();
+Assert.assertFalse(res.asString().contains("isError"));
+Assert.assertFalse(res.asString().contains("isMissing"));
+Assert.assertFalse(res.asString().contains("isRestricted"));
+	 
  }
  
  @Test
