@@ -175,8 +175,8 @@ public class Sprint24 extends Configuration {
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
-				.when().get(chTreeendpoint).then().body("data.id[0]", equalTo("57035"))
-				.body("data.type[0]", equalTo("companies")).extract().response();
+				.when().get(chTreeendpoint).then().body(containsString("57035"))
+				.body(containsString("companies")).extract().response();
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));

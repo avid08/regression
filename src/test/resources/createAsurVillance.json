@@ -1,0 +1,18 @@
+{
+  "data": {
+    "type": "surveillanceDeals",
+    "attributes": {
+      "name": "Series 2016-1",
+      "dealId": 1231,
+      "marketSector": "03011402",
+      "surveillanceType": "CMBS",
+      "assetType": "Single-Borrower",
+      "fitchGroupId": 5465151
+    },
+    "relationships": {
+      "entity": {
+        "data": { "type":"entites","id": "12345" }
+      }
+    }
+  }
+}

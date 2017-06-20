@@ -1,0 +1,33 @@
+{
+  "data": {
+    "type": "valueRequest",
+    "attributes": {
+      "entities": [
+        {
+          "id": "1005350",
+          "type": "FitchID"
+        },
+         {
+          "id": "1327111",
+          "type": "FitchID"
+        },
+         {
+          "id": "1352330",
+          "type": "FitchID"
+        }
+                
+      ],
+      "fitchFieldIds": [
+        "FC_COUNTRY_NAME",
+        "FC_COMPANY_NAME",
+        "FC_REGION",
+        "FC_ULT_PARENT",
+        "FC_CONNECT_URL",
+        "FC_SPONSOR_SPV"
+      
+      ],
+      "options": [
+      ]
+    }
+  }
+}

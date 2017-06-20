@@ -1,0 +1,38 @@
+{  
+   "data":{  
+      "type":"entities",
+      "attributes":{  
+         "entities":[  
+         
+          
+         ],
+         "issues": [
+               
+                {
+                    "id": "87902584",
+                    "type": "FitchIssueID"
+                }
+             
+            ],
+            
+         "fitchFieldIds":[  
+            "FC_ESTR",
+			"FC_ESTR_ACTN",
+			"FC_ESTR_DT",
+			"FC_ESTR_ALRT",
+			"FC_ESTR_SOLST",
+			"FC_ELTR",
+			"FC_ELTR_ACTN",
+			"FC_ELTR_DT",
+			"FC_ELTR_ALRT",
+			"FC_ELTR_SOLST"
+						
+
+            ],
+         
+          "options":[  
+         
+        ]
+      }
+   }
+}

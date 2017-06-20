@@ -790,7 +790,7 @@ public class ApIsmokeTestSuite extends Configuration {
 
 	}
 
-	@Test
+	@Test(enabled=false)
 	public void unauthorization() throws IOException {
 
 		URL file = Resources.getResource("wrong media.json");
@@ -2099,15 +2099,16 @@ public class ApIsmokeTestSuite extends Configuration {
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+				.assertThat().statusCode(200)
 				.body("data.attributes.entities.get(0).id", Matchers.notNullValue())
 				.body("data.attributes.entities.get(0).id", equalTo("IBM"))
 				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
 				.body("data.attributes.entities.get(0).type", equalTo("companyTicker")).body(containsString("A1"))
 				.body(containsString("Aa3"))
 
-				.assertThat().log().ifError().statusCode(200).extract().response();
-
-		Assert.assertNotNull(res);
+				.extract().response();
+           
+            System.out.println(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
 		Assert.assertFalse(res.asString().contains("isRestricted"));

@@ -1,0 +1,39 @@
+{ 
+ "data":{ 
+ "type":"valueRequest",
+ "attributes":{ 
+ "dateOptions":{ 
+ "dates":[ 
+
+ ],
+ "periods":[ 
+
+ ]
+ },
+ "entities":[ 
+ { 
+ "type":"fitchGroupId",
+ "id":"80089220"
+ },
+  { 
+ "type":"fitchId",
+ "id":"111503"
+ },
+ { 
+ "type":"fitchGroupId",
+ "id":"80088917"
+ },
+  { 
+ "type":"fitchId",
+ "id":"110589"
+ }
+ ],
+ "fitchFieldIds":[ 
+ "FC_CVB_FLAG"
+ ],
+ "options":[ 
+
+ ]
+ }
+ }
+}
