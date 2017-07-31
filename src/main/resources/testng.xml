@@ -26,10 +26,14 @@
 			<class name="com.fitchconnect.api.Sprint37" />
 			<class name="com.fitchconnect.api.Sprint38" />
 			<class name="com.fitchconnect.api.Sprint39" />
-			<class name="com.fitchconnect.fiscontent.fisCon_Sprint1" />
-			<class name="com.fitchconnect.fiscontent.fisCon_Sprint2" />
-			<class name="com.fitchconnect.fiscontent.fisCon_Sprint4" />
-			<class name="com.fitchconnect.fiscontent.fisCon_Sprint5" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint1" />	
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint2" />	
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint4" />	
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint5" />	
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint6" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint7" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint8" />
+		
 
 		</classes>
 

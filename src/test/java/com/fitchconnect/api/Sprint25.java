@@ -31,6 +31,8 @@ import groovy.json.internal.Charsets;
 public class Sprint25 extends Configuration{
 	
 
+	private static final String priority = null;
+
 	@Test
 	public void entity_includedShareHolders_() {
 
@@ -114,7 +116,7 @@ public class Sprint25 extends Configuration{
 
 		this.id = res.path("data.id");
 
-		System.out.println("id"+id);
+		System.out.println("id "+id);
 
 		String jsonString = null;
 
@@ -164,12 +166,12 @@ public class Sprint25 extends Configuration{
 
 		this.id1 = resViewDef.path("data.id");
 		
-		System.out.println("id1"+id1);
+		System.out.println("id1 "+id1);
 		 
 	 
   }
  
- @Test(priority=2)
+ @Test(enabled=false )
  public void updateViewfield (){
 	   
 	   String jsonString1 = null;
@@ -177,6 +179,8 @@ public class Sprint25 extends Configuration{
 	
 	   String upDteviewFieldUri = "/v1/viewfields/"; 
 	   String updateViewFildUrl= baseURI + upDteviewFieldUri +id;
+	   
+	   System.out.println("udpateViewfieldUrl "+updateViewFildUrl);
 
 
 		JSONObject obj = new JSONObject();
@@ -214,7 +218,7 @@ public class Sprint25 extends Configuration{
 		list2.put("type", "viewfields");
 		list2.put("id", "FC_CONNECT_URL");
 		jsonString1 = obj.toString();
-		System.out.println("json1"+jsonString1);
+		System.out.println("viewfieldUpdate Request"+jsonString1);
 		
 		
 		
@@ -240,6 +244,8 @@ public class Sprint25 extends Configuration{
 		
 	   String upDteviewDefUri = "/v1/viewdefs/"; 
 	   String updateViewdefUrl= baseURI + upDteviewDefUri +id1;
+	   
+	   System.out.println("udpateview Def url "+updateViewdefUrl);
 		   
 		   
 		String jsonString2 = null;
@@ -281,7 +287,7 @@ public class Sprint25 extends Configuration{
 		data2.put("id", id);
 		jsonString2 = obj.toString();
 
-		System.out.println("json2"+jsonString2);
+		System.out.println("viewDef update request "+jsonString2);
 
 		 Response res = given()
 

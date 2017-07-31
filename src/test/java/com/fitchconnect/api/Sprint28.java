@@ -55,7 +55,7 @@ public class Sprint28 extends Configuration {
 				.body(containsString("city")).body(containsString("address1")).body(containsString("countryISOCode"))
 				.body(containsString("name")).body(containsString("stateCode")).body(containsString("state"))
 				.body(containsString("countryName")).body(containsString("region"))
-				.body(containsString("fitchConnectUrl"))
+				
 
 				.extract().response();
 

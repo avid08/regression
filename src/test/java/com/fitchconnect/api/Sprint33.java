@@ -124,7 +124,7 @@ public class Sprint33 extends Configuration {
 		Assert.assertFalse(res.asString().contains("isRestricted")); 
   }
 
-  @Test()
+  @Test(enabled=false)
 	public void displayname_Compare_1639() throws IOException, URISyntaxException {
 		String jsonAsString;
 		
@@ -180,7 +180,7 @@ public class Sprint33 extends Configuration {
 
 	}
   
-  @Test
+  @Test(enabled= false)
   public void FCA_1666_default_case() throws IOException {
 
       
