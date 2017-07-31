@@ -62,6 +62,7 @@ public void displaynameChange_1884 () {
 
 		Assert.assertFalse(responsedata.asString().contains("isError"));
 		Assert.assertFalse(responsedata.asString().contains("isRestricted"));
+		Assert.assertFalse(responsedata.asString().contains("isMissing"));
 
 		
 
@@ -107,7 +108,9 @@ public void displaynameChange_1884 () {
 				.extract().response();
 
 		Assert.assertFalse(responsedata.asString().contains("isError"));
+		Assert.assertFalse(responsedata.asString().contains("isMissing"));
 		Assert.assertFalse(responsedata.asString().contains("isRestricted"));
+		
 	  
 	  
 	  
@@ -135,6 +138,7 @@ public void displaynameChange_1884 () {
 	
 	
 	Assert.assertFalse(responsedata.asString().contains("isError"));
+	Assert.assertFalse(responsedata.asString().contains("isMissing"));
 	Assert.assertFalse(responsedata.asString().contains("isRestricted"));
   
 	  
@@ -162,6 +166,7 @@ public void displaynameChange_1884 () {
 				.extract().response();
 
 		Assert.assertFalse(responsedata.asString().contains("isError"));
+		Assert.assertFalse(responsedata.asString().contains("isMissing"));
 		Assert.assertFalse(responsedata.asString().contains("isRestricted"));
 	  
 		  

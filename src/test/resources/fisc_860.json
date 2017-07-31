@@ -1,0 +1,19 @@
+{  
+ "data":{  
+    "type":"valueRequest",
+      "attributes":{  
+       "entities":[  
+          {  
+             "id":"100188",
+               "type":"fitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+         "FC_OPERATING_PROFIT_RANK_YEAR", "FC_TOTAL_ASSET_RANK_YEAR", "FC_TIER1_CAPITAL_RANK_YEAR","FC_TOTAL_WEIGHTED_RISK_RANK_YEAR"
+         ],
+         "options":[  
+
+       ]
+      }
+   }
+}

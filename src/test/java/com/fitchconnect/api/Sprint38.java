@@ -34,7 +34,7 @@ public class Sprint38 extends Configuration {
 			.body(containsString("value"))
 			
 			.extract().response();
-
+	Assert.assertFalse(responsedata.asString().contains("isMissing"));
 	Assert.assertFalse(responsedata.asString().contains("isError"));
 	Assert.assertFalse(responsedata.asString().contains("isRestricted"));
   
@@ -59,7 +59,7 @@ public void FCA_1805_PeriodResulation () throws IOException {
 			.body(containsString("M1"))
 			
 			.extract().response();
-
+	Assert.assertFalse(responsedata.asString().contains("isMissing"));
 	Assert.assertFalse(responsedata.asString().contains("isError"));
 	Assert.assertFalse(responsedata.asString().contains("isRestricted"));
  
@@ -88,6 +88,7 @@ public void FCA_1789_DA_greaterthan_2018 () throws IOException {
 
 	Assert.assertFalse(responsedata.asString().contains("isError"));
 	Assert.assertFalse(responsedata.asString().contains("isRestricted"));
+	Assert.assertFalse(responsedata.asString().contains("isMissing"));
  
 	 
  }
