@@ -92,7 +92,7 @@ public void Fisc_871_FConnectURL() throws IOException {
 
  }
 
-@Test()
+@Test(enabled=false)
 public void FISC_869_FIR_Amendments() {
 
 	String getAllurl = baseURI + "/v1/financialImpliedRatings";
@@ -128,7 +128,7 @@ public void FISC_869_FIR_Amendments() {
 
    }
 
-   @Test ()
+   @Test (enabled=false)
    
    public void fisc_604_FIR_entityRelationship () {
 	   
@@ -177,7 +177,7 @@ public void FISC_869_FIR_Amendments() {
 	   
    }
    
-  @Test ()
+  @Test (enabled=false)
    
    public void fisc_605_FIR_statementRelation () {
 	   
@@ -213,7 +213,7 @@ public void FISC_869_FIR_Amendments() {
    
   }
    
-  @Test()
+  @Test(enabled=false)
   
   public void FISC_869 () {
 	  
@@ -228,10 +228,6 @@ public void FISC_869_FIR_Amendments() {
 			.body(containsString("loanQuality"))
 			.extract().response();
 	  
-  }
+    }
  
-  
-  
-  
-
 }

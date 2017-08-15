@@ -49,7 +49,7 @@ public class Configuration {
 			baseURI = "https://api.fitchconnect-qa.com";
 			bearerToken_QA();
 			this.AuthrztionValue = "Bearer " + accessToken;
-			System.out.println("QA Bearer Token " + AuthrztionValue);			
+			System.out.println("QA Bearer Token " + AuthrztionValue);
 			dataBaseServer1 = "mgo-que1a-cr001.fitchratings.com";
 			dataBaseServer2 = "mgo-que1a-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-9";
@@ -72,7 +72,7 @@ public class Configuration {
 			baseURI = "https://api.fitchconnect-qa.com";
 			bearerToken_QA();
 			this.AuthrztionValue = "Bearer " + accessToken;
-			System.out.println("QA Bearer Token " + AuthrztionValue);			
+			System.out.println("QA Bearer Token " + AuthrztionValue);
 			dataBaseServer1 = "mgo-que1a-cr001.fitchratings.com";
 			dataBaseServer2 = "mgo-que1a-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-9";
@@ -85,7 +85,7 @@ public class Configuration {
 			databaseFitchEnty = "esp-9";
 		} else if (env.equals("prod")) {
 			baseURI = "https://api.fitchconnect.com";
-			PROD_bearerToken();	
+			PROD_bearerToken();
 			this.AuthrztionValue = "Bearer " + accessToken;
 			dataBaseServer1 = "mgo-pue1c-cr001.fitchratings.com";
 			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
@@ -99,9 +99,9 @@ public class Configuration {
 	}
 
 	public void bearerToken_INT() throws IOException {
-		
-	//	given().config(RestAssured.config().encoderConfig(encoderConfig().encodeContentTypeAs("application/zip", ContentType.TEXT))
-		
+
+		// given().config(RestAssured.config().encoderConfig(encoderConfig().encodeContentTypeAs("application/zip",
+		// ContentType.TEXT))
 
 		String url = baseURI + "/v1/oauth/token";
 		System.out.println(url);
@@ -145,11 +145,11 @@ public class Configuration {
 			tokenizer.nextToken();
 			accessToken = tokenizer.nextToken();
 		}
-		
+
 		System.out.println("access token " + accessToken);
 
 	}
-	
+
 	public void stage_bearerToken() throws IOException {
 
 		String url = baseURI + "/v1/oauth/token";
@@ -170,11 +170,11 @@ public class Configuration {
 			tokenizer.nextToken();
 			accessToken = tokenizer.nextToken();
 		}
-		
+
 		System.out.println("access token " + accessToken);
 
 	}
-	
+
 	public void PROD_bearerToken() throws IOException {
 
 		String url = baseURI + "/v1/oauth/token";
@@ -195,7 +195,7 @@ public class Configuration {
 			tokenizer.nextToken();
 			accessToken = tokenizer.nextToken();
 		}
-		
+
 		System.out.println("access token " + accessToken);
 
 	}

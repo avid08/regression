@@ -124,9 +124,7 @@ public class fisCon_Sprint1 extends Configuration {
 				.body(containsString("FC_ST_NSR_WATCHLIST_DT_MDY"))
 				.body(containsString("National"))
 				.extract().response();
-		
-		
-		
+				
 		Assert.assertFalse(response.asString().contains("isError"));
 		Assert.assertFalse(response.asString().contains("isMissing"));
 		Assert.assertFalse(response.asString().contains("isRestricted"));
