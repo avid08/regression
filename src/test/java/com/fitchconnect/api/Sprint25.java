@@ -81,14 +81,18 @@ public class Sprint25 extends Configuration{
 				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).contentType("application/vnd.api+json").body(myjson).with().when()
 				.post(dataPostUrl).then().statusCode(200)
-				.body("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.type", equalTo("Q3"))
-				.body("data.attributes.entities[0].values[0].values[0].timeIntervalPeriod.year", equalTo(2014))					
+				
+								
 				.body(containsString("A"))				
 				.body(containsString("Annual"))
 				.body(containsString("Q1"))
 				.body(containsString("Q1"))
 				.body(containsString("Q2"))
 				.body(containsString("Q4"))	
+				.body(containsString("Q3"))
+				.body(containsString("periodResolution"))
+				.body(containsString("dateOptions"))
+				.body(containsString("periods"))
 				.extract().response();
 		
 		Assert.assertFalse(res.asString().contains("isError"));

@@ -57,7 +57,7 @@ public class Sprint34 extends Configuration {
 
 	}
 
-	@Test
+	@Test(enabled=false)
 	public void fca_1678() {
 
 		String userUrl = baseURI + "/v1/users";

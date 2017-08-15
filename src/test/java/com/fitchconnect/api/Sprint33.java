@@ -198,7 +198,7 @@ public class Sprint33 extends Configuration {
 
   }
 
-  @Test
+  @Test(enabled=false)
   public void FCA_1666_true_case() throws IOException {
 
       
@@ -216,7 +216,7 @@ public class Sprint33 extends Configuration {
 
   }
 
-  @Test
+  @Test(enabled=false)
   public void FCA_1666_false_case() throws IOException {
 
       

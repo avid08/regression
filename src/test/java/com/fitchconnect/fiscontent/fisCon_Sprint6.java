@@ -30,7 +30,7 @@ public class fisCon_Sprint6 extends Configuration {
 				.body(containsString("countryRiskIndicator")).body(containsString("region"))
 				.body(containsString("rating")).body(containsString("fitchEntityId"))
 				.body(containsString("totalAssets")).body(containsString("stmntDate"))
-				.body(containsString("imputedProfitability")).body(containsString("imputedLoanQuality"))
+				.body(containsString("profitability")).body(containsString("loanQuality"))
 				.body(containsString("bandRanking")).body(containsString("modelScore"))
 				.body(containsString("batchDate")).extract().response();
 		Assert.assertFalse(res.asString().contains("isError"));
