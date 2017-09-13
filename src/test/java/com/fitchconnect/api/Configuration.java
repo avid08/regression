@@ -29,7 +29,7 @@ public class Configuration {
 	protected String id1;
 	String jsonresponse;
 	String metaEndPoint = "/v1/metadata/fields"; // Metadata-EndPoint
-	String metaUrl = baseURI + metaEndPoint;
+	public String metaUrl = baseURI + metaEndPoint;
 	String dataEndPoint = "/v1/data/valueRequest";
 	protected String dataPostUrl = baseURI + dataEndPoint; // Data Aggregator
 															// -EndPoint
@@ -46,17 +46,16 @@ public class Configuration {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api.fitchconnect-qa.com";
-			bearerToken_QA();
+			baseURI = "https://api.fitchconnect.com";
+			PROD_bearerToken();
 			this.AuthrztionValue = "Bearer " + accessToken;
-			System.out.println("QA Bearer Token " + AuthrztionValue);
-			dataBaseServer1 = "mgo-que1a-cr001.fitchratings.com";
-			dataBaseServer2 = "mgo-que1a-ur001.fitchratings.com";
+			dataBaseServer1 = "mgo-pue1c-cr001.fitchratings.com";
+			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-9";
 		} else if (env.equals("dev")) {
 			baseURI = "https://api.fitchconnect-dev.com";
 			this.AuthrztionValue = ("Basic MUc4TTJCUzVIUTdGTVE5RVlNWTdWWVlUWTpoeU51d2lIYUVtOEpaSnF1RzVsRmM0TnRrTXpMMjdqcVFFczVwSDlUdEZJ");
-			// dataBaseServer = "mongoweb-x01";
+			
 			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
 			dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-dev-9";

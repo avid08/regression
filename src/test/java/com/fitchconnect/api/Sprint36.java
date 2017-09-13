@@ -69,11 +69,11 @@ public void FCA_1797_datavaluerequest () throws IOException{
 
        URL dvfile = Resources.getResource("1797.json");
        String datavJson = Resources.toString(dvfile, Charsets.UTF_8);
-       String XappClintIDvalue = "3dab0f06-eb00-4bee-8966-268a0ee27ba0"; 
+     
        Response datavres = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
                           .contentType("application/vnd.api+json").body(datavJson).with().when().post(dataPostUrl).then()
                           .assertThat().statusCode(200)
-                          .body("data.attributes.entities[0].values[0].values[0].value[0]", equalTo("axAA"))
+                          .body("data.attributes.entities[0].values[0].values[0].value[0]", equalTo("NR"))
                           .extract().response(); 
            Assert.assertFalse(datavres.asString().contains("isError"));
             Assert.assertFalse(datavres.asString().contains("isMissing"));

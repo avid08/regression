@@ -3,33 +3,33 @@
       "type":"valueRequest",
       "attributes":{  
          "dateOptions":{  
-            "dates":[  
-
-            ],
             "periods":[  
-
+               {  
+                  "type":"Annual",
+                  "year":2015
+               }
             ]
          },
          "entities":[  
             {  
-               "type":"fitchGroupId",
-               "id":"80089220"
+               "id":"BO",
+               "type":"isoCountryCode2"
             },
             {  
-               "type":"fitchId",
-               "id":"111503"
+               "id":"BOL",
+               "type":"isoCountryCode3"
             },
             {  
-               "type":"fitchGroupId",
-               "id":"80088917"
+               "id":"LC",
+               "type":"isoCountryCode2"
             },
             {  
-               "type":"fitchId",
-               "id":"110589"
+               "id":"LCA",
+               "type":"isoCountryCode3"
             }
          ],
          "fitchFieldIds":[  
-            "FC_CVB_FLAG"
+            "FC_ENTITY_ID"
          ],
          "options":[  
 

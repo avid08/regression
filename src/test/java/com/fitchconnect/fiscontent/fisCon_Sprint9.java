@@ -58,7 +58,7 @@ public class fisCon_Sprint9 extends Configuration {
 
 		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(issuerUrl).then()
-				.statusCode(200).body(containsString("country")).body(containsString("transactionSecurityID"))
+				.statusCode(200).body(containsString("country"))
 				.body(containsString("cusip")).body(containsString("disclosure")).body(containsString("marketSectors"))
 				.body(containsString("marketsectorId")).body(containsString("primary"))
 				.body(containsString("classTypeDescription")).body(containsString("coupon"))

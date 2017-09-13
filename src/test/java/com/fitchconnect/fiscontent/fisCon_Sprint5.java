@@ -2,6 +2,7 @@ package com.fitchconnect.fiscontent;
 
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,6 +34,8 @@ public class fisCon_Sprint5 extends Configuration {
 				.body(containsString("FC_CVB_FLAG"))
 				.body(containsString("false"))
 				.body(containsString("true"))
+				.body("data.attributes.entities[0].values[0].values[0].value[0]", equalTo("true"))
+				.body("data.attributes.entities[3].values[0].values[0].value[0]", equalTo("false"))
 				.extract().response();
 
 		Assert.assertFalse(fieldResponse.asString().contains("isError"));

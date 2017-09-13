@@ -66,7 +66,7 @@ public class Sprint35 extends Configuration {
 
 	}
 
-	@Test
+	@Test(enabled=false)
 
 	public void effectivePersmisison_1765() {
 

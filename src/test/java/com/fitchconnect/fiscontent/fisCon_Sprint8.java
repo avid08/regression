@@ -23,12 +23,12 @@ public class fisCon_Sprint8 extends Configuration {
 	public void FISC_606_attributefilter() {
 
 		String FIRfilterUrl = baseURI
-				+ "/v1/financialImpliedRatings/?filter[fitchEntityId]=1143152,1003922,1000469,1040027&filter[rating]=c&filter[stmntDate]=2014-12-31&filter[stmntDateRank]=2";
+				+ "/v1/financialImpliedRatings/?filter[fitchEntityId]=1143152,1003922,1000469,1040027&filter[rating]=c&filter[stmntDate]=2014-12-31&filter[stmntDateRank]=3";
 
 		Response res = given().header("Authorization", (AuthrztionValue)).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType(ContentType.JSON).when()
-				.get(FIRfilterUrl).then().statusCode(200).body(containsString("1003922"))
-				.body(containsString("1000469")).body(containsString("2014-12-31")).body(containsString("2")).extract()
+				.get(FIRfilterUrl).then().statusCode(200).body(containsString("stmntDate"))
+				.body(containsString("8138146")).body(containsString("2014-12-31")).body(containsString("3")).extract()
 				.response();
 
 		Assert.assertFalse(res.asString().contains("isError"));
@@ -62,7 +62,7 @@ public class fisCon_Sprint8 extends Configuration {
 		Response res = given().header("Authorization", (AuthrztionValue)).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType(ContentType.JSON).when()
 				.get(getallissueUrl).then().statusCode(200).body(containsString("country"))
-				.body(containsString("transactionSecurityID")).body(containsString("cusip"))
+				.body(containsString("cusip"))
 				.body(containsString("disclosure")).body(containsString("marketSectors"))
 				.body(containsString("marketsectorId")).body(containsString("marketSectorDesc"))
 				.body(containsString("classTypeDescription")).body(containsString("coupon"))
@@ -86,7 +86,7 @@ public class fisCon_Sprint8 extends Configuration {
 		Response res1 = given().header("Authorization", (AuthrztionValue)).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType(ContentType.JSON).when()
 				.get(singleIssueIdUrl).then().statusCode(200).body(containsString("country"))
-				.body(containsString("transactionSecurityID")).body(containsString("cusip"))
+				.body(containsString("cusip"))
 				.body(containsString("disclosure")).body(containsString("marketSectors"))
 				.body(containsString("marketsectorId")).body(containsString("marketSectorDesc"))
 				.body(containsString("classTypeDescription")).body(containsString("coupon"))
@@ -112,7 +112,7 @@ public class fisCon_Sprint8 extends Configuration {
 				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).contentType("application/vnd.api+json").body(myjson).with().when()
 				.post(dataPostUrl).then().statusCode(200).body(containsString("value")).body(containsString("type"))
-				.body(containsString("8638461")).body(containsString("timeIntervalPeriod"))
+				.body(containsString("timeIntervalPeriod"))
 
 				.extract().response();
 

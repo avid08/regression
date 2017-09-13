@@ -29,13 +29,9 @@ public class Sprint31 extends Configuration {
 			.body(containsString("Financials"))
 			.body(containsString("Fitch Ratings"))
 			.body(containsString("Moody's Issuer Rating"))
-			.body(containsString("Sovereign Data"))
-			//.body(containsString("Registered Office Address"))
-			//.body(containsString("Head Office Address"))
-			//.body(containsString("Identifiers"))
-			//.body(containsString("Industry Classification"))
-			.extract().response();
-	
+			//.body(containsString("Sovereign Data"))
+			//.body(containsString("Sovereign Financials"))
+			.extract().response();	
 	
 	
 	Assert.assertFalse(res.asString().contains("isError"));
