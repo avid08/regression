@@ -1,4 +1,4 @@
-package com.fitchconnect.api;
+ package com.fitchconnect.api;
 
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.contains;
@@ -1113,12 +1113,10 @@ public class ApIsmokeTestSuite extends Configuration {
 
 		for (int i = 0; i < dateOptions.size(); i++) {
 			Assert.assertNotNull(dateOptions.get(i));
-
-		}
+			}
 
 		for (int j = 0; j < actual_values.size(); j++) {
 			Assert.assertNotNull(actual_values.get(j));
-
 		}
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
@@ -1149,7 +1147,6 @@ public class ApIsmokeTestSuite extends Configuration {
 
 		for (int j = 0; j < actual_values.size(); j++) {
 			Assert.assertNotNull(actual_values.get(j));
-
 		}
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));

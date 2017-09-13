@@ -33,7 +33,10 @@
 			<class name="com.fitchconnect.fiscontent.fisCon_Sprint6" />
 			<class name="com.fitchconnect.fiscontent.fisCon_Sprint7" />
 			<class name="com.fitchconnect.fiscontent.fisCon_Sprint8" />
-		
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint9" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint10" />
+			<class name="com.fitchconnect.fiscontent.FisCon_Sprint11" />
+			
 
 		</classes>
 

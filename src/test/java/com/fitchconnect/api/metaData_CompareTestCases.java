@@ -52,7 +52,7 @@ public class metaData_CompareTestCases extends Configuration {
 
 				Response response = given().header("Authorization", AuthrztionValue)
 						.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
-						.header("content", contentValue).when().get(MetaDataUrl).then()
+						.header("content", contentValue).contentType("application/vnd.api+json").when().get(MetaDataUrl).then()
 						.statusCode(200).extract().response();
 
 				jsonAsString = response.asString();
@@ -100,7 +100,7 @@ public class metaData_CompareTestCases extends Configuration {
 		File src = new File(fileUrl.toURI());
 		FileInputStream file = new FileInputStream(src);
 		XSSFWorkbook wb = new XSSFWorkbook(file);
-		XSSFSheet mySheet = wb.getSheet("Fitch Ratings");
+		XSSFSheet mySheet = wb.getSheet("FitchRatings");
 		int rowcount = mySheet.getPhysicalNumberOfRows();
 		System.out.println(rowcount + " fields are available");
 
@@ -124,7 +124,7 @@ public class metaData_CompareTestCases extends Configuration {
 				//System.out.println(DataTypeUrl);
 
 				String jsonAsString;
-
+ 
 				Response response = given().header("Authorization", AuthrztionValue)
 						.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
 						.header("content", contentValue).when().get(DataTypeUrl)
@@ -166,13 +166,13 @@ public class metaData_CompareTestCases extends Configuration {
 					System.err.println("The Response does not contain DataType : " + fieldIds  + " PermissionType "+PermissionType);
 				}
 				
-				/*if (index2 != -1) {
+				if (index2 != -1) {
 
 				} else {
 					failure = true;
 					System.err.println("The Response does not contain field Description : " + desC);
 				}
-          */
+          
 				/*if (index3 != -1) {
 					
 				  System.out.println(i);

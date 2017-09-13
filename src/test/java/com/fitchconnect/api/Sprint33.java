@@ -33,12 +33,18 @@ public class Sprint33 extends Configuration {
   Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 			.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
 			.when().get(cateGorsUri).then()
-			.body(containsString("BMI"))
+			.body(containsString("BMI"))			
 			.body(containsString("Telecommunications"))
 			.body(containsString("Information Technology"))
 			.body(containsString("Petrochemicals"))
-			.body(containsString("Insurance Data"))
+			.body(containsString("Sovereign Financials"))
 			.body(containsString("Fitch Ratings"))
+			.body(containsString("S&P Issuer Rating"))
+			.body(containsString("Moody's Issuer Rating"))
+			.body(containsString("Local Currency"))
+			.body(containsString("Foreign Currency"))
+			.body(containsString("Local Currency Rating"))
+			.body(containsString("Foreign Currency Rating"))			
 			.extract().response();
   
     Assert.assertFalse(res.asString().contains("isError"));
@@ -57,7 +63,7 @@ public class Sprint33 extends Configuration {
 			.extract().response();
   
   Assert.assertFalse(res1.asString().contains("isError"));
-		Assert.assertFalse(res1.asString().contains("isMissing"));
+  Assert.assertFalse(res1.asString().contains("isMissing"));
 	
   
   }

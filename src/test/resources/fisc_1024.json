@@ -4,7 +4,7 @@
       "attributes":{  
          "dateOptions":{  
             "dates":[  
-
+            
             ],
             "periods":[  
 
@@ -12,24 +12,27 @@
          },
          "entities":[  
             {  
-               "type":"fitchGroupId",
-               "id":"80089220"
+               "id":"1708",
+               "type":"fitchId"
+            },
+           
+            {  
+               "id":"104895",
+               "type":"fitchId"
             },
             {  
-               "type":"fitchId",
-               "id":"111503"
-            },
-            {  
-               "type":"fitchGroupId",
-               "id":"80088917"
-            },
-            {  
-               "type":"fitchId",
-               "id":"110589"
+               "id":"1383598",
+               "type":"fitchId"
             }
          ],
          "fitchFieldIds":[  
-            "FC_CVB_FLAG"
+		 "FC_LT_IDR",
+"FC_LT_IDR_ACTN",
+"FC_LT_IDR_DT",
+"FC_LT_IDR_ALRT",
+"FC_LT_IDR_SOLST"
+
+           
          ],
          "options":[  
 
