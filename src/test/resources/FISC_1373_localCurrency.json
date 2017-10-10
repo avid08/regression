@@ -1,0 +1,33 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+
+       "entities":
+       [  
+            {"id":"111490","type":"FitchID"}       
+         ],
+         "dateOptions":
+         {"periods":[
+         
+         {"type":"Annual"
+         ,"year":2013}
+         
+         ]},
+         
+         "fitchFieldIds":
+         [  "FC_STATEMENT_ID",
+            "FC_COUNTRY",
+            "FC_COMPANY_NAME",
+            "FC_TOTAL_ASSETS_BNK",
+            "FC_NET_INCOME_BEFORE_PROFIT_TRANSFERS_BNK"
+         ],
+    "options":
+    [
+    {"name":"accountingStandard","value":"LOCAL"},
+    {"name":"consolidation","value":"CON"},
+    {"name":"currency","value":"LOCAL"}
+    ]
+      }
+   }
+}

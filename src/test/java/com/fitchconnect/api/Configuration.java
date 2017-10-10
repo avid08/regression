@@ -46,16 +46,17 @@ public class Configuration {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api.fitchconnect.com";
-			PROD_bearerToken();
+			baseURI = "https://api.fitchconnect-qa.com";
+			bearerToken_QA();
 			this.AuthrztionValue = "Bearer " + accessToken;
-			dataBaseServer1 = "mgo-pue1c-cr001.fitchratings.com";
-			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
+			System.out.println("QA Bearer Token " + AuthrztionValue);
+			dataBaseServer1 = "mgo-que1a-cr001.fitchratings.com";
+			dataBaseServer2 = "mgo-que1a-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-9";
 		} else if (env.equals("dev")) {
 			baseURI = "https://api.fitchconnect-dev.com";
-			this.AuthrztionValue = ("Basic MUc4TTJCUzVIUTdGTVE5RVlNWTdWWVlUWTpoeU51d2lIYUVtOEpaSnF1RzVsRmM0TnRrTXpMMjdqcVFFczVwSDlUdEZJ");
-			
+			Dev_bearerToken();
+			this.AuthrztionValue = "Bearer " + accessToken;
 			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
 			dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-dev-9";
@@ -198,5 +199,32 @@ public class Configuration {
 		System.out.println("access token " + accessToken);
 
 	}
+	
+	public void Dev_bearerToken() throws IOException {
+
+		String url = baseURI + "/v1/oauth/token";
+		System.out.println(url);
+		URL file = Resources.getResource("Dev_granType.json");
+		String myjson = Resources.toString(file, Charsets.UTF_8);
+
+		Response response = given().contentType("application/x-www-form-urlencoded").body(myjson).with().when()
+				.post(url).then().statusCode(200).extract().response();
+
+		String responseString = response.asString();
+
+		accessToken = "";
+
+		StringTokenizer tokenizer = new StringTokenizer(responseString, "{}\"");
+		if (tokenizer.hasMoreTokens()) {
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			accessToken = tokenizer.nextToken();
+		}
+
+		System.out.println("access token " + accessToken);
+
+	}
+
+	
 
 }

@@ -104,10 +104,14 @@ public class Sprint39 extends Configuration {
 				.extract().response();
 
 		List<String> entityData = response.path("data.relationships.entity.links.related");
+		
+	  
 
 		System.out.println(entityData.size());
 
 		for (int i = 0; i < entityData.size(); i++) {
+			
+			System.out.println(entityData.get(i));
 		
 
 			Response response1 = given().header("Authorization", AuthrztionValue)
@@ -115,8 +119,6 @@ public class Sprint39 extends Configuration {
 					.header("content", contentValue).when().get(entityData.get(i)).then().statusCode(200)
 					.body(containsString("officers")).body(containsString("name")).body(containsString("countryName"))
 					.body(containsString("officers"))
-				
-
 					.body(containsString("relationships")).body(containsString("entityRankings"))
 					.body(containsString("standardAndPoorIssuerRatings")).body(containsString("moodyIssuerRatings"))
 					.body(containsString("fitchIssuerRatings")).body(containsString("ultimateParent"))

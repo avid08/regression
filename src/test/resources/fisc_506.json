@@ -1,0 +1,29 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+        
+               
+            ],
+            "periods":[  
+              
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"111448",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+            "FC_SWIFT_CODES",
+			"FC_LEI"
+         ],
+         "options":[  
+
+         ]
+      }
+   }
+}

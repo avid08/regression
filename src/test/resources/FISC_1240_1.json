@@ -1,0 +1,45 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+            
+          "2011-12-31"
+
+            ],
+            "periods":[         
+            
+
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"1003961",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+            "FC_STATEMENT_ID",
+            "FC_COUNTRY",
+            "FC_PERIOD_DT",
+            "FC_COMM_EQUITY_TOTAL_ASSETS_BNK",
+            "FC_OTHER_EARNING_ASSETS_BNK",
+            "FC_NET_INCOME_BEFORE_PROFIT_TRANSFERS_BNK"
+         ],
+         "options":[  
+           {"name": "consolidation",
+		   "value": "Combined"
+		   },
+		    {"name": "accountingStandard",
+		   "value": "IFRS"},
+         
+           {"name": "currency",
+		   "value": "INR",
+		   "date": "2014-12-31"                                 
+		  }   
+               
+         ]
+      }
+   }
+}
