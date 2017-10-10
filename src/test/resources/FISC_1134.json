@@ -1,0 +1,23 @@
+{  
+  "data":{  
+     "type":"valueRequest",
+      "attributes":{  
+        "entities":[  
+           {  
+              "id":"80362034",
+               "type":"fitchGroupId"
+            }
+         ],
+         "fitchFieldIds":[  
+           "FC_PEER_ISSUER_IDS",
+            "FC_PEER_ISSUER_NAMES"
+         ],
+         "dates": [
+          
+        ],
+         "options":[  
+			
+        ]
+      }
+   }
+}

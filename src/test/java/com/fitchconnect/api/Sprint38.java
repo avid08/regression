@@ -145,8 +145,8 @@ public void FCA_1773 () throws IOException {
 	String periodJson = Resources.toString(periodfile, Charsets.UTF_8);
 
 	Response periodresponsedata = given().header("Authorization", AuthrztionValue)
-			.header("X-App-Client-Id", XappClintIDvalue).contentType("application/vnd.api+json").body(periodJson).with()
-			
+			.header("X-App-Client-Id", XappClintIDvalue).contentType("application/vnd.api+json")
+			.body(periodJson).with()			
 			.when().post(dataPostUrl)
 			.then().statusCode(200)
 			.extract().response();
@@ -190,7 +190,9 @@ public void FCA_1883case2 () throws IOException {
 			
 			.when().post(dataPostUrl)
 			.then().statusCode(200)
-			.body(containsString("47307272065.0722"))
+			.body(containsString("USD"))
+			.body(containsString("value"))
+			.body(containsString("periodResolution"))
 			.extract().response();
 
 	Assert.assertFalse(case2responsedata.asString().contains("isError"));

@@ -227,8 +227,7 @@ public class fisCon_Sprint10 extends Configuration {
 	
 	public void fisc_943_TrasnctionRating(){
 		
-		String transCtionRatingURl = baseURI +"/v1/transactions/96247985/transactionRatings?page[limit]=2&filter[action]=New Rating,Downgrade"
-				+ "&filter[startDate]=2016-04-25&filter[endDate]=2017-08-08&filter[alert]=Rating Outlook Negative,Rating Watch Negative";
+		String transCtionRatingURl = baseURI +"/v1/transactions/96249968/transactionRatings?filter[action]=New Rating,Downgrade&filter[startDate]=2016-04-25&filter[endDate]=2016-10-08";
 
 		Response res = given().header("Authorization", AuthrztionValue).header("content", contentValue)
 				.header("'Accept",acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(transCtionRatingURl)
@@ -238,7 +237,7 @@ public class fisCon_Sprint10 extends Configuration {
 				.body(containsString("description"))
 				.body(containsString("effectiveDate"))				
 				.body(containsString("2016-04-25"))
-				.body(containsString("Rating Outlook Negative"))				
+				.body(containsString("Rating Outlook Stable"))				
 				.body(containsString("transactionRatings"))
 				.body(containsString("Downgrade"))
 				.body(containsString("first"))
