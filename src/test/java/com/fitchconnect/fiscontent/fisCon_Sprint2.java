@@ -1,5 +1,5 @@
-package com.fitchconnect.fiscontent;
-
+ package com.fitchconnect.fiscontent;
+                                                               
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.containsString;
 

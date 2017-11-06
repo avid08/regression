@@ -27,12 +27,13 @@ public class Configuration {
 	protected String dataBaseServer2;
 	protected String id;
 	protected String id1;
+	
 	String jsonresponse;
 	String metaEndPoint = "/v1/metadata/fields"; // Metadata-EndPoint
 	public String metaUrl = baseURI + metaEndPoint;
 	String dataEndPoint = "/v1/data/valueRequest";
 	protected String dataPostUrl = baseURI + dataEndPoint; // Data Aggregator
-															// -EndPoint
+	protected String BMIbaseURL;					  									// -EndPoint
 	protected String XappClintIDvalue = "3dab0f06-eb00-4bee-8966-268a0ee27ba0";
 	protected String acceptValue = "application/vnd.api+json";
 	protected String contentValue = "application/vnd.api+json";
@@ -46,13 +47,13 @@ public class Configuration {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api.fitchconnect-qa.com";
-			bearerToken_QA();
+			baseURI = "https://api.fitchconnect.com";
+			PROD_bearerToken();
 			this.AuthrztionValue = "Bearer " + accessToken;
-			System.out.println("QA Bearer Token " + AuthrztionValue);
-			dataBaseServer1 = "mgo-que1a-cr001.fitchratings.com";
-			dataBaseServer2 = "mgo-que1a-ur001.fitchratings.com";
+			dataBaseServer1 = "mgo-pue1c-cr001.fitchratings.com";
+			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-9";
+			BMIbaseURL = "https://api.bmiresearch.com";
 		} else if (env.equals("dev")) {
 			baseURI = "https://api.fitchconnect-dev.com";
 			Dev_bearerToken();
@@ -60,6 +61,7 @@ public class Configuration {
 			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
 			dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-dev-9";
+			BMIbaseURL = "https://api-stg1.bmiresearch.com";
 		} else if (env.equals("int")) {
 			baseURI = "https://api.fitchconnect-int.com";
 			bearerToken_INT();
@@ -68,6 +70,7 @@ public class Configuration {
 			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
 			dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-dev-9";
+			BMIbaseURL = "https://api-stg1.bmiresearch.com";
 		} else if (env.equals("qa")) {
 			baseURI = "https://api.fitchconnect-qa.com";
 			bearerToken_QA();
@@ -76,6 +79,7 @@ public class Configuration {
 			dataBaseServer1 = "mgo-que1a-cr001.fitchratings.com";
 			dataBaseServer2 = "mgo-que1a-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-9";
+			BMIbaseURL = "https://api-stg1.bmiresearch.com";
 		} else if (env.equals("stage")) {
 			baseURI = "https://api.fitchconnect-stg.com";
 			stage_bearerToken();
@@ -83,6 +87,7 @@ public class Configuration {
 			dataBaseServer1 = "mgo-uue1a-cr001.fitchratings.com";
 			dataBaseServer2 = "mgo-uue1a-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-9";
+			BMIbaseURL = "https://api-stg1.bmiresearch.com";
 		} else if (env.equals("prod")) {
 			baseURI = "https://api.fitchconnect.com";
 			PROD_bearerToken();
@@ -90,6 +95,7 @@ public class Configuration {
 			dataBaseServer1 = "mgo-pue1c-cr001.fitchratings.com";
 			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-9";
+			BMIbaseURL = "https://api.bmiresearch.com";
 		}
 
 		System.out.println(baseURI);

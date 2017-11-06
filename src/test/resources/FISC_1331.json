@@ -1,0 +1,19 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "entities":[  
+            {  
+               "id":"139785",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+            "FC_COMPANY_NAME",
+            "FC_COUNTRY_CD",
+            "FC_COUNTRY_NAME",
+            "FC_SWIFT_CD"
+         ]
+      }
+   }
+}

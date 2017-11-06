@@ -112,14 +112,13 @@ public class fisCon_Sprint12 extends Configuration {
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
 		Assert.assertFalse(res.asString().contains("isRestricted"));
-	 
-	 
+	 	 
   }
  
  @Test 
  public void fisc_899_bug(){
 	
-	 String entityUrl = baseURI +"/v1/entities/1480373";	 
+	 String entityUrl = baseURI +"/v1/entities/1466963";	 
 
 		Response res = given().header("Authorization", AuthrztionValue).header("content", contentValue)
 				.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(entityUrl)

@@ -101,6 +101,10 @@ public class fisCon_Sprint13 extends Configuration {
 			.body(containsString("included"))
 			.extract().response();		
 			
+	
+
+	Assert.assertFalse(res1.asString().contains("isMissing"));
+	Assert.assertFalse(res1.asString().contains("isRestricted"));
   }
  
  @Test 
@@ -222,7 +226,7 @@ public void FISC_1240_exchangeRate_CustomRate () throws IOException{
 	
 	 exchngeRateValue();
 	
-	Float expectedvalue = (float) (rate*144.7*1000000*1.2);
+	Float expectedvalue = (float) (rate*144.7*1000000*1.2);  //
 	
 	System.out.println("expected total Netincome "+expectedvalue);
 	
@@ -291,8 +295,7 @@ Assert.assertFalse(failure);
 	Assert.assertFalse(res.asString().contains("isRestricted"));
 	 
    }
- 
- 
+  
  @Test 
  
   public void fisc_1240_GroupIDtest () throws IOException {
@@ -373,21 +376,40 @@ Assert.assertFalse(failure);
 				.body(containsString("Annual"))
 				.extract().response();	
 		
-		
-		
-	
-		
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
 		Assert.assertFalse(res.asString().contains("isRestricted"));
-	 	  
+		
+		  
     }
    
+  @Test
   
+  public void FISC_1331_multipleCountryCd () throws IOException{
+  URL file = Resources.getResource("FISC_1331.json");
+	String myJson = Resources.toString(file, Charsets.UTF_8);
 
-}	
-	 
+	Response res = given().header("Authorization", AuthrztionValue)
+			.header("X-App-Client-Id", XappClintIDvalue).contentType("application/vnd.api+json")
+			.body(myJson).with()
+			.when().post(dataPostUrl)
+			.then().assertThat().statusCode(200)
+			.body(containsString("Asya Katilim Bankasi A.S."))
+			.extract().response();
+  
 	
+	Assert.assertTrue(res.asString().contains("TURKEY"));
+	
+	Assert.assertFalse(res.asString().contains("NORWAY"));	
+	
+	Assert.assertFalse(res.asString().contains("isError"));
+	Assert.assertFalse(res.asString().contains("isMissing"));
+	Assert.assertFalse(res.asString().contains("isRestricted"));
+	
+
+  }	
+	 
+}	
 	
 	 
 	 
