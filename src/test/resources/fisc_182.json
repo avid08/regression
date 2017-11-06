@@ -1,0 +1,27 @@
+{  
+   "data":{  
+      "type":"valueResponse",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+         
+            ],
+            "periods":[  
+
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"1273049",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+            "FC_LT_CAVAL_NSR_SP"
+         ],
+         "options":[  
+           
+         ]
+      }
+   }
+}

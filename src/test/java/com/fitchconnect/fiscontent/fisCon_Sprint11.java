@@ -156,7 +156,6 @@ public class fisCon_Sprint11 extends Configuration {
 				.body(containsString("disclosure")).body(containsString("id")).body(containsString("role"))
 				.body(containsString("groupCode")).body(containsString("name")).body(containsString("description"))
 				.body(containsString("email")).body(containsString("marketSectors")).body(containsString("primary"))
-
 				.extract().response();
 
 		Assert.assertFalse(res.asString().contains("isError"));
@@ -247,7 +246,7 @@ public class fisCon_Sprint11 extends Configuration {
 		Assert.assertFalse(res.asString().contains("isMissing"));
 		Assert.assertFalse(res.asString().contains("isRestricted"));
 
-		String SingletransactionSecurityURi = baseURI + "/v1/transactionSecurities/96514261";
+		String SingletransactionSecurityURi = baseURI + "/v1/transactionSecurities/96566796";
 
 		Response res1 = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")

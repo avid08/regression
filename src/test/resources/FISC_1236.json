@@ -15,9 +15,9 @@
                "type":"FitchID"
             },
        
-            {  
-               "id":"CBG.LN",
-               "type":"companyTicker"
+             {  
+               "id":"1025444",
+               "type":"FitchID"
             }
          ],
          "fitchFieldIds":[  
