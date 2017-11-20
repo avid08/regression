@@ -108,7 +108,7 @@ String case1url = baseURI + "/v1/entities?filter[name]=bank";
 
 Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
            .header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
-           .when().get(case1url).then().body(containsString("Asia"))
+           .when().get(case1url).then()
            .body(containsString("1880 Bank"))
            .body(containsString("North America"))
            .body(containsString("Cambridge"))

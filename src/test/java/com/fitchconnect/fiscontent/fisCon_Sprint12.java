@@ -118,7 +118,7 @@ public class fisCon_Sprint12 extends Configuration {
  @Test 
  public void fisc_899_bug(){
 	
-	 String entityUrl = baseURI +"/v1/entities/1466963";	 
+	 String entityUrl = baseURI +"/v1/entities/1201722";	 
 
 		Response res = given().header("Authorization", AuthrztionValue).header("content", contentValue)
 				.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(entityUrl)
@@ -127,7 +127,6 @@ public class fisCon_Sprint12 extends Configuration {
 				.body(containsString("fitchConnectUrl"))				
 				.body(containsString("https://app.fitchconnect"))
 				.extract().response();
-		
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
 		Assert.assertFalse(res.asString().contains("isRestricted"));
@@ -172,6 +171,5 @@ public class fisCon_Sprint12 extends Configuration {
 		Assert.assertFalse(res1.asString().contains("isRestricted"));
 		
   }
-
 
 }

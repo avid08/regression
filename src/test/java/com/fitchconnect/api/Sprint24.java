@@ -167,7 +167,7 @@ public class Sprint24 extends Configuration {
 
 	}
 	
-  	@Test
+  	@Test(enabled=false)
 
 	public void FCA_1116_chTree_Descendants() throws IOException {
 
