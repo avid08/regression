@@ -96,9 +96,9 @@ public class fisCon_Sprint14 extends Configuration {
 			String BmiCategoryId = mySheet.getRow(i).getCell(0).getStringCellValue();
 			String BmiCategoryName = mySheet.getRow(i).getCell(1).getStringCellValue();
 			
-			System.out.println("bmiId  "+BmiCategoryId);
+			//System.out.println("bmiId  "+BmiCategoryId);
 			
-			System.out.println("bmi catgry Name  "+BmiCategoryName);
+			//System.out.println("bmi catgry Name  "+BmiCategoryName);
 			
 			String jsonAsString;
 			
@@ -210,12 +210,12 @@ public class fisCon_Sprint14 extends Configuration {
 		Assert.assertFalse(res.asString().contains("isMissing"));
 		Assert.assertFalse(res.asString().contains("isRestricted"));
     	
-	String NullBTStatementURI = baseURI+"/v1/entities/140170/statements";
+	String NullBTStatementURI = baseURI+"/v1/entities/750748/statements";
     	
     	Response res1 = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(NullBTStatementURI).then()
 				.statusCode(200)
-				.body(containsString("businessTemplate"))				
+				//.body(containsString("businessTemplate"))				
 				//.body(containsString(null))				
 				.extract().response();
     	

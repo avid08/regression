@@ -51,15 +51,18 @@ public class Sprint22 extends Configuration {
 
 	public void regions_single_524() throws IOException {
 
-		String regionEndPoint = "/v1/regions/11"; // Metadata-EndPoint
+		String regionEndPoint = "/v1/regions/GF"; // Metadata-EndPoint
 		String regionmetaUrl = baseURI + regionEndPoint;
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue)
 
-				.when().get(regionmetaUrl).then().body("data.id", equalTo("11"))
-				.body("data.attributes.name", equalTo("Mediterranean")).contentType(ContentType.JSON).extract()
-				.response();
+				.when().get(regionmetaUrl).then().statusCode(200)
+				.body(containsString("regions"))
+				.body(containsString("French Guiana"))
+				.extract().response();
+		
+		System.out.println(res.asString());
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
