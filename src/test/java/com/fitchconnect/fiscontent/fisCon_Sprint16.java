@@ -33,7 +33,7 @@ public class fisCon_Sprint16 extends Configuration {
 
 		boolean failure = false;
 		for (int i =2; i < rowcount; i++) {
-
+			
 			String fitchFieldIds = mySheet.getRow(i).getCell(0).getStringCellValue();
 			String audit = mySheet.getRow(i).getCell(1).getStringCellValue();
 			
@@ -97,8 +97,7 @@ public class fisCon_Sprint16 extends Configuration {
 		for (int i =2; i < rowcount; i++) {
 
 			String fitchFieldIds = mySheet.getRow(i).getCell(0).getStringCellValue();
-			String formula = mySheet.getRow(i).getCell(1).getStringCellValue();
-			
+			String formula = mySheet.getRow(i).getCell(1).getStringCellValue();			
 
 			String CategoriesUrl = baseURI + "/v1/metadata/fields/" + fitchFieldIds;
 
@@ -269,7 +268,6 @@ public void fisc_1570_regions() {
 	
 	String issueURi = baseURI+"/v1/issues?filter[entityId]=1429651&filter[id]=93575704&filter[isin]=XS0982711391&filter[cusip]=Y00371AA5&filter[issuerId]=93528490&filter[loanXId]=LX146783";
 	
-	
 	Response response = given().header("Authorization", AuthrztionValue)
 			.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
 			.header("content", contentValue).when().get(issueURi).then().statusCode(200)
@@ -282,7 +280,6 @@ public void fisc_1570_regions() {
 			.body(containsString("Y00371AA5"))
 			.body(containsString("93528490"))
 			.body(containsString("LX146783"))
-			
 			.extract().response();
 	
 	
@@ -291,4 +288,6 @@ public void fisc_1570_regions() {
 	
    }
 
+
+  
 }

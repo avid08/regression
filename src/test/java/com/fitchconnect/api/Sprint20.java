@@ -20,7 +20,6 @@ import groovy.json.internal.Charsets;
 
 public class Sprint20 extends Configuration {
 
-	
 	@Test(enabled = true)
 	public void ModyNewFields_775() throws IOException {
 
@@ -72,8 +71,8 @@ public class Sprint20 extends Configuration {
 		Assert.assertFalse(fieldResponse.asString().contains("isMissing"));
 		Assert.assertTrue(fieldResponse.asString().contains("FC_ST_DERIVED_ISSR_MDY"));
 
-	}	
-	
+	}
+
 	@Test(enabled = true)
 	public void Entity_Search_921() {
 
@@ -123,50 +122,45 @@ public class Sprint20 extends Configuration {
 
 	}
 
-   @Test
-   
-   public void MetaDataService_withLinks_975 () {
-		Response fieldsRes =given().header("Authorization", AuthrztionValue).header("content", contentValue).header("'Accept", acceptValue)
-		.header("X-App-Client-Id", XappClintIDvalue).when().get(metaUrl)
-		.then().assertThat().log().ifError().statusCode(200)
-		.extract().response();
-		
-		Assert.assertFalse(fieldsRes.asString().contains("isError"));
-		Assert.assertFalse(fieldsRes.asString().contains("isMissing"));	
-		
-	 List <String> relationship=fieldsRes.path("data.relationships.categories.links.self");
-	 List <String> Links = fieldsRes.path("data.links.self");
+	@Test
 
-	 
-	 for (int i =0;i>Links.size();i++){
-		Assert.assertNotNull(Links.get(i));
-		Assert.assertNotNull(relationship.get(i));
-		 
-	 }
-		
-   }
-   
-   @Test
-  public void categories2_802() {
-	    
-	   String categoryUri = "/v1/metadata/categories/2";
-       String cteGorYUrl =baseURI+categoryUri ;
-	   
-	   Response cateGories =given().header("Authorization", AuthrztionValue).header("content", contentValue).header("'Accept", acceptValue)
-				.header("X-App-Client-Id", XappClintIDvalue)
-				.when().get(cteGorYUrl)
-				.then()
-				.assertThat().statusCode(200)
-				.body("data.attributes.name",equalTo("Financials"))
-				.body("data.links.self",containsString("https:"))				
-				.body("data.relationships.children.data[0].type",equalTo("categories"))
-				.body("data.relationships.children.data[1].id",Matchers.anything("12"))
-				
+	public void MetaDataService_withLinks_975() {
+		Response fieldsRes = given().header("Authorization", AuthrztionValue).header("content", contentValue)
+				.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(metaUrl).then()
+				.assertThat().log().ifError().statusCode(200).extract().response();
+
+		Assert.assertFalse(fieldsRes.asString().contains("isError"));
+		Assert.assertFalse(fieldsRes.asString().contains("isMissing"));
+
+		List<String> relationship = fieldsRes.path("data.relationships.categories.links.self");
+		List<String> Links = fieldsRes.path("data.links.self");
+
+		for (int i = 0; i > Links.size(); i++) {
+			Assert.assertNotNull(Links.get(i));
+			Assert.assertNotNull(relationship.get(i));
+
+		}
+
+	}
+
+	@Test
+	public void categories2_802() {
+
+		String categoryUri = "/v1/metadata/categories/2";
+		String cteGorYUrl = baseURI + categoryUri;
+
+		Response cateGories = given().header("Authorization", AuthrztionValue).header("content", contentValue)
+				.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(cteGorYUrl)
+				.then().assertThat().statusCode(200).body("data.attributes.name", equalTo("Financials"))
+				.body("data.links.self", containsString("https:"))
+				.body("data.relationships.children.data[0].type", equalTo("categories"))
+				.body("data.relationships.children.data[1].id", Matchers.anything("12"))
+
 				.extract().response();
-				
-				Assert.assertFalse(cateGories.asString().contains("isError"));
-				Assert.assertFalse(cateGories.asString().contains("isMissing"));
-   }
+
+		Assert.assertFalse(cateGories.asString().contains("isError"));
+		Assert.assertFalse(cateGories.asString().contains("isMissing"));
+	}
 
 	@Test(enabled = true)
 	public void FCURL_928() throws IOException {
@@ -187,5 +181,6 @@ public class Sprint20 extends Configuration {
 		Assert.assertFalse(dataResponse.asString().contains("isMissing"));
 
 	}
+
 
 }

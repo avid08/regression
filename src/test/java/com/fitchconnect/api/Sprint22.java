@@ -106,7 +106,7 @@ public class Sprint22 extends Configuration {
 
 				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get().then().statusCode(200)
-				.body("data[0].id", equalTo("01000000")).body("data[0].type", equalTo("marketSector"))
+				.body("data[0].id", equalTo("01000000")).body("data[0].type", equalTo("marketSectors"))
 				.body("data[0].attributes.name", equalTo("Corporate Finance")).contentType(ContentType.JSON).extract()
 				.response();
 
@@ -127,7 +127,7 @@ public class Sprint22 extends Configuration {
 
 				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get().then().statusCode(200)
-				.body("data.id", equalTo("01000000")).body("data.type", equalTo("marketSector"))
+				.body("data.id", equalTo("01000000")).body("data.type", equalTo("marketSectors"))
 				.body("data.attributes.name", equalTo("Corporate Finance")).contentType(ContentType.JSON).extract()
 				.response();
 
