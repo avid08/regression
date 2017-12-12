@@ -2646,7 +2646,7 @@ public class ApIsmokeTestSuite extends Configuration {
 	}
 	
 	
-	@Test(enabled=true)
+	@Test(enabled=false)
 	public void numberOfentitiesPerPage() {
 
 		String entityURI = baseURI + "/v1/entities";
