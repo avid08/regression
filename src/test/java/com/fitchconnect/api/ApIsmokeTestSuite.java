@@ -16,6 +16,9 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -105,9 +108,9 @@ public class ApIsmokeTestSuite extends Configuration {
 
 	// Test Description: verify that system display empty response for entity
 	// which are not published or Publishflag = NO
-	@Test(enabled = false)
+	@Test()
 	public void Shareholder_869_without_Data() {
-		String endpoint1 = "/v1/entities/110631/shareholders";
+		String endpoint1 = "/v1/entities/1433291/shareholders";
 		String DirectrUrl = baseURI + endpoint1;
 
 		Response res = given().header("Authorization", AuthrztionValue).header("content", contentValue)
@@ -2641,5 +2644,78 @@ public class ApIsmokeTestSuite extends Configuration {
 		 */
 
 	}
+	
+	
+	@Test(enabled=true)
+	public void numberOfentitiesPerPage() {
 
+		String entityURI = baseURI + "/v1/entities";
+
+		int numberofPages =3136;
+
+		String newURI = entityURI + "?page[number]=";
+
+		for (int i = 0;i<numberofPages; i++) {
+
+			int num = (i);
+
+			String NewURIx = newURI + num;
+
+			Response res = given().header("Authorization", AuthrztionValue).header("content", contentValue)
+					.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(NewURIx)
+					.then().assertThat().statusCode(200).extract().response();
+			List<String> Id = res.path("data.id");
+
+			System.out.println (Id.size());		
+			
+			//Id.forEach(System.out::println);
+
+		}
+
+	}
+	
+	
+	@Test(enabled=false)
+	public void numberOftransactionPerPage() {
+
+		String transctionURI = baseURI + "/v1/transactions/?page[limit]=50&";
+
+		int offsetPage = 2400;
+
+		String newURI = transctionURI + "page[offset]=";
+		
+		ExecutorService executor = Executors.newFixedThreadPool(10);
+
+		for (int i = 0;i<offsetPage; i+=50) {
+			final int idx = i;
+			executor.submit(() -> {
+			
+			
+			System.out.println(idx);
+
+			String NewURIx = newURI + idx;		
+
+			Response res = given().header("Authorization", AuthrztionValue).header("content", contentValue)
+					.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(NewURIx)
+					.then().assertThat().statusCode(200).extract().response();
+			List<String> Id = res.path("data.id");
+
+			//System.out.println(Id.size());
+			
+			Id.forEach(System.out::println);
+
+		});
+
+		}
+	
+	
+	try {
+		System.out.println("attempt to shutdown executor");
+		executor.shutdown();
+		executor.awaitTermination(12, TimeUnit.HOURS);
+	} catch (InterruptedException e) {
+		System.err.println("tasks interrupted");
+	}
+	
+}
 }

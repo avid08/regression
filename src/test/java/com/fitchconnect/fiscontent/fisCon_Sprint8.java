@@ -82,6 +82,8 @@ public class fisCon_Sprint8 extends Configuration {
 		System.out.println(" issueId " + singleIssueId);
 
 		String singleIssueIdUrl = getallissueUrl + "/" + singleIssueId;
+		
+		System.out.println(singleIssueIdUrl);
 
 		Response res1 = given().header("Authorization", (AuthrztionValue)).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType(ContentType.JSON).when()

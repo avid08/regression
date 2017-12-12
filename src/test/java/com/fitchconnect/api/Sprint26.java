@@ -56,10 +56,10 @@ public class Sprint26 extends Configuration {
 
            Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
                         .header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
-                         .when().get(entitiesurl).then().body("data[0].type", equalTo("entities"))
-                 
+                         .when().get(entitiesurl).then().body("data[0].type", equalTo("entities"))                 
                         .extract()
                         .response();
+           
            int numberOfentities = res.path("meta.count");
            
            System.out.println(numberOfentities);

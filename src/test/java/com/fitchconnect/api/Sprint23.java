@@ -131,7 +131,7 @@ public class Sprint23 extends Configuration {
 
 		Response res = given().header("Authorization", (AuthrztionValue)).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(url).then().statusCode(200)
-				.body("data.type", equalTo("entities")).body("data.id", equalTo("1418754"))
+				.body("data.type", equalTo("entities")).body("data.id", equalTo("107559"))
 				//.body("data.attributes.name", equalTo("Barclays plc"))
 				.contentType(ContentType.JSON).extract().response();
 
