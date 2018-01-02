@@ -97,7 +97,8 @@ public class fisCon_Sprint15 extends Configuration {
 				.header("accept", acceptValue).header("content", contentValue).when().get(entityResrceURI).then()
 				.statusCode(200).body(containsString("marketSectors")).body(containsString("description"))
 				.body(containsString("id")).body(containsString("primary")).body(containsString("relationships"))
-				.body(containsString("address2")).body(containsString("included")).extract().response();
+				.body(containsString("Mutual Savings Bank"
+						+ "")).body(containsString("included")).extract().response();
 
 		Assert.assertFalse(res.asString().contains("isMissing"));
 		Assert.assertFalse(res.asString().contains("isRestricted"));
