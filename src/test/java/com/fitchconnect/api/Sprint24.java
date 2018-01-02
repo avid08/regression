@@ -72,9 +72,9 @@ public class Sprint24 extends Configuration {
 
 		this.id = res.path("data.id");
 
-		System.out.println("id"+id);
+		System.out.println("id "+id);
 		
-		System.out.println("viewfield  " +res.asString());
+		//System.out.println("viewfield  " +res.asString());
 
 		String jsonString = null;
 
@@ -113,7 +113,7 @@ public class Sprint24 extends Configuration {
 		data2.put("id", id);
 		jsonString = obj.toString();
 
-		System.out.println("json"+jsonString);
+		//System.out.println("json"+jsonString);
 
 		Response resViewDef = given()
 
@@ -124,7 +124,7 @@ public class Sprint24 extends Configuration {
 
 		this.id1 = resViewDef.path("data.id");
 		
-		System.out.println("id1"+id1);
+		System.out.println("id1 "+id1);
 		
 		
 		System.out.println("viewdef  " +resViewDef.asString());
@@ -134,12 +134,16 @@ public class Sprint24 extends Configuration {
 	@Test(priority = 2)
 	public void retrieve_viewDefs_1062() throws IOException {
 		String CrteViewDefUri = "/v1/viewdefs";
-		String CrteViewDefUrl = baseURI + CrteViewDefUri;
+		String CrteViewDefUrl = baseURI + CrteViewDefUri +"/"+id1;
+		
+	
 
 		Response listofViewDef = given().header("Authorization", AuthrztionValue)
 				.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
 				.header("content", contentValue).contentType("application/vnd.api+json").when().get(CrteViewDefUrl)
 				.then().assertThat().statusCode(200).body(containsString(id)).extract().response();
+		
+		
 		Assert.assertFalse(listofViewDef.asString().contains("isError"));
 		Assert.assertFalse(listofViewDef.asString().contains("isMissing"));
 		Assert.assertFalse(listofViewDef.asString().contains("isRestricted"));

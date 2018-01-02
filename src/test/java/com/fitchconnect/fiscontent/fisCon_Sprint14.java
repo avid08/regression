@@ -227,11 +227,11 @@ public class fisCon_Sprint14 extends Configuration {
     	
     }
     
-   @Test(enabled=false)
+   @Test()
    
    public void FISC_1337_newAttribtes() {
 	   
-	   String issueURI = baseURI+"/v1/issuers?filter[identifierType]=CUSIP&filter[identifierValue]=123860&filter[id]=1010000146"  ;
+	   String issueURI = baseURI+"/v1/issuers?filter[cusip]=123860,652414&filter[id]=1010000146"  ;
 	   
 	   Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(issueURI).then()

@@ -47,7 +47,7 @@ public class ApIsmokeTestSuite extends Configuration {
 
 	}
 
-	// Test Description : Verify that Pulish_Flag added to metadata service and
+	// Test Description : Verify that Pulish_Flag added to metadata service and 
 	// in the Entity Summary
 	@Test()
 	public void metaDataResponse_with_PF_US897() {
@@ -108,9 +108,9 @@ public class ApIsmokeTestSuite extends Configuration {
 
 	// Test Description: verify that system display empty response for entity
 	// which are not published or Publishflag = NO
-	@Test()
+	@Test(enabled=true)
 	public void Shareholder_869_without_Data() {
-		String endpoint1 = "/v1/entities/1433291/shareholders";
+		String endpoint1 = "/v1/entities/11275301127530/shareholders";
 		String DirectrUrl = baseURI + endpoint1;
 
 		Response res = given().header("Authorization", AuthrztionValue).header("content", contentValue)
@@ -2649,9 +2649,9 @@ public class ApIsmokeTestSuite extends Configuration {
 	@Test(enabled=false)
 	public void numberOfentitiesPerPage() {
 
-		String entityURI = baseURI + "/v1/entities";
+		String entityURI = baseURI + "/v1/issuers";
 
-		int numberofPages =3136;
+		int numberofPages =432;
 
 		String newURI = entityURI + "?page[number]=";
 
@@ -2666,9 +2666,9 @@ public class ApIsmokeTestSuite extends Configuration {
 					.then().assertThat().statusCode(200).extract().response();
 			List<String> Id = res.path("data.id");
 
-			System.out.println (Id.size());		
+			//System.out.println (Id.size());		
 			
-			//Id.forEach(System.out::println);
+			Id.forEach(System.out::println);
 
 		}
 
@@ -2718,4 +2718,48 @@ public class ApIsmokeTestSuite extends Configuration {
 	}
 	
 }
+
+    @Test(enabled=false)
+    public void numberof_issues() {
+
+       String transctionURI = baseURI + "/v1/issues?page[limit]=50&";
+
+       int offsetPage = 429100;
+
+       String newURI = transctionURI + "page[offset]=";
+        
+       ExecutorService executor = Executors.newFixedThreadPool(150);
+
+       for (int i = 0;i<offsetPage; i+=50) {
+            final int idx = i;
+            executor.submit(() -> {
+               
+           String NewURIx = newURI + idx;            
+           //System.out.println(NewURIx);
+
+           Response res = given().header("Authorization", AuthrztionValue).header("content", contentValue)
+                    .header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(NewURIx)
+                    .then().assertThat().statusCode(200).extract().response();
+            List<String> Id = res.path("data.id");
+
+          // System.out.println(Id.size());
+            
+           Id.forEach(System.out::println);
+
+       });
+
+       }
+    
+   
+   try {
+        System.out.println("attempt to shutdown executor");
+        executor.shutdown();
+        executor.awaitTermination(12, TimeUnit.HOURS);
+    } catch (InterruptedException e) {
+        System.err.println("tasks interrupted");
+    }
+    
 }
+
+}
+	
