@@ -193,7 +193,7 @@ String IdfilterMSinclusiveURI = baseURI+"/v1/marketSectors?filter[level]=3&filte
 	public void FISC_1510_trnsction_regionRelation(){
 		
 
-		String trnsactionURI = baseURI+"/v1/transactions/96592757/region";		
+		String trnsactionURI = baseURI+"/v1/transactions/96354479/region";		
 		
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")

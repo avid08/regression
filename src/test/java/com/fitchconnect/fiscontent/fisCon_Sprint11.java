@@ -38,7 +38,6 @@ public class fisCon_Sprint11 extends Configuration {
 	}
 
 	@Test
-
 	public void FISC_1048_obligors() {
 
 		String IssueResourceURi = baseURI + "/v1/issues/87130571";
@@ -246,7 +245,7 @@ public class fisCon_Sprint11 extends Configuration {
 		Assert.assertFalse(res.asString().contains("isMissing"));
 		Assert.assertFalse(res.asString().contains("isRestricted"));
 
-		String SingletransactionSecurityURi = baseURI + "/v1/transactionSecurities/96566796";
+		String SingletransactionSecurityURi = baseURI + "/v1/transactionSecurities/96499501";
 
 		Response res1 = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
