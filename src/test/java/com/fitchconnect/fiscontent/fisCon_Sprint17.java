@@ -14,6 +14,53 @@ public class fisCon_Sprint17 extends Configuration {
 	
 	@Test
 	
+	public void fisc_1503_newRegionsAttributes(){
+		
+
+		String marktSectorURI = baseURI+"/v1/marketSectors?filter[bmiServiceChannelIds]=C219,C220&filter[level]=3";		
+		
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
+				.when().get(marktSectorURI).then().statusCode(200)
+				.body(containsString("bmiServiceChannelIds"))
+				.body(containsString("marketSectors"))
+				.body(containsString("level"))	
+				.body(containsString("C219"))	
+				.body(containsString("C220"))				
+				.body(containsString("name"))
+				.body(containsString("active"))						
+				.extract().response();		
+		
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));		 
+		
+	String IdfilterMSURI = baseURI+"/v1/marketSectors?filter[id]=01010300";	
+	
+	Response res1 = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+			.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
+			.when().get(IdfilterMSURI).then().statusCode(200)
+			.body(containsString("bmiServiceChannelIds"))
+			.body(containsString("marketSectors"))
+			.body(containsString("level"))	
+			.body(containsString("C219"))	
+			.body(containsString("C220"))				
+			.body(containsString("name"))
+			.body(containsString("active"))	
+			.extract().response();
+	
+	
+String IdfilterMSinclusiveURI = baseURI+"/v1/marketSectors?filter[level]=3&filter[id]=01010300";	
+	
+	Response res2 = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+			.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
+			.when().get(IdfilterMSinclusiveURI).then().statusCode(400)
+			.body(containsString("id filter cannot be used with other filters."))			
+			.extract().response();
+			
+	}
+	
+	@Test
+	
 	public void fisc_1507_entities_regionRelationship(){
 		
 		String entitiesRegionURI = baseURI+"/v1/entities/102798/regions";
@@ -125,69 +172,7 @@ public class fisCon_Sprint17 extends Configuration {
 		
 		
 	}
-	
-	@Test
-	
-	public void fisc_1503_newRegionsAttributes(){
-		
 
-		String marktSectorURI = baseURI+"/v1/marketSectors?filter[bmiServiceChannelIds]=C219,C220&filter[level]=3";		
-		
-		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
-				.when().get(marktSectorURI).then().statusCode(200)
-				.body(containsString("bmiServiceChannelIds"))
-				.body(containsString("marketSectors"))
-				.body(containsString("level"))	
-				.body(containsString("C219"))	
-				.body(containsString("C220"))				
-				.body(containsString("name"))
-				.body(containsString("active"))						
-				.extract().response();		
-		
-		Assert.assertFalse(res.asString().contains("isError"));
-		Assert.assertFalse(res.asString().contains("isMissing"));		 
-		
-	String IdfilterMSURI = baseURI+"/v1/marketSectors?filter[id]=01010300";	
-	
-	Response res1 = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-			.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
-			.when().get(IdfilterMSURI).then().statusCode(200)
-			.body(containsString("bmiServiceChannelIds"))
-			.body(containsString("marketSectors"))
-			.body(containsString("level"))	
-			.body(containsString("C219"))	
-			.body(containsString("C220"))				
-			.body(containsString("name"))
-			.body(containsString("active"))	
-			.extract().response();
-	
-	
-String IdfilterMSinclusiveURI = baseURI+"/v1/marketSectors?filter[level]=3&filter[id]=01010300";	
-	
-	Response res2 = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-			.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
-			.when().get(IdfilterMSinclusiveURI).then().statusCode(400)
-			.body(containsString("id filter cannot be used with other filters."))			
-			.extract().response();
-			
-	}
-
-	@Test
-	public void fisc_1571_regions_newattribute() {
-		
-		String regionsURi = baseURI + "/v1/regions";
-		
-		Response res = given().header("Authorization", AuthrztionValue)
-				.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
-				.header("content", contentValue).when().get(regionsURi).then().statusCode(200)
-				.body(containsString("legacyRegionId"))
-				
-				.extract().response();
-		Assert.assertFalse(res.asString().contains("isError"));
-		Assert.assertFalse(res.asString().contains("isMissing"));
-	   }
-	
 	@Test
 	
 	public void FISC_1510_trnsction_regionRelation(){
@@ -235,6 +220,24 @@ String IdfilterMSinclusiveURI = baseURI+"/v1/marketSectors?filter[level]=3&filte
 				.extract().response();
 				
 	   }
+	
+	@Test
+	public void fisc_1571_regions_newattribute() {
+		
+		String regionsURi = baseURI + "/v1/regions";
+		
+		Response res = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
+				.header("content", contentValue).when().get(regionsURi).then().statusCode(200)
+				.body(containsString("legacyRegionId"))
+				
+				.extract().response();
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+	   }
+	
+	
+	
 		
 		
 }

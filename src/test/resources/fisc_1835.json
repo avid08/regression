@@ -1,0 +1,47 @@
+{  
+	  "data":{  
+		 "type":"valueRequest",
+		 "attributes":{  
+			"dateOptions":{  
+			   "dates":[  
+			   
+				 
+			   ],
+			   "periods":[
+				{
+				  "type":"Annual",
+				  "year":2014
+			   }
+				 
+			   ]
+			},
+			"entities":[  
+			   {  
+				  "id":"1424190",
+				  "type":"FitchID"
+			   },
+			   
+				 {  
+				  "id":"100188",
+				  "type":"FitchID"
+			   }
+			],
+			"fitchFieldIds":[  
+			  "FC_ISSUER_SOLICITATION_STATUS",
+			"FC_COUNTRY_FITCH_LEGAL_ENTITY",
+			"FC_ENDORSEMENT_COMPLIANCE",
+			"FC_PRIMARY_RATING_ANALYST",
+			"FC_PRIMARY_RATING_ANALYST_COUNTRY",
+			"FC_ISSUER_MRKT_SECTOR_ID",
+			"FC_ISSUER_MRKT_SECTOR_DESC",
+			"FC_ISSUER_PRIMARY_MRKT_SECTOR_ID",
+			"FC_ISSUER_PRIMARY_MRKT_SECTOR_DESC"
+
+			],
+			"options":[			
+			 
+			 
+			]
+		 }
+	  }
+	}

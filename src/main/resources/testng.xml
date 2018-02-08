@@ -42,6 +42,11 @@
 			<class name="com.fitchconnect.fiscontent.fisCon_Sprint15" />
 			<class name="com.fitchconnect.fiscontent.fisCon_Sprint16" />
 			<class name="com.fitchconnect.fiscontent.fisCon_Sprint17" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint18" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint19" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint20" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint21" />
+			
 			
 			
 		</classes>

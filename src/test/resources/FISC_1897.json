@@ -1,0 +1,48 @@
+
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+           "2012-12-31"    
+               
+            ],
+            "periods":[ 
+            
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"1012492",
+               "type":"FitchID"
+            },
+            
+             {  
+               "id":"1237318",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+            "FC_TOTAL_ASSETS_BNK",
+            "FC_INT_INC_LOANS_BNK",
+            "FC_STATEMENT_ID",
+            "FC_AUDIT_DATE",      
+           "FC_CONSOLIDATION_STATUS"
+         ],
+         "options":[ 
+      
+            {
+               "name":"consolidation",
+               "value":"combined"
+            },
+	
+	        {
+               "name":"currency",
+               "value":"AED"
+            }
+           
+         ]
+      }
+   }
+}

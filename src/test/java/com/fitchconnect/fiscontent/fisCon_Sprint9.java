@@ -51,31 +51,6 @@ public class fisCon_Sprint9 extends Configuration {
 	}
 
 	@Test
-
-	public void FISC_941() {
-
-		String issuerUrl = baseURI + "/v1/issues";
-
-		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).when().get(issuerUrl).then()
-				.statusCode(200).body(containsString("country"))
-				.body(containsString("cusip")).body(containsString("disclosure")).body(containsString("marketSectors"))
-				.body(containsString("marketsectorId")).body(containsString("primary"))
-				.body(containsString("classTypeDescription")).body(containsString("coupon"))
-				.body(containsString("countryCd")).body(containsString("originalAmount"))
-				.body(containsString("bondName")).body(containsString("privatePlacementDescription"))
-				.body(containsString("originalAmount")).body(containsString("maturityDate"))
-				.body(containsString("countryOfAnalyst")).body(containsString("currency")).body(containsString("isin"))
-				.body(containsString("issueRatings")).body(containsString("issuer")).extract().response();
-		
-		Assert.assertFalse(response.asString().contains("isError"));
-		Assert.assertFalse(response.asString().contains("isRestricted"));
-		Assert.assertFalse(response.asString().contains("isError"));
-
-	}
-	
-
-	@Test
 	
 	public void FISC_940 () {
 		
@@ -101,6 +76,31 @@ public class fisCon_Sprint9 extends Configuration {
 		Assert.assertFalse(response1.asString().contains("isRestricted"));
 		Assert.assertFalse(response1.asString().contains("isError"));
 		
+	}
+	
+
+	@Test
+
+	public void FISC_941() {
+
+		String issuerUrl = baseURI + "/v1/issues";
+
+		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).when().get(issuerUrl).then()
+				.statusCode(200).body(containsString("country"))
+				.body(containsString("cusip")).body(containsString("disclosure")).body(containsString("marketSectors"))
+				.body(containsString("marketsectorId")).body(containsString("primary"))
+				.body(containsString("classTypeDescription")).body(containsString("coupon"))
+				.body(containsString("countryCd")).body(containsString("originalAmount"))
+				.body(containsString("bondName")).body(containsString("privatePlacementDescription"))
+				.body(containsString("originalAmount")).body(containsString("maturityDate"))
+				.body(containsString("countryOfAnalyst")).body(containsString("currency")).body(containsString("isin"))
+				.body(containsString("issueRatings")).body(containsString("issuer")).extract().response();
+		
+		Assert.assertFalse(response.asString().contains("isError"));
+		Assert.assertFalse(response.asString().contains("isRestricted"));
+		Assert.assertFalse(response.asString().contains("isError"));
+
 	}
 	
 

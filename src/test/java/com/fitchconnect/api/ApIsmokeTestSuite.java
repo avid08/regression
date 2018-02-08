@@ -2592,6 +2592,27 @@ public class ApIsmokeTestSuite extends Configuration {
 		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
+	
+	
+	@Test(enabled=true)
+
+	public void defaultOptions_FinancialServiceBank() throws IOException {
+
+		URL file = Resources.getResource("defaultOption_financial_bank.json");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+			    .statusCode(200).extract().response();
+			
+		
+		Assert.assertFalse(res.asString().contains("USD"));	
+		
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
+
+	}
 
 	@Test(enabled = false)
 

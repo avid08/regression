@@ -101,7 +101,7 @@ public class Sprint25 extends Configuration{
 
 	}
 	
- @Test(priority=1)
+ @Test(enabled=false)
  
  public void viewfield_and_viewDef_creation() throws IOException  {
 	 String CrteviewfildUri = "/v1/viewfields";

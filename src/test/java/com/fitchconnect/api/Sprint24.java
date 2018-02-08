@@ -5,19 +5,12 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
-import java.util.Random;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.google.common.io.Resources;
 import com.jayway.restassured.response.Response;
-
-import groovy.json.internal.Charsets;
 
 public class Sprint24 extends Configuration {
 
@@ -46,7 +39,7 @@ public class Sprint24 extends Configuration {
 
 		}
 	}
-
+/*
 	@Test(priority = 1)
 
 	public void Create_Viewfields_1063() throws IOException {
@@ -170,7 +163,7 @@ public class Sprint24 extends Configuration {
 		
 
 	}
-	
+	*/
   	@Test(enabled=false)
 
 	public void FCA_1116_chTree_Descendants() throws IOException {

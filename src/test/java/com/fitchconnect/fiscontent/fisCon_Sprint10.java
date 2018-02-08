@@ -18,95 +18,6 @@ import groovy.json.internal.Charsets;
 public class fisCon_Sprint10 extends Configuration {
 
 	@Test
-	public void FisC_1023_IssuerRating_AllGroupTypes() throws IOException {
-
-		String endpoint1 = baseURI + "/v1/entities/110631/fitchIssuerRatings";
-
-		Response res = given().header("Authorization", AuthrztionValue).header("content", contentValue)
-				.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(endpoint1).then()
-				.assertThat().statusCode(200).body(containsString("fitchIssuerRatings")).body(containsString("issuers"))
-				.body(containsString("entities"))
-
-				.extract().response();
-
-		// Entity with no groupType aattached
-
-		String noGroupTypeentity = baseURI + "/v1/entities/1230070/fitchIssuerRatings";
-
-		Response res1 = given().header("Authorization", AuthrztionValue).header("content", contentValue)
-				.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(endpoint1).then()
-				.assertThat().statusCode(200).body(containsString("data")).extract().response();
-
-	}
-
-	@Test
-
-	public void fisc_1024() throws IOException {
-
-		URL file = Resources.getResource("fisc_1024.json");
-		String myJson = Resources.toString(file, Charsets.UTF_8);
-
-		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.contentType("application/vnd.api+json").body(myJson).with()
-
-				.when().post(dataPostUrl).then().assertThat().statusCode(200).extract().response();
-
-		Assert.assertFalse(res.asString().contains("isError"));
-		Assert.assertFalse(res.asString().contains("isMissing"));
-		Assert.assertFalse(res.asString().contains("isRestricted"));
-	}
-
-	@Test
-
-	public void fisc_333_XrefcountryCD() throws IOException {
-
-		URL file = Resources.getResource("fisc_333.json");
-		String myJson = Resources.toString(file, Charsets.UTF_8);
-
-		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
-				.assertThat().statusCode(200).body(containsString("1001603")).body(containsString("1474671"))
-				.body(containsString("2015")).body(containsString("value")).body(containsString("Annual")).extract()
-				.response();
-
-		Assert.assertFalse(res.asString().contains("isError"));
-		Assert.assertFalse(res.asString().contains("isMissing"));
-		Assert.assertFalse(res.asString().contains("isRestricted"));
-
-	}
-
-	@Test
-
-	public void fisc_1033_transCtion_relatedResource() {
-
-		String transctnUri = baseURI + "/v1/transactions/96250107";
-
-		Response res = given().header("Authorization", AuthrztionValue).header("content", contentValue)
-				.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(transctnUri)
-				.then().assertThat().statusCode(200).body(containsString("relatedCredit"))
-
-				.extract().response();
-
-		Assert.assertFalse(res.asString().contains("isError"));
-		Assert.assertFalse(res.asString().contains("isMissing"));
-		Assert.assertFalse(res.asString().contains("isRestricted"));
-
-		String relateCreditlink = res.path("data.relationships.relatedCredit.links.related");
-
-		Response res1 = given().header("Authorization", AuthrztionValue).header("content", contentValue)
-				.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(relateCreditlink)
-				.then().assertThat().statusCode(200).body(containsString("96250128"))
-				.body(containsString("transactions")).body(containsString("agentStateName"))
-
-				.extract().response();
-
-		Assert.assertFalse(res1.asString().contains("isError"));
-		Assert.assertFalse(res1.asString().contains("isMissing"));
-		Assert.assertFalse(res1.asString().contains("isRestricted"));
-
-	}
-
-	@Test
 
 	public void fisc_1006_otherDebtRelation() {
 
@@ -149,6 +60,95 @@ public class fisCon_Sprint10 extends Configuration {
 	
 
 }
+
+	@Test
+	public void FisC_1023_IssuerRating_AllGroupTypes() throws IOException {
+
+		String endpoint1 = baseURI + "/v1/entities/110631/fitchIssuerRatings";
+
+		Response res = given().header("Authorization", AuthrztionValue).header("content", contentValue)
+				.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(endpoint1).then()
+				.assertThat().statusCode(200).body(containsString("fitchIssuerRatings")).body(containsString("issuers"))
+				.body(containsString("entities"))
+
+				.extract().response();
+
+		// Entity with no groupType aattached
+
+		String noGroupTypeentity = baseURI + "/v1/entities/1230070/fitchIssuerRatings";
+
+		Response res1 = given().header("Authorization", AuthrztionValue).header("content", contentValue)
+				.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(endpoint1).then()
+				.assertThat().statusCode(200).body(containsString("data")).extract().response();
+
+	}
+
+	@Test
+
+	public void fisc_1024() throws IOException {
+
+		URL file = Resources.getResource("fisc_1024.json");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with()
+
+				.when().post(dataPostUrl).then().assertThat().statusCode(200).extract().response();
+
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
+	}
+
+	@Test
+
+	public void fisc_1033_transCtion_relatedResource() {
+
+		String transctnUri = baseURI + "/v1/transactions/96250107";
+
+		Response res = given().header("Authorization", AuthrztionValue).header("content", contentValue)
+				.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(transctnUri)
+				.then().assertThat().statusCode(200).body(containsString("relatedCredit"))
+
+				.extract().response();
+
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
+
+		String relateCreditlink = res.path("data.relationships.relatedCredit.links.related");
+
+		Response res1 = given().header("Authorization", AuthrztionValue).header("content", contentValue)
+				.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(relateCreditlink)
+				.then().assertThat().statusCode(200).body(containsString("96250128"))
+				.body(containsString("transactions")).body(containsString("agentStateName"))
+
+				.extract().response();
+
+		Assert.assertFalse(res1.asString().contains("isError"));
+		Assert.assertFalse(res1.asString().contains("isMissing"));
+		Assert.assertFalse(res1.asString().contains("isRestricted"));
+
+	}
+
+	@Test
+
+	public void fisc_333_XrefcountryCD() throws IOException {
+
+		URL file = Resources.getResource("fisc_333.json");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+				.assertThat().statusCode(200).body(containsString("1001603")).body(containsString("1474671"))
+				.body(containsString("2015")).body(containsString("value")).body(containsString("Annual")).extract()
+				.response();
+
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
+
+	}
 	
 	@Test
 	
