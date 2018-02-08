@@ -21,6 +21,29 @@ public class fisCon_Sprint13 extends Configuration {
  
  float rate ;
 	
+ public void exchngeRateValue(){
+	 
+	 String ExNgRateURI = baseURI+"/v1/exchangeRates?filter[baseCurrency]=MYR&filter[currency]=INR&filter[date]=2014-12-31";	 
+	 
+	 Response res = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
+				.header("content", contentValue)
+				.when().get(ExNgRateURI).then()
+				.statusCode(200)
+				.body(containsString("MYR"))
+				.body(containsString("currency"))
+				.body(containsString("INR"))
+				.body(containsString("2014-12-31"))				
+				.extract().response();
+	 
+	this.rate = res.path("data[0].attributes.exchangeRates[0].rate"); 
+	Assert.assertFalse(res.asString().contains("isError"));
+	Assert.assertFalse(res.asString().contains("isMissing"));
+	Assert.assertFalse(res.asString().contains("isRestricted"));
+	 
+   }
+ 
+ 
  @Test
  
  public void fisc_1214_nickNme_Amendments(){	 
@@ -70,83 +93,6 @@ public class fisCon_Sprint13 extends Configuration {
 	 
     }
  
- 
- @Test
-  
- public void fisc_1260_finncialMetaDataUpdate(){
-	 
-		String metaDataUri = baseURI+"/v1/metadata/fields/FC_GDP_LOCAL_SOV";
-
-		Response res = given().header("Authorization", AuthrztionValue)
-				.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
-				.header("content", contentValue)
-				.when().get(metaDataUri).then()
-				.statusCode(200)
-				.body(containsString("databaseId"))
-				.extract().response();		
-		
-		Assert.assertFalse(res.asString().contains("isError"));
-		Assert.assertFalse(res.asString().contains("isMissing"));
-		Assert.assertFalse(res.asString().contains("isRestricted"));
-		
-	String DatbaseIdfilterURI =baseURI+"/v1/metadata/fields?filter[databaseId]=1010";
-	
-	Response res1 = given().header("Authorization", AuthrztionValue)
-			.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
-			.header("content", contentValue)
-			.when().get(DatbaseIdfilterURI).then()
-			.statusCode(200)
-			.body(containsString("databaseId"))
-			.body(containsString("financials"))
-			.body(containsString("included"))
-			.extract().response();		
-			
-	
-
-	Assert.assertFalse(res1.asString().contains("isMissing"));
-	Assert.assertFalse(res1.asString().contains("isRestricted"));
-  }
- 
- @Test 
- 
- public void fisc_1267_ExnGRateSorting (){
-		String ExNgRateURI = baseURI+"/v1/exchangeRates?sort=-date";  // Desc order 
-
-		Response res = given().header("Authorization", AuthrztionValue)
-				.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
-				.header("content", contentValue)
-				.when().get(ExNgRateURI).then()
-				.statusCode(200)
-				.extract().response();
-		
-		Assert.assertFalse(res.asString().contains("isError"));
-		Assert.assertFalse(res.asString().contains("isMissing"));
-		Assert.assertFalse(res.asString().contains("isRestricted"));
-		
-		List<String> id = res.path("data.id");	
-		
-		boolean sorted = Ordering.natural().reverse().isOrdered(id);
-		
-	     Assert.assertTrue(sorted);
-	     
-	  
-	     String AscExNgRateURI = baseURI+"/v1/exchangeRates?sort=date";  // ASC order 
-
-			Response res1 = given().header("Authorization", AuthrztionValue)
-					.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
-					.header("content", contentValue)
-					.when().get(AscExNgRateURI).then()
-					.statusCode(200)
-					.extract().response();
-			
-			List<String> idx = res1.path("data.id");	
-			
-			boolean sortedx = Ordering.natural().isOrdered(idx);
-			
-		    Assert.assertTrue(sortedx);	     
-	 
-   }
- 
  @Test
 	
 	public void FISC_1236_newCurrencies() throws IOException{	 
@@ -175,7 +121,7 @@ public class fisCon_Sprint13 extends Configuration {
 			
 	}
  
-@Test
+ @Test
  
  public void FISC_1240_exchangeRate_CurrencYDate () throws IOException{
 	
@@ -272,31 +218,8 @@ if (expectedvalue==totalActualNetIncome){
 Assert.assertFalse(failure);
 
 }
-
-
- public void exchngeRateValue(){
-	 
-	 String ExNgRateURI = baseURI+"/v1/exchangeRates?filter[baseCurrency]=MYR&filter[currency]=INR&filter[date]=2014-12-31";	 
-	 
-	 Response res = given().header("Authorization", AuthrztionValue)
-				.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
-				.header("content", contentValue)
-				.when().get(ExNgRateURI).then()
-				.statusCode(200)
-				.body(containsString("MYR"))
-				.body(containsString("currency"))
-				.body(containsString("INR"))
-				.body(containsString("2014-12-31"))				
-				.extract().response();
-	 
-	this.rate = res.path("data[0].attributes.exchangeRates[0].rate"); 
-	Assert.assertFalse(res.asString().contains("isError"));
-	Assert.assertFalse(res.asString().contains("isMissing"));
-	Assert.assertFalse(res.asString().contains("isRestricted"));
-	 
-   }
-  
- @Test 
+ 
+@Test 
  
   public void fisc_1240_GroupIDtest () throws IOException {
 	 
@@ -320,8 +243,9 @@ Assert.assertFalse(failure);
 		Assert.assertFalse(res.asString().contains("isRestricted"));
 	 
       }
- 
-  @Test
+
+
+ @Test
   
   public void FISC_1240_NocurrencY() throws IOException{
 	  
@@ -352,8 +276,110 @@ Assert.assertFalse(failure);
 		Assert.assertFalse(res.asString().contains("isRestricted"));
 	 	  
     }
+  
+ @Test
+  
+ public void fisc_1260_finncialMetaDataUpdate(){
+	 
+		String metaDataUri = baseURI+"/v1/metadata/fields/FC_GDP_LOCAL_SOV";
+
+		Response res = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
+				.header("content", contentValue)
+				.when().get(metaDataUri).then()
+				.statusCode(200)
+				.body(containsString("databaseId"))
+				.extract().response();		
+		
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
+		
+	String DatbaseIdfilterURI =baseURI+"/v1/metadata/fields?filter[databaseId]=1010";
+	
+	Response res1 = given().header("Authorization", AuthrztionValue)
+			.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
+			.header("content", contentValue)
+			.when().get(DatbaseIdfilterURI).then()
+			.statusCode(200)
+			.body(containsString("databaseId"))
+			.body(containsString("financials"))
+			.body(containsString("included"))
+			.extract().response();		
+			
+	
+
+	Assert.assertFalse(res1.asString().contains("isMissing"));
+	Assert.assertFalse(res1.asString().contains("isRestricted"));
+  }
+ 
+  @Test 
+ 
+ public void fisc_1267_ExnGRateSorting (){
+		String ExNgRateURI = baseURI+"/v1/exchangeRates?sort=-date";  // Desc order 
+
+		Response res = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
+				.header("content", contentValue)
+				.when().get(ExNgRateURI).then()
+				.statusCode(200)
+				.extract().response();
+		
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
+		
+		List<String> id = res.path("data.id");	
+		
+		boolean sorted = Ordering.natural().reverse().isOrdered(id);
+		
+	    Assert.assertTrue(sorted);
+	     
+	  
+	     String AscExNgRateURI = baseURI+"/v1/exchangeRates?sort=date";  // ASC order 
+
+			Response res1 = given().header("Authorization", AuthrztionValue)
+					.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
+					.header("content", contentValue)
+					.when().get(AscExNgRateURI).then()
+					.statusCode(200)
+					.extract().response();
+			
+			List<String> idx = res1.path("data.id");	
+			
+			boolean sortedx = Ordering.natural().isOrdered(idx);
+			
+		    Assert.assertTrue(sortedx);	     
+	 
+   }
    
  @Test
+  
+  public void FISC_1331_multipleCountryCd () throws IOException{
+  URL file = Resources.getResource("FISC_1331.json");
+	String myJson = Resources.toString(file, Charsets.UTF_8);
+
+	Response res = given().header("Authorization", AuthrztionValue)
+			.header("X-App-Client-Id", XappClintIDvalue).contentType("application/vnd.api+json")
+			.body(myJson).with()
+			.when().post(dataPostUrl)
+			.then().assertThat().statusCode(200)
+			.body(containsString("Asya Katilim Bankasi A.S."))
+			.extract().response();
+  
+	
+	Assert.assertTrue(res.asString().contains("TURKEY"));
+	
+	Assert.assertFalse(res.asString().contains("NORWAY"));	
+	
+	Assert.assertFalse(res.asString().contains("isError"));
+	Assert.assertFalse(res.asString().contains("isMissing"));
+	Assert.assertFalse(res.asString().contains("isRestricted"));
+	
+
+  }
+   
+  @Test
   
   public void FISC_1373_LocalcurrencY() throws IOException{
 	  
@@ -381,33 +407,7 @@ Assert.assertFalse(failure);
 		Assert.assertFalse(res.asString().contains("isRestricted"));
 		
 		  
-    }
-   
-  @Test
-  
-  public void FISC_1331_multipleCountryCd () throws IOException{
-  URL file = Resources.getResource("FISC_1331.json");
-	String myJson = Resources.toString(file, Charsets.UTF_8);
-
-	Response res = given().header("Authorization", AuthrztionValue)
-			.header("X-App-Client-Id", XappClintIDvalue).contentType("application/vnd.api+json")
-			.body(myJson).with()
-			.when().post(dataPostUrl)
-			.then().assertThat().statusCode(200)
-			.body(containsString("Asya Katilim Bankasi A.S."))
-			.extract().response();
-  
-	
-	Assert.assertTrue(res.asString().contains("TURKEY"));
-	
-	Assert.assertFalse(res.asString().contains("NORWAY"));	
-	
-	Assert.assertFalse(res.asString().contains("isError"));
-	Assert.assertFalse(res.asString().contains("isMissing"));
-	Assert.assertFalse(res.asString().contains("isRestricted"));
-	
-
-  }	
+    }	
 	 
 }	
 	

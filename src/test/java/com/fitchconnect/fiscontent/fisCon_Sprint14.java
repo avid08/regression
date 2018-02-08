@@ -188,65 +188,65 @@ public class fisCon_Sprint14 extends Configuration {
 		Assert.assertFalse(res.asString().contains("isRestricted"));
 	}
 	
-    @Test
+    @Test()
+	   
+	   public void FISC_1337_newAttribtes() {
+		   
+		   String issueURI = baseURI+"/v1/issuers?filter[cusip]=123860,652414&filter[id]=1010000146"  ;
+		   
+		   Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+					.header("accept", acceptValue).header("content", contentValue).when().get(issueURI).then()
+					.statusCode(200)
+					.body(containsString("name"))
+					.body(containsString("typeId"))
+					.body(containsString("countryOfFitchLegalEntity"))
+					.body(containsString("cusip"))
+					.body(containsString("123860"))
+					.body(containsString("1010000146"))
+					.extract().response();
+		   
+			Assert.assertFalse(res.asString().contains("isMissing"));
+			Assert.assertFalse(res.asString().contains("isRestricted"));
+	   }
     
-    public void  FISC_1376_StatementResource (){
-    	
-    	String fincialStatementURI = baseURI+"/v1/entities/113332/statements?filter[businessTemplate]=banks";
-    	
-    	Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).when().get(fincialStatementURI).then()
-				.statusCode(200)
-				.body(containsString("businessTemplate"))	
-				.body(containsString("Banks"))
-				.extract().response();
-    	
-    	String businesTemplate = res.path("data[0].attributes.header.businessTemplate");
-    	
-    	System.out.println(businesTemplate);
-    	
+   @Test
+
+public void  FISC_1376_StatementResource (){
 	
-		
-		
-		Assert.assertFalse(res.asString().contains("isMissing"));
-		Assert.assertFalse(res.asString().contains("isRestricted"));
-    	
-	String NullBTStatementURI = baseURI+"/v1/entities/750748/statements";
-    	
-    	Response res1 = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).when().get(NullBTStatementURI).then()
-				.statusCode(200)
-				//.body(containsString("businessTemplate"))				
-				//.body(containsString(null))				
-				.extract().response();
-    	
-    	
-		Assert.assertFalse(res1.asString().contains("isError"));
-		Assert.assertFalse(res1.asString().contains("isMissing"));
-		Assert.assertFalse(res1.asString().contains("isRestricted"));
-    	
-    }
-    
-   @Test()
-   
-   public void FISC_1337_newAttribtes() {
-	   
-	   String issueURI = baseURI+"/v1/issuers?filter[cusip]=123860,652414&filter[id]=1010000146"  ;
-	   
-	   Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).when().get(issueURI).then()
-				.statusCode(200)
-				.body(containsString("name"))
-				.body(containsString("typeId"))
-				.body(containsString("countryOfFitchLegalEntity"))
-				.body(containsString("cusip"))
-				.body(containsString("123860"))
-				.body(containsString("1010000146"))
-				.extract().response();
-	   
-		Assert.assertFalse(res.asString().contains("isMissing"));
-		Assert.assertFalse(res.asString().contains("isRestricted"));
-   }
+	String fincialStatementURI = baseURI+"/v1/entities/113332/statements?filter[businessTemplate]=banks";
+	
+	Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+			.header("accept", acceptValue).header("content", contentValue).when().get(fincialStatementURI).then()
+			.statusCode(200)
+			.body(containsString("businessTemplate"))	
+			.body(containsString("Banks"))
+			.extract().response();
+	
+	String businesTemplate = res.path("data[0].attributes.header.businessTemplate");
+	
+	System.out.println(businesTemplate);
+	
+
+	
+	
+	Assert.assertFalse(res.asString().contains("isMissing"));
+	Assert.assertFalse(res.asString().contains("isRestricted"));
+	
+String NullBTStatementURI = baseURI+"/v1/entities/750748/statements";
+	
+	Response res1 = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+			.header("accept", acceptValue).header("content", contentValue).when().get(NullBTStatementURI).then()
+			.statusCode(200)
+			//.body(containsString("businessTemplate"))				
+			//.body(containsString(null))				
+			.extract().response();
+	
+	
+	Assert.assertFalse(res1.asString().contains("isError"));
+	Assert.assertFalse(res1.asString().contains("isMissing"));
+	Assert.assertFalse(res1.asString().contains("isRestricted"));
+	
+}
 }			
 				
 				

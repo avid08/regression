@@ -17,41 +17,45 @@ public class fisCon_Sprint4 extends Configuration {
 
 	@Test
 
-	public void getAll_SurveillanceDeals() {
+	public void FISC_589_entityRanking_Resource() {
 
-		// Include filter params in the test to make sure the filters are
-		// working
-
-		String allsurViellanceURI = baseURI + "/v1/surveillanceDeals";
+		String entityRanking = baseURI + "/v1/entityRankings";
+		// + "/58acd660e4b0cb81582462a4?include[entityRankings]=entity";
 
 		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).when().get(allsurViellanceURI).then()
-				.statusCode(200).body(containsString("name")).body(containsString("surveillanceType"))
-				.body(containsString("assetType")).body(containsString("fitchGroupId"))
-				.body(containsString("marketSector")).body(containsString("entities")).body(containsString("links"))
-				.body(containsString("id"))
+				.header("accept", acceptValue).header("content", contentValue).when().get(entityRanking).then()
+				.statusCode(200).body(containsString("entityRankings")).body(containsString("countryISOCode3"))
+				.body(containsString("globalRankChange")).body(containsString("relationships"))
+				.body(containsString("rankType"))
 
 				.extract().response();
 
-		Assert.assertFalse(response.asString().contains("isMissing"));
+		List<String> id = response.path("data.id");
+
+		System.out.println(id.size());
+
+		for (int i = 0; i < 10; i++) {
+
+			String entityRankingResourceURI = entityRanking + "/" + id.get(i) + "?include[entityRankings]=entity";
+
+			// System.out.println(entityRankingResourceURI);
+
+			Response response2 = given().header("Authorization", AuthrztionValue)
+					.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
+					.header("content", contentValue).when().get(entityRankingResourceURI).then().statusCode(200)
+
+					.body(containsString("countryISOCode3")).body(containsString("rankType"))
+					.body(containsString("globalRankChange")).body(containsString("included"))
+					.body(containsString("attributes")).body(containsString("name")).body(containsString("state"))
+					.body(containsString("countryName")).body(containsString("city")).extract().response();
+
+			Assert.assertFalse(response2.asString().contains("isError"));
+			Assert.assertFalse(response2.asString().contains("isMissing"));
+
+		}
+		Assert.assertFalse(response.asString().contains("isError"));
 		Assert.assertFalse(response.asString().contains("isMissing"));
 		Assert.assertFalse(response.asString().contains("isRestricted"));
-
-		String SurVillaneReportLink = response.path("data[0].relationships.surveillanceReport.links.related");
-
-		System.out.println("survillanceReport " + SurVillaneReportLink);
-
-		Response response2 = given().header("Authorization", AuthrztionValue)
-				.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
-				.header("content", contentValue).when().get(SurVillaneReportLink).then().statusCode(200)
-				.body(containsString("fileName")).body(containsString("fileMimeType"))
-				.body(containsString("surveillanceDeal")).body(containsString("fileName"))
-
-				.extract().response();
-
-		Assert.assertFalse(response2.asString().contains("isMissing"));
-		Assert.assertFalse(response2.asString().contains("isMissing"));
-		Assert.assertFalse(response2.asString().contains("isRestricted"));
 
 	}
 
@@ -151,49 +155,83 @@ public class fisCon_Sprint4 extends Configuration {
 
 	@Test
 
-	public void FISC_589_entityRanking_Resource() {
+	public void GetA_surVillanceReport() {
 
-		String entityRanking = baseURI + "/v1/entityRankings";
-		// + "/58acd660e4b0cb81582462a4?include[entityRankings]=entity";
+		String SurVillnceReportURI = baseURI + "/v1/surveillanceReports";
 
 		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).when().get(entityRanking).then()
-				.statusCode(200).body(containsString("entityRankings")).body(containsString("countryISOCode3"))
-				.body(containsString("globalRankChange")).body(containsString("relationships"))
-				.body(containsString("rankType"))
-
+				.header("accept", acceptValue).header("content", contentValue).when().get(SurVillnceReportURI).then()
+				.statusCode(200).body(containsString("type")).body(containsString("fileName"))
+				.body(containsString("fileMimeType")).body(containsString("download"))
+				.body(containsString("surveillanceDeal")).body(containsString("download")).body(containsString("id"))
 				.extract().response();
 
-		List<String> id = response.path("data.id");
-
-		System.out.println(id.size());
-
-		for (int i = 0; i < 10; i++) {
-
-			String entityRankingResourceURI = entityRanking + "/" + id.get(i) + "?include[entityRankings]=entity";
-
-			// System.out.println(entityRankingResourceURI);
-
-			Response response2 = given().header("Authorization", AuthrztionValue)
-					.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
-					.header("content", contentValue).when().get(entityRankingResourceURI).then().statusCode(200)
-
-					.body(containsString("countryISOCode3")).body(containsString("rankType"))
-					.body(containsString("globalRankChange")).body(containsString("included"))
-					.body(containsString("attributes")).body(containsString("name")).body(containsString("state"))
-					.body(containsString("countryName")).body(containsString("city")).extract().response();
-
-			Assert.assertFalse(response2.asString().contains("isError"));
-			Assert.assertFalse(response2.asString().contains("isMissing"));
-
-		}
 		Assert.assertFalse(response.asString().contains("isError"));
 		Assert.assertFalse(response.asString().contains("isMissing"));
 		Assert.assertFalse(response.asString().contains("isRestricted"));
 
+		String survillnaceReportId = response.path("data[0].id");
+
+		System.out.println(survillnaceReportId);
+
+		String A_SurVillnceReportUri = baseURI + "/v1/surveillanceReports" + "/" + survillnaceReportId;
+
+		Response response2 = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
+				.header("content", contentValue).when().get(A_SurVillnceReportUri).then().statusCode(200)
+				.body(containsString("type")).body(containsString("fileName")).body(containsString("fileMimeType"))
+				.body(containsString("download")).body(containsString("surveillanceDeals"))
+				.body(containsString("relationships")).body(containsString("links"))
+
+				.extract().response();
+
+		Assert.assertFalse(response2.asString().contains("isError"));
+		Assert.assertFalse(response2.asString().contains("isMissing"));
+		Assert.assertFalse(response2.asString().contains("isRestricted"));
+
 	}
 
 	// SURVILLANCE REPORT TEST CASES
+
+	@Test
+
+	public void getAll_SurveillanceDeals() {
+
+		// Include filter params in the test to make sure the filters are
+		// working
+
+		String allsurViellanceURI = baseURI + "/v1/surveillanceDeals";
+
+		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).when().get(allsurViellanceURI).then()
+				.statusCode(200).body(containsString("name")).body(containsString("surveillanceType"))
+				.body(containsString("assetType")).body(containsString("fitchGroupId"))
+				.body(containsString("marketSector")).body(containsString("entities")).body(containsString("links"))
+				.body(containsString("id"))
+
+				.extract().response();
+
+		Assert.assertFalse(response.asString().contains("isMissing"));
+		Assert.assertFalse(response.asString().contains("isMissing"));
+		Assert.assertFalse(response.asString().contains("isRestricted"));
+
+		String SurVillaneReportLink = response.path("data[0].relationships.surveillanceReport.links.related");
+
+		System.out.println("survillanceReport " + SurVillaneReportLink);
+
+		Response response2 = given().header("Authorization", AuthrztionValue)
+				.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
+				.header("content", contentValue).when().get(SurVillaneReportLink).then().statusCode(200)
+				.body(containsString("fileName")).body(containsString("fileMimeType"))
+				.body(containsString("surveillanceDeal")).body(containsString("fileName"))
+
+				.extract().response();
+
+		Assert.assertFalse(response2.asString().contains("isMissing"));
+		Assert.assertFalse(response2.asString().contains("isMissing"));
+		Assert.assertFalse(response2.asString().contains("isRestricted"));
+
+	}
 
 	@Test
 
@@ -244,44 +282,6 @@ public class fisCon_Sprint4 extends Configuration {
 			System.out.println(response3);
 
 		}
-
-	}
-
-	@Test
-
-	public void GetA_surVillanceReport() {
-
-		String SurVillnceReportURI = baseURI + "/v1/surveillanceReports";
-
-		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).when().get(SurVillnceReportURI).then()
-				.statusCode(200).body(containsString("type")).body(containsString("fileName"))
-				.body(containsString("fileMimeType")).body(containsString("download"))
-				.body(containsString("surveillanceDeal")).body(containsString("download")).body(containsString("id"))
-				.extract().response();
-
-		Assert.assertFalse(response.asString().contains("isError"));
-		Assert.assertFalse(response.asString().contains("isMissing"));
-		Assert.assertFalse(response.asString().contains("isRestricted"));
-
-		String survillnaceReportId = response.path("data[0].id");
-
-		System.out.println(survillnaceReportId);
-
-		String A_SurVillnceReportUri = baseURI + "/v1/surveillanceReports" + "/" + survillnaceReportId;
-
-		Response response2 = given().header("Authorization", AuthrztionValue)
-				.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
-				.header("content", contentValue).when().get(A_SurVillnceReportUri).then().statusCode(200)
-				.body(containsString("type")).body(containsString("fileName")).body(containsString("fileMimeType"))
-				.body(containsString("download")).body(containsString("surveillanceDeals"))
-				.body(containsString("relationships")).body(containsString("links"))
-
-				.extract().response();
-
-		Assert.assertFalse(response2.asString().contains("isError"));
-		Assert.assertFalse(response2.asString().contains("isMissing"));
-		Assert.assertFalse(response2.asString().contains("isRestricted"));
 
 	}
 

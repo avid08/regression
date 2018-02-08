@@ -48,13 +48,14 @@ public class Configuration {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api.fitchconnect.com";
-			PROD_bearerToken();
+			baseURI = "https://api.fitchconnect-int.com";
+			bearerToken_INT();
 			this.AuthrztionValue = "Bearer " + accessToken;
-			dataBaseServer1 = "mgo-pue1c-cr001.fitchratings.com";
-			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
-			databaseFitchEnty = "esp-9";
-			BMIbaseURL = "https://api.bmiresearch.com";
+			System.out.println("INT Bearer Token " + AuthrztionValue);
+			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
+			dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
+			databaseFitchEnty = "esp-dev-9";
+			BMIbaseURL = "https://api-stg1.bmiresearch.com";
 		} else if (env.equals("dev")) {
 			baseURI = "https://api.fitchconnect-dev.com";
 			Dev_bearerToken();
@@ -110,15 +111,20 @@ public class Configuration {
 		// given().config(RestAssured.config().encoderConfig(encoderConfig().encodeContentTypeAs("application/zip",
 		// ContentType.TEXT))
 
-		String url = baseURI + "/v1/oauth/token";
+		String url = baseURI +"/v1/oauth/token";
 		System.out.println(url);
 		URL file = Resources.getResource("Int_granType.json");
 		String myjson = Resources.toString(file, Charsets.UTF_8);
+		
+		//System.out.println(myjson);
 
 		Response response = given().contentType("application/x-www-form-urlencoded").body(myjson).with().when()
-				.post(url).then().statusCode(200).extract().response();
+				.post(url).then()//.statusCode(200)
+				.extract().response();
 
 		String responseString = response.asString();
+		
+		//System.out.println(responseString);
 
 		accessToken = "";
 
@@ -231,7 +237,5 @@ public class Configuration {
 		System.out.println("access token " + accessToken);
 
 	}
-
-	
 
 }

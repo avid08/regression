@@ -65,7 +65,7 @@ public class fisCon_Sprint16 extends Configuration {
 
 			if (index1 != -1) {
 
-				System.out.println(i);
+				//System.out.println(i);
 
 			} else {
 				failure = true;
@@ -122,7 +122,7 @@ public class fisCon_Sprint16 extends Configuration {
 
 			if (index1 != -1) {
 
-				System.out.println(i);
+			//	System.out.println(i);
 
 			} else {
 				failure = true;
@@ -136,6 +136,54 @@ public class fisCon_Sprint16 extends Configuration {
 
 	}
 
+@Test 
+ public void fisc_1445_newAttributes_filter(){
+	
+	String issueURi = baseURI+"/v1/issues?filter[entityId]=1429651&filter[id]=93575704&filter[isin]=XS0982711391&filter[cusip]=Y00371AA5&filter[issuerId]=93528490&filter[loanXId]=LX146783";
+	
+	Response response = given().header("Authorization", AuthrztionValue)
+			.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
+			.header("content", contentValue).when().get(issueURi).then().statusCode(200)
+			.body(containsString("isin"))
+			.body(containsString("cusip"))
+			.body(containsString("loanXId"))
+			.body(containsString("1429651"))
+			.body(containsString("93575704"))
+			.body(containsString("XS0982711391"))
+			.body(containsString("Y00371AA5"))
+			.body(containsString("93528490"))
+			.body(containsString("LX146783"))
+			.extract().response();
+	
+	
+	Assert.assertFalse(response.asString().contains("isMissing"));
+	
+	
+   }
+@Test
+public void fisc_1503_regions() {
+	
+	String regionsURi = baseURI + "/v1/regions";
+	
+	Response response = given().header("Authorization", AuthrztionValue)
+			.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
+			.header("content", contentValue).when().get(regionsURi).then().statusCode(200)
+			.body(containsString("id"))
+			.body(containsString("name"))
+			.body(containsString("regionType"))
+			.body(containsString("subNationalType"))
+			.body(containsString("identifiers"))
+			.body(containsString("countryISOCode2"))
+			.body(containsString("countryISOCode3"))
+			.body(containsString("localCurrency"))
+			.body(containsString("active"))
+			.body(containsString("inactiveDate"))
+			.body(containsString("true"))
+			.body(containsString("false"))
+			
+			.extract().response();
+	
+   }
 @Test
 
 public void fisc_1506_regions_entities() {
@@ -220,30 +268,7 @@ public void fisc_1513_regions_relations() {
 			.extract().response();
 	
     }
-@Test
-public void fisc_1503_regions() {
-	
-	String regionsURi = baseURI + "/v1/regions";
-	
-	Response response = given().header("Authorization", AuthrztionValue)
-			.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
-			.header("content", contentValue).when().get(regionsURi).then().statusCode(200)
-			.body(containsString("id"))
-			.body(containsString("name"))
-			.body(containsString("regionType"))
-			.body(containsString("subNationalType"))
-			.body(containsString("identifiers"))
-			.body(containsString("countryISOCode2"))
-			.body(containsString("countryISOCode3"))
-			.body(containsString("localCurrency"))
-			.body(containsString("active"))
-			.body(containsString("inactiveDate"))
-			.body(containsString("true"))
-			.body(containsString("false"))
-			
-			.extract().response();
-	
-   }
+
 @Test
 public void fisc_1570_regions() {
 	
@@ -260,31 +285,6 @@ public void fisc_1570_regions() {
 			.body(containsString("countryOfFitchLegalEntity"))				
 			.extract().response();
 	Assert.assertFalse(response.asString().contains("isMissing"));
-	
-   }
-
-@Test 
- public void fisc_1445_newAttributes_filter(){
-	
-	String issueURi = baseURI+"/v1/issues?filter[entityId]=1429651&filter[id]=93575704&filter[isin]=XS0982711391&filter[cusip]=Y00371AA5&filter[issuerId]=93528490&filter[loanXId]=LX146783";
-	
-	Response response = given().header("Authorization", AuthrztionValue)
-			.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
-			.header("content", contentValue).when().get(issueURi).then().statusCode(200)
-			.body(containsString("isin"))
-			.body(containsString("cusip"))
-			.body(containsString("loanXId"))
-			.body(containsString("1429651"))
-			.body(containsString("93575704"))
-			.body(containsString("XS0982711391"))
-			.body(containsString("Y00371AA5"))
-			.body(containsString("93528490"))
-			.body(containsString("LX146783"))
-			.extract().response();
-	
-	
-	Assert.assertFalse(response.asString().contains("isMissing"));
-	
 	
    }
 

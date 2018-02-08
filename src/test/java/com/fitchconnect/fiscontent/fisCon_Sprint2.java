@@ -85,8 +85,7 @@ public class fisCon_Sprint2 extends Configuration {
 		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(SPVMetaURI).then()
 				.statusCode(200)
-				.body(containsString("Sponsor of the SPV"))
-				.body(containsString("TEXT"))
+				.body(containsString("Sponsor of the SPV"))				
 				.body(containsString("ratings"))
 				.body(containsString("dataService"))
 				.extract().response();
@@ -94,8 +93,7 @@ public class fisCon_Sprint2 extends Configuration {
 		Assert.assertFalse(response.asString().contains("isError"));
 		Assert.assertFalse(response.asString().contains("isMissing"));
 		Assert.assertFalse(response.asString().contains("isRestricted"));
-		
-		
+				
 	}
 	
 @Test
@@ -111,15 +109,14 @@ public class fisCon_Sprint2 extends Configuration {
 				.statusCode(200)
 				.body(containsString("value"))
 				.body(containsString("COSTA RICA"))
-				.body(containsString("text"))
+				.body(containsString("Text"))
 				.extract().response();
 						
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
 		Assert.assertFalse(res.asString().contains("isRestricted"));
 		
-		
-	}
+   }
 	
   @Test 
   

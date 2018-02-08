@@ -55,6 +55,61 @@ public class fisCon_Sprint8 extends Configuration {
 	}
 
 	@Test
+
+	public void FISC_608_FIR_categories() {
+
+		String FIRcategoriesUrl = baseURI + "/v1/metadata/categories/260";
+
+		Response res = given().header("Authorization", (AuthrztionValue)).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).contentType(ContentType.JSON).when()
+				.get(FIRcategoriesUrl).then().statusCode(200).body(containsString("Financial Implied Rating")).extract()
+				.response();
+
+		System.out.println(res.asString());
+
+		String predictions = res.path("data.relationships.children.data[0].id");
+
+		System.out.println(predictions);
+
+		String predictionURl = baseURI + "/v1/metadata/categories/" + predictions;
+
+		System.out.println(predictionURl);
+
+		Response res1 = given().header("Authorization", (AuthrztionValue)).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).contentType(ContentType.JSON).when()
+				.get(predictionURl).then().statusCode(200).body(containsString("Predictions"))
+				.body(containsString("FC_LOAN_QUAL_FIR")).body(containsString("FC_PERIOD_DT_RANK_FIR"))
+				.body(containsString("FC_FIR")).body(containsString("FC_COUNTRY_RISK_IND_FIR"))
+				.body(containsString("FC_PROFIT_FIR")).body(containsString("FC_PERIOD_DT_FIR"))
+				.body(containsString("FC_REGION_FIR")).body(containsString("FC_TOTAL_ASSETS_FIR"))
+				.body(containsString("FC_BAND_RANK_FIR")).body(containsString("FC_MODEL_SCORE_FIR"))
+				.body(containsString("FC_STATEMENT_ID_FIR")).extract().response();
+
+	}
+
+	@Test
+
+	public void FISC_608_FIR_DataAggregator() throws IOException {
+
+		URL file = Resources.getResource("FISC_608.json");
+		myjson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given()
+
+				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).contentType("application/vnd.api+json").body(myjson).with().when()
+				.post(dataPostUrl).then().statusCode(200).body(containsString("value")).body(containsString("type"))
+				.body(containsString("timeIntervalPeriod"))
+
+				.extract().response();
+
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
+
+	}
+
+	@Test
 	public void FISC_923_IssueService() {
 
 		String getallissueUrl = baseURI + "/v1/issues";
@@ -99,61 +154,6 @@ public class fisCon_Sprint8 extends Configuration {
 				.body(containsString("relationships")).body(containsString("entity")).body(containsString("issuer"))
 
 				.extract().response();
-
-	}
-
-	@Test
-
-	public void FISC_608_FIR_DataAggregator() throws IOException {
-
-		URL file = Resources.getResource("FISC_608.json");
-		myjson = Resources.toString(file, Charsets.UTF_8);
-
-		Response res = given()
-
-				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).contentType("application/vnd.api+json").body(myjson).with().when()
-				.post(dataPostUrl).then().statusCode(200).body(containsString("value")).body(containsString("type"))
-				.body(containsString("timeIntervalPeriod"))
-
-				.extract().response();
-
-		Assert.assertFalse(res.asString().contains("isError"));
-		Assert.assertFalse(res.asString().contains("isMissing"));
-		Assert.assertFalse(res.asString().contains("isRestricted"));
-
-	}
-
-	@Test
-
-	public void FISC_608_FIR_categories() {
-
-		String FIRcategoriesUrl = baseURI + "/v1/metadata/categories/260";
-
-		Response res = given().header("Authorization", (AuthrztionValue)).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).contentType(ContentType.JSON).when()
-				.get(FIRcategoriesUrl).then().statusCode(200).body(containsString("Financial Implied Rating")).extract()
-				.response();
-
-		System.out.println(res.asString());
-
-		String predictions = res.path("data.relationships.children.data[0].id");
-
-		System.out.println(predictions);
-
-		String predictionURl = baseURI + "/v1/metadata/categories/" + predictions;
-
-		System.out.println(predictionURl);
-
-		Response res1 = given().header("Authorization", (AuthrztionValue)).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).contentType(ContentType.JSON).when()
-				.get(predictionURl).then().statusCode(200).body(containsString("Predictions"))
-				.body(containsString("FC_LOAN_QUAL_FIR")).body(containsString("FC_PERIOD_DT_RANK_FIR"))
-				.body(containsString("FC_FIR")).body(containsString("FC_COUNTRY_RISK_IND_FIR"))
-				.body(containsString("FC_PROFIT_FIR")).body(containsString("FC_PERIOD_DT_FIR"))
-				.body(containsString("FC_REGION_FIR")).body(containsString("FC_TOTAL_ASSETS_FIR"))
-				.body(containsString("FC_BAND_RANK_FIR")).body(containsString("FC_MODEL_SCORE_FIR"))
-				.body(containsString("FC_STATEMENT_ID_FIR")).extract().response();
 
 	}
 
