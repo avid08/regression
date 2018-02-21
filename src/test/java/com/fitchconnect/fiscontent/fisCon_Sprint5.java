@@ -57,7 +57,7 @@ public class fisCon_Sprint5 extends Configuration {
 				.when().post(dataPostUrl)
 				.then().assertThat().statusCode(200)
 				.body(containsString("value"))
-				.body(containsString("Upgrade"))
+				.body(containsString("Affirmed"))
 				.body(containsString("Rating Outlook Positive"))
 				.body(containsString("timeIntervalDate"))						
 				.extract().response();

@@ -1,7 +1,15 @@
 {  
    "data":{  
       "type":"entities",
-      "attributes":{  
+      "attributes":{
+          "dateOptions":{  
+            "dates":[  
+               "2016-12-31"
+               
+            ]
+           
+         },
+         
          "entities":[  
           {           
                "id":"1708",
