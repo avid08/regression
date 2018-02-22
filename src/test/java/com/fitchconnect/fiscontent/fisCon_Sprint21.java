@@ -25,7 +25,7 @@ import com.jayway.restassured.response.Response;
 import groovy.json.internal.Charsets;
 
 public class fisCon_Sprint21 extends Configuration {
-	@Test(enabled=false)
+	@Test(enabled=true)
 	public void Fisc_1988_newCategory() throws URISyntaxException, IOException {
 
 		URL fileUrl = Resources.getResource("NewCateGory.xlsx");

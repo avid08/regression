@@ -32,7 +32,8 @@
             }
          ],
          "fitchFieldIds":[
-            "FC_LT_IDR"
+            "FC_LT_IDR",
+          "FC_TOTAL_ASSETS_BNK"
          ],
          "options":[
 		{
