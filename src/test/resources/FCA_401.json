@@ -4,9 +4,10 @@
       "attributes":{
          "dateOptions":{
             "dates":[
-		"2014-10-09"
+
             ],
             "periods":[
+         
 
             ]
          },
@@ -32,26 +33,11 @@
                "name":"filingType",
                "value":"Original"
             },
-            {
-               "name":"currency",
-               "value":"JPY"
-            },
-            {
-               "name":"currency",
-               "value":"USD"
-            },
-            {
-               "name":"currency",
-               "value":"local"
-            },
-            {
+              {
                "name":"currency",
                "value":"EUR"
-            },
-            {
-               "name":"currency",
-               "value":"GBP"
             }
+       
          ]
       }
    }
