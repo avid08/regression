@@ -42,14 +42,6 @@
             },
             {
                "name":"currency",
-               "value":"USD"
-            },
-            {
-               "name":"currency",
-               "value":"Local"
-            },
-            {
-               "name":"currency",
                "value":"GBP"
             }
           

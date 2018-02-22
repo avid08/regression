@@ -124,8 +124,7 @@ public void FCA_1853() throws IOException {
                   .body(containsString("ENABLED"))
                   .statusCode(200)                 
                   .extract()
-                  .response();
-       	
+                  .response();     	
 
 		} else {
 			
@@ -244,8 +243,7 @@ public void FCA_1883case4() throws IOException {
 				.body(containsString("JPMorgan Chase & Co."))
 				.body(containsString("value"))
 				.body(containsString("timeIntervalPeriod"))
-				.body(containsString("year"))	
-				
+				.body(containsString("year"))				
 				.extract().response();
 
 		Assert.assertFalse(case4responsedata.asString().contains("isError"));
@@ -310,7 +308,7 @@ public void FCA_1937  () throws IOException {
 	Assert.assertFalse(finresponsedata.asString().contains("isMissing"));
  }
 @Test 
-public void FCA_1948  () throws IOException {
+public void FCA_1948 () throws IOException {
 	  
 	URL errfile = Resources.getResource("FCA_1948.json");
 	String errmyJson = Resources.toString(errfile, Charsets.UTF_8);
@@ -318,9 +316,9 @@ public void FCA_1948  () throws IOException {
 	Response errresponsedata = given().header("Authorization", AuthrztionValue)
 			.header("X-App-Client-Id", XappClintIDvalue).contentType("application/vnd.api+json").body(errmyJson).with()
 			.when().post(dataPostUrl)
-			.then().assertThat().log().ifError().statusCode(200)
-			
+			.then().assertThat().log().ifError().statusCode(200)			
 			.extract().response();	
+	
 	Assert.assertFalse(errresponsedata.asString().contains("isError"));
 	Assert.assertFalse(errresponsedata.asString().contains("isRestricted"));
 	Assert.assertFalse(errresponsedata.asString().contains("isMissing"));
