@@ -1,26 +1,32 @@
+
 {  
    "data":{  
-      "type":"valueResponse",
+      "type":"valueRequest",
       "attributes":{  
          "dateOptions":{  
             "dates":[  
-         
+   
+            
             ],
             "periods":[  
-
+               
             ]
          },
          "entities":[  
             {  
-               "id":"1396190",
+               "id":"1278",
                "type":"FitchID"
             }
          ],
          "fitchFieldIds":[  
-            "FC_LT_CAVAL_NSR_SP"
+        
+"FC_DATE_CDS",
+"FC_RISK_BENCHMARK_MM_BPS_CDS"
+
+			
          ],
          "options":[  
-           
+
          ]
       }
    }

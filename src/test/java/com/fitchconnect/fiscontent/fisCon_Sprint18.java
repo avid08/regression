@@ -58,7 +58,7 @@ public class fisCon_Sprint18 extends Configuration {
 		Assert.assertFalse(res.asString().contains("isMissing"));
 		Assert.assertFalse(res.asString().contains("isRestricted"));		
 		
-		String nickNameWithFilterURI = baseURI+"/v1/nicknames?filter[businessTemplate]=sovereigns,insurance";
+		/*String nickNameWithFilterURI = baseURI+"/v1/nicknames?filter[businessTemplate]=sovereigns,insurance";
 
 		Response res1 = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
@@ -70,7 +70,7 @@ public class fisCon_Sprint18 extends Configuration {
 		
 		Assert.assertFalse(res1.asString().contains("isError"));
 		Assert.assertFalse(res1.asString().contains("isMissing"));
-		Assert.assertFalse(res1.asString().contains("isRestricted"));
+		Assert.assertFalse(res1.asString().contains("isRestricted"));*/
      	 
     }
 

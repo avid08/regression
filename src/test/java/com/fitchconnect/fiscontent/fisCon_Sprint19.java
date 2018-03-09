@@ -42,7 +42,7 @@ public class fisCon_Sprint19 extends Configuration {
 	
   }
 	
-  @Test(enabled=false)
+  @Test(enabled=true)
    
    public void Consolidated_AccuntingStndrd_Default_valueChange_fisc_1760() throws IOException{
 	   
@@ -70,7 +70,7 @@ public class fisCon_Sprint19 extends Configuration {
 	   
    }
   
-  @Test (enabled=false)
+  @Test (enabled=true)
   public void Consolidated_AccuntingStndrd_Default_valueChange_fisc_1760_BnkOfAmerica() throws IOException{
 	   
 	   URL myfile = Resources.getResource("fisc_1760_bnkOfamerica.json");

@@ -280,7 +280,7 @@ public class ApIsmokeTestSuite extends Configuration {
 
 	// Test Description : Verify that all fields within MetaData Response
 	// contains all the fields from different entities.
-	@Test()
+	@Test(enabled=false)
 	public void metaDataResponse_Compare() throws IOException, URISyntaxException {
 		String jsonAsString;
 
@@ -2592,7 +2592,7 @@ public class ApIsmokeTestSuite extends Configuration {
 	}
 	
 	
-	@Test(enabled=true)
+	@Test(enabled=false)
 
 	public void defaultOptions_FinancialServiceBank() throws IOException {
 

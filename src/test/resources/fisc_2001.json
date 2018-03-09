@@ -1,0 +1,26 @@
+{
+   "data":{
+      "type":"valueResponse",
+      "attributes":{
+         "dateOptions":{
+            "dates":[
+		
+            ]
+            
+         },
+         "issues":[
+            {
+               "id":"96535507",
+               "type":"FitchIssueID"
+            }
+         ],
+         "fitchFieldIds":[
+                "FC_COMMERCIAL_PAPER_TYPE"
+                
+         ],
+         "options":[            
+                  
+         ]
+      }
+   }
+}
