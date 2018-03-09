@@ -18,7 +18,7 @@ import groovy.json.internal.Charsets;
 public class fisCon_Sprint15 extends Configuration {
 
 	@Test
-	public void fca_182_SpellingMistke_Bug() throws IOException {
+	public void fisc_182_SpellingMistke_Bug() throws IOException {
 
 		URL file = Resources.getResource("fisc_182.json");
 		String myJson = Resources.toString(file, Charsets.UTF_8);
@@ -217,7 +217,7 @@ public class fisCon_Sprint15 extends Configuration {
 		Assert.assertFalse(res.asString().contains("isMissing"));
 		Assert.assertFalse(res.asString().contains("isRestricted"));
 
-	}
+	   }
 	
 
 				

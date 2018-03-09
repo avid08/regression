@@ -44,13 +44,13 @@ public class fisCon_Sprint16 extends Configuration {
 
 			String CategoriesUrl = baseURI + "/v1/metadata/fields/" + fitchFieldIds;
 
-			//System.out.println(CategoriesUrl);
-
-			String jsonAsString;
+     		String jsonAsString;
 
 			Response response = given().header("Authorization", AuthrztionValue)
 					.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
-					.header("content", contentValue).when().get(CategoriesUrl).then().statusCode(200)
+					.header("content", contentValue).when().get(CategoriesUrl)
+					.then()
+					.statusCode(200)
 					.body(containsString("relationships")).body(containsString("true"))
 					.body(containsString("formula")).extract().response();
 
@@ -102,12 +102,20 @@ public class fisCon_Sprint16 extends Configuration {
 			String CategoriesUrl = baseURI + "/v1/metadata/fields/" + fitchFieldIds;
 
 			//System.out.println(CategoriesUrl);
+			
+	/*		int statuscode = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+					.header("Accept", acceptValue).header("Content", contentValue).when().get(metaUrl)
+
+					.statusCode();
+			
+			System.out.println(statuscode);*/
 
 			String jsonAsString;
 
 			Response response = given().header("Authorization", AuthrztionValue)
 					.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
-					.header("content", contentValue).when().get(CategoriesUrl).then().statusCode(200)
+					.header("content", contentValue).when().get(CategoriesUrl).then()
+					.statusCode(200)
 					.body(containsString("relationships")).body(containsString("true"))
 					.body(containsString("formula")).extract().response();
 
