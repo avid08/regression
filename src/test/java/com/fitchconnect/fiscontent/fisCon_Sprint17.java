@@ -236,8 +236,6 @@ String IdfilterMSinclusiveURI = baseURI+"/v1/marketSectors?filter[level]=3&filte
 		Assert.assertFalse(res.asString().contains("isMissing"));
 	   }
 	
-	
-	
 		
 		
 }

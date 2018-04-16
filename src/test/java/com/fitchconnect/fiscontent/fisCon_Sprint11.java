@@ -154,7 +154,7 @@ public class fisCon_Sprint11 extends Configuration {
 				.header("X-App-Client-Id", XappClintIDvalue).contentType("application/vnd.api+json").body(myRequest)
 				.with().when().post(dataPostUrl).then().assertThat().statusCode(200).body(containsString("value"))
 				.body(containsString("timeIntervalDate")).body(containsString("FC_PEER_ISSUER_NAMES"))
-				.body(containsString("China MinSheng Banking Corporation")).body(containsString("Bank of Beijing")).extract()
+				.body(containsString("China Minsheng Banking Corp., Ltd.")).body(containsString("Bank of Beijing")).extract()
 				.response();
 
 		Assert.assertFalse(fieldResponse.asString().contains("isError"));

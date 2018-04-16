@@ -27,11 +27,7 @@ public class Sprint29 extends Configuration {
 
 		Response responsedata = given().header("Authorization", AuthrztionValue)
 				.header("X-App-Client-Id", XappClintIDvalue).contentType("application/vnd.api+json").body(myJson1)
-				.with()
-
-				.when().post(dataPostUrl)
-				
-
+				.with().when().post(dataPostUrl)
 				.then().assertThat().statusCode(200)
 				.body(containsString("01010306"))
 				.body(containsString("FC_MRKT_SECTOR_4_DESC"))				

@@ -127,7 +127,7 @@ public class fisCon_Sprint22 extends Configuration {
 		Response leglAgnetresponse = given().header("Authorization", AuthrztionValue)
 				.header("X-App-Client-Id", XappClintIDvalue).contentType("application/vnd.api+json").body(myjson).with()
 				.when().post(dataPostUrl).then().assertThat().statusCode(200).body(containsString("value"))
-				.body(containsString("SEN")).body(containsString("USD")).body(containsString("2015-11-08")).extract()
+				.body(containsString("SEN")).body(containsString("USD")).body(containsString("2009-09-20")).extract()
 				.response();
 
 		Assert.assertFalse(leglAgnetresponse.asString().contains("isError"));
@@ -135,7 +135,7 @@ public class fisCon_Sprint22 extends Configuration {
 		Assert.assertFalse(leglAgnetresponse.asString().contains("isRestricted"));
 	}
 
-	@Test
+	@Test(enabled=false)
 	public void dataAggregator_1974_calendarDate() throws IOException {
 
 		URL file = Resources.getResource("fisc_1974_calendarDate.json");
@@ -151,8 +151,8 @@ public class fisCon_Sprint22 extends Configuration {
 
 				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.contentType("application/vnd.api+json").body(myjson).with().when().post(dataPostUrl).then()
-				.assertThat().statusCode(200).body(containsString("value")).body(containsString("-5.7254234884"))
-				.body(containsString("-7.8625951163")).body(containsString("-7.8625951163")).extract().response();
+				.assertThat().statusCode(200).body(containsString("value")).body(containsString("FC_RISK_BENCHMARK_BPS_CDS"))
+				.body(containsString("274.4574212676")).extract().response();
 
 		Assert.assertFalse(leglAgnetresponse.asString().contains("isError"));
 		Assert.assertFalse(leglAgnetresponse.asString().contains("isMissing"));
@@ -170,14 +170,11 @@ public class fisCon_Sprint22 extends Configuration {
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
 		String cdate = ft.format(dNow).toString();
 
-		System.out.println(cdate);
+	
 		Response leglAgnetresponse = given()
-
 				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.contentType("application/vnd.api+json").body(myjson).with().when().post(dataPostUrl).then()
-				.assertThat().statusCode(200).body(containsString("value")).body(containsString(cdate))
-				.body(containsString("date")).extract().response();
-
+				.assertThat().statusCode(200).body(containsString("value")).extract().response();
 		Assert.assertFalse(leglAgnetresponse.asString().contains("isError"));
 		Assert.assertFalse(leglAgnetresponse.asString().contains("isMissing"));
 		Assert.assertFalse(leglAgnetresponse.asString().contains("isRestricted"));

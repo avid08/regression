@@ -38,9 +38,14 @@ public class Sprint27 extends Configuration {
 		List<DBObject> pipeline = new ArrayList<>();
 		DBObject match = new BasicDBObject("$match", new BasicDBObject("agentID", new BasicDBObject("$exists", true))
 				.append("ratings", new BasicDBObject("$exists", true)));
+		
+		System.out.println(match);
 		pipeline.add(match);
 
 		ArrayList<Long> myArray = new ArrayList();
+		
+		
+		System.out.println(myArray);
 
 		try {
 			MongoCredential credential = MongoCredential.createCredential("reporter", "admin",
@@ -56,6 +61,8 @@ public class Sprint27 extends Configuration {
 
 			pipeline.add(project);
 			AggregationOutput output = collection.aggregate(pipeline);
+			
+			System.out.println("output"+project);
 
 			for (DBObject result : output.results()) {
 
@@ -63,9 +70,9 @@ public class Sprint27 extends Configuration {
 
 			}
 
-			System.out.println(myArray.size());
+			System.out.println("List of entities :"+myArray.size());
 
-			// System.out.println(Url);
+		
 
 			for (int i = 0; i < 1; i++) {
 				String endpoint1 = "/v1/entities/";

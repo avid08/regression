@@ -101,7 +101,7 @@ public class Sprint33 extends Configuration {
 				.when().get(fieldsURI).then()
 				.statusCode(200)
 				
-				.body(containsString("Industry and construction sector average annual wages, LOCCUR"))
+				.body(containsString("Industry and construction sector average annual wages, LCU"))
 			
 				.extract().response();
 		

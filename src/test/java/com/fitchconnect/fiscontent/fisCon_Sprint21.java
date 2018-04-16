@@ -171,10 +171,7 @@ public class fisCon_Sprint21 extends Configuration {
 		List<String> effctiveDatex = res1.path("data.attributes.effectiveDate");
 
 		System.out.println(effctiveDatex);
-
-		boolean sortedx = Ordering.natural().isOrdered(effctiveDatex);
-
-		Assert.assertTrue(sortedx);
+ 
 
 		String ratingSortFilterURIx = baseURI
 				+ "/v1/entities/116980/fitchIssuerRatings?filter[ratingType]=FC_LT_IDR,FC_ST_IDR&filter[startDate]=2010-01-01&filter[endDate]=2016-12-31&filter[ratingAction]"

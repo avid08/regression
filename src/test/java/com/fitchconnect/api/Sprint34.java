@@ -79,14 +79,13 @@ public class Sprint34 extends Configuration {
 
 	public void BMI_metaData_field() {
 
-		String Bmi_meTadataURi = baseURI + "/v1/metadata/fields/BMI_INS_LIAB_NL_EUR_PCTCH_EOP";
+		String Bmi_meTadataURi = baseURI + "/v1/metadata/fields/BMI_FS_SHIP_LIMON_TEU_PCTCH";
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue)
 
 				.when().get(Bmi_meTadataURi).then().statusCode(200)
-				.body(containsString("Insurance sector non-life liabilities, &lt;loccur&gt;, EUR % chg y-o-y (EOP)"))
-
+				.body(containsString("Port Limon container throughput, TEU, % chg y-o-y"))
 				.extract().response();
 
 		Assert.assertFalse(res.asString().contains("isError"));
@@ -111,8 +110,7 @@ public class Sprint34 extends Configuration {
 				.body(containsString("currency")).body(containsString("USD")).body(containsString("2015"))
 				.body(containsString("RON")).extract().response();
 
-		Assert.assertFalse(res.asString().contains("isError"));
-		//Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isError"));		
 		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 		Response res1 = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -138,10 +136,11 @@ public class Sprint34 extends Configuration {
 				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
 				.assertThat().statusCode(200).body(containsString("BMI_FISCAL_BALANCE_PCTGDP"))
 				.body(containsString("FC_LT_IDR")).body(containsString("BMI_GDP_NOM_LCU"))
-
-				.body(containsString("Annual")).body(containsString("value")).body(containsString("currency"))
-				.body(containsString("Bangladesh")).body(containsString("BDT"))
-
+				.body(containsString("Annual"))
+				.body(containsString("value"))
+				.body(containsString("currency"))
+				.body(containsString("Bangladesh"))
+				.body(containsString("BDT"))
 				.extract().response();
 
 		Assert.assertFalse(res.asString().contains("isError"));
@@ -161,7 +160,9 @@ public class Sprint34 extends Configuration {
 				.body("data.attributes.entities[0].values[0].values[0].value[0]", equalTo("Sovereigns"))
 				.body("data.attributes.entities[0].values[1].values[0].value[0]", equalTo("05"))
 				.contentType(ContentType.JSON).extract().response();
+		
 		Assert.assertNotNull(MSoutput);
+		
 		Assert.assertFalse(MSoutput.asString().contains("isError"));
 		Assert.assertFalse(MSoutput.asString().contains("isMissing"));
 		Assert.assertFalse(MSoutput.asString().contains("isRestricted"));
