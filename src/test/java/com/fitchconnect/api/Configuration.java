@@ -48,13 +48,14 @@ public class Configuration {
 		env = System.getProperty("env");
 		System.out.println("Test Execution Environment: " + env);
 		if (env == null) {
-			baseURI = "https://api.fitchconnect.com";
-			PROD_bearerToken();
+			baseURI = "https://api.fitchconnect-qa.com";
+			bearerToken_QA();
 			this.AuthrztionValue = "Bearer " + accessToken;
-			dataBaseServer1 = "mgo-pue1c-cr001.fitchratings.com";
-			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
+			System.out.println("QA Bearer Token " + AuthrztionValue);
+			dataBaseServer1 = "mgo-que1a-cr001.fitchratings.com";
+			dataBaseServer2 = "mgo-que1a-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-9";
-			BMIbaseURL = "https://api.bmiresearch.com";
+			BMIbaseURL = "https://api-stg1.bmiresearch.com";
 		} else if (env.equals("dev")) {
 			baseURI = "https://api.fitchconnect-dev.com";
 			Dev_bearerToken();

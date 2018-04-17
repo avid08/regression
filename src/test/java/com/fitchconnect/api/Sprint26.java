@@ -14,181 +14,161 @@ import com.jayway.restassured.response.Response;
 
 public class Sprint26 extends Configuration {
 
+	@Test
 
-    @Test
+	public void FCA_1158() throws IOException {
 
-    public void FCA_1158() throws IOException {
+		String newattributes = baseURI + "/v1/entities/1064795";
 
-           String newattributes = baseURI + "/v1/entities/1064795";
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
+				.when().get(newattributes).then().body("data.id", equalTo("1064795"))
+				.body("data.attributes.countryISOCode", equalTo("KR"))
+				.body("data.attributes.name", equalTo("Korea Hydro & Nuclear Power Co., Ltd.")).extract().response();
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
-           Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-                        .header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
-                         .when().get(newattributes).then().body("data.id", equalTo("1064795"))
-                        .body("data.attributes.countryISOCode", equalTo("KR"))
-                        .body("data.attributes.name", equalTo("Korea Hydro & Nuclear Power Co., Ltd.")).extract()
-                        .response();
-           Assert.assertFalse(res.asString().contains("isError"));
-           Assert.assertFalse(res.asString().contains("isMissing"));
-           Assert.assertFalse(res.asString().contains("isRestricted"));
+	}
 
-    }
-    
-    @Test
-    
-    public void FCA_1207() throws IOException {
+	@Test
 
-           String metafields = baseURI + "/v1/metadata/fields";
+	public void FCA_1207() throws IOException {
 
-           Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-                        .header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
-                         .when().get(metafields).then().body("data[0].links.self", Matchers.anything("https://api-"))
-                        .extract()
-                        .response();
-           Assert.assertFalse(res.asString().contains("isError"));
-           Assert.assertFalse(res.asString().contains("isMissing"));
-           Assert.assertFalse(res.asString().contains("isRestricted"));
+		String metafields = baseURI + "/v1/metadata/fields";
 
-    }
-@Test        
-    public void FCA_1157() throws IOException {
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
+				.when().get(metafields).then().body("data[0].links.self", Matchers.anything("https://api-")).extract()
+				.response();
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
-           String entitiesurl = baseURI + "/v1/entities";
+	}
 
-           Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-                        .header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
-                         .when().get(entitiesurl).then().body("data[0].type", equalTo("entities"))                 
-                        .extract()
-                        .response();
-           
-           int numberOfentities = res.path("meta.count");
-           
-           System.out.println(numberOfentities);
-           
-           if (numberOfentities<10000){
-        	   
-        	   
-           }else{
-        	   
-        	   System.err.println("Check out entities");
-        	   
-        	   
-           }
-           
-           
-           Assert.assertFalse(res.asString().contains("isError"));
-           Assert.assertFalse(res.asString().contains("isMissing"));
-           Assert.assertFalse(res.asString().contains("isRestricted"));
+	@Test
+	public void FCA_1157() throws IOException {
 
-    }
+		String entitiesurl = baseURI + "/v1/entities";
 
-@Test
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
+				.when().get(entitiesurl).then().body("data[0].type", equalTo("entities")).extract().response();
 
-public void FCA_1157paginationtest() throws IOException {
+		int numberOfentities = res.path("meta.count");
 
-String paginationentityurl = baseURI + "/v1/entities?page[size]=100";
+		System.out.println(numberOfentities);
 
-Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-           .header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
-           .when().get(paginationentityurl).then().body("errors[0].status", equalTo("400"))
-           .body("errors[0].title", equalTo("Max page size of 50 exceeded!"))
-           .extract()
-           .response();
-Assert.assertFalse(res.asString().contains("isError"));
-Assert.assertFalse(res.asString().contains("isMissing"));
-Assert.assertFalse(res.asString().contains("isRestricted"));
+		if (numberOfentities > 10000) {
 
-}
+		} else {
 
+			System.err.println("Check out entities");
 
-@Test
+		}
 
-public void FCA_1187case1() throws IOException {
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
-String case1url = baseURI + "/v1/entities?filter[name]=bank";
+	}
 
-Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-           .header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
-           .when().get(case1url).then()
-           .body(containsString("1880 Bank"))
-           .body(containsString("North America"))
-           .body(containsString("Cambridge"))
-           .body(containsString("United States"))
-           .extract()
-           .response();
-Assert.assertFalse(res.asString().contains("isError"));
-Assert.assertFalse(res.asString().contains("isMissing"));
-Assert.assertFalse(res.asString().contains("isRestricted"));
+	@Test
 
-}
+	public void FCA_1157paginationtest() throws IOException {
 
-@Test
+		String paginationentityurl = baseURI + "/v1/entities?page[size]=100";
 
-public void FCA_1187case2() throws IOException {
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
+				.when().get(paginationentityurl).then().body("errors[0].status", equalTo("400"))
+				.body("errors[0].title", equalTo("Max page size of 50 exceeded!")).extract().response();
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
-String case2url = baseURI + "/v1/entities?filter[countryISOCode]=IN";
+	}
 
-Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-           .header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
-           .when().get(case2url).then().body("data[0].attributes.countryISOCode", equalTo("IN"))
-           .extract()
-           .response();
-Assert.assertFalse(res.asString().contains("isError"));
-Assert.assertFalse(res.asString().contains("isMissing"));
-Assert.assertFalse(res.asString().contains("isRestricted"));
+	@Test
 
-}
+	public void FCA_1187case1() throws IOException {
 
-@Test
+		String case1url = baseURI + "/v1/entities?filter[name]=bank";
 
-public void FCA_1187case3() throws IOException {
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
+				.when().get(case1url).then().body(containsString("1880 Bank")).body(containsString("North America"))
+				.body(containsString("Cambridge")).body(containsString("United States")).extract().response();
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
-String case3url = baseURI + "/v1/entities?filter[fitchEntityId]=1455904";
+	}
 
-Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-           .header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
-           .when().get(case3url).then().body("data[0].id", equalTo("1455904"))
-           .extract()
-           .response();
-Assert.assertFalse(res.asString().contains("isError"));
-Assert.assertFalse(res.asString().contains("isMissing"));
-Assert.assertFalse(res.asString().contains("isRestricted"));
+	@Test
 
-}
+	public void FCA_1187case2() throws IOException {
 
-@Test
+		String case2url = baseURI + "/v1/entities?filter[countryISOCode]=IN";
 
-public void FCA_1187negativecase1() throws IOException {
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
+				.when().get(case2url).then().body("data[0].attributes.countryISOCode", equalTo("IN")).extract()
+				.response();
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
-String negativecase1url = baseURI + "/v1/entities?filter[name]=aa";
+	}
 
-Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-           .header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
-           .when().get(negativecase1url).then().body("errors[0].status", equalTo("400"))
-           
-           .extract()
-           .response();
-Assert.assertFalse(res.asString().contains("isError"));
-Assert.assertFalse(res.asString().contains("isMissing"));
-Assert.assertFalse(res.asString().contains("isRestricted"));
+	@Test
 
-}
-@Test
+	public void FCA_1187case3() throws IOException {
 
-public void FCA_1244() throws IOException {
+		String case3url = baseURI + "/v1/entities?filter[fitchEntityId]=1455904";
 
-String newattributesurl = baseURI + "/v1/statements/5454931?fields[statements]=header";
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
+				.when().get(case3url).then().body("data[0].id", equalTo("1455904")).extract().response();
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
 
-Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-           .header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
-           .when().get(newattributesurl).then().body("data.attributes.header.periodDuration", equalTo("12"))
-           .body("data.attributes.header.auditorOpinion", equalTo("Audited - Unqualified"))
-           .body("data.attributes.header.inflationAdjusted", equalTo(false))
-           .extract()
-           .response();
-Assert.assertFalse(res.asString().contains("isError"));
-Assert.assertFalse(res.asString().contains("isMissing"));
-Assert.assertFalse(res.asString().contains("isRestricted"));
+	}
 
-     }
+	@Test
+
+	public void FCA_1187negativecase1() throws IOException {
+
+		String negativecase1url = baseURI + "/v1/entities?filter[name]=aa";
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
+				.when().get(negativecase1url).then().body("errors[0].status", equalTo("400"))
+
+				.extract().response();
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
+
+	}
+
+	@Test
+
+	public void FCA_1244() throws IOException {
+
+		String newattributesurl = baseURI + "/v1/statements/5454931?fields[statements]=header";
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
+				.when().get(newattributesurl).then().body("data.attributes.header.periodDuration", equalTo("12"))
+				.body("data.attributes.header.auditorOpinion", equalTo("Audited - Unqualified"))
+				.body("data.attributes.header.inflationAdjusted", equalTo(false)).extract().response();
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
+
+	}
 
 }

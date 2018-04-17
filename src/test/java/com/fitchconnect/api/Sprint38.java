@@ -20,7 +20,7 @@ public class Sprint38 extends Configuration {
 @Test
 
  public void BMI_with_EntitySummry_1774 () throws IOException {
-	
+	 
 	URL file = Resources.getResource("FCA_1774.json");
 	String myJson = Resources.toString(file, Charsets.UTF_8);
 

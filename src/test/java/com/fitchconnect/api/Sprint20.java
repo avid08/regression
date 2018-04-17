@@ -84,8 +84,8 @@ public class Sprint20 extends Configuration {
 				.header("content", contentValue).header("'Accept", acceptValue)
 				.header("X-App-Client-Id", XappClintIDvalue).when().get(SerchUrl).then().assertThat().log().ifError()
 				.statusCode(200).body(containsString("Brazil")).body(containsString("ultimateParent"))
-				.body("data[0].attributes.name", equalTo("Algorithmics Brazil do Brazil Ltda"))
-				.body(containsString("directors"));
+				.body(containsString("countryName")).body(containsString("region"))
+				.body(containsString("Latin America"));
 
 	}
 
@@ -181,6 +181,5 @@ public class Sprint20 extends Configuration {
 		Assert.assertFalse(dataResponse.asString().contains("isMissing"));
 
 	}
-
 
 }

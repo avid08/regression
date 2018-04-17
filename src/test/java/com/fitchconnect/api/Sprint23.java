@@ -9,7 +9,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 
@@ -46,16 +45,10 @@ public class Sprint23 extends Configuration {
 
 				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.contentType("application/vnd.api+json").body(myjson).with()
-
-				.when().post(dataPostUrl)
-
-				.then().assertThat().statusCode(200)
-				.body("data.attributes.entities[0].values[0].values[0].value[0]",
-						equalTo("Korea Hydro & Nuclear Power Co., Ltd."))
-				.body("data.attributes.entities[0].values[1].fitchFieldId", equalTo("FC_CONNECT_URL"))
-				.body("data.attributes.entities[0].values[1].values[0].value[0]", Matchers.anything("https"))
-				.body("data.attributes.entities[1].values[1].fitchFieldId", equalTo("FC_CONNECT_URL"))
-				.body("data.attributes.entities[1].values[1].values", equalTo(null))
+				.when().post(dataPostUrl).then().assertThat().statusCode(200)
+				.body(containsString("Korea Hydro & Nuclear Power Co., Ltd."))
+				.body(containsString("https://app.fitchconnect"))	
+	
 
 				.extract().response();
 
@@ -64,7 +57,7 @@ public class Sprint23 extends Configuration {
 		Assert.assertFalse(FcUrlrespnse.asString().contains("isRestricted"));
 
 	}
-
+    @Test
 	public void FCA_1046_Entities_FCURL_Get() {
 		String FCuri = "/v1/entities/1064795";
 		String FCUrl = baseURI + FCuri;
@@ -73,10 +66,9 @@ public class Sprint23 extends Configuration {
 
 				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(FCUrl).then().statusCode(200)
-				.body("data.attributes.name", equalTo("Korea Hydro & Nuclear Power Co., Ltd."))
-				.body("data.attributes.fitchConnectUrl",
-						equalTo("https://app-uat.fitchconnect.com/entity/GRP_82254463"))
+				.body(containsString("https://app.fitchconnect"))	
 				.extract().response();
+		
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
 		Assert.assertFalse(res.asString().contains("isRestricted"));
@@ -100,8 +92,6 @@ public class Sprint23 extends Configuration {
 				.body(containsString("The Standard Bank of South Africa Limited"))
 				.body(containsString("Republic Financial Holdings Limited"))
 				.body(containsString("JSC Citibank Kazakhstan"))
-				
-
 				.extract().response();
 
 		Assert.assertFalse(leglAgnetresponse.asString().contains("isError"));
@@ -118,10 +108,11 @@ public class Sprint23 extends Configuration {
 		given().header("Authorization", AuthrztionValue)
 
 				.header("content", contentValue).header("'Accept", acceptValue)
-				.header("X-App-Client-Id", XappClintIDvalue).when().get(SerchUrl).then().assertThat().log().ifError()
+				.header("X-App-Client-Id", XappClintIDvalue).when().get(SerchUrl)
+				.then().assertThat()
 				.statusCode(200)
-
-				.body("data[0].attributes.name", equalTo("Kenosha")).body(containsString("directors"));
+				.body(containsString("Kenosha County"))
+				.body(containsString("directors"));
 
 	}
 

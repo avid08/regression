@@ -123,7 +123,7 @@ public class fisCon_Sprint15 extends Configuration {
 
 	public void FISC_1442_newAttributes() throws IOException {
 
-		String entityResrceURI = baseURI + "/v1/entities";
+		String entityResrceURI = baseURI + "/v1/entities/116980";
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(entityResrceURI).then()

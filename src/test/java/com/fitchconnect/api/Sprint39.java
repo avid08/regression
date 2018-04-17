@@ -48,12 +48,9 @@ public class Sprint39 extends Configuration {
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.contentType(contentValue).body(myJson).with()
-
 				.when().post(dataPostUrl)
-
 				.then().assertThat().statusCode(200).body(containsString("currency")).body(containsString("numerical"))
 				.body(containsString("FC_PROFIT_BEFORE_TAX_SHARE_BROKER"))
-
 				.extract().response();
 		assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
@@ -70,9 +67,7 @@ public class Sprint39 extends Configuration {
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.contentType(contentValue).body(myJson).with()
-
 				.when().post(dataPostUrl)
-
 				.then().assertThat().statusCode(200).body(containsString("date")).body(containsString("text"))
 				.body(containsString("FC_NIMQR_ACTN"))
 
@@ -103,9 +98,7 @@ public class Sprint39 extends Configuration {
 
 				.extract().response();
 
-		List<String> entityData = response.path("data.relationships.entity.links.related");
-		
-	  
+		List<String> entityData = response.path("data.relationships.entity.links.related");	  
 
 		System.out.println(entityData.size());
 
