@@ -108,7 +108,8 @@ public class fisCon_Sprint2 extends Configuration {
 				.assertThat().statusCode(200)
 				.statusCode(200)
 				.body(containsString("value"))
-				.body(containsString("COSTA RICA"))				
+				.body(containsString(""))
+				.body(containsString("Conduent Incorporated"))	
 				.extract().response();
 						
 		Assert.assertFalse(res.asString().contains("isError"));
