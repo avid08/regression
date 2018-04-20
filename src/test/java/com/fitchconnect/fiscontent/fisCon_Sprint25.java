@@ -3,11 +3,17 @@ package com.fitchconnect.fiscontent;
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.containsString;
 
+import java.io.IOException;
+import java.net.URL;
+
 import org.junit.Assert;
 import org.testng.annotations.Test;
 
 import com.fitchconnect.api.Configuration;
+import com.google.common.io.Resources;
 import com.jayway.restassured.response.Response;
+
+import groovy.json.internal.Charsets;
 
 public class fisCon_Sprint25 extends Configuration {
 		
@@ -90,6 +96,57 @@ public class fisCon_Sprint25 extends Configuration {
 		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}	
+	
+	
+	@Test
+	 
+	 public void Fisc_2139() throws IOException {
+		 
+		 URL file = Resources.getResource("fisc_2139.json");
+			String myRequest = Resources.toString(file, Charsets.UTF_8);
+	
+			Response response = given().header("Authorization", AuthrztionValue)
+					.header("X-App-Client-Id", XappClintIDvalue).contentType("application/vnd.api+json").body(myRequest)
+					.with()
+					.when().post(dataPostUrl)
+					.then().assertThat().statusCode(200)
+					.body(containsString("value"))
+					.body(containsString("2017"))
+					.body(containsString("forecastType"))
+					.body(containsString("Annual"))
+					.body(containsString("Forecast"))
+					.body(containsString("Estimate"))
+					.body(containsString("firstForecastYear"))
+					.body(containsString("source"))
+					.body(containsString("lastReviewed"))
+					.body(containsString("notes"))										
+					.extract().response();
+		  
+			Assert.assertFalse(response.asString().contains("isError"));
+			Assert.assertFalse(response.asString().contains("isMissing"));
+			Assert.assertFalse(response.asString().contains("isRestricted"));
+		 	 
+	   }
+	
+	@Test
+	public void FISC_2138_predefineValue_BMI() {
+
+		String metaDataURI = baseURI + "/v1/metadata/fields/BMI_EDUCATION_ENROL_EDU_UNIT";
+
+		Response res = given().header("Authorization", AuthrztionValue).header("content", contentValue)
+				.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(metaDataURI).then()
+				.assertThat().statusCode(200)
+				.body(containsString("fieldDefinition"))
+				.body(containsString("Tertiary (third level) education, defined as higher education or post-secondary (final) school level education. Represents the number of students enrolled on &#39;education&#39"))
+				.body(containsString("bmi"))
+				.extract().response();
+		
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
+
+	}	
+	
 	
 
 }

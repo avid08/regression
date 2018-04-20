@@ -1,0 +1,26 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+            ]
+            },
+         "entities":[  
+            {  
+               "id":"140071",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+            "BMI_INDEX_Composite_UNIT",
+            "BMI_GDP_REAL_PCTCH"
+       
+         ],
+         "options":[  
+
+         ]
+      }
+   }
+}
+
