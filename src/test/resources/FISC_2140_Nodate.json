@@ -1,0 +1,28 @@
+{
+   "data": {
+       "type": "valueRequest",
+       "attributes": {
+           "dateOptions": {
+           "dates":[  
+           
+            
+            ]
+               
+           },
+           "entities": [
+              
+               {
+                   "id": "US-TX",
+                   "type": "regionId"
+               }
+           ],
+           "fitchFieldIds": [
+               "BMI_FX_LCU_USD_AVE_UNIT"
+             
+           
+           ],
+           "options": [
+           ]
+       }
+   }
+}

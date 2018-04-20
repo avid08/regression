@@ -120,7 +120,7 @@ public class Sprint34 extends Configuration {
 				.body(containsString("BDT")).extract().response();
 
 		Assert.assertFalse(res.asString().contains("isError"));
-		//Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
 		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
