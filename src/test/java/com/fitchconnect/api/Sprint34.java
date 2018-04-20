@@ -94,7 +94,7 @@ public class Sprint34 extends Configuration {
 
 	}
 
-	@Test
+	@Test(enabled=false)
 
 	public void BMI_Integration_1620_450_marcrofields() throws IOException {
 

@@ -137,7 +137,7 @@ public class fisCon_Sprint25 extends Configuration {
 				.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(metaDataURI).then()
 				.assertThat().statusCode(200)
 				.body(containsString("fieldDefinition"))
-				.body(containsString("Tertiary (third level) education, defined as higher education or post-secondary (final) school level education. Represents the number of students enrolled on &#39;education&#39; courses.\r\n\r\nUnits: thousands. "))
+				.body(containsString("Tertiary (third level) education, defined as higher education or post-secondary (final) school level education. Represents the number of students enrolled on &#39;education&#39"))
 				.body(containsString("bmi"))
 				.extract().response();
 		
