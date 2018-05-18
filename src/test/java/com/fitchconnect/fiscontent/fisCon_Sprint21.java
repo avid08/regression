@@ -1,5 +1,4 @@
 package com.fitchconnect.fiscontent;
-
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -199,8 +198,17 @@ public class fisCon_Sprint21 extends Configuration {
 				.statusCode(200).extract().response();
 
 		Assert.assertFalse(res.asString().contains("isError"));
-		Assert.assertFalse(res.asString().contains("isMissing"));
-		Assert.assertFalse(res.asString().contains("isRestricted"));
+		Assert.assertFalse(res.asString().contains("isMissing"));// Desc
+																											// order
+
+		Response res1 = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).when().get(ratingSortURI).then()
+				.statusCode(200).extract().response();
+
+		Assert.assertFalse(res1.asString().contains("isError"));
+		Assert.assertFalse(res1.asString().contains("isMissing"));
+		Assert.assertFalse(res1.asString().contains("isRestricted"));
+		Assert.assertFalse(res1.asString().contains("isRestricted"));
 
 		List<String> effctiveDate = res.path("data.attributes.effectiveDate");
 
@@ -211,15 +219,15 @@ public class fisCon_Sprint21 extends Configuration {
 				+ "/v1/issuers/80089181/fitchIssuerRatings?sort[fitchIssuerRatings][effectiveDate]=asc"; // ASC
 																										// order
 
-		Response res1 = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+		Response res3 = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(ratingSortURIx).then()
 				.statusCode(200).extract().response();
 
-		Assert.assertFalse(res1.asString().contains("isRestricted"));
+		Assert.assertFalse(res3.asString().contains("isRestricted"));
 
-		List<String> effctiveDatex = res1.path("data.attributes.effectiveDate");
+		List<String> effctiveDatex = res3.path("data.attributes.effectiveDate");
 
-		System.out.println(effctiveDatex);
+		System.out.println("assending"+effctiveDatex);
 
 		boolean sortedx = Ordering.natural().isOrdered(effctiveDatex);
 

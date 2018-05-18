@@ -43,6 +43,8 @@ public class fisCon_Sprint16 extends Configuration {
 			
 
 			String CategoriesUrl = baseURI + "/v1/metadata/fields/" + fitchFieldIds;
+			
+			System.out.println(CategoriesUrl);
 
      		String jsonAsString;
 

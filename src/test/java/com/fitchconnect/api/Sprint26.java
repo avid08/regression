@@ -31,7 +31,7 @@ public class Sprint26 extends Configuration {
 
 	}
 
-	@Test
+	@Test(enabled=false)
 
 	public void FCA_1207() throws IOException {
 
