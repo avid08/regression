@@ -104,7 +104,7 @@ Assert.assertFalse(res.asString().contains("isRestricted"));
 @Test()
 public void fisc_2369_RatingstransitionHistory() {
 	String ratingTansition=baseURI
-			+ "v1/issueRatingsTransitionHistory?include[issueRatingsTransitionHistory]=issues"; // Desc
+			+ "/v1/issueRatingsTransitionHistory?include[issueRatingsTransitionHistory]=issues"; // Desc
 																						// order
 	 Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 			.header("accept", acceptValue).header("content", contentValue).when().get(ratingTansition).then()
