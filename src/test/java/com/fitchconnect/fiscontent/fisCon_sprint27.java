@@ -101,8 +101,7 @@ Assert.assertFalse(res.asString().contains("isRestricted"));
 
 }
 
-
-@Test(enabled=false)
+@Test()
 public void fisc_2369_RatingstransitionHistory() {
 	String ratingTansition=baseURI
 			+ "v1/issueRatingsTransitionHistory?include[issueRatingsTransitionHistory]=issues"; // Desc
