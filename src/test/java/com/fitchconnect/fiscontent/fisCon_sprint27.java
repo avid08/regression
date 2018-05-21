@@ -105,28 +105,26 @@ Assert.assertFalse(res.asString().contains("isRestricted"));
 @Test(enabled=false)
 public void fisc_2369_RatingstransitionHistory() {
 	String ratingTansition=baseURI
-			+ "/v1/issueRatingsTransitions?filter[ratingType]=FC_LT_LC_IR&filter[startDate]=2009-01-01&filter[endDate]=2018-01-01&filter[marketSectorId]=03071100"; // Desc
+			+ "v1/issueRatingsTransitionHistory?include[issueRatingsTransitionHistory]=issues"; // Desc
 																						// order
 	 Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 			.header("accept", acceptValue).header("content", contentValue).when().get(ratingTansition).then()
-			.statusCode(200)				
+			.statusCode(200)
+			.body(containsString("issueRatingsTransitionHistory"))
+			.body(containsString("AA"))
+			.body(containsString("Annual"))
+			.body(containsString("relationships"))
+			.body(containsString("issueId"))
+			.body(containsString("period"))
+			// inclued issue Section
+			.body(containsString("included"))
+			.body(containsString("country"))
+			.body(containsString("marketSectors"))
 			.extract().response();
 	 Assert.assertFalse(res.asString().contains("isError"));
 	 Assert.assertFalse(res.asString().contains("isMissing"));
 	 Assert.assertFalse(res.asString().contains("isRestricted"));
-	 
-	 String historylink = res.path("data[0].relationships.issueRatingsAnnualTransitionHistory.links.related");
-	 
-	 Response res1 = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).when().get(historylink).then()
-				.statusCode(200)
-				.body(containsString("Annual"))
-				.body(containsString("issueId"))
-				.extract().response();	 
-	 
-	 Assert.assertFalse(res1.asString().contains("isError"));
-	 Assert.assertFalse(res1.asString().contains("isMissing"));
-	 Assert.assertFalse(res1.asString().contains("isRestricted"));
+	
     }
 
 
