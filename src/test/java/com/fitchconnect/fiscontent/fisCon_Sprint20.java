@@ -126,7 +126,9 @@ public class fisCon_Sprint20 extends Configuration{
 
 			//Category Name validation
 			String categories = response.path("data.relationships.categories.links.related");
-		
+			
+			System.out.println(categories);
+		       
 
 			Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 					.header("accept", acceptValue).header("content", contentValue).when().get(categories).then()

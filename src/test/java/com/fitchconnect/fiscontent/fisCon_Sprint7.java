@@ -194,4 +194,20 @@ public class fisCon_Sprint7 extends Configuration {
 
 	}
 
+	
+	@Test
+	
+	public void somecode() {
+		
+		int a =100;
+		
+		for (int i=0;i<a;i++){
+			
+	       System.out.println("print number");
+	       
+		}
+		
+	}
+	
+	
 }
