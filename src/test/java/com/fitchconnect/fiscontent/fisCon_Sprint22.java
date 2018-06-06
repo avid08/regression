@@ -25,7 +25,7 @@ import groovy.json.internal.Charsets;
 
 public class fisCon_Sprint22 extends Configuration {
 
-	@Test(enabled=false)
+	@Test(enabled=true)
 
 	public void Fisc_1974_CDS_MetaData__Verification() throws URISyntaxException, IOException {
 
@@ -117,7 +117,7 @@ public class fisCon_Sprint22 extends Configuration {
 
 	}
 
-	@Test(enabled=false)
+	@Test(enabled=true)
 	public void dataAggregator_1974_CalendarDate_withData() throws IOException {
 
 		URL file = Resources.getResource("fisc_1974.json");
@@ -135,7 +135,7 @@ public class fisCon_Sprint22 extends Configuration {
 		Assert.assertFalse(leglAgnetresponse.asString().contains("isRestricted"));
 	}
 
-	@Test(enabled=false)
+	@Test(enabled=true)
 	public void dataAggregator_1974_calendarDate() throws IOException {
 
 		URL file = Resources.getResource("fisc_1974_calendarDate.json");
@@ -159,7 +159,7 @@ public class fisCon_Sprint22 extends Configuration {
 		Assert.assertFalse(leglAgnetresponse.asString().contains("isRestricted"));
 	}
 
-	@Test(enabled=false)
+	@Test(enabled=true)
 	public void dataAggregator_1974_NOcalendarDate() throws IOException {
 
 		URL file = Resources.getResource("fisc_1974_NocalendarDate.json");

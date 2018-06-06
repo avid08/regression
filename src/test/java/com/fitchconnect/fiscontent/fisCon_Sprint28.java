@@ -94,14 +94,11 @@ public class fisCon_Sprint28 extends Configuration {
 	    
 	    System.out.println(percentagefromResponse);
 	 
-	   int singleRatingCount_B = res.path("data[0].attributes.count");
-	   
+	   int singleRatingCount_B = res.path("data[0].attributes.count");	   
 	   
 	   float B_count = (float) singleRatingCount_B;   
-
 	   
 	   int TotalRatingCount_B = res.path("meta.ratingCodesTotalCount.B"); 
-
 	 
 	   float Calcultedpercentage =B_count/TotalRatingCount_B*100;
 	   
@@ -138,5 +135,116 @@ public class fisCon_Sprint28 extends Configuration {
 	 
 	 
   }
+	
+	@Test
+	public void fisc_2372_issuer_modifierOff() {
+	String ratingTansition=baseURI
+			+ "/v1/issuerRatingsTransitions?filter[marketSectorId]=01010111&filter[startDate]=2000-01-01&filter[endDate]=2001-01-01&filter[ratingType]=FC_LT_IDR&filter[modifiers]=off"; // Desc
+																						// order
+	 Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+			.header("accept", acceptValue).header("content", contentValue).when().get(ratingTansition).then()
+			.statusCode(200)			
+			.body(containsString("count"))
+			.body(containsString("to"))
+			.body(containsString("from"))
+			.body(containsString("relationships"))
+			.body(containsString("issuerRatingsTransitions"))
+			.body(containsString("links"))
+			.body(containsString("percentage"))	
+			.body(containsString("BBB"))	
+			.body(containsString("ratingCodesTotalCount"))	
+			.extract().response();
+	 
+	 Assert.assertFalse(res.asString().contains("AA+")); 
+	 
+	 Assert.assertFalse(res.asString().contains("isError"));
+	 Assert.assertFalse(res.asString().contains("isMissing"));
+	 Assert.assertFalse(res.asString().contains("isRestricted"));
+	 
+	 
+	  float percentagefromResponse = res.path("data[0].attributes.percentage");
+	    
+	    System.out.println(percentagefromResponse);
+	    
+	    int singleRatingCount_BB = res.path("data[0].attributes.count");
+	    
+	    float BB_count = (float) singleRatingCount_BB; 
+	    
+	    int TotalRatingCount_BB = res.path("meta.ratingCodesTotalCount.BB"); 
+	    
+	    
+	    System.out.println(TotalRatingCount_BB);
+	    
+	    
+	    float Calcultedpercentage =BB_count/TotalRatingCount_BB*100;
+	    
+	    System.out.println(Calcultedpercentage);
+		   
+		   boolean failure = false;
+		   
+		   if(percentagefromResponse==Calcultedpercentage){
+			   
+			   System.out.println("percentage Calculation is working correctly");
+			   
+		   }else {
+			   failure = true;
+			   System.err.println("percentage Calculation is NOT working correctly");
+			   
+		   }
+		   
+		   Assert.assertFalse(failure);
+				
+		}
+	
+	
+	@Test
+	public void fisc_2368_relationship() {
+	String ratingTansition=baseURI+ "/v1/issuerRatingsTransitions?filter[marketSectorId]=01020100&filter[startDate]=2000-01-01&filter[endDate]=2010-01-01&filter[ratingType]=FC_LT_IDR&filter[issuerId]=80088924"; 
+																						
+	 Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+			.header("accept", acceptValue).header("content", contentValue).when().get(ratingTansition).then()
+			.statusCode(200)				
+			.body(containsString("issuerRatingsAnnualTransitionHistory"))	
+			.body(containsString("ratingCodesTotalCount"))	
+			.extract().response();
+	 
+	 String anualTransitionHistory = res.path("data[0].relationships.issuerRatingsAnnualTransitionHistory.links.related");
+	
+	 Assert.assertFalse(res.asString().contains("isRestricted"));
+	 
+	 // Relationship link working
+	 Response res1 = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).when().get(anualTransitionHistory).then()
+				.statusCode(200)				
+				.body(containsString("issuerId"))	
+				.body(containsString("period"))	
+				.body(containsString("ratingType"))	
+				.extract().response(); 
+	 
+	 Assert.assertFalse(res1.asString().contains("isError"));
+	 Assert.assertFalse(res1.asString().contains("isMissing"));
+	 Assert.assertFalse(res1.asString().contains("isRestricted"));	 
+	 
+  }
+	
+	@Test
+	public void fisc_2368_includedIssuer() {
+	String ratingTansition=baseURI+ "/v1/issuerRatingsTransitionHistory?include[issuerRatingsTransitionHistory]=issuer&filter[marketSectorId]=01020100&filter[startDate]=2000-01-01&filter[endDate]=2010-01-01&filter[ratingType]=FC_LT_IDR&filter[issuerId]=80088924"; 
+																						
+	 Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+			.header("accept", acceptValue).header("content", contentValue).when().get(ratingTansition).then()
+			.statusCode(200)				
+			.body(containsString("issuerId"))	
+			.body(containsString("period"))	
+			.body(containsString("ratingType"))	
+			.body(containsString("included"))	
+			.body(containsString("regions"))	
+			.body(containsString("cusip"))	
+			.body(containsString("hasTransactions"))				
+			.extract().response();
+	 
+	 Assert.assertFalse(res.asString().contains("isRestricted"));
+	 	
+   }
 	
 }

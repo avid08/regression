@@ -62,10 +62,10 @@ public void fisc_2314() {
 			.body(containsString("issueId"))
 			.body(containsString("period"))
 			.body(containsString("Annual"))
-			.body(containsString("2015"))
-			.body(containsString("BBB+"))
+		
+			.body(containsString("BBB"))
 			.body(containsString("relationships"))
-			.body(containsString("7"))
+			
 			.extract().response();
 
 	Assert.assertFalse(res.asString().contains("isError"));
@@ -126,6 +126,57 @@ public void fisc_2369_RatingstransitionHistory() {
 	
     }
 
+
+@Test()
+public void fisc_2312_issuer_RatingTransition() {
+	String ratingTansition=baseURI
+			+ "/v1/issuerRatingsTransitions?filter[marketSectorId]=01010112,01010109,01010219&filter[startDate]=2000-01-01&filter[endDate]"
+			+ "=2001-01-01&filter[ratingType]=FC_LT_IDR&filter[issuerId]=80360063&filter[countryISOCode2]=TR,NL"; // Desc
+																						// order
+	 Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+			.header("accept", acceptValue).header("content", contentValue).when().get(ratingTansition).then()
+			.statusCode(200)
+			.body(containsString("issuerRatingsTransitions"))
+			.body(containsString("percentage"))
+			.body(containsString("count"))
+			.body(containsString("from"))
+			.body(containsString("to"))
+			.body(containsString("issuerRatingsAnnualTransitionHistory"))			
+			.body(containsString("relationships"))	
+			.extract().response();
+			
+	 Assert.assertFalse(res.asString().contains("isError"));
+	 Assert.assertFalse(res.asString().contains("isMissing"));
+	 Assert.assertFalse(res.asString().contains("isRestricted"));
+    }
+
+
+@Test()
+public void fisc_2313_issuer_RatingTransition() {
+	String ratingTansition=baseURI
+			+ "/v1/issuerRatingsTransitionHistory?filter[issuerId]=90485080&filter[countryISOCode2]=NL&filter[marketSectorId]=01010111&filter[startDate]=2012-01-01&filter[endDate]=2016-12-31&filter[ratingType]=FC_LT_IDR";
+																						// order
+	 Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+			.header("accept", acceptValue).header("content", contentValue).when().get(ratingTansition).then()
+			.statusCode(200)
+			.body(containsString("issuerRatingsTransitionHistory"))
+			.body(containsString("issuerId"))
+			.body(containsString("period"))
+			.body(containsString("Annual"))
+			.body(containsString("year"))
+			.body(containsString("rating"))
+			.body(containsString("AA-"))
+			.body(containsString("totalResourceCount"))			
+			.extract().response();
+
+	 Assert.assertFalse(res.asString().contains("isError"));
+	 Assert.assertFalse(res.asString().contains("isMissing"));
+	 Assert.assertFalse(res.asString().contains("isRestricted"));
+    }
+
+
+
+   
 
 }
 
