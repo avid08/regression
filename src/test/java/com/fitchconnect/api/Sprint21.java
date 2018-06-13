@@ -126,9 +126,8 @@ public class Sprint21 extends Configuration {
 
 		Response fitchData = given().header("Authorization", AuthrztionValue)
 				.header("X-App-Client-Id", XappClintIDvalue).header("Accept", acceptValue)
-				.header("content", contentValue).when().get(fRatingURL).then().assertThat().statusCode(200).log()
-				.ifError().body("data.get(0).type", equalTo("fitchIssuerRatings"))
-				// .body(data.get(0). arg1)
+				.header("content", contentValue).when().get(fRatingURL).then().assertThat().statusCode(200)
+				.body("data.get(0).type", equalTo("fitchIssuerRatings"))				
 				.contentType(ContentType.JSON).extract().response();
 
 		List<String> alert = fitchData.path("data.attributes.alert");
