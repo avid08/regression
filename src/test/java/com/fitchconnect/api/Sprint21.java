@@ -144,7 +144,7 @@ public class Sprint21 extends Configuration {
 
 		for (int i = 0; i < totalattributes; i++) {
 
-			Assert.assertNotNull(alert.get(i));
+			//Assert.assertNotNull(alert.get(i));
 			Assert.assertNotNull(ratinType.get(i));
 			Assert.assertNotNull(rating.get(i));
 			Assert.assertNotNull(action.get(i));
