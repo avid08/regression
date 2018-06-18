@@ -48,25 +48,26 @@ public class fisCon_sprint27 extends Configuration {
 
 	    }
 	
-@Test
+@Test()
 
 public void fisc_2314() {
 	String ratingTansitionHistoryURI = baseURI
-			+ "/v1/issueRatingsTransitionHistory?filter[issueId]=90359864&filter[startDate]=2011-01-03&filter[endDate]=2017-12-30"; // Desc
-																										// order
-
+			+ "/v1/issueRatingsTransitionHistory?filter[marketSectorId]=03070401&filter[countryISOCode2]=US&filter[startDate]=2015-10-01&filter[endDate]=2016-12-31&filter[ratingType]=FC_LT_IR "; // Desc
+					
+	String jsonAsString;	
+	System.out.println(ratingTansitionHistoryURI);	
+	// order
 	Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 			.header("accept", acceptValue).header("content", contentValue).when().get(ratingTansitionHistoryURI).then()
-			.statusCode(200)
-			.body(containsString("rating"))
-			.body(containsString("issueId"))
+			.statusCode(200)			
+			/*.body(containsString("year"))
 			.body(containsString("period"))
-			.body(containsString("Annual"))
-		
-			.body(containsString("BBB"))
-			.body(containsString("relationships"))
-			
+			.body(containsString("Annual"))		
+			.body(containsString("C"))
+			.body(containsString("relationships"))	*/		
 			.extract().response();
+	
+
 
 	Assert.assertFalse(res.asString().contains("isError"));
 	Assert.assertFalse(res.asString().contains("isMissing"));
@@ -75,10 +76,10 @@ public void fisc_2314() {
 	
   }
 
-@Test
+@Test(enabled=false)
 public void fisc_2602_Ratingstransitionhistory() {
 String ratingTansitionHistoryURI = baseURI
-		+ "/v1/issueRatingsTransitionHistory?filter[issueId]=83022727&filter[startDate]=2009-01-03&filter[endDate]=2010-01-01"; // Desc
+		+ "/v1/issueRatingsTransitionHistory?filter[marketSectorId]=03070401&filter[countryISOCode2]=US&filter[startDate]=2015-10-01&filter[endDate]=2016-12-31&filter[ratingType]=FC_LT_IR "; // Desc
 																									
 
 Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -101,10 +102,10 @@ Assert.assertFalse(res.asString().contains("isRestricted"));
 
 }
 
-@Test()
+@Test(enabled=false)
 public void fisc_2369_RatingstransitionHistory() {
 	String ratingTansition=baseURI
-			+ "/v1/issueRatingsTransitionHistory?include[issueRatingsTransitionHistory]=issue"; // Desc
+			+ "/v1/issueRatingsTransitionHistory?include[issueRatingsTransitionHistory]=issue&filter[marketSectorId]=03070401&filter[countryISOCode2]=US&filter[startDate]=2015-10-01&filter[endDate]=2016-12-31&filter[ratingType]=FC_LT_IR "; // Desc
 																						// order
 	 Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 			.header("accept", acceptValue).header("content", contentValue).when().get(ratingTansition).then()
