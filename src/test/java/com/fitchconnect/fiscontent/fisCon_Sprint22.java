@@ -25,7 +25,7 @@ import groovy.json.internal.Charsets;
 
 public class fisCon_Sprint22 extends Configuration {
 
-	@Test(enabled=true)
+	@Test(enabled=false)
 
 	public void Fisc_1974_CDS_MetaData__Verification() throws URISyntaxException, IOException {
 

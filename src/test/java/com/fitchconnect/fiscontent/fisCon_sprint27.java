@@ -51,24 +51,20 @@ public class fisCon_sprint27 extends Configuration {
 @Test()
 
 public void fisc_2314() {
-	String ratingTansitionHistoryURI = baseURI
-			+ "/v1/issueRatingsTransitionHistory?filter[marketSectorId]=03070401&filter[countryISOCode2]=US&filter[startDate]=2015-10-01&filter[endDate]=2016-12-31&filter[ratingType]=FC_LT_IR "; // Desc
-					
-	String jsonAsString;	
-	System.out.println(ratingTansitionHistoryURI);	
+	String ratingTansitionHistoryURI = baseURI+"/v1/issueRatingsTransitionHistory?filter[issueId]=10000024&filter[periodType]=asof,annual&filter[startDate]=2012-10-18&filter[endDate]=2015-10-18&filter[ratingType]"
+			+ "=FC_LT_IR&filter[marketSectorId]=03020900";
+
 	// order
 	Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 			.header("accept", acceptValue).header("content", contentValue).when().get(ratingTansitionHistoryURI).then()
 			.statusCode(200)			
-			/*.body(containsString("year"))
+			.body(containsString("year"))
 			.body(containsString("period"))
 			.body(containsString("Annual"))		
 			.body(containsString("C"))
-			.body(containsString("relationships"))	*/		
-			.extract().response();
-	
-
-
+			.body(containsString("relationships"))	
+			.extract().response();	
+	//System.out.println(res.asString());
 	Assert.assertFalse(res.asString().contains("isError"));
 	Assert.assertFalse(res.asString().contains("isMissing"));
 	Assert.assertFalse(res.asString().contains("isRestricted"));
@@ -76,10 +72,10 @@ public void fisc_2314() {
 	
   }
 
-@Test(enabled=false)
+@Test(enabled=true)
 public void fisc_2602_Ratingstransitionhistory() {
 String ratingTansitionHistoryURI = baseURI
-		+ "/v1/issueRatingsTransitionHistory?filter[marketSectorId]=03070401&filter[countryISOCode2]=US&filter[startDate]=2015-10-01&filter[endDate]=2016-12-31&filter[ratingType]=FC_LT_IR "; // Desc
+		+ "/v1/issueRatingsTransitionHistory?filter[issueId]=83022727&filter[startDate]=2008-01-03&filter[endDate]=2010-01-01&filter[ratingType]=FC_LT_IR&filter[marketSectorId]=03070101&filter[periodType]=annual"; // Desc
 																									
 
 Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -115,8 +111,7 @@ public void fisc_2369_RatingstransitionHistory() {
 			.body(containsString("Annual"))
 			.body(containsString("relationships"))
 			.body(containsString("issueId"))
-			.body(containsString("period"))
-			// inclued issue Section
+			.body(containsString("period"))			
 			.body(containsString("included"))
 			.body(containsString("country"))
 			.body(containsString("marketSectors"))
