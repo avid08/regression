@@ -20,8 +20,7 @@ public class fisCon_sprint27 extends Configuration {
 																						// order
 	 Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 			.header("accept", acceptValue).header("content", contentValue).when().get(ratingTansition).then()
-			.statusCode(200)
-			
+			.statusCode(200)			
 			.body(containsString("count"))
 			.body(containsString("to"))
 			.body(containsString("from"))
@@ -149,8 +148,10 @@ public void fisc_2312_issuer_RatingTransition() {
 
 @Test()
 public void fisc_2313_issuer_RatingTransition() {
+
+	
 	String ratingTansition=baseURI
-			+ "/v1/issuerRatingsTransitionHistory?filter[issuerId]=90485080&filter[countryISOCode2]=NL&filter[marketSectorId]=01010111&filter[startDate]=2012-01-01&filter[endDate]=2016-12-31&filter[ratingType]=FC_LT_IDR";
+			+ "/v1/issuerRatingsTransitionHistory?filter[issuerId]=90485080&filter[countryISOCode2]=NL&filter[marketSectorId]=01010111&filter[startDate]=2012-01-01&filter[endDate]=2013-12-31&filter[ratingType]=FC_LT_IDR";
 																						// order
 	 Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 			.header("accept", acceptValue).header("content", contentValue).when().get(ratingTansition).then()
