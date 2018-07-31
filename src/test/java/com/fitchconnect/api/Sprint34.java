@@ -134,8 +134,7 @@ public class Sprint34 extends Configuration {
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
-				.assertThat().statusCode(200).body(containsString("BMI_FISCAL_BALANCE_PCTGDP"))
-				.body(containsString("FC_LT_IDR")).body(containsString("BMI_GDP_NOM_LCU"))
+				.assertThat().statusCode(200).body(containsString("BMI_FISCAL_BALANCE_PCTGDP"))				
 				.body(containsString("Annual"))
 				.body(containsString("value"))
 				.body(containsString("currency"))

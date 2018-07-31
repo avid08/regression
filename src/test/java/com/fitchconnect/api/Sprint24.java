@@ -220,7 +220,7 @@ public class Sprint24 extends Configuration {
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
 				.when().get(stmtendpoint).then()
-				.body("data[0].id", equalTo("FC_REAL_ESTATE_ACQ_SATISFACTION_DEBT_LIFE_US_INS")).extract().response();
+				.body("data[0].id", equalTo("FC_MIN_CAPITAL_REQ_SOLV_II_NONL_INS")).extract().response();
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
 		Assert.assertFalse(res.asString().contains("isRestricted"));
