@@ -2695,6 +2695,7 @@ public class ApIsmokeTestSuite extends Configuration {
 	
 	
 	@Test(enabled=false)
+	
 	public void numberOftransactionPerPage() {
 
 		String transctionURI = baseURI + "/v1/transactions/?page[limit]=50&";
@@ -2747,7 +2748,7 @@ public class ApIsmokeTestSuite extends Configuration {
 
        String newURI = transctionURI + "page[offset]=";
         
-       ExecutorService executor = Executors.newFixedThreadPool(150);
+       ExecutorService executor = Executors.newFixedThreadPool(2);
 
        for (int i = 0;i<offsetPage; i+=50) {
             final int idx = i;
@@ -2779,6 +2780,55 @@ public class ApIsmokeTestSuite extends Configuration {
     }
     
 }
+    
+    
+    
+    @Test(enabled=false)
+    public void numberOfEntitiesPerPage_testing() {
 
-}
+        String entityURI = baseURI +"/v1/entities";
+
+        int numberofPages = 1847;
+
+        String newURI = entityURI + "?page[number]=";
+        	
+        	 ExecutorService executor = Executors.newFixedThreadPool(1);
+
+             for (int i=0;i<numberofPages; i++) {
+                  final int idx = i;
+                  executor.submit(() -> {           
+
+            String NewURIx = newURI + idx +"&page[size]=50"; 
+            
+           //System.out.println(NewURIx);
+
+            Response res = given().header("Authorization", AuthrztionValue).header("content-type","application/vnd.api+json")
+                    .header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(NewURIx)
+                    .then().assertThat().statusCode(200).extract().response();
+            
+            List<String> Id = res.path("data.id"); 
+            
+            //System.out.println(Id.size());
+                       
+            Id.forEach(System.out::println);          
+
+                  });
+
+                  }
+               
+              
+              try {
+                   System.out.println("attempt to shutdown executor");
+                   executor.shutdown();
+                   executor.awaitTermination(12, TimeUnit.HOURS);
+               
+               } catch (InterruptedException e) {
+                   System.err.println("tasks interrupted");
+               }
+
+        }
+
+    }
+
+
 	
