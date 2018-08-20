@@ -25,7 +25,7 @@ public class fisCon_Sprint29 extends Configuration {
 				.body(containsString("bondName"))
 				.body(containsString("FNT Mortgage ser 2000-1"))
 				.body(containsString("asOf"))
-				.body(containsString("H2"))
+				
 				
 				.extract().response();
 		Assert.assertFalse(res.asString().contains("isError"));
