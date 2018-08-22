@@ -161,7 +161,7 @@ public class fisCon_Sprint28 extends Configuration {
 	 Assert.assertFalse(res.asString().contains("isMissing"));
 	 Assert.assertFalse(res.asString().contains("isRestricted"));
 	 
-	 
+	/* 
 	  float percentagefromResponse = res.path("data[0].attributes.percentage");
 	    
 	    System.out.println(percentagefromResponse);
@@ -193,13 +193,13 @@ public class fisCon_Sprint28 extends Configuration {
 		   }
 		   
 		   Assert.assertFalse(failure);
-				
+				*/
 		}
 	
 	
 	@Test
 	public void fisc_2368_relationship() {
-	String ratingTansition=baseURI+ "/v1/issuerRatingsTransitions?filter[marketSectorId]=01020100&filter[startDate]=2000-01-01&filter[endDate]=2010-01-01&filter[ratingType]=FC_LT_IDR&filter[issuerId]=80088924"; 
+	String ratingTansition=baseURI+ "/v1/issuerRatingsTransitions?filter[marketSectorId]=01020100&filter[startDate]=2000-01-01&filter[endDate]=2010-01-01&filter[ratingType]=FC_LT_IDR&filter[issuerId]=80464303"; 
 																						
 	 Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 			.header("accept", acceptValue).header("content", contentValue).when().get(ratingTansition).then()
@@ -227,9 +227,9 @@ public class fisCon_Sprint28 extends Configuration {
 	 
   }
 	
-	@Test
+	@Test(enabled=false)
 	public void fisc_2368_includedIssuer() {
-	String ratingTansition=baseURI+ "/v1/issuerRatingsTransitionHistory?include[issuerRatingsTransitionHistory]=issuer&filter[marketSectorId]=01020100&filter[startDate]=2000-01-01&filter[endDate]=2010-01-01&filter[ratingType]=FC_LT_IDR&filter[issuerId]=80088924"; 
+	String ratingTansition=baseURI+ "/v1/issuerRatingsTransitionHistory?include[issuerRatingsTransitionHistory]=issuer&filter[marketSectorId]=01020100&filter[startDate]=2000-01-01&filter[endDate]=2010-01-01&filter[ratingType]=FC_LT_IDR&filter[issuerId]=80088915"; 
 																						
 	 Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 			.header("accept", acceptValue).header("content", contentValue).when().get(ratingTansition).then()
