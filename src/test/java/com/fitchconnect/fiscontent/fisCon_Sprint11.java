@@ -266,7 +266,7 @@ public class fisCon_Sprint11 extends Configuration {
 
 	public void FISC_966_MS_Analyst_DC_attribute() {
 
-		String entitiesURL = baseURI +"/v1/entities/1431752";
+		String entitiesURL = baseURI +"/v1/entities/1409010";
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
