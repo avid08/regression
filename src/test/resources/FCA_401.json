@@ -4,7 +4,7 @@
       "attributes":{
          "dateOptions":{
             "dates":[
-
+          "2018-03-31"
             ],
             "periods":[
          
@@ -13,12 +13,14 @@
          },
          "entities":[
             {
-               "id":"1466804",
+               "id":"1471422",
                "type":"FitchID"
             }
          ],
          "fitchFieldIds":[
-            "FC_INT_INC_LOANS_BNK"
+           "FC_CASH_MARKETABLE_CORPS",
+           "FC_OTHER_CURRENT_ASSETS_CORPS",
+           "FC_STATEMENT_ID"
          ],
          "options":[
             {
@@ -27,7 +29,7 @@
             },
             {
                "name":"accountingStandard",
-               "value":"Local"
+               "value":"USGAAP"
             },
             {
                "name":"filingType",

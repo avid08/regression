@@ -17,15 +17,14 @@ public class fisCon_Sprint29 extends Configuration {
 
 	public void fisc_2779_IssueName() throws IOException {
 
-		String issueRatingTrainsition = baseURI + "/v1/issueRatingsTransitionHistory?filter[marketSectorId]=03070401,03031500&filter[countryISOCode2]=US&filter[startDate]=2012-12-01&filter[endDate]=2013-12-31&filter[ratingType]=FC_LT_IR&filter[issueId]=96606484,20303865&filter[periodType]=asOf,semiannual";
+		String issueRatingTrainsition = baseURI + "/v1/issueRatingsTransitionHistory?filter[marketSectorId]=03070401,03031500&filter[countryISOCode2]=US&filter[startDate]=2010-01-01&filter[endDate]=2014-11-30&filter[ratingType]=FC_LT_IR&filter[issueId]=96606484,20303865&filter[periodType]=asOf,semiannual";
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
 				.when().get(issueRatingTrainsition).then()
 				.body(containsString("bondName"))
 				.body(containsString("FNT Mortgage ser 2000-1"))
-				.body(containsString("asOf"))
-				
+				.body(containsString("asOf"))				
 				
 				.extract().response();
 		Assert.assertFalse(res.asString().contains("isError"));
