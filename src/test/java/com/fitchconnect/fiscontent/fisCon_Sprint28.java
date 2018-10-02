@@ -78,7 +78,7 @@ public class fisCon_Sprint28 extends Configuration {
    }
 	
 	
-	@Test
+	@Test(enabled=false)
 	public void fisc_2371_RatingCodeCount_Percentage() {
 	String ratingTansition=baseURI
 			+ "/v1/issueRatingsTransitions?filter[ratingType]=FC_LT_IR&filter[startDate]=2000-01-01&filter[endDate]=2010-12-31&filter[marketSectorId]=03070201&filter[modifiers]=off"; // Desc
@@ -101,6 +101,8 @@ public class fisCon_Sprint28 extends Configuration {
 	   int TotalRatingCount_B = res.path("meta.ratingCodesTotalCount.B"); 
 	 
 	   float Calcultedpercentage =B_count/TotalRatingCount_B*100;
+	   
+	    System.out.println(Calcultedpercentage);
 	   
 	   boolean failure = false;
 	   

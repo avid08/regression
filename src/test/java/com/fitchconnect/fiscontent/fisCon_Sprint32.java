@@ -19,7 +19,7 @@ public class fisCon_Sprint32 extends Configuration  {
 	@Test
 	public void FISC_2625_issueRatingTransitionInclude() {
 
-		String IssueRatingTransitionURI = baseURI + "/v1/issueRatingsTransitions?filter[ratingType]=FC_LT_LC_IR&filter[startDate]=2009-01-01&filter[endDate]=2018-01-01&filter[marketSectorId]=03071100";
+		String IssueRatingTransitionURI = baseURI + "/v1/issueRatingsTransitions?filter[ratingType]=FC_LT_LC_IR&filter[startDate]=2014-01-01&filter[endDate]=2017-01-01&filter[marketSectorId]=03071100";
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(IssueRatingTransitionURI).then()

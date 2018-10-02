@@ -16,7 +16,7 @@ public class fisCon_sprint27 extends Configuration {
 	@Test
 	public void fisc_2367_RatingstransitionResource() {
 	String ratingTansition=baseURI
-			+ "/v1/issueRatingsTransitions?filter[ratingType]=FC_LT_LC_IR&filter[startDate]=2009-01-01&filter[endDate]=2018-01-01&filter[marketSectorId]=03071100"; // Desc
+		+"/v1/issueRatingsTransitions?filter[ratingType]=FC_LT_LC_IR&filter[startDate]=2014-01-01&filter[endDate]=2017-01-01&filter[marketSectorId]=03071100"; // Desc
 																						// order
 	 Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 			.header("accept", acceptValue).header("content", contentValue).when().get(ratingTansition).then()
@@ -67,8 +67,7 @@ public void fisc_2314() {
 	Assert.assertFalse(res.asString().contains("isError"));
 	Assert.assertFalse(res.asString().contains("isMissing"));
 	Assert.assertFalse(res.asString().contains("isRestricted"));
-	
-	
+		
   }
 
 @Test(enabled=true)

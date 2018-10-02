@@ -115,8 +115,10 @@ public class ApIsmokeTestSuite extends Configuration {
 
 		Response res = given().header("Authorization", AuthrztionValue).header("content", contentValue)
 				.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(DirectrUrl)
-				.then().assertThat().statusCode(200).body("isEmpty()", Matchers.is(false))
-				.body("data.included", Matchers.hasSize(0)).extract().response();
+				.then().assertThat().statusCode(200)
+				.body("isEmpty()", Matchers.is(false))
+				.body("data.included", Matchers.hasSize(0))
+				.extract().response();
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
@@ -1680,18 +1682,16 @@ public class ApIsmokeTestSuite extends Configuration {
 
 		Response defaultCurrncyData = given().header("Authorization", AuthrztionValue)
 				.header("X-App-Client-Id", XappClintIDvalue).contentType(contentValue).body(myJson).with()
-
 				.when().post(dataPostUrl)
-
-				.then().assertThat().log().ifError().statusCode(200).body(containsString("VND"))
-				.body(containsString("Annual")).body(containsString("VND")).extract().response();
+				.then().assertThat().log().ifError().statusCode(200).body(containsString("2017"))
+				.body(containsString("Annual")).body(containsString("TWD")).extract().response();
 
 		Assert.assertFalse(defaultCurrncyData.asString().contains("isError"));
 		Assert.assertFalse(defaultCurrncyData.asString().contains("isMissing"));
 		Assert.assertFalse(defaultCurrncyData.asString().contains("isRestricted"));
 
 		List<String> id = defaultCurrncyData.path("data.attributes.entities.id");
-		assert (id.contains("1466804"));
+		assert (id.contains("111631"));
 
 	}
 

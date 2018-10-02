@@ -4,7 +4,7 @@
       "attributes":{
          "dateOptions":{
             "dates":[
-		
+		  "2017-12-31"
             ],
             "periods":[
 
@@ -12,7 +12,7 @@
          },
          "entities":[
             {
-               "id":"1466804",
+               "id":"111631",
                "type":"FitchID"
             }
          ],
@@ -20,18 +20,7 @@
             "FC_INT_INC_LOANS_BNK"
           ],
          "options":[
-            {
-               "name":"consolidation",
-               "value":"combined"
-            },
-            {
-               "name":"accountingStandard",
-               "value":"Local"
-            },
-            {
-               "name":"filingType",
-               "value":"Original"
-            }
+           
           
          ]
       }
