@@ -55,7 +55,6 @@ public class Configuration {
 			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-9";
 			BMIbaseURL = "https://api.bmiresearch.com";
-			BMIbaseURL = "https://api-stg1.bmiresearch.com";
 		} else if (env.equals("dev")) {
 			baseURI = "https://api.fitchconnect-dev.com";
 			Dev_bearerToken();
