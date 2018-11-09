@@ -17,7 +17,7 @@ import groovy.json.internal.Charsets;
 
 public class fisCon_Sprint37 extends Configuration {
 	
-	@Test
+	@Test(enabled=false)
 	
 	public void BMI_Dates_Monthly_quarterly_Annual_fisc2755() throws IOException{
 		URL file = Resources.getResource("bmi_dates_mthly_Quatrly.json");
@@ -65,7 +65,7 @@ public class fisCon_Sprint37 extends Configuration {
 	}
 
 
-@Test
+@Test(enabled=false)
 
 public  void Fisc_2755_BMI_DatesPeriod_Monthly_quarterly_Annual() throws IOException{
 	

@@ -68,7 +68,7 @@ public class fisCon_Sprint20 extends Configuration{
 			
 			String DataTypeUrl = metaUrl + "/" + fitchFieldIds;
 			
-		//System.out.println(DataTypeUrl);
+		System.out.println(DataTypeUrl);
 
 			String jsonAsString;
 

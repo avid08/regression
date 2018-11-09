@@ -34,7 +34,8 @@ import com.jayway.restassured.response.Response;
 import groovy.json.internal.Charsets;
 
 public class ApIsmokeTestSuite extends Configuration {
-
+	
+	
 	@Test()
 	public void StatusCodeTest() {
 

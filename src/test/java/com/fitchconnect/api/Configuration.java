@@ -21,7 +21,7 @@ public class Configuration {
 	protected String myjson;
 	protected String AuthrztionValue;
 	protected String baseURI;
-	protected String accessToken;
+	protected String refresh_token;
 	String env;
 	String databaseFitchEnty;
 	protected String dataBaseServer1;
@@ -50,7 +50,7 @@ public class Configuration {
 		if (env == null) {
 			baseURI = "https://api.fitchconnect.com";
 			PROD_bearerToken();
-			this.AuthrztionValue = "Bearer " + accessToken;
+			this.AuthrztionValue = "Bearer " + refresh_token;
 			dataBaseServer1 = "mgo-pue1c-cr001.fitchratings.com";
 			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-9";
@@ -58,7 +58,7 @@ public class Configuration {
 		} else if (env.equals("dev")) {
 			baseURI = "https://api.fitchconnect-dev.com";
 			Dev_bearerToken();
-			this.AuthrztionValue = "Bearer " + accessToken;
+			this.AuthrztionValue = "Bearer " + refresh_token;
 			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
 			dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-dev-9";
@@ -66,7 +66,7 @@ public class Configuration {
 		} else if (env.equals("int")) {
 			baseURI = "https://api.fitchconnect-int.com";
 			bearerToken_INT();
-			this.AuthrztionValue = "Bearer " + accessToken;
+			this.AuthrztionValue = "Bearer " + refresh_token;
 			System.out.println("INT Bearer Token " + AuthrztionValue);
 			dataBaseServer1 = "mgo-due1c-cr001.fitchratings.com";
 			dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
@@ -75,8 +75,8 @@ public class Configuration {
 		} else if (env.equals("qa")) {
 			baseURI = "https://api.fitchconnect-qa.com";
 			bearerToken_QA();
-			this.AuthrztionValue = "Bearer " + accessToken;
-			System.out.println("QA Bearer Token " + AuthrztionValue);
+			this.AuthrztionValue = "Bearer " + refresh_token;
+			System.out.println("QA Bearer Token :" + AuthrztionValue);
 			dataBaseServer1 = "mgo-que1a-cr001.fitchratings.com";
 			dataBaseServer2 = "mgo-que1a-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-9";
@@ -84,7 +84,7 @@ public class Configuration {
 		} else if (env.equals("stage")) {
 			baseURI = "https://api.fitchconnect-stg.com";
 			stage_bearerToken();
-			this.AuthrztionValue = "Bearer " + accessToken;
+			this.AuthrztionValue = "Bearer " + refresh_token;
 			dataBaseServer1 = "mgo-uue1a-cr001.fitchratings.com";
 			dataBaseServer2 = "mgo-uue1a-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-9";
@@ -92,7 +92,7 @@ public class Configuration {
 		} else if (env.equals("prod")) {
 			baseURI = "https://api.fitchconnect.com";
 			PROD_bearerToken();
-			this.AuthrztionValue = "Bearer " + accessToken;
+			this.AuthrztionValue = "Bearer " + refresh_token;
 			dataBaseServer1 = "mgo-pue1c-cr001.fitchratings.com";
 			dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
 			databaseFitchEnty = "esp-9";
@@ -125,15 +125,23 @@ public class Configuration {
 		
 		//System.out.println(responseString);
 
-		accessToken = "";
+		refresh_token = "";
 
 		StringTokenizer tokenizer = new StringTokenizer(responseString, "{}\"");
 		if (tokenizer.hasMoreTokens()) {
 			tokenizer.nextToken();
 			tokenizer.nextToken();
-			accessToken = tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			refresh_token = tokenizer.nextToken();
 		}
-		System.out.println("access token " + accessToken);
+		System.out.println("refresh token " + refresh_token);
 
 	}
 
@@ -145,20 +153,28 @@ public class Configuration {
 		String myjson = Resources.toString(file, Charsets.UTF_8);
 
 		Response response = given().contentType("application/x-www-form-urlencoded").body(myjson).with().when()
-				.post(url).then().statusCode(200).extract().response();
+				.post(url).then().extract().response();
 
 		String responseString = response.asString();
 
-		accessToken = "";
+		refresh_token = "";
 
 		StringTokenizer tokenizer = new StringTokenizer(responseString, "{}\"");
 		if (tokenizer.hasMoreTokens()) {
 			tokenizer.nextToken();
 			tokenizer.nextToken();
-			accessToken = tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			refresh_token = tokenizer.nextToken();
 		}
 
-		System.out.println("access token " + accessToken);
+		System.out.println("refresh Token " + refresh_token);
 
 	}
 
@@ -174,16 +190,24 @@ public class Configuration {
 
 		String responseString = response.asString();
 
-		accessToken = "";
+		refresh_token = "";
 
 		StringTokenizer tokenizer = new StringTokenizer(responseString, "{}\"");
 		if (tokenizer.hasMoreTokens()) {
 			tokenizer.nextToken();
 			tokenizer.nextToken();
-			accessToken = tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			refresh_token = tokenizer.nextToken();
 		}
 
-		System.out.println("access token " + accessToken);
+		System.out.println("access token " + refresh_token);
 
 	}
 
@@ -199,16 +223,24 @@ public class Configuration {
 
 		String responseString = response.asString();
 
-		accessToken = "";
+		refresh_token = "";
 
 		StringTokenizer tokenizer = new StringTokenizer(responseString, "{}\"");
 		if (tokenizer.hasMoreTokens()) {
 			tokenizer.nextToken();
 			tokenizer.nextToken();
-			accessToken = tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			refresh_token = tokenizer.nextToken();
 		}
 
-		System.out.println("access token " + accessToken);
+		System.out.println("access token " + refresh_token);
 
 	}
 	
@@ -224,16 +256,24 @@ public class Configuration {
 
 		String responseString = response.asString();
 
-		accessToken = "";
+		refresh_token = "";
 
 		StringTokenizer tokenizer = new StringTokenizer(responseString, "{}\"");
 		if (tokenizer.hasMoreTokens()) {
 			tokenizer.nextToken();
 			tokenizer.nextToken();
-			accessToken = tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			tokenizer.nextToken();
+			refresh_token = tokenizer.nextToken();
 		}
 
-		System.out.println("access token " + accessToken);
+		System.out.println("refresh Token " + refresh_token);
 
 	}
 
