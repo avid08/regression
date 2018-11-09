@@ -38,7 +38,7 @@ public class fisCon_Sprint4 extends Configuration {
 
 			String entityRankingResourceURI = entityRanking + "/" + id.get(i) + "?include[entityRankings]=entity";
 
-			// System.out.println(entityRankingResourceURI);
+			//System.out.println(entityRankingResourceURI);
 
 			Response response2 = given().header("Authorization", AuthrztionValue)
 					.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
@@ -99,12 +99,17 @@ public class fisCon_Sprint4 extends Configuration {
 		// write a test case with Support Param
 
 		String allsurViellanceURI = baseURI + "/v1/surveillanceDeals";
+		
+		String allsurViellanceReportsURI = baseURI + "/v1/surveillanceReports";
 
 		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.header("accept", acceptValue).header("content", contentValue).when().get(allsurViellanceURI).then()
+				.header("accept", acceptValue).header("content", contentValue).when().get(allsurViellanceReportsURI).then()
 				.statusCode(200).extract().response();
 
-		String singleSurvillanceID = response.path("data[0].id");
+		String singleSurvillanceID = response.path("data[0].relationships.surveillanceDeal.data.id");
+		
+		System.out.println(singleSurvillanceID);
+		
 
 		String AsurveillanceDealUri = allsurViellanceURI + "/" + singleSurvillanceID
 				+ "?include[surveillanceDeals]=surveillanceReport";
@@ -201,7 +206,7 @@ public class fisCon_Sprint4 extends Configuration {
 
 		// Include filter params in the test to make sure the filters are
 		// working
-
+		//ArrayList<String> reports = new ArrayList();
 		String allsurViellanceURI = baseURI + "/v1/surveillanceDeals";
 
 		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -216,6 +221,20 @@ public class fisCon_Sprint4 extends Configuration {
 		Assert.assertFalse(response.asString().contains("isMissing"));
 		Assert.assertFalse(response.asString().contains("isMissing"));
 		Assert.assertFalse(response.asString().contains("isRestricted"));
+		
+	/*	List <String> SurVillaneReportLink = response.path("data.relationships.surveillanceReport.data.id");
+		
+		System.out.println(SurVillaneReportLink.size());
+		
+		for(int i=0;i<SurVillaneReportLink.size();i++){
+			//ArrayList<String> reports = new ArrayList();
+	
+			
+
+			
+			
+		}
+		*/
 
 		String SurVillaneReportLink = response.path("data[0].relationships.surveillanceReport.links.related");
 

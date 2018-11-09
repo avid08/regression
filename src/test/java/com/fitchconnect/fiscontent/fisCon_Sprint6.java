@@ -58,11 +58,11 @@ public class fisCon_Sprint6 extends Configuration {
 
 	public void Fisc_736() {
 
-		String surVillnceReportURl = baseURI + "/v1/surveillanceDeals/87149031-ESF/surveillanceReport";
+		String surVillnceReportURl = baseURI + "/v1/surveillanceDeals/96287534-CDO/surveillanceReport";
 
 		Response res = given().header("Authorization", (AuthrztionValue)).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType(ContentType.JSON).when()
-				.get(surVillnceReportURl).then().statusCode(200).body(containsString("Delphinus 2000-II B.V..xlsx"))
+				.get(surVillnceReportURl).then().statusCode(200).body(containsString("1828 CLO Ltd..xlsx"))
 				.body(containsString("surveillanceDeals")).body(containsString("download")).extract().response();
 
 		Assert.assertFalse(res.asString().contains("isError"));

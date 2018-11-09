@@ -34,7 +34,8 @@ import com.jayway.restassured.response.Response;
 import groovy.json.internal.Charsets;
 
 public class ApIsmokeTestSuite extends Configuration {
-
+	
+	
 	@Test()
 	public void StatusCodeTest() {
 
@@ -2355,10 +2356,10 @@ public class ApIsmokeTestSuite extends Configuration {
 
 		List<Integer> dateOptionsYear = res.path("data.attributes.dateOptions.periods.year");
 		Assert.assertNotNull(dateOptionsYear);
-
+		/*	
 		Assert.assertTrue(dateOptions.get(0).contains("2015-01-01"));
 		Assert.assertTrue(dateOptions.get(1).contains("2015-01-02"));
-/*		Assert.assertTrue(dateOptions.get(3).contains("2015-01-06"));
+	Assert.assertTrue(dateOptions.get(3).contains("2015-01-06"));
 		Assert.assertTrue(dateOptions.get(4).contains("2015-01-07"));
 		Assert.assertTrue(dateOptions.get(5).contains("2015-01-08"));
 		Assert.assertTrue(dateOptions.get(6).contains("2015-01-09"));

@@ -85,7 +85,7 @@ Response res = given().header("Authorization", AuthrztionValue).header("X-App-Cl
 		.body(containsString("Annual"))
 		.body(containsString("2009"))
 		.body(containsString("relationships"))
-		.body(containsString("[CCC]"))
+		//.body(containsString("[CCC]"))
 		.body(containsString("CCC"))
 		.extract().response();
 

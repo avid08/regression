@@ -23,14 +23,14 @@ public class Sprint34 extends Configuration {
 
 	public void fca_1677() {
 
-		String sandPratingsUrl = baseURI + "/v1/entities/1011510/standardAndPoorIssuerRatings";
+		String sandPratingsUrl = baseURI + "/v1/entities/140090/standardAndPoorIssuerRatings";
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue)
 
 				.when().get(sandPratingsUrl).then().statusCode(200).body(containsString("standardAndPoorIssuerRatings"))
 				.body(containsString("Issuer Credit Rating")).body(containsString("ratingDate"))
-				.body(containsString("A")).extract().response();
+				.body(containsString("NR")).extract().response();
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
