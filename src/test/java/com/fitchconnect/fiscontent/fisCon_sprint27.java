@@ -126,7 +126,9 @@ public void fisc_2312_issuer_RatingTransition() {
 	String ratingTansition=baseURI
 			+ "/v1/issuerRatingsTransitions?filter[marketSectorId]=01010112,01010109,01010219&filter[startDate]=2000-01-01&filter[endDate]"
 			+ "=2001-01-01&filter[ratingType]=FC_LT_IDR&filter[issuerId]=80360063&filter[countryISOCode2]=TR,NL"; // Desc
-																						// order
+			
+	System.out.println(ratingTansition);
+	// order
 	 Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 			.header("accept", acceptValue).header("content", contentValue).when().get(ratingTansition).then()
 			.statusCode(200)

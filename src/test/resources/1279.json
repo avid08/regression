@@ -52,8 +52,7 @@
             "id" : "25647V",
             "type" : "CUSIP6"
         }
-      ],
-           
+      ],          
 
       "fitchFieldIds": [      
         "FC_STATEMENT_ID",

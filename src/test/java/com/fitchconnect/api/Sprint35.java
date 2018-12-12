@@ -54,6 +54,8 @@ public class Sprint35 extends Configuration {
 		Assert.assertFalse(res1.asString().contains("isRestricted"));
 
 		// entity information
+		
+		System.out.println(entityId);
 		given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(entityId).then()
 				.contentType(ContentType.JSON).statusCode(200)

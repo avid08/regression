@@ -179,7 +179,7 @@ public class fisCon_Sprint20 extends Configuration{
 
 public void issuer_Attributes_Fisc_1838(){
 	
-	String issuerURI = baseURI + "/v1/issuers/6061";
+	String issuerURI = baseURI + "/v1/issuers/81391";
 
 	Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 			.header("accept", acceptValue).header("content", contentValue).when().get(issuerURI).then()

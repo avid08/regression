@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.containsString;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 
 import org.junit.Assert;
 import org.testng.annotations.Test;
@@ -12,6 +13,7 @@ import org.testng.annotations.Test;
 import com.fitchconnect.api.Configuration;
 import com.google.common.io.Resources;
 import com.jayway.restassured.response.Response;
+
 
 import groovy.json.internal.Charsets;
 
@@ -109,9 +111,9 @@ public class fisCon_Sprint32 extends Configuration  {
 	Assert.assertFalse(res.asString().contains("isMissing"));
 	Assert.assertFalse(res.asString().contains("isRestricted"));
 	
-	System.out.println(valueOfDataValuReqst);		
+	System.out.println("onevalue "+valueOfDataValuReqst);		
 		
-	String statementURI = baseURI+"/v1/entities/1145683/statements";          
+	String statementURI = baseURI+"/v1/statements/9335860";          
 
 	Response res1 = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(statementURI).then()
@@ -119,9 +121,9 @@ public class fisCon_Sprint32 extends Configuration  {
 				.body(containsString("statements"))				
 				.extract().response();      
         
-	float ValueStatemetnResource = res1.path("data[0].attributes.detail[0].value[0].value");
+	float ValueStatemetnResource = res1.path("data.attributes.detail[0].value[0].value");
 		
-	System.out.println(ValueStatemetnResource);
+	System.out.println("newvalue"+ValueStatemetnResource);
 		
 		
 	Assert.assertFalse(res1.asString().contains("isMissing"));
@@ -155,6 +157,47 @@ public class fisCon_Sprint32 extends Configuration  {
 			.body(containsString("included"))
 			
 			.extract().response();		
+	
+	Assert.assertFalse(res.asString().contains("isMissing"));
+	Assert.assertFalse(res.asString().contains("isRestricted"));
+	
+	}
+	
+	
+@Test 
+	
+	public void fisc_MS () {
+	
+	String regionURI = baseURI + "/v1/marketSectors";
+
+	Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+			.header("accept", acceptValue).header("content", contentValue).when().get(regionURI).then()
+			.statusCode(200)			
+			.extract().response();	
+	
+	 List <String> id = res.path("data.id");
+	 List <String> name = res.path("data.attributes.name");
+	 
+	 System.out.println(name.size());
+	 
+	 
+	 for(int i = 0 ; i<name.size();i++) {
+		 
+		   System.out.println(name.get(i) );
+		 
+		 
+	 }
+	 
+	 System.out.println("================id=========================id");
+	 
+	 for(int i = 0 ; i<id.size();i++) {
+		 
+		
+		   System.out.println(id.get(i) );
+		 
+	 }
+	 
+	 
 	
 	Assert.assertFalse(res.asString().contains("isMissing"));
 	Assert.assertFalse(res.asString().contains("isRestricted"));

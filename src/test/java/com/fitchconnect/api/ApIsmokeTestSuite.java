@@ -2593,6 +2593,30 @@ public class ApIsmokeTestSuite extends Configuration {
 	}
 	
 	
+	@Test 
+	
+	public void allrelationshipOfanEntity() {
+		
+		String url = baseURI + "/v1/entities/1708";
+		
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").when().get(url).then()
+			    .statusCode(200).extract().response();
+		
+		
+		
+		
+		
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
+	}
+	
+	
+	
+	
+	
 	@Test(enabled=false)
 
 	public void defaultOptions_FinancialServiceBank() throws IOException {

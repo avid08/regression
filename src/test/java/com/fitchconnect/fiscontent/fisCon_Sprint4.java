@@ -223,15 +223,7 @@ public class fisCon_Sprint4 extends Configuration {
 		Assert.assertFalse(response.asString().contains("isRestricted"));
 		
 	/*	List <String> SurVillaneReportLink = response.path("data.relationships.surveillanceReport.data.id");
-		
-		System.out.println(SurVillaneReportLink.size());
-		
-		for(int i=0;i<SurVillaneReportLink.size();i++){
-			//ArrayList<String> reports = new ArrayList();
 	
-			
-
-			
 			
 		}
 		*/
