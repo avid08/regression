@@ -1,0 +1,38 @@
+{  
+   "data":{  
+      "type":"valueResponse",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+            ],
+            "periods":[  
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"14528",
+               "type":"FitchId"
+            }
+         ],
+         "issues":[  
+         ],
+         "fitchFieldIds":[  
+            "FC_OPERATING_PROFIT_GLOBAL_RANK",
+            "FC_COMPANY_NAME",
+            "FC_STATEMENT_ID",
+             "FC_LT_IDR"
+         ],
+         "options":[  
+           {  
+               "name":"currency",
+               "value":"EUR"
+            },
+            {  
+               "name":"accountingStandard",
+               "value":"USGAAP"
+            }
+          
+         ]
+      }
+   }
+}
