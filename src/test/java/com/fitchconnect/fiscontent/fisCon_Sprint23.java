@@ -182,7 +182,7 @@ public class fisCon_Sprint23 extends Configuration {
 
 	}
 
-	@Test
+	@Test(enabled=false)
 	public void FISC_2228_IncludeIssuerWithIssue_otherDebt() {
 
 		String stmentURI = baseURI + "/v1/transactions/96247915/otherDebt";

@@ -61,12 +61,12 @@ public class Sprint32 extends Configuration{
 	
 	public void fca_1569() {
 		
-		String IPFurl = baseURI + "/v1/entities/107477";
+		String IPFurl = baseURI + "/v1/entities/110631";
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
 				.when().get(IPFurl).then()
-				.body(containsString("Banco Popular Espanol S.A."))
+				//.body(containsString("Banco Popular Espanol S.A."))
 				
 				
 				.extract().response();
@@ -122,7 +122,7 @@ public class Sprint32 extends Configuration{
    public void fca_1571() {
 	   
 	   
-	   String fitchIssuerUrl = baseURI + "/v1/entities/107477/fitchIssuerRatings?filter[ratingType]=FC_LT_IDR";
+	   String fitchIssuerUrl = baseURI + "/v1/entities/110631/fitchIssuerRatings?filter[ratingType]=FC_LT_IDR";
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")

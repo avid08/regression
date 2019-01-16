@@ -1184,7 +1184,7 @@ public class ApIsmokeTestSuite extends Configuration {
 	}
 
 	// Test Description:
-	@Test
+	@Test(enabled=false)
 
 	public void multitpleRatingEntites() throws IOException {
 
@@ -2614,8 +2614,26 @@ public class ApIsmokeTestSuite extends Configuration {
 	}
 	
 	
-	
-	
+	@Test
+	public void financial_Datawith_ranking_field() throws IOException {
+
+		URL file = Resources.getResource("financial_dataWith_ranking.json");
+		String myJson = Resources.toString(file, Charsets.UTF_8);
+
+		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
+			    .statusCode(200)
+			    
+			    .extract().response();
+			
+		
+		Assert.assertTrue(res.asString().contains("values"));	
+		
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
+
+	}
 	
 	@Test(enabled=false)
 
