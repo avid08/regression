@@ -173,7 +173,7 @@ public class fisCon_Sprint15 extends Configuration {
 		// Needs to Automate Filter options
 	}
 		
-	@Test
+	@Test(enabled=false)
 	public void FISC_1443_IssUes_otherDebt() {
 
 		String transctionURi = baseURI + "/v1/transactions/96247915/otherDebt";
