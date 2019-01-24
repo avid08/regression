@@ -56,7 +56,7 @@ public void FCA_1761() {
      String snpurl = baseURI + "/v1/entities/140090/standardAndPoorIssuerRatings";
      Response snpres = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
                                      .header("accept", acceptValue).header("content", contentValue).when().get(snpurl).then()
-     .body("meta.count", equalTo(2))
+     .body("meta.count", equalTo(6))
      .contentType(ContentType.JSON).statusCode(200).extract().response();
      Assert.assertFalse(snpres.asString().contains("isError"));
      Assert.assertFalse(snpres.asString().contains("isMissing"));
