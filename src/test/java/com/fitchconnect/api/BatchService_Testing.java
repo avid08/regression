@@ -23,7 +23,7 @@ public class BatchService_Testing extends Configuration {
 	@Test
 	public void comparingData_535() throws IOException {
 		
-		System.out.println("Batch Service Test Casses");
+		System.out.println("Batch Service Test Cases");
 
 		boolean failure = false;
 
@@ -51,11 +51,7 @@ public class BatchService_Testing extends Configuration {
 			for (DBObject result : output.results()) {
 				MRKT_SCTR_DESC = (String) result.get("MRKT_SCTR_DESC");
 				// System.out.println("**" + result);
-			}
-			
-		
-		
-		
+			}		
 		
 			   MongoCredential credential1 = MongoCredential.createCredential("reporter", "admin",
 						"the_call".toCharArray());
@@ -164,7 +160,7 @@ public class BatchService_Testing extends Configuration {
 
 	}
 
-	@Test(enabled=false)
+	@Test()
 	public void compareCore_1marketSector_To_fcapidb_marketSector_Data() throws IOException {
 	boolean failure = false;
 
@@ -198,10 +194,10 @@ public class BatchService_Testing extends Configuration {
 
 				for (DBObject result : output.results()) {
 					MRKT_SCTR_DESC = (String) result.get("MRKT_SCTR_DESC");
-					// System.out.println("First Database:" + result);
+					 System.out.println("First Database:" + result);
 				}
 				
-				//System.out.println(MRKT_SCTR_DESC);
+				System.out.println(MRKT_SCTR_DESC);
 				
 				
 				

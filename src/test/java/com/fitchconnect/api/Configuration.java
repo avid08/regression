@@ -23,7 +23,7 @@ public class Configuration {
 	protected String baseURI;
 	protected String refresh_token;
 	String env;
-	String databaseFitchEnty;
+	protected String databaseFitchEnty;
 	protected String dataBaseServer1;
 	protected String dataBaseServer2;
 	protected String id;

@@ -139,7 +139,7 @@ public class fisCon_Sprint14 extends Configuration {
 	
 	}
 		
-	@Test
+	@Test(enabled=false)
 	
 	public void FISC_1269_NewFIRModel (){
 		
