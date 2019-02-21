@@ -1797,7 +1797,10 @@ public class ApIsmokeTestSuite extends Configuration {
 		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrl).then()
 				.contentType(ContentType.JSON).extract().response();
-
+   
+		System.out.println(metaUrl);
+		
+		  
 		List<String> Id = response.path("data.id");
 		List<String> displayNme = response.path("data.attributes.displayName");
 

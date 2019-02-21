@@ -103,7 +103,7 @@ public class fisCon_Sprint16 extends Configuration {
 
 			String CategoriesUrl = baseURI + "/v1/metadata/fields/" + fitchFieldIds;
 
-			//System.out.println(CategoriesUrl);
+			System.out.println(CategoriesUrl);
 			
 	/*		int statuscode = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 					.header("Accept", acceptValue).header("Content", contentValue).when().get(metaUrl)
