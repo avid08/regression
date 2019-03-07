@@ -1,4 +1,4 @@
- package com.fitchconnect.api;
+package com.fitchconnect.api;
 
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.contains;
@@ -34,8 +34,7 @@ import com.jayway.restassured.response.Response;
 import groovy.json.internal.Charsets;
 
 public class ApIsmokeTestSuite extends Configuration {
-	
-	
+
 	@Test()
 	public void StatusCodeTest() {
 
@@ -48,11 +47,11 @@ public class ApIsmokeTestSuite extends Configuration {
 
 	}
 
-	// Test Description : Verify that Pulish_Flag added to metadata service and 
+	// Test Description : Verify that Pulish_Flag added to metadata service and
 	// in the Entity Summary
 	@Test()
 	public void metaDataResponse_with_PF_US897() {
-		
+
 		System.out.println(metaUrl);
 
 		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
@@ -109,17 +108,15 @@ public class ApIsmokeTestSuite extends Configuration {
 
 	// Test Description: verify that system display empty response for entity
 	// which are not published or Publishflag = NO
-	@Test(enabled=true)
+	@Test(enabled = true)
 	public void Shareholder_869_without_Data() {
 		String endpoint1 = "/v1/entities/11275301127530/shareholders";
 		String DirectrUrl = baseURI + endpoint1;
 
 		Response res = given().header("Authorization", AuthrztionValue).header("content", contentValue)
 				.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(DirectrUrl)
-				.then().assertThat().statusCode(200)
-				.body("isEmpty()", Matchers.is(false))
-				.body("data.included", Matchers.hasSize(0))
-				.extract().response();
+				.then().assertThat().statusCode(200).body("isEmpty()", Matchers.is(false))
+				.body("data.included", Matchers.hasSize(0)).extract().response();
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
@@ -283,7 +280,7 @@ public class ApIsmokeTestSuite extends Configuration {
 
 	// Test Description : Verify that all fields within MetaData Response
 	// contains all the fields from different entities.
-	@Test(enabled=false)
+	@Test(enabled = false)
 	public void metaDataResponse_Compare() throws IOException, URISyntaxException {
 		String jsonAsString;
 
@@ -335,6 +332,41 @@ public class ApIsmokeTestSuite extends Configuration {
 		Assert.assertFalse(response.asString().contains("isMissing"));
 		Assert.assertFalse(response.asString().contains("isRestricted"));
 
+	}
+
+	@Test()
+	
+	public void all_metaDataType_Validation() throws URISyntaxException, IOException {
+		
+		URL fileUrl = Resources.getResource("SampleFrom_All_MetaData_Type.xlsx");
+
+		File src = new File(fileUrl.toURI());
+
+		FileInputStream file = new FileInputStream(src);
+
+		XSSFWorkbook wb = new XSSFWorkbook(file);
+		XSSFSheet mySheet = wb.getSheet("Sheet1");
+		int rowcount = mySheet.getPhysicalNumberOfRows();
+		System.out.println(rowcount + " fields are available");
+
+		boolean failure = false;
+		
+		for (int i = 1; i < rowcount; i++) {
+
+			  String fitchfieldId = mySheet.getRow(i).getCell(0).getStringCellValue(); 			
+			  String metaDataURI = baseURI+"/v1/metadata/fields/"+fitchfieldId;
+		      System.out.println(metaDataURI);		
+
+				int statuscode = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+						.header("Accept", acceptValue).header("Content", contentValue).when().get(metaDataURI)
+
+						.statusCode();
+
+				assertTrue(statuscode == 200);
+				
+		}		
+		
+		
 	}
 
 	// Test Description : Verifies System throws right information in the json
@@ -505,9 +537,7 @@ public class ApIsmokeTestSuite extends Configuration {
 
 				.when().post(dataPostUrl)
 
-				.then().assertThat().statusCode(200)
-				.body(containsString("EUR"))
-				.extract().response();
+				.then().assertThat().statusCode(200).body(containsString("EUR")).extract().response();
 		assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
@@ -646,8 +676,8 @@ public class ApIsmokeTestSuite extends Configuration {
 				.then().assertThat().log().ifError().statusCode(400)
 				.body("errors.get(0).title", equalTo("Malformed JSON")).body("errors.get(0).status", equalTo(400))
 				.body("errors.get(0).code", equalTo("21002"))
-				.body("errors.get(0).detail",
-						equalTo("Text '2010-13-09' could not be parsed: Invalid value for MonthOfYear (valid values 1 - 12): 13"))
+				.body("errors.get(0).detail", equalTo(
+						"Text '2010-13-09' could not be parsed: Invalid value for MonthOfYear (valid values 1 - 12): 13"))
 				.extract().response();
 		assertNotNull(res);
 		Assert.assertFalse(res.asString().contains("isError"));
@@ -795,7 +825,7 @@ public class ApIsmokeTestSuite extends Configuration {
 
 	}
 
-	@Test(enabled=false)
+	@Test(enabled = false)
 	public void unauthorization() throws IOException {
 
 		URL file = Resources.getResource("wrong media.json");
@@ -807,9 +837,8 @@ public class ApIsmokeTestSuite extends Configuration {
 				.when().post(dataPostUrl)
 
 				.then().assertThat().extract().response();
-		
-		
-		System.out.print("response :"+res.asString());
+
+		System.out.print("response :" + res.asString());
 
 		Assert.assertTrue(res.asString().contains("Unauthorized"));
 		Assert.assertTrue(res.asString().contains("401"));
@@ -839,12 +868,11 @@ public class ApIsmokeTestSuite extends Configuration {
 				.body("data.attributes.entities.id", Matchers.notNullValue())
 				.body("data.attributes.entities.id", contains("116980"))
 
-				.body("data.attributes.entities.values.get(0).type", contains("text"))
-				.body(containsString("value"))
+				.body("data.attributes.entities.values.get(0).type", contains("text")).body(containsString("value"))
 				.body("data.attributes.entities.fitchEntityId", contains("116980"))
 				.body("data.attributes.entities.values.get(0).fitchFieldId", contains("FC_LT_IDR")).extract()
 				.response();
-		      		
+
 		Assert.assertTrue(res.asString().contains("fitchFieldId"));
 		Assert.assertTrue(res.asString().contains("fitchEntityId"));
 		Assert.assertTrue(res.asString().contains("timeIntervalDate"));
@@ -1118,7 +1146,7 @@ public class ApIsmokeTestSuite extends Configuration {
 
 		for (int i = 0; i < dateOptions.size(); i++) {
 			Assert.assertNotNull(dateOptions.get(i));
-			}
+		}
 
 		for (int j = 0; j < actual_values.size(); j++) {
 			Assert.assertNotNull(actual_values.get(j));
@@ -1184,7 +1212,7 @@ public class ApIsmokeTestSuite extends Configuration {
 	}
 
 	// Test Description:
-	@Test(enabled=false)
+	@Test(enabled = false)
 
 	public void multitpleRatingEntites() throws IOException {
 
@@ -1682,9 +1710,8 @@ public class ApIsmokeTestSuite extends Configuration {
 		String myJson = Resources.toString(myfile, Charsets.UTF_8);
 
 		Response defaultCurrncyData = given().header("Authorization", AuthrztionValue)
-				.header("X-App-Client-Id", XappClintIDvalue).contentType(contentValue).body(myJson).with()
-				.when().post(dataPostUrl)
-				.then().assertThat().log().ifError().statusCode(200).body(containsString("2017"))
+				.header("X-App-Client-Id", XappClintIDvalue).contentType(contentValue).body(myJson).with().when()
+				.post(dataPostUrl).then().assertThat().log().ifError().statusCode(200).body(containsString("2017"))
 				.body(containsString("Annual")).body(containsString("TWD")).extract().response();
 
 		Assert.assertFalse(defaultCurrncyData.asString().contains("isError"));
@@ -1797,10 +1824,9 @@ public class ApIsmokeTestSuite extends Configuration {
 		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(metaUrl).then()
 				.contentType(ContentType.JSON).extract().response();
-   
+
 		System.out.println(metaUrl);
-		
-		  
+
 		List<String> Id = response.path("data.id");
 		List<String> displayNme = response.path("data.attributes.displayName");
 
@@ -2102,16 +2128,15 @@ public class ApIsmokeTestSuite extends Configuration {
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
-				.assertThat().statusCode(200)
-				.body("data.attributes.entities.get(0).id", Matchers.notNullValue())
+				.assertThat().statusCode(200).body("data.attributes.entities.get(0).id", Matchers.notNullValue())
 				.body("data.attributes.entities.get(0).id", equalTo("IBM"))
 				.body("data.attributes.entities.get(0).type", Matchers.notNullValue())
 				.body("data.attributes.entities.get(0).type", equalTo("companyTicker")).body(containsString("A1"))
 				.body(containsString("Aa3"))
 
 				.extract().response();
-           
-            System.out.println(res);
+
+		System.out.println(res);
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
 		Assert.assertFalse(res.asString().contains("isRestricted"));
@@ -2299,18 +2324,20 @@ public class ApIsmokeTestSuite extends Configuration {
 		Assert.assertEquals(res.path("data.attributes.entities.get(0).values.get(0).values.get(13).value.get(0)"),
 				("A+"));
 
-	/*	Assert.assertTrue(dateOptions.get(0).contains("2011-01-01"));
-		Assert.assertTrue(dateOptions.get(1).contains("2015-01-01"));
-		Assert.assertTrue(dateOptions.get(2).contains("2015-01-02"));
-		Assert.assertTrue(dateOptions.get(3).contains("2015-01-05"));
-		Assert.assertTrue(dateOptions.get(4).contains("2015-01-06"));
-		Assert.assertTrue(dateOptions.get(5).contains("2015-01-07"));
-		Assert.assertTrue(dateOptions.get(6).contains("2015-01-08"));
-		Assert.assertTrue(dateOptions.get(7).contains("2015-01-09"));
-		Assert.assertTrue(dateOptions.get(8).contains("2015-01-12"));
-		Assert.assertTrue(dateOptions.get(9).contains("2015-01-13"));
-		Assert.assertTrue(dateOptions.get(10).contains("2015-01-14"));
-		Assert.assertTrue(dateOptions.get(11).contains("2015-01-15"));*/
+		/*
+		 * Assert.assertTrue(dateOptions.get(0).contains("2011-01-01"));
+		 * Assert.assertTrue(dateOptions.get(1).contains("2015-01-01"));
+		 * Assert.assertTrue(dateOptions.get(2).contains("2015-01-02"));
+		 * Assert.assertTrue(dateOptions.get(3).contains("2015-01-05"));
+		 * Assert.assertTrue(dateOptions.get(4).contains("2015-01-06"));
+		 * Assert.assertTrue(dateOptions.get(5).contains("2015-01-07"));
+		 * Assert.assertTrue(dateOptions.get(6).contains("2015-01-08"));
+		 * Assert.assertTrue(dateOptions.get(7).contains("2015-01-09"));
+		 * Assert.assertTrue(dateOptions.get(8).contains("2015-01-12"));
+		 * Assert.assertTrue(dateOptions.get(9).contains("2015-01-13"));
+		 * Assert.assertTrue(dateOptions.get(10).contains("2015-01-14"));
+		 * Assert.assertTrue(dateOptions.get(11).contains("2015-01-15"));
+		 */
 
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
@@ -2359,17 +2386,18 @@ public class ApIsmokeTestSuite extends Configuration {
 
 		List<Integer> dateOptionsYear = res.path("data.attributes.dateOptions.periods.year");
 		Assert.assertNotNull(dateOptionsYear);
-		/*	
-		Assert.assertTrue(dateOptions.get(0).contains("2015-01-01"));
-		Assert.assertTrue(dateOptions.get(1).contains("2015-01-02"));
-	Assert.assertTrue(dateOptions.get(3).contains("2015-01-06"));
-		Assert.assertTrue(dateOptions.get(4).contains("2015-01-07"));
-		Assert.assertTrue(dateOptions.get(5).contains("2015-01-08"));
-		Assert.assertTrue(dateOptions.get(6).contains("2015-01-09"));
-		Assert.assertTrue(dateOptions.get(7).contains("2015-01-12"));
-		Assert.assertTrue(dateOptions.get(8).contains("2015-01-13"));
-		Assert.assertTrue(dateOptions.get(9).contains("2015-01-14"));
-		Assert.assertTrue(dateOptions.get(10).contains("2015-01-15"));*/
+		/*
+		 * Assert.assertTrue(dateOptions.get(0).contains("2015-01-01"));
+		 * Assert.assertTrue(dateOptions.get(1).contains("2015-01-02"));
+		 * Assert.assertTrue(dateOptions.get(3).contains("2015-01-06"));
+		 * Assert.assertTrue(dateOptions.get(4).contains("2015-01-07"));
+		 * Assert.assertTrue(dateOptions.get(5).contains("2015-01-08"));
+		 * Assert.assertTrue(dateOptions.get(6).contains("2015-01-09"));
+		 * Assert.assertTrue(dateOptions.get(7).contains("2015-01-12"));
+		 * Assert.assertTrue(dateOptions.get(8).contains("2015-01-13"));
+		 * Assert.assertTrue(dateOptions.get(9).contains("2015-01-14"));
+		 * Assert.assertTrue(dateOptions.get(10).contains("2015-01-15"));
+		 */
 
 		Assert.assertTrue(dateOptionsType.get(0).contains("Q2"));
 		Assert.assertTrue(dateOptionsYear.get(0).equals(2010));
@@ -2594,29 +2622,21 @@ public class ApIsmokeTestSuite extends Configuration {
 		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
-	
-	
-	@Test 
-	
+
+	@Test
+
 	public void allrelationshipOfanEntity() {
-		
+
 		String url = baseURI + "/v1/entities/1708";
-		
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
-				.contentType("application/vnd.api+json").when().get(url).then()
-			    .statusCode(200).extract().response();
-		
-		
-		
-		
-		
+				.contentType("application/vnd.api+json").when().get(url).then().statusCode(200).extract().response();
+
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
 		Assert.assertFalse(res.asString().contains("isRestricted"));
 	}
-	
-	
+
 	@Test
 	public void financial_Datawith_ranking_field() throws IOException {
 
@@ -2625,20 +2645,19 @@ public class ApIsmokeTestSuite extends Configuration {
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
-			    .statusCode(200)
-			    
-			    .extract().response();
-			
-		
-		Assert.assertTrue(res.asString().contains("values"));	
-		
+				.statusCode(200)
+
+				.extract().response();
+
+		Assert.assertTrue(res.asString().contains("values"));
+
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
 		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
-	
-	@Test(enabled=false)
+
+	@Test(enabled = false)
 
 	public void defaultOptions_FinancialServiceBank() throws IOException {
 
@@ -2647,11 +2666,10 @@ public class ApIsmokeTestSuite extends Configuration {
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.contentType("application/vnd.api+json").body(myJson).with().when().post(dataPostUrl).then()
-			    .statusCode(200).extract().response();
-			
-		
-		Assert.assertFalse(res.asString().contains("USD"));	
-		
+				.statusCode(200).extract().response();
+
+		Assert.assertFalse(res.asString().contains("USD"));
+
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
 		Assert.assertFalse(res.asString().contains("isRestricted"));
@@ -2703,24 +2721,22 @@ public class ApIsmokeTestSuite extends Configuration {
 
 		/*
 		 * try { System.out.println("attempt to shutdown executor");
-		 * executor.shutdown(); executor.awaitTermination(12, TimeUnit.HOURS); }
-		 * catch (InterruptedException e) { System.err.println(
-		 * "tasks interrupted"); }
+		 * executor.shutdown(); executor.awaitTermination(12, TimeUnit.HOURS); } catch
+		 * (InterruptedException e) { System.err.println( "tasks interrupted"); }
 		 */
 
 	}
-	
-	
-	@Test(enabled=false)
+
+	@Test(enabled = false)
 	public void numberOfentitiesPerPage() {
 
 		String entityURI = baseURI + "/v1/issuers";
 
-		int numberofPages =432;
+		int numberofPages = 432;
 
 		String newURI = entityURI + "?page[number]=";
 
-		for (int i = 0;i<numberofPages; i++) {
+		for (int i = 0; i < numberofPages; i++) {
 
 			int num = (i);
 
@@ -2731,17 +2747,16 @@ public class ApIsmokeTestSuite extends Configuration {
 					.then().assertThat().statusCode(200).extract().response();
 			List<String> Id = res.path("data.id");
 
-			//System.out.println (Id.size());		
-			
+			// System.out.println (Id.size());
+
 			Id.forEach(System.out::println);
 
 		}
 
 	}
-	
-	
-	@Test(enabled=false)
-	
+
+	@Test(enabled = false)
+
 	public void numberOftransactionPerPage() {
 
 		String transctionURI = baseURI + "/v1/transactions/?page[limit]=50&";
@@ -2749,132 +2764,124 @@ public class ApIsmokeTestSuite extends Configuration {
 		int offsetPage = 2400;
 
 		String newURI = transctionURI + "page[offset]=";
-		
+
 		ExecutorService executor = Executors.newFixedThreadPool(10);
 
-		for (int i = 0;i<offsetPage; i+=50) {
+		for (int i = 0; i < offsetPage; i += 50) {
 			final int idx = i;
 			executor.submit(() -> {
-			
-			
-			System.out.println(idx);
 
-			String NewURIx = newURI + idx;		
+				System.out.println(idx);
 
-			Response res = given().header("Authorization", AuthrztionValue).header("content", contentValue)
-					.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(NewURIx)
-					.then().assertThat().statusCode(200).extract().response();
-			List<String> Id = res.path("data.id");
+				String NewURIx = newURI + idx;
 
-			//System.out.println(Id.size());
-			
-			Id.forEach(System.out::println);
+				Response res = given().header("Authorization", AuthrztionValue).header("content", contentValue)
+						.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(NewURIx)
+						.then().assertThat().statusCode(200).extract().response();
+				List<String> Id = res.path("data.id");
 
-		});
+				// System.out.println(Id.size());
+
+				Id.forEach(System.out::println);
+
+			});
 
 		}
-	
-	
-	try {
-		System.out.println("attempt to shutdown executor");
-		executor.shutdown();
-		executor.awaitTermination(12, TimeUnit.HOURS);
-	} catch (InterruptedException e) {
-		System.err.println("tasks interrupted");
+
+		try {
+			System.out.println("attempt to shutdown executor");
+			executor.shutdown();
+			executor.awaitTermination(12, TimeUnit.HOURS);
+		} catch (InterruptedException e) {
+			System.err.println("tasks interrupted");
+		}
+
 	}
-	
+
+	@Test(enabled = false)
+	public void numberof_issues() {
+
+		String transctionURI = baseURI + "/v1/issues?page[limit]=50&";
+
+		int offsetPage = 429100;
+
+		String newURI = transctionURI + "page[offset]=";
+
+		ExecutorService executor = Executors.newFixedThreadPool(2);
+
+		for (int i = 0; i < offsetPage; i += 50) {
+			final int idx = i;
+			executor.submit(() -> {
+
+				String NewURIx = newURI + idx;
+				// System.out.println(NewURIx);
+
+				Response res = given().header("Authorization", AuthrztionValue).header("content", contentValue)
+						.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(NewURIx)
+						.then().assertThat().statusCode(200).extract().response();
+				List<String> Id = res.path("data.id");
+
+				// System.out.println(Id.size());
+
+				Id.forEach(System.out::println);
+
+			});
+
+		}
+
+		try {
+			System.out.println("attempt to shutdown executor");
+			executor.shutdown();
+			executor.awaitTermination(12, TimeUnit.HOURS);
+		} catch (InterruptedException e) {
+			System.err.println("tasks interrupted");
+		}
+
+	}
+
+	@Test(enabled = false)
+	public void numberOfEntitiesPerPage_testing() {
+
+		String entityURI = baseURI + "/v1/entities";
+
+		int numberofPages = 1847;
+
+		String newURI = entityURI + "?page[number]=";
+
+		ExecutorService executor = Executors.newFixedThreadPool(1);
+
+		for (int i = 0; i < numberofPages; i++) {
+			final int idx = i;
+			executor.submit(() -> {
+
+				String NewURIx = newURI + idx + "&page[size]=50";
+
+				// System.out.println(NewURIx);
+
+				Response res = given().header("Authorization", AuthrztionValue)
+						.header("content-type", "application/vnd.api+json").header("'Accept", acceptValue)
+						.header("X-App-Client-Id", XappClintIDvalue).when().get(NewURIx).then().assertThat()
+						.statusCode(200).extract().response();
+
+				List<String> Id = res.path("data.id");
+
+				// System.out.println(Id.size());
+
+				Id.forEach(System.out::println);
+
+			});
+
+		}
+
+		try {
+			System.out.println("attempt to shutdown executor");
+			executor.shutdown();
+			executor.awaitTermination(12, TimeUnit.HOURS);
+
+		} catch (InterruptedException e) {
+			System.err.println("tasks interrupted");
+		}
+
+	}
+
 }
-
-    @Test(enabled=false)
-    public void numberof_issues() {
-
-       String transctionURI = baseURI + "/v1/issues?page[limit]=50&";
-
-       int offsetPage = 429100;
-
-       String newURI = transctionURI + "page[offset]=";
-        
-       ExecutorService executor = Executors.newFixedThreadPool(2);
-
-       for (int i = 0;i<offsetPage; i+=50) {
-            final int idx = i;
-            executor.submit(() -> {
-               
-           String NewURIx = newURI + idx;            
-           //System.out.println(NewURIx);
-
-           Response res = given().header("Authorization", AuthrztionValue).header("content", contentValue)
-                    .header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(NewURIx)
-                    .then().assertThat().statusCode(200).extract().response();
-            List<String> Id = res.path("data.id");
-
-          // System.out.println(Id.size());
-            
-           Id.forEach(System.out::println);
-
-       });
-
-       }
-    
-   
-   try {
-        System.out.println("attempt to shutdown executor");
-        executor.shutdown();
-        executor.awaitTermination(12, TimeUnit.HOURS);
-    } catch (InterruptedException e) {
-        System.err.println("tasks interrupted");
-    }
-    
-}
-    
-    
-    
-    @Test(enabled=false)
-    public void numberOfEntitiesPerPage_testing() {
-
-        String entityURI = baseURI +"/v1/entities";
-
-        int numberofPages = 1847;
-
-        String newURI = entityURI + "?page[number]=";
-        	
-        	 ExecutorService executor = Executors.newFixedThreadPool(1);
-
-             for (int i=0;i<numberofPages; i++) {
-                  final int idx = i;
-                  executor.submit(() -> {           
-
-            String NewURIx = newURI + idx +"&page[size]=50"; 
-            
-           //System.out.println(NewURIx);
-
-            Response res = given().header("Authorization", AuthrztionValue).header("content-type","application/vnd.api+json")
-                    .header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(NewURIx)
-                    .then().assertThat().statusCode(200).extract().response();
-            
-            List<String> Id = res.path("data.id"); 
-            
-            //System.out.println(Id.size());
-                       
-            Id.forEach(System.out::println);          
-
-                  });
-
-                  }
-               
-              
-              try {
-                   System.out.println("attempt to shutdown executor");
-                   executor.shutdown();
-                   executor.awaitTermination(12, TimeUnit.HOURS);
-               
-               } catch (InterruptedException e) {
-                   System.err.println("tasks interrupted");
-               }
-
-        }
-
-    }
-
-
-	

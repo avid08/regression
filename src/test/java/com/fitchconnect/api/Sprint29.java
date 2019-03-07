@@ -16,9 +16,6 @@ import groovy.json.internal.Charsets;
 
 public class Sprint29 extends Configuration {
 	
-
-
-	
 	@Test
 	public void test_1351() throws IOException {
 
@@ -51,8 +48,7 @@ public class Sprint29 extends Configuration {
 				.header("X-App-Client-Id", XappClintIDvalue).contentType("application/vnd.api+json").body(myJson1)
 				.with()
 
-				.when().post(dataPostUrl)
-				
+				.when().post(dataPostUrl)			
 
 				.then().assertThat().statusCode(200)
 				.body(containsString("statementLink"))

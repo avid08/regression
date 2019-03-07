@@ -55,8 +55,10 @@
 			<class name="com.fitchconnect.fiscontent.fisCon_Sprint28" />
 			<class name="com.fitchconnect.fiscontent.fisCon_Sprint29" />
 			<class name="com.fitchconnect.fiscontent.fisCon_Sprint31" />
-			<class name="com.fitchconnect.fiscontent.fisCon_Sprint32" />
-			<class name="com.fitchconnect.fiscontent.fisCon_Sprint37" />			
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint32" />			
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint37" />
+			<class name="com.PublicFinanc.api.TransactionService_Test_cases" />
+			<class name="com.PublicFinanc.api.TransactionSecurityTestCases" />			
 			
 			
 		</classes>

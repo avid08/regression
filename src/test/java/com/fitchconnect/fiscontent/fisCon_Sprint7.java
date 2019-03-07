@@ -18,7 +18,7 @@ import groovy.json.internal.Charsets;
 
 public class fisCon_Sprint7 extends Configuration {
 
-	@Test(enabled = false)
+	@Test()
 
 	public void fisc_604_FIR_entityRelationship() {
 

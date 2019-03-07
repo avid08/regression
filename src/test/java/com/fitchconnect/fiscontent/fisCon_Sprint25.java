@@ -83,12 +83,11 @@ public class fisCon_Sprint25 extends Configuration {
 		Response res = given().header("Authorization", AuthrztionValue).header("content", contentValue)
 				.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(metaDataURI).then()
 				.assertThat().statusCode(200)
-				.body(containsString("AAA"))
-				.body(containsString("NR"))
-				.body(containsString("CCC+"))
-				.body(containsString("AA+"))	
-				.body(containsString("CCC+"))	
-				.body(containsString("BBB+"))					
+				.body(containsString("F1+"))
+				.body(containsString("F1"))
+				.body(containsString("D"))
+				.body(containsString("F1+/F1+"))				
+				.body(containsString("PIF"))					
 				.extract().response();
 		
 		Assert.assertFalse(res.asString().contains("isError"));
