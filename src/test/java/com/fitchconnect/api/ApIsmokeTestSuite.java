@@ -80,7 +80,6 @@ public class ApIsmokeTestSuite extends Configuration {
 				.header("Accept", acceptValue).header("content", contentValue).when().get(metaUrl).then().log()
 				.ifError().assertThat().statusCode(200).body("data.id", hasItem("FC_CH_PUBLISH_FLAG")).and()
 				.body("data.attributes.type", hasItem("CURRENCY"));
-
 	}
 
 	// Test Description : Verify that entity with publishflag = false displays
