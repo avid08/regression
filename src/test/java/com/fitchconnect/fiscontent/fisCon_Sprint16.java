@@ -303,7 +303,7 @@ public void fisc_1570_regions() {
 
 public void FISC_1512_fitchRatedActiveAttributes() {
 	
-	String FrActiveURI = "/v1/entities?filter[fitchRatedActive]=true";
+	String FrActiveURI =baseURI+"/v1/entities?filter[fitchRatedActive]=true";
 	
 
 	Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
