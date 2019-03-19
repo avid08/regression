@@ -14,7 +14,6 @@ import com.fitchconnect.api.Configuration;
 import com.google.common.io.Resources;
 import com.jayway.restassured.response.Response;
 
-
 import groovy.json.internal.Charsets;
 
 public class fisCon_Sprint32 extends Configuration  {
@@ -79,8 +78,7 @@ public class fisCon_Sprint32 extends Configuration  {
 				.header("accept", acceptValue).header("content", contentValue).when().get(includedLink).then()
 				.statusCode(200)
 				.body(containsString("issuerRatingsTransitionHistory"))
-				.body(containsString("Annual"))
-				.body(containsString("Bank Nederlandse Gemeenten (BNG)"))
+				.body(containsString("Annual"))				
 				.body(containsString("included"))
 				.extract().response();
 		Assert.assertFalse(res1.asString().contains("isMissing"));

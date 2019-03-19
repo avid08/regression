@@ -299,5 +299,27 @@ public void fisc_1570_regions() {
    }
 
 
+@Test
+
+public void FISC_1512_fitchRatedActiveAttributes() {
+	
+	String FrActiveURI =baseURI+"/v1/entities?filter[fitchRatedActive]=true";
+	
+
+	Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+			.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")				
+			.when().get(FrActiveURI).then().statusCode(200)
+			.body(containsString("fitchRatedActive"))
+			.body(containsString("fitchConnectUrl"))
+			.body(containsString("true"))
+			.extract().response();
+
+	Assert.assertFalse(res.asString().contains("isError"));
+	Assert.assertFalse(res.asString().contains("isMissing"));
+	Assert.assertFalse(res.asString().contains("isRestricted"));
+	
+	
+}
+
   
 }
