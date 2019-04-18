@@ -111,7 +111,7 @@ public class fisCon_Sprint1 extends Configuration {
   
 	@Test
 	
-	public void FISC_223 (){
+	public void FISC_223 () {
 		
 		String modyCateGoryURI = baseURI + "/v1/metadata/fields/FC_ST_NSR_MDY/categories";
 		

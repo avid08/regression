@@ -21,7 +21,7 @@ import com.jayway.restassured.response.Response;
 
 public class fisCon_Sprint14 extends Configuration {
 
-	@Test(enabled=false)
+	@Test()
 
 	public void BMI_Batch_FISC1263() {
 
@@ -37,6 +37,8 @@ public class fisCon_Sprint14 extends Configuration {
 		
 		
 		List<String> BMIcateGoryName = res.path("data.attributes.name");
+		
+		
 
 		
 
@@ -105,13 +107,15 @@ public class fisCon_Sprint14 extends Configuration {
 			
 			String CategoryURI = baseCategoryURI +"/"+BmiCategoryId;
 			
-			System.out.println(CategoryURI);
+			//System.out.println(CategoryURI);
 
 			Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 					.header("accept", acceptValue).header("content", contentValue).when().get(CategoryURI).then()
 					.statusCode(200).extract().response();
-
-			jsonAsString = response.asString();
+						
+			/*String BmicateGoryNames = response.path("data.attributes.name");			
+			System.out.println(BmicateGoryNames);
+*/			jsonAsString = response.asString();
 
 			Assert.assertFalse(response.asString().contains("isError"));
 			Assert.assertFalse(response.asString().contains("isMissing"));

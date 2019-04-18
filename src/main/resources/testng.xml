@@ -59,7 +59,11 @@
 			<class name="com.fitchconnect.fiscontent.fisCon_Sprint37" />
 			<class name="com.PublicFinanc.api.TransactionService_Test_cases" />
 			<class name="com.PublicFinanc.api.TransactionSecurityTestCases" />			
+			<class name="com.issueRatingTransition.IssueRatingsTransition" />
+			<class name="com.issueRatingTransition.IssueRatingsTransitionHistory" />
+			<class name="com.financial.api.Financials" />
 			
+
 			
 		</classes>
 

@@ -37,6 +37,28 @@ public class fisCon_Sprint25 extends Configuration {
 	}
 	
 	@Test
+	 
+	 public void Fisc_fIR_valueRequestcall() throws IOException {
+		 
+		 URL file = Resources.getResource("FIRvalueRequest.json");
+			String myRequest = Resources.toString(file, Charsets.UTF_8);
+	
+			Response response = given().header("Authorization", AuthrztionValue)
+					.header("X-App-Client-Id", XappClintIDvalue).contentType("application/vnd.api+json").body(myRequest)
+					.with()
+					.when().post(dataPostUrl)
+					.then().assertThat().statusCode(200)
+					.body(containsString("value"))					
+											
+					.extract().response();
+		  
+			Assert.assertFalse(response.asString().contains("isError"));
+			Assert.assertFalse(response.asString().contains("isMissing"));
+			Assert.assertFalse(response.asString().contains("isRestricted"));
+		 	 
+	   }
+	
+	@Test
 	public void FISC_1945_selfLink() {
 
 		String metaDataURI = baseURI + "/v1/regions/EMGMKT";
