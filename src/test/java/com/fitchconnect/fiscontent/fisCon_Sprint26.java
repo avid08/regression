@@ -33,8 +33,7 @@ public class fisCon_Sprint26 extends Configuration {
 					.body(containsString("1"))
 					.body(containsString("forecastType"))
 					.body(containsString("Annual"))
-					.body(containsString("numerical"))
-									
+					.body(containsString("numerical"))									
 					.extract().response();
 		  
 			Assert.assertFalse(response.asString().contains("isError"));
