@@ -2674,6 +2674,36 @@ public class ApIsmokeTestSuite extends Configuration {
 		Assert.assertFalse(res.asString().contains("isRestricted"));
 
 	}
+	@Test	
+	public void FISC_5441_IssueRatingType (){
+			
+			String issueRatingTypeURI = baseURI+"/v1/issues/96496679/issueRatings";		
+
+			Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+					.header("accept", acceptValue).header("content", contentValue).when().get(issueRatingTypeURI).then()
+					.statusCode(200)
+					.body(containsString("FC_LT_NIR"))
+					.extract().response();
+	  }
+
+	@Test	
+	public void FISC_5441_IssuerRatingType (){
+			
+			String issueRatingTypeURI = baseURI+"/v1/entities/1000791/fitchIssuerRatings?filter[startDate]=2018-07-27";		
+
+			Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+					.header("accept", acceptValue).header("content", contentValue).when().get(issueRatingTypeURI).then()
+					.statusCode(200)
+					.body(containsString("FC_LT_NIR_ISSR"))
+					.extract().response();
+	  }
+	
+	
+	
+	
+	
+	//==================================================Some Scripts=========================================================================================
+	
 
 	@Test(enabled = false)
 
