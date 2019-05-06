@@ -21,7 +21,7 @@ import com.jayway.restassured.response.Response;
 
 public class fisCon_Sprint14 extends Configuration {
 
-	@Test()
+	@Test(enabled=false)
 
 	public void BMI_Batch_FISC1263() throws InterruptedException {
 
@@ -45,7 +45,7 @@ public class fisCon_Sprint14 extends Configuration {
 				.header("accept", acceptValue).header("content", contentValue).when().get(categoryURI).then()
 				.statusCode(200).extract().response();
 		
-		 Thread.sleep(5000);
+		 Thread.sleep(1000);
 		
 		List<String> fitchCategoryName = res1.path("data.attributes.name");
 		
