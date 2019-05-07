@@ -23,29 +23,30 @@ public class fisCon_Sprint14 extends Configuration {
 
 	@Test(enabled=false)
 
-	public void BMI_Batch_FISC1263() {
+	public void BMI_Batch_FISC1263() throws InterruptedException {
 
 		String BmiCategoryURl = BMIbaseURL + "/v1/ndb/metadata/categories";
+		 System.out.println(BmiCategoryURl);		
 		Response res = given().header("content", contentValue).when().get(BmiCategoryURl).then().statusCode(200)
-				.extract().response();
+				.extract().response();	
 
 		List<String> BMICategoryId = res.path("data.id");
-		List<String> BMICategoryIdChild = res.path("data.relationships.children.data.id");
-		
+		List<String> BMICategoryIdChild = res.path("data.relationships.children.data.id");		
 		 		 
-		 System.out.println("BMI categoryID parent :"+BMICategoryId);
-		
+		 System.out.println("BMI categoryID parent :"+BMICategoryId);		
 		
 		List<String> BMIcateGoryName = res.path("data.attributes.name");
-
 		
+		 System.out.println("BMI categoryID parent :"+BMIcateGoryName);	
 
 		String categoryURI = baseURI + "/v1/metadata/categories";
 
 		Response res1 = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).when().get(categoryURI).then()
 				.statusCode(200).extract().response();
-
+		
+		 Thread.sleep(1000);
+		
 		List<String> fitchCategoryName = res1.path("data.attributes.name");
 		
 		List<String> catergoryid = res1.path("data.id");
@@ -105,13 +106,15 @@ public class fisCon_Sprint14 extends Configuration {
 			
 			String CategoryURI = baseCategoryURI +"/"+BmiCategoryId;
 			
-			System.out.println(CategoryURI);
+			//System.out.println(CategoryURI);
 
 			Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 					.header("accept", acceptValue).header("content", contentValue).when().get(CategoryURI).then()
 					.statusCode(200).extract().response();
-
-			jsonAsString = response.asString();
+						
+			/*String BmicateGoryNames = response.path("data.attributes.name");			
+			System.out.println(BmicateGoryNames);
+*/			jsonAsString = response.asString();
 
 			Assert.assertFalse(response.asString().contains("isError"));
 			Assert.assertFalse(response.asString().contains("isMissing"));

@@ -148,9 +148,12 @@ public class fisCon_Sprint7 extends Configuration {
 
 		Response res1 = given().header("Authorization", (AuthrztionValue)).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType(ContentType.JSON).when()
-				.get(url1).then().statusCode(200).body(containsString("relationships")).body(containsString("included"))
+				.get(url1).then().statusCode(200)
+				.body(containsString("relationships"))
+				.body(containsString("included"))
+				.body(containsString("fitchConnectUrl"))
 				.extract().response();
-		Assert.assertFalse(res1.asString().contains("fitchConnectUrl"));
+		
 		Assert.assertFalse(res1.asString().contains("isError"));
 		Assert.assertFalse(res1.asString().contains("isMissing"));
 		Assert.assertFalse(res1.asString().contains("isRestricted"));
@@ -195,19 +198,7 @@ public class fisCon_Sprint7 extends Configuration {
 	}
 
 	
-	@Test
 	
-	public void somecode() {
-		
-		int a =100;
-		
-		for (int i=0;i<a;i++){
-			
-	       System.out.println("print number");
-	       
-		}
-		
-	}
 	
 	
 }

@@ -80,7 +80,7 @@ public class fisCon_Sprint6 extends Configuration {
 		Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.contentType("application/vnd.api+json").body(myRequest).with().when().post(dataPostUrl).then()
 				.statusCode(200).body(containsString("value")).body(containsString("Healthcare"))
-				.body(containsString("Continuing Care Retirement Community")).body(containsString("UNITED STATES"))
+				.body(containsString("U.S. Public Finance")).body(containsString("UNITED STATES"))
 				.body(containsString("04")).extract().response();
 
 		Assert.assertFalse(response.asString().contains("isError"));
