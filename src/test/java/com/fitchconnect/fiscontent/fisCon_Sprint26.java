@@ -35,7 +35,7 @@ public class fisCon_Sprint26 extends Configuration {
 		  
 			Assert.assertFalse(response.asString().contains("isError"));
 			Assert.assertFalse(response.asString().contains("isMissing"));
-			Assert.assertFalse(response.asString().contains("isRestricted"));
+			Assert.assertTrue(response.asString().contains("isRestricted"));
 		 	 
 	   }
 	
