@@ -62,6 +62,9 @@
 			<class name="com.issueRatingTransition.IssueRatingsTransition" />
 			<class name="com.issueRatingTransition.IssueRatingsTransitionHistory" />
 			<class name="com.financial.api.Financials" />
+			<class name="com.ESGdata.api.EsgMetadataTestCases" />
+			<class name="com.ESGdata.api.EsgValueRequestTestCases" />
+			
 			
 
 			

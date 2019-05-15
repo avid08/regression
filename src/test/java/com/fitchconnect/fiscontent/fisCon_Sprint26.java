@@ -19,7 +19,7 @@ public class fisCon_Sprint26 extends Configuration {
 	
 	@Test
 	 
-	 public void Fisc_430() throws IOException {
+	 public void Fisc_430_region() throws IOException {
 		 
 		 URL file = Resources.getResource("FISC_2140_Nodate.json");
 			String myRequest = Resources.toString(file, Charsets.UTF_8);
@@ -29,11 +29,8 @@ public class fisCon_Sprint26 extends Configuration {
 					.with()
 					.when().post(dataPostUrl)
 					.then().assertThat().statusCode(200)
-					.body(containsString("value"))
-					.body(containsString("1"))
-					.body(containsString("forecastType"))
-					.body(containsString("Annual"))
-					.body(containsString("numerical"))									
+					.body(containsString("isRestricted"))
+					.body(containsString("true"))													
 					.extract().response();
 		  
 			Assert.assertFalse(response.asString().contains("isError"));
