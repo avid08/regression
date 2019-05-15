@@ -1,0 +1,34 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "entities":[  
+            {  
+               "id":"110526",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+            "FC_COMPANY_NAME",
+            "FC_DATE_CORP_NAV",
+            "FC_ENV_EAQ_ESG_CORP_NAV",
+            "FC_ENV_EFM_ESG_CORP_NAV",
+            "FC_ENV_EWT_ESG_CORP_NAV",
+            "FC_ENV_EHZ_ESG_CORP_NAV",
+            "FC_ENV_EIM_ESG_CORP_NAV",
+            "FC_SOC_SCR_ESG_CORP_NAV",
+            "FC_SOC_SCW_ESG_CORP_NAV",
+            "FC_SOC_SLB_ESG_CORP_NAV",
+            "FC_SOC_SEW_ESG_CORP_NAV",
+            "FC_SOC_SIM_ESG_CORP_NAV",           
+            "FC_GOV_GEX_ESG_CORP_NAV",
+            "FC_GOV_GGV_ESG_CORP_NAV",
+            "FC_GOV_GST_ESG_CORP_NAV",
+            "FC_GOV_GTR_ESG_CORP_NAV"
+         ],
+         "options":[  
+
+         ]
+      }
+   }
+}

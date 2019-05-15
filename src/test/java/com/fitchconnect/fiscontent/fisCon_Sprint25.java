@@ -79,6 +79,27 @@ public class fisCon_Sprint25 extends Configuration {
 	}
 	
 	@Test
+	public void Subnatoinal_RegionType() {
+
+		String metaDataURI = baseURI + "/v1/regions/US-WI";
+
+		Response res = given().header("Authorization", AuthrztionValue).header("content", contentValue)
+				.header("'Accept", acceptValue).header("X-App-Client-Id", XappClintIDvalue).when().get(metaDataURI).then()
+				.assertThat().statusCode(200)
+				.body(containsString("regions"))
+			
+				.body(containsString("Sub-National"))
+				.body(containsString("State"))	
+				.body(containsString("Wisconsin"))	
+				.extract().response();
+
+		Assert.assertFalse(res.asString().contains("isError"));
+		Assert.assertFalse(res.asString().contains("isMissing"));
+		Assert.assertFalse(res.asString().contains("isRestricted"));
+
+	}
+	
+	@Test
 	public void FISC_1943_selfLink() {
 
 		String metaDataURI = baseURI + "/v1/issues/90522483/relationships/issueRatings";
