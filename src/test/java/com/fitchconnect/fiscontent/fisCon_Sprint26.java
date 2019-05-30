@@ -29,13 +29,13 @@ public class fisCon_Sprint26 extends Configuration {
 					.with()
 					.when().post(dataPostUrl)
 					.then().assertThat().statusCode(200)
-					.body(containsString("isRestricted"))
+					
 					.body(containsString("true"))													
 					.extract().response();
 		  
 			Assert.assertFalse(response.asString().contains("isError"));
 			Assert.assertFalse(response.asString().contains("isMissing"));
-			Assert.assertTrue(response.asString().contains("isRestricted"));
+			Assert.assertFalse(response.asString().contains("isRestricted"));
 		 	 
 	   }
 	
