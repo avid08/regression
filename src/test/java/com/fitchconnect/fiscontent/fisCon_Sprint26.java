@@ -28,14 +28,13 @@ public class fisCon_Sprint26 extends Configuration {
 					.header("X-App-Client-Id", XappClintIDvalue).contentType("application/vnd.api+json").body(myRequest)
 					.with()
 					.when().post(dataPostUrl)
-					.then().assertThat().statusCode(200)
-					.body(containsString("isRestricted"))
-					.body(containsString("true"))													
+					.then().assertThat().statusCode(200)					
+					.body(containsString("value"))													
 					.extract().response();
 		  
 			Assert.assertFalse(response.asString().contains("isError"));
 			Assert.assertFalse(response.asString().contains("isMissing"));
-			Assert.assertTrue(response.asString().contains("isRestricted"));
+			Assert.assertFalse(response.asString().contains("isRestricted"));
 		 	 
 	   }
 	
