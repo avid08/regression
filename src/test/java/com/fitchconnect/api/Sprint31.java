@@ -17,10 +17,10 @@ public class Sprint31 extends Configuration {
 	
 
 	
-   @Test
+   @Test(enabled=false)
    public void caTegories_1542 () {
 	
-	String categrisUrl = baseURI + "/v1/metadata/categories";
+	String categrisUrl = baseURI + "/v1/metadata/categories/";
 
 	Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 			.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
@@ -28,9 +28,7 @@ public class Sprint31 extends Configuration {
 			.body(containsString("Entity Reference"))
 			.body(containsString("Financials"))
 			.body(containsString("Fitch Ratings"))
-			.body(containsString("Moody's Issuer Rating"))
-			//.body(containsString("Sovereign Data"))
-			//.body(containsString("Sovereign Financials"))
+			.body(containsString("Moody's Issuer Rating"))		
 			.extract().response();	
 	
 	
