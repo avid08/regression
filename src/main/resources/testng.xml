@@ -64,6 +64,8 @@
 			<class name="com.financial.api.Financials" />
 			<class name="com.ESGdata.api.EsgMetadataTestCases" />
 			<class name="com.ESGdata.api.EsgValueRequestTestCases" />
+			<class name="com.CreditOpinions.api.IssuerCreditOpinions" />
+			<class name="com.CreditOpinions.api.IssueCreditOpinions" />
 			
 			
 
