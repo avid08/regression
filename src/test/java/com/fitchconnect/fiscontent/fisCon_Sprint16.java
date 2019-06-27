@@ -82,7 +82,7 @@ public class fisCon_Sprint16 extends Configuration {
 	}
 	
 	
-	@Test
+	@Test(enabled=false)
 
 	public void Fisc_1177_financialFormula_update_Verification() throws URISyntaxException, IOException {
 

@@ -122,4 +122,40 @@ public void RegionAncestorinArray_FISC_1715(){
 
 	
    }
+ 
+ @Test
+
+ public void RegionSubnationType_Iso_code_FISC_1571 () {
+	
+	String regionURI = baseURI+"/v1/regions?filter[subNationalType]=ON";
+
+	Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+			.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
+			.when().get(regionURI)
+			.then().statusCode(200)
+			.body(containsString("subNationalType"))
+			.body(containsString("Sub-National"))
+			.body(containsString("Region"))				
+			.extract().response();
+	
+	
+	
+	String regionURIisoCde = baseURI+"/v1/regions?filter[countryISOCode3]=USA";
+	
+	Response res2 = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+			.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
+			.when().get(regionURIisoCde)
+			.then().statusCode(200)
+			.body(containsString("localCurrency"))
+			.body(containsString("USD"))
+			.body(containsString("Region"))				
+			.extract().response();
+	
+
+	Assert.assertFalse(res.asString().contains("isError"));
+	Assert.assertFalse(res.asString().contains("isMissing"));
+	Assert.assertFalse(res.asString().contains("isRestricted"));
+
+	
+  }
 }
