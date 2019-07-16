@@ -152,7 +152,7 @@ public class fisCon_Sprint22 extends Configuration {
 				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.contentType("application/vnd.api+json").body(myjson).with().when().post(dataPostUrl).then()
 				.assertThat().statusCode(200).body(containsString("value")).body(containsString("FC_RISK_BENCHMARK_BPS_CDS"))
-				.body(containsString("274.4574212676")).extract().response();
+				.body(containsString("172.3524163486361")).extract().response();
 
 		Assert.assertFalse(leglAgnetresponse.asString().contains("isError"));
 		Assert.assertFalse(leglAgnetresponse.asString().contains("isMissing"));

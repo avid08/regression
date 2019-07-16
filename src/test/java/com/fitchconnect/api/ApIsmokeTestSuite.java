@@ -2682,6 +2682,8 @@ public class ApIsmokeTestSuite extends Configuration {
 			Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 					.header("accept", acceptValue).header("content", contentValue).when().get(issueRatingTypeURI).then()
 					.statusCode(200)
+					.body(containsString("rating"))
+					.body(containsString("Affirmed"))
 					.body(containsString("FC_LT_NIR"))
 					.extract().response();
 	  }
