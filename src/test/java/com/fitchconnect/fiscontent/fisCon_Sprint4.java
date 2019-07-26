@@ -38,7 +38,7 @@ public class fisCon_Sprint4 extends Configuration {
 
 			String entityRankingResourceURI = entityRanking + "/" + id.get(i) + "?include[entityRankings]=entity";
 
-			//System.out.println(entityRankingResourceURI);
+			System.out.println(entityRankingResourceURI);
 
 			Response response2 = given().header("Authorization", AuthrztionValue)
 					.header("X-App-Client-Id", XappClintIDvalue).header("accept", acceptValue)
