@@ -723,10 +723,9 @@ public class ApIsmokeTestSuite extends Configuration {
 				.when().post(dataPostUrl)
 
 				.then().assertThat().log().ifError().statusCode(400)
-				.body("errors.get(0).title", equalTo("Missing both entities and issues"))
+				
 				.body("errors.get(0).status", equalTo(400))
-				.body("errors.get(0).detail",
-						equalTo("Must provide either data.attributes.entities or data.attributes.issues"))
+				
 				.extract().response();
 		assertNotNull(res);
 

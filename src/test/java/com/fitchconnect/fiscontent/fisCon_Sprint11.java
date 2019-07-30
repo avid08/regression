@@ -20,7 +20,7 @@ public class fisCon_Sprint11 extends Configuration {
 	@Test
 	public void FISC_1048_obligors() {
 
-		String IssueResourceURi = baseURI + "/v1/issues/94155092";
+		String IssueResourceURi = baseURI + "/v1/issues/87620783";
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
