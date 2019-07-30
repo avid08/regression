@@ -82,11 +82,12 @@ public void cdsValueRequest_with150Entities_multipleDatapoints() throws IOExcept
 				.body(containsString("Sekisui House, Ltd"))
 				.body(containsString("auditTrail"))
 				.body(containsString("currency"))
+				.body(containsString("numerical"))
+				
 				.extract()
 				.response();
 
-		Assert.assertFalse(leglAgnetresponse.asString().contains("isError"));
-		Assert.assertFalse(leglAgnetresponse.asString().contains("isMissing"));
+		Assert.assertFalse(leglAgnetresponse.asString().contains("isError"));		
 		Assert.assertFalse(leglAgnetresponse.asString().contains("isRestricted"));
 	 
 	 

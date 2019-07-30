@@ -105,13 +105,13 @@ public void FISC_5882_aLLIssuerCreditOpinionsRelationship() {
 
 public void FISC_5843_Filter_IssuerCreditOpinion() {
 	
-	String IssuerCreditOpnionUri = baseURI +"/v1/issuerCreditOpinions?filter[FC_ISSUER_ID]=96683626";
+	String IssuerCreditOpnionUri = baseURI +"/v1/issuerCreditOpinions?filter[FC_ISSUER_ID]=96380497";
 
 	Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 			.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
 			.when().get(IssuerCreditOpnionUri).then().statusCode(200)
 			.body(containsString("Public CO / Public Data"))
-			.body(containsString("1500345"))			
+			.body(containsString("1475112"))			
 			.extract().response();		
 	
 	Assert.assertFalse(res.asString().contains("isError"));
@@ -143,7 +143,7 @@ public void FISC_5843_Filter_DateRange() {
 
 public void FISC_5843_Filter_Entity() {
 	
-	String IssuerCreditOpnionUri = baseURI +"/v1/issuerCreditOpinions?filter[FC_ENTITY_ID]=1500345";
+	String IssuerCreditOpnionUri = baseURI +"/v1/issuerCreditOpinions?filter[FC_ENTITY_ID]=1475112";
 
 	Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 			.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
