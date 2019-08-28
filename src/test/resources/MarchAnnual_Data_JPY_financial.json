@@ -1,0 +1,37 @@
+{  
+   "data":{  
+      "attributes":{  
+         "dateOptions":{  
+            "dateRanges":[  
+            ],
+            "dates":[ 
+            ],
+            "periodRanges":[ 
+            ],
+            "periods":[  
+               {  
+                  "type":"Annual",
+                  "year":2015
+               }
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"1383250",
+               "type":"fitchId"
+            }
+         ],
+         "fitchFieldIds":[  
+            "FC_TOTAL_ASSETS_BNK",
+            "FC_TANGIBLE_COMMON_EQUITY_TANGIBLE_ASSETS_BNK",
+            "FC_STATEMENT_ID"
+         ],
+         "options":[  
+            {  
+               "name":"currency",
+               "value":"LOCAL"
+            }
+         ]
+      }
+   }
+}

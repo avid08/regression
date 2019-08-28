@@ -93,15 +93,15 @@ public void cdsValueRequest_with150Entities_multipleDatapoints() throws IOExcept
 	 
 }
 
-@Test(enabled=false)
+@Test(enabled=true)
 
 public void Fisc_1974_CDS_MetaData__Verification() throws URISyntaxException, IOException {
 
-	URL fileUrl = Resources.getResource("CDS_metaData_v1.xlsx");
+	URL fileUrl = Resources.getResource("CDS_Data_Mnemonics_v5.xlsx");
 	File src = new File(fileUrl.toURI());
 	FileInputStream file = new FileInputStream(src);
 	XSSFWorkbook wb = new XSSFWorkbook(file);
-	XSSFSheet mySheet = wb.getSheet("CDS_fields");
+	XSSFSheet mySheet = wb.getSheet("Sheet1");
 	int rowcount = mySheet.getPhysicalNumberOfRows();
 	System.out.println(rowcount + " fields are available");
 
@@ -109,17 +109,17 @@ public void Fisc_1974_CDS_MetaData__Verification() throws URISyntaxException, IO
 
 	boolean failure = false;
 
-	for (int i = 1; i < rowcount; i++) {
+	for (int i=1;i<rowcount; i++) {
 
 		String fitchFieldIds = mySheet.getRow(i).getCell(0).getStringCellValue();
-		String fitchFieldDescp = mySheet.getRow(i).getCell(1).getStringCellValue();
-		String displayName = mySheet.getRow(i).getCell(2).getStringCellValue();
-		String dataType = mySheet.getRow(i).getCell(3).getStringCellValue();
+		String displayName = mySheet.getRow(i).getCell(1).getStringCellValue();
+		String fitchFieldDescp = mySheet.getRow(i).getCell(2).getStringCellValue();
+		String dataType = mySheet.getRow(i).getCell(4).getStringCellValue();
 		String permission = mySheet.getRow(i).getCell(5).getStringCellValue();
 
 		String DataTypeUrl = metaUrl + "/" + fitchFieldIds;
 
-		// System.out.println(DataTypeUrl);
+
 
 		String jsonAsString;
 
@@ -129,13 +129,11 @@ public void Fisc_1974_CDS_MetaData__Verification() throws URISyntaxException, IO
 				.response();
 
 		jsonAsString = response.asString();
-
-		Assert.assertFalse(response.asString().contains("isError"));
 		
-		Assert.assertFalse(response.asString().contains("isMissing"));
-
 		String resPnsdsplyName = response.path("data.attributes.displayName");
+	
 		String resPnsDesc = response.path("data.attributes.fitchFieldDesc");
+		
 
 		// int index1 = jsonAsString.indexOf(fitchFieldIds);
 		int index4 = jsonAsString.indexOf(dataType);
@@ -150,10 +148,7 @@ public void Fisc_1974_CDS_MetaData__Verification() throws URISyntaxException, IO
 
 		if (equalToIgnoringWhiteSpace(fitchFieldDescp).matches(resPnsDesc)) {
 
-		} else {
-
-			System.err.println(resPnsDesc);
-			System.err.println(fitchFieldDescp);
+		} else {		
 
 			failure = true;
 			System.err.println("The response has Description  mismatch   : " + fitchFieldIds);
@@ -248,6 +243,27 @@ public void dataAggregator_1974_NOcalendarDate() throws IOException {
 	Assert.assertFalse(leglAgnetresponse.asString().contains("isRestricted"));
 }
 
- 
+@Test(enabled=true)
+public void cdsDataValueReqWith_multigrpIdsfromSameEntity_FISC_6754() throws IOException {
+
+	URL file = Resources.getResource("multiGroupIds_frm_sameEntity_Cds.json");
+
+	myjson = Resources.toString(file, Charsets.UTF_8);
+
+	Date dNow = new Date();
+	SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
+	String cdate = ft.format(dNow).toString();
+
+
+	Response leglAgnetresponse = given()
+			.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+			.contentType("application/vnd.api+json").body(myjson).with().when().post(dataPostUrl).then()
+			.assertThat().statusCode(200).body(containsString("value")).extract().response();
+	
+	Assert.assertFalse(leglAgnetresponse.asString().contains("isError"));
+	Assert.assertTrue(leglAgnetresponse.asString().contains("isMissing"));
+	Assert.assertFalse(leglAgnetresponse.asString().contains("isRestricted"));
+}
+
  
 }

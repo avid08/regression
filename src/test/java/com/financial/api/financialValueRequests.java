@@ -1161,4 +1161,29 @@ public class financialValueRequests extends Configuration {
 		   Assert.assertFalse(res.asString().contains("isRestricted"));
 
 		}
+		
+		
+		@Test
+
+		public void annual_date_inMarchEntity_jpy() throws IOException {
+
+			URL file = Resources.getResource("MarchAnnual_Data_JPY_financial.json");
+			myjson = Resources.toString(file, Charsets.UTF_8);
+
+			Response res = given()
+
+					.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+					.header("accept", acceptValue).contentType("application/vnd.api+json").body(myjson).with().when()
+					.post(dataPostUrl).then().statusCode(200)					
+					.extract().response();
+			
+			Assert.assertFalse(res.asString().contains("2015-12-31"));
+			Assert.assertTrue(res.asString().contains("2015-03-31"));
+			
+			
+			Assert.assertFalse(res.asString().contains("isError"));
+			Assert.assertFalse(res.asString().contains("isMissing"));
+		   Assert.assertFalse(res.asString().contains("isRestricted"));
+
+		}
 }
