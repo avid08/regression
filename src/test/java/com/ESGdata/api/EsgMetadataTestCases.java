@@ -20,11 +20,11 @@ import com.jayway.restassured.response.Response;
 
 public class EsgMetadataTestCases extends Configuration{
 	
-	@Test
+	@Test(enabled=true)
 	
-	public void ESG_MetaData__Verification() throws URISyntaxException, IOException {
+	public void ESG_MetaData_Verification() throws URISyntaxException, IOException {
 
-		URL fileUrl = Resources.getResource("");
+		URL fileUrl = Resources.getResource("ESG_Bnk_NvigatorData.xlsx");
 		File src = new File(fileUrl.toURI());
 		FileInputStream file = new FileInputStream(src);
 		XSSFWorkbook wb = new XSSFWorkbook(file);
