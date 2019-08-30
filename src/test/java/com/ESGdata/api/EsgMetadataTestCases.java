@@ -20,7 +20,7 @@ import com.jayway.restassured.response.Response;
 
 public class EsgMetadataTestCases extends Configuration{
 	
-	@Test(enabled=true)
+	@Test(enabled=false)
 	
 	public void ESG_MetaData_Verification() throws URISyntaxException, IOException {
 
