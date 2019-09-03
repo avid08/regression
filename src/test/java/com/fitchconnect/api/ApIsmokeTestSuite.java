@@ -2117,7 +2117,7 @@ public class ApIsmokeTestSuite extends Configuration {
 	}
 
 	// Test Description: checks for date and period moodys option
-	@Test
+	@Test(enabled=false)
 
 	public void dateAndPeriodMoodys() throws IOException {
 

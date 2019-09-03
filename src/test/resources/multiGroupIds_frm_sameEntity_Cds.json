@@ -1,0 +1,53 @@
+{
+   "data": {
+       "type": "valueRequest",
+       "attributes": {
+           "dateOptions": {
+           "dates":[  
+           "2019-08-13"
+            ]
+               
+           },
+           "entities": [
+              
+              
+               {
+                    "id": "234sdfxfg",
+                    "type": "fitchId"
+                },
+                
+                 {
+                    "id": "114015",
+                    "type": "fitchId"
+                },
+                 {
+                    "id": "110633",
+                    "type": "fitchId"
+                },
+                 
+                {
+                    "id": "111746",
+                    "type": "fitchId"
+                },
+                
+                 {
+                    "id": "80359704",
+                    "type": "fitchGroupID"
+                },
+                {
+                    "id": "111518",
+                    "type": "fitch"
+                }
+           ],
+           "fitchFieldIds": [
+                 "FC_CURRENCY_CDS",
+                 "FC_1Y_BPS_CDS",
+                 "FC_5Y_BPS_CDS"        
+                
+          ],
+           "options": [
+            
+           ]
+       }
+   }
+}
