@@ -344,8 +344,7 @@ public class fisCon_Sprint4 extends Configuration {
 			Response response2 = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 					.header("accept", acceptValue).header("content", contentValue).when().get(singleSurvillanceLink.get(i)).then()
 					.statusCode(200)
-					.extract().response();
-			
+					.extract().response();			
 
 			Assert.assertFalse(response2.asString().contains("isError"));
 			Assert.assertFalse(response2.asString().contains("isMissing"));

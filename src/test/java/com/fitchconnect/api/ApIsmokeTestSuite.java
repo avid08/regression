@@ -1282,8 +1282,7 @@ public class ApIsmokeTestSuite extends Configuration {
 
 		}
 
-		Assert.assertTrue(fitchEntityId.contains("112082"));
-		Assert.assertTrue(fitchEntityId.contains("1315051"));
+		Assert.assertTrue(fitchEntityId.contains("112082"));		
 		Assert.assertTrue(fitchEntityId.contains("116980"));
 		Assert.assertTrue(fitchEntityId.contains("1313773"));
 		Assert.assertTrue(fitchEntityId.contains("1407617"));

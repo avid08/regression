@@ -97,7 +97,7 @@ public void cdsValueRequest_with150Entities_multipleDatapoints() throws IOExcept
 
 public void Fisc_1974_CDS_MetaData__Verification() throws URISyntaxException, IOException {
 
-	URL fileUrl = Resources.getResource("CDS_Data_Mnemonics_v5.xlsx");
+	URL fileUrl = Resources.getResource("CDS Data Mnemonics v5.1.xlsx");
 	File src = new File(fileUrl.toURI());
 	FileInputStream file = new FileInputStream(src);
 	XSSFWorkbook wb = new XSSFWorkbook(file);
@@ -114,10 +114,12 @@ public void Fisc_1974_CDS_MetaData__Verification() throws URISyntaxException, IO
 		String fitchFieldIds = mySheet.getRow(i).getCell(0).getStringCellValue();
 		String displayName = mySheet.getRow(i).getCell(1).getStringCellValue();
 		String fitchFieldDescp = mySheet.getRow(i).getCell(2).getStringCellValue();
-		String dataType = mySheet.getRow(i).getCell(4).getStringCellValue();
-		String permission = mySheet.getRow(i).getCell(5).getStringCellValue();
+		String dataType = mySheet.getRow(i).getCell(3).getStringCellValue();
+		String permission = mySheet.getRow(i).getCell(4).getStringCellValue();
 
 		String DataTypeUrl = metaUrl + "/" + fitchFieldIds;
+		
+		System.out.println(DataTypeUrl );
 
 
 
