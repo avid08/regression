@@ -93,7 +93,7 @@ public void cdsValueRequest_with150Entities_multipleDatapoints() throws IOExcept
 	 
 }
 
-@Test(enabled=true)
+@Test(enabled=false)
 
 public void Fisc_1974_CDS_MetaData__Verification() throws URISyntaxException, IOException {
 
