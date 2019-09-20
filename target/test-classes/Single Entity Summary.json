@@ -1,0 +1,39 @@
+{
+   "data":{
+      "type":"valueRequest",
+      "attributes":{
+         "dateOptions":{
+            "dates":[
+      	
+            ]
+         },
+         "entities":[
+            {
+               "id":"115915",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[
+            "FC_INT_INC_LOANS_BNK"
+         ],
+         "options":[
+		{
+               "name":"consolidation",
+               "value":"noncon"
+            },
+            {
+               "name":"accountingStandard",
+               "value":"Local"
+            },
+            {
+               "name":"filingType",
+               "value":"Original"
+            },
+            {
+               "name":"currency",
+               "value":"USD"
+            } 
+         ]
+      }
+   }
+}

@@ -1,0 +1,41 @@
+{
+"data": {
+"type": "valueRequest",
+"attributes": {
+"dateOptions": {
+"periodRanges":[
+{
+"startPeriod" : {"type": "Q2", "year": 2010},
+"endPeriod" : {"type": "Q1", "year": 2011}
+}]
+},
+"entities": [
+		{
+		     "id": "116980",
+		     "type": "FitchID"
+		}
+      ],
+      "fitchFieldIds" : [
+        "FC_INT_INC_LOANS_BNK"
+      ],
+ "options": [
+ 		  {
+               "name":"consolidation",
+               "value":"con"
+            },
+            {
+               "name":"accountingStandard",
+               "value":"USGAAP"
+            },
+            {
+               "name":"filingType",
+               "value":"Original"
+            },
+            {
+               "name":"currency",
+               "value":"USD"
+            }
+      ]
+    }
+  }
+}

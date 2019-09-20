@@ -1,0 +1,44 @@
+{
+   "data":{
+      "type":"valueResponse",
+      "attributes":{
+         "dateOptions":{
+            "dates":[
+		
+            ],
+            "periods":[
+
+            ]
+         },
+         "entities":[
+            {
+               "id":"1012179",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[
+            "FC_INT_INC_LOANS_BNK"
+         ],
+         "options":[
+            {
+               "name":"consolidation",
+               "value":"comBinEd"
+            },
+            
+            {
+               "name":"filingType",
+               "value":"Original"
+            },
+            {
+               "name":"currency",
+               "value":"USD"
+            } ,
+          {
+               "name":"accountingStandard",
+               "value":"IfRS"
+            } 
+            
+         ]
+      }
+   }
+}

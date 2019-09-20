@@ -1,0 +1,87 @@
+{  
+   "data":{  
+      "type":"valueResponse",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+
+            ],
+            "periods":[  
+              
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"14528",
+               "type":"fitchid"
+            }
+         ],
+         "fitchFieldIds":[  
+           "FC_LT_LC_NIR",
+"FC_LT_LC_NIR_ACTN",
+"FC_LT_LC_NIR_DT",
+"FC_LT_LC_NIR_ALRT",
+"FC_LT_LC_NIR_SOLST",
+"FC_BIR",
+"FC_BIR_ACTN",
+"FC_BIR_DT",
+"FC_BIR_ALRT",
+"FC_BIR_SOLST",
+"FC_FDIC_CERT",
+"FC_CDO_AMR",
+"FC_CDO_AMR_ACTN",
+"FC_CDO_AMR_DT",
+"FC_CDO_AMR_ALRT",
+"FC_CDO_AMR_SOLST",
+"FC_TP_CDO_AMR",
+"FC_TP_CDO_AMR_ACTN",
+"FC_TP_CDO_AMR_DT",
+"FC_TP_CDO_AMR_ALRT",
+"FC_TP_CDO_AMR_SOLST",
+"FC_CFBR",
+"FC_CFBR_ACTN",
+"FC_CFBR_DT",
+"FC_CFBR_ALRT",
+"FC_CFBR_SOLST",
+"FC_IPR",
+"FC_IPR_ACTN",
+"FC_IPR_DT",
+"FC_IPR_ALRT",
+"FC_IPR_SOLST",
+"FC_NIFR",
+"FC_NIFR_ACTN",
+"FC_NIFR_DT",
+"FC_NIFR_ALRT",
+"FC_NIFR_SOLST",
+"FC_NPFPR",
+"FC_NPFPR_ACTN",
+"FC_NPFPR_DT",
+"FC_NPFPR_ALRT",
+"FC_NPFPR_SOLST",
+"FC_NEFR",
+"FC_NEFR_ACTN",
+"FC_NEFR_DT",
+"FC_NEFR_ALRT",
+"FC_NEFR_SOLST",
+"FC_NREFR",
+"FC_NREFR_ACTN",
+"FC_NREFR_DT",
+"FC_NREFR_ALRT",
+"FC_NREFR_SOLST",
+"FC_IGC_CDO_AMR",
+"FC_IGC_CDO_AMR_ACTN",
+"FC_IGC_CDO_AMR_DT",
+"FC_IGC_CDO_AMR_ALRT",
+"FC_IGC_CDO_AMR_SOLST",
+"FC_DCR",
+"FC_DCR_ACTN",
+"FC_DCR_DT",
+"FC_DCR_ALRT",
+"FC_DCR_SOLST"
+         ],
+         "options":[  
+
+         ]
+      }
+   }
+}

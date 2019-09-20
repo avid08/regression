@@ -1,0 +1,33 @@
+{
+   "data": {
+       "type": "valueRequest",
+       "attributes": {
+           "dateOptions": {
+           "dates":[  
+          "2019-07-23"
+            
+            ]
+               
+           },
+           "entities": [
+              
+               {
+                    "id": "110633",
+                    "type": "fitchId"
+                },
+                {
+                    "id": "103346",
+                    "type": "fitchId"
+                }
+
+           ],
+           "fitchFieldIds": [
+               "FC_CURRENCY_CDS"
+
+           ],
+           "options": [
+            
+           ]
+       }
+   }
+}

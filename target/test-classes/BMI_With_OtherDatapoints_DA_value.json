@@ -1,0 +1,44 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+            
+            "2020-12-31"
+           
+            ]
+            
+         },
+         "entities":[  
+            {  
+               "id":"140065",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+            "BMI_GDP_NOM_LCU",
+             "FC_LT_LC_ISSR_MDY",
+              "FC_LT_IDR",
+              "FC_LT_FC_ISSR_SP",
+              "FC_COMPANY_NAME"
+            
+         ],
+         "options":[  
+          {
+               "name":"consolidation",
+               "value":"combined"
+            },
+            {
+               "name":"accountingStandard",
+               "value":"USGAAP"
+            },
+            {
+               "name":"currency",
+               "value":"JYP"
+            }
+
+         ]
+      }
+   }
+}

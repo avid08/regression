@@ -1,0 +1,42 @@
+{
+   "data":{
+      "type":"valueRequest",
+      "attributes":{
+         "dateOptions":{
+            "dates":[
+              "2010-09-09"
+           
+            ],
+         "periods":[
+            
+         ]},
+         "entities":[
+            {
+               "id":"112427",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[
+		"FC_BFS_RTG_MDY",
+		"FC_BFS_RTG_DIR_MDY",
+		"FC_BFS_RTG_DT_MDY",
+		"FC_BFS_RANK_MDY",
+		"FC_RATING_OUTLOOK_MDY"
+         ],
+         "options":[
+		{
+               "name":"consolidation",
+               "value":"combined"
+            },
+            {
+               "name":"accountingStandard",
+               "value":"USGAAP"
+            },
+            {
+               "name":"filingType",
+               "value":"Original"
+            }
+         ]
+      }
+   }
+}

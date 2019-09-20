@@ -1,0 +1,39 @@
+{
+"data": {
+"type": "valueRequest",
+"attributes": {
+"dateOptions": {
+"dateRanges":[
+	{
+	"startDate":"2015-01-01",
+	"endDate":"2015-07-01", 
+	"frequency":"Quarterly"
+	}
+	]
+},
+"entities": [
+		{
+		     "id": "116980",
+		     "type": "FitchID"
+		}
+      ],
+      "fitchFieldIds" : [
+        "FC_LT_IDR"
+      ],
+ "options": [
+ {
+               "name":"consolidation",
+               "value":"combined"
+            },
+            {
+               "name":"accountingStandard",
+               "value":"USGAAP"
+            },
+            {
+               "name":"filingType",
+               "value":"Original"
+            }
+ ]
+    }
+  }
+}

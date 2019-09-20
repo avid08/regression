@@ -1,0 +1,31 @@
+{
+  "data": {
+    "type": "valueRequest",
+    "attributes": {
+      "dateOptions": {
+        "dates": [
+          "2015-04-15"
+        ]
+      },
+      "entities": [
+        {
+            "id": "1708",
+            "type": "FitchID"
+        },
+        {
+            "id": "80472612",
+            "type": "fitchGroupId"
+        }
+      ],
+      "fitchFieldIds": [
+        "FC_LT_IDR","FC_CMBS_PSR",
+        "FC_MRKT_SECTOR_1_DESC",
+        "FC_LT_IDR_SOLST",
+        "FC_LT_IDR",
+        "FC_COMPANY_NAME"
+            
+     ],
+      "options": []
+    }
+  }
+}

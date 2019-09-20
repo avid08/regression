@@ -1,0 +1,55 @@
+
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+           "2012-12-31"    
+               
+            ],
+            "periods":[ 
+             {
+               "type":"Annual",
+               "year":2014
+            }
+              
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"110631",
+               "type":"FitchID"
+            },
+            
+              {  
+               "id":"100188",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+            "FC_TOTAL_ASSETS_BNK",
+            "FC_INT_INC_LOANS_BNK",
+            "FC_STATEMENT_ID"
+         ],
+         "options":[ 
+          {
+               "name":"consolidation",
+               "value":"combined"
+            },
+			
+	     	{
+               "name":"accountingStandard",
+               "value":"USGAAP"
+            } ,
+	
+	        {
+               "name":"currency",
+               "value":"JPY"
+            }
+          
+           
+         ]
+      }
+   }
+}

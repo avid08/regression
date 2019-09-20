@@ -1,0 +1,38 @@
+{  
+   "data":{  
+      "type":"valueResponse",
+      "attributes":{  
+         "dateOptions":{  
+
+"dateRanges": [
+  {
+    "startDate": "2015-12-31",
+    "endDate": "2016-12-31",
+    "frequency": "Annually"
+  }
+]
+				},
+       
+         "entities":[  
+            {  
+               "id":"110631",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+            "FC_TOTAL_ASSETS_BNK"
+
+         ],
+         "options":[  
+            {  
+               "name":"accountingStandard",
+               "value":"USGAAP"
+            },
+            {  
+               "name":"consolidation",
+               "value":"CON"
+            }
+         ]
+      }
+   }
+}

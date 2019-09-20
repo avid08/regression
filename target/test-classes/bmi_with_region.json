@@ -1,0 +1,39 @@
+{  
+   "data":{  
+      "attributes":{  
+         "entities":[  
+            {  
+               "type":"regionId",
+               "id":"AF"
+            },
+            {  
+               "type":"regionId",
+               "id":"BD"
+            },
+             
+             {  
+               "type":"regionId",
+               "id":"US-TX"
+            }
+         ],
+         "fitchFieldIds":[  
+            "BMI_GDP_NOM_LCU",
+            "BMI_GDP_NOM_USD_AVE"
+         ],
+         "dateOptions":{  
+            "dateRanges":[  
+               {  
+                  "startDate":"2014-08-27",
+                  "endDate":"2016-08-27",
+                  "frequency":"Annually"
+               }
+            ]
+         },
+         "options":[  
+
+         ]
+      }
+   },
+   "id":1,
+   "type":"valueRequest"
+}

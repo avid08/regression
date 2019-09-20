@@ -1,0 +1,45 @@
+{  
+   "data":{  
+      "type":"entities",
+      "attributes":{
+          "dateOptions":{  
+            "dates":[  
+               "2016-12-31"
+               
+            ]
+           
+         },
+         
+         "entities":[  
+          {           
+               "id":"1708",
+               "type":"fitchId"
+           }
+           ,
+            {         
+               "id":"84453492",
+               "type":"fitchGroupId"
+           }
+           
+            
+            
+         ],
+         "issues": [
+         
+               
+            ],
+         "fitchFieldIds":[  
+          "FC_LT_IDR",
+"FC_LT_IDR_ACTN",
+"FC_LT_IDR_DT",
+"FC_LT_IDR_ALRT",
+"FC_LT_IDR_SOLST"
+
+         ],
+         
+          "options":[  
+         
+        ]
+      }
+   }
+}

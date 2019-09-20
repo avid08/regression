@@ -1,0 +1,25 @@
+{  
+   "data":{  
+      "type":"entities",
+      "attributes":{  
+         "entities":[  
+            {  
+               "id":"117522",
+               "type":"FitchID"
+            }
+           
+         ],
+         "fitchFieldIds":[  
+            "FC_ADDRESS_1",
+            "FC_ADDRESS_2",
+            "FC_ADDRESS_3",
+            "FC_CITY",
+            "FC_ZIP_CD",
+            "FC_STATE",
+            "FC_STATE_CD",
+            "FC_REGION",
+            "FC_COUNTRY_NAME"
+         ]
+      }
+   }
+}

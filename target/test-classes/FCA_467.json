@@ -1,0 +1,39 @@
+{  
+   "data":{  
+      "type":"entities",
+      "attributes":{  
+         "entities":[  
+         
+           {  
+               "id":"1202737",
+               "type":"FitchID"
+            } 
+         ],
+         "issues": [
+                {
+                    "id": "US69348LE547",
+                    "type": "ISIN"
+                },
+                {
+                    "id": "82030572",
+                    "type": "FitchIssueID"
+                },
+                {
+                    "id": "69348LE54",
+                    "type": "CUSIP9"
+                }
+            ],
+         "fitchFieldIds":[  
+            "FC_IRR",
+            "FC_LT_IR",
+            "FC_UST_IR"
+           
+
+         ],
+         
+          "options":[  
+         
+        ]
+      }
+   }
+}

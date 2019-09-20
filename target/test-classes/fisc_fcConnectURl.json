@@ -1,0 +1,26 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "entities":[  
+            {  
+               "id":"1058453",
+               "type":"FitchID"
+            }, 
+            {  
+               "id":"14528",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+         
+            "FC_COMPANY_NAME",
+            "FC_CONNECT_URL"
+          
+         ],
+         "options":[  
+
+         ]
+      }
+   }
+}

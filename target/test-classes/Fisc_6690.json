@@ -1,0 +1,72 @@
+{
+   "data": {
+       "type": "valueRequest",
+       "attributes": {
+           "dateOptions": {
+           "dates":[  
+           "2019-07-24", "2017-03-31"
+            ]
+               
+           },
+           "entities": [
+              
+               {
+                    "id": "1085310",
+                    "type": "fitchId"
+                },
+                {
+                    "id": "103346",
+                    "type": "fitchId"
+                },
+                {
+                    "id": "141763",
+                    "type": "fitchId"
+                },
+                {
+                    "id": "153250",
+                    "type": "fitchId"
+                },
+                {
+                    "id": "111503",
+                    "type": "fitchId"
+                },
+                {
+                    "id": "110631",
+                    "type": "fitchId"
+                },
+                {
+                    "id": "14528",
+                    "type": "fitchId"
+                },
+                {
+                    "id": "1027885",
+                    "type": "fitchId"
+                },
+                {
+                    "id": "111151",
+                    "type": "fitchId"
+                },
+                {
+                    "id": "111493",
+                    "type": "fitchId"
+                },
+                {
+                    "id": "110633",
+                    "type": "fitchId"
+                }
+
+           ],
+           "fitchFieldIds": [
+                 "FC_CURRENCY_CDS",
+                 "FC_7Y_BPS_CDS",
+                "FC_10Y_BPS_CDS",
+                "FC_5Y_BPS_CDS"
+                
+
+           ],
+           "options": [
+            
+           ]
+       }
+   }
+}

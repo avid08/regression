@@ -1,0 +1,28 @@
+{
+   "data":{
+      "type":"valueResponse",
+      "attributes":{
+         "dateOptions":{
+            "dates":[
+		  "2017-12-31"
+            ],
+            "periods":[
+
+            ]
+         },
+         "entities":[
+            {
+               "id":"111631",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[
+            "FC_INT_INC_LOANS_BNK"
+          ],
+         "options":[
+           
+          
+         ]
+      }
+   }
+}

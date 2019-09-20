@@ -9,8 +9,5 @@
         <module name="restassuredtest" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="restassuredtest" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>

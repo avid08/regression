@@ -1,0 +1,29 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+            "periods":[  
+               {  
+                  "type":"Annual",
+                  "year":2015
+               }
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"140064",
+               "type":"fitchid"
+            }
+         ],
+         "fitchFieldIds":[  
+          "FC_CITY",
+          "BMI_GDP_NOM_LCU"
+         
+         ],
+         "options":[  
+           
+         ]
+      }
+   }
+}

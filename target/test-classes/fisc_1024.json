@@ -1,0 +1,42 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+            
+            ],
+            "periods":[  
+
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"1708",
+               "type":"fitchId"
+            },
+           
+            {  
+               "id":"104895",
+               "type":"fitchId"
+            },
+            {  
+               "id":"1383598",
+               "type":"fitchId"
+            }
+         ],
+         "fitchFieldIds":[  
+		 "FC_LT_IDR",
+"FC_LT_IDR_ACTN",
+"FC_LT_IDR_DT",
+"FC_LT_IDR_ALRT",
+"FC_LT_IDR_SOLST"
+
+           
+         ],
+         "options":[  
+
+         ]
+      }
+   }
+}

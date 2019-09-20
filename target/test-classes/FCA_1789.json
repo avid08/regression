@@ -1,0 +1,34 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+            "periods":[  
+               {  
+                  "type":"Annual",
+                  "year":2020
+               }
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"140064",
+               "type":"fitchid"
+            }
+         ],
+         "fitchFieldIds":[  
+           
+            "BMI_GDP_Nom_LCU",
+"BMI_GDP_Nom_pctch",
+"BMI_GDP_Nom_USD_ave",
+"BMI_GDP_Nom_EUR_ave",
+"BMI_GDP_Nom_USD_ppp"
+
+           
+         ],
+         "options":[  
+           
+         ]
+      }
+   }
+}

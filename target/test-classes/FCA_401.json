@@ -1,0 +1,46 @@
+{
+   "data":{
+      "type":"valueResponse",
+      "attributes":{
+         "dateOptions":{
+            "dates":[
+          "2018-03-31"
+            ],
+            "periods":[
+         
+
+            ]
+         },
+         "entities":[
+            {
+               "id":"1471422",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[
+           "FC_CASH_MARKETABLE_CORPS",
+           "FC_OTHER_CURRENT_ASSETS_CORPS",
+           "FC_STATEMENT_ID"
+         ],
+         "options":[
+            {
+               "name":"consolidation",
+               "value":"combined"
+            },
+            {
+               "name":"accountingStandard",
+               "value":"USGAAP"
+            },
+            {
+               "name":"filingType",
+               "value":"Original"
+            },
+              {
+               "name":"currency",
+               "value":"EUR"
+            }
+       
+         ]
+      }
+   }
+}

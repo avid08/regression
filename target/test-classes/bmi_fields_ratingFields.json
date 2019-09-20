@@ -1,0 +1,42 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+            "periods":[  
+               {  
+                  "type":"Annual",
+                  "year":2015
+               }
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"1437410",
+               "type":"fitchId"
+            }
+            ,
+            {  
+               "id":"29766L",
+               "type":"CUSIP6"
+            }
+            
+         ],
+         "fitchFieldIds":[  
+            "BMI_GDP_NOM_LCU",
+            "BMI_FISCAL_BALANCE_PCTGDP",
+             "FC_LT_IDR",
+             "FC_COMPANY_NAME",
+             "FC_FQR"
+            
+            
+         ],
+         "options":[  
+            {  
+               "name":"currency",
+               "value":"USD"
+            }
+         ]
+      }
+   }
+}

@@ -1,0 +1,41 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+        
+           "2015-12-31"
+
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"1003961",
+               "type":"FitchID"
+            },
+       
+             {  
+               "id":"1025444",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+            "FC_STATEMENT_ID",
+            "FC_COUNTRY",
+            "FC_PERIOD_DT",
+            "FC_COMM_EQUITY_TOTAL_ASSETS_BNK",
+            "FC_OTHER_EARNING_ASSETS_BNK",
+            "FC_NET_INCOME_BEFORE_PROFIT_TRANSFERS_BNK"
+         ],
+         "options":[  
+            {  
+               "name":"currency",
+               "value":"AED"
+            }
+            
+           
+         ]
+      }
+   }
+}

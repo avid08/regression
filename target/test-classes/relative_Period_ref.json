@@ -1,0 +1,54 @@
+{
+   "data":{
+      "type":"valueRequest",
+      "attributes":{
+         "dateOptions":{
+            "dates":[
+               
+            ],
+         "periods":[
+            {
+               "type":"Q4",
+               "year":2014,
+			   "relative":"-4"
+            },
+
+             {
+               "type":"Q3",
+               "year":2014,
+			   "relative":"-3"
+            },
+                      
+            {
+               "type":"Annual",
+               "year":2015,
+			    "relative":"-2"
+            }
+         ]},
+         "entities":[
+            {
+               "id":"110631",
+               "type":"fitchId"
+            }
+         ],
+         "fitchFieldIds":[
+            "FC_LT_IDR",
+          "FC_TOTAL_ASSETS_BNK"
+         ],
+         "options":[
+		{
+               "name":"consolidation",
+               "value":"combined"
+            },
+            {
+               "name":"accountingStandard",
+               "value":"USGAAP"
+            },
+            {
+               "name":"filingType",
+               "value":"Original"
+            }
+         ]
+      }
+   }
+}

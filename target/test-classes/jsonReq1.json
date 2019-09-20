@@ -1,0 +1,24 @@
+{"data": {
+   "attributes":    {
+      "entities": [      {
+         "id": "1025444",
+         "type": "FitchID",
+         "values": [         {
+            "fitchFieldId": "FC_CH_PUBLISH_FLAG",
+            "type": "text",
+            "values": [            {
+               "timeIntervalDate": "2016-06-20",
+               "timeIntervalPeriod":                {
+                  "type": "",
+                  "year": 0
+               },
+               "value": ["false"]
+            }]
+         }],
+         "fitchEntityId": "1025444"
+      }],
+      "dateOptions": {"dates": ["2016-06-20"]}
+   },
+   "id": "1",
+   "type": "valueResponse"
+}}

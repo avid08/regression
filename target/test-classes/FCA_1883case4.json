@@ -1,0 +1,45 @@
+{  
+   "data":{  
+      "type":"valueResponse",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+         "2022-12-31"
+            ],
+            "periods":[  
+{  
+                 "type":"Annual",
+                 "year":2022
+              }
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"14528",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+            "FC_GROSS_LOANS_BNK",
+            "FC_COMPANY_NAME",
+            "FC_LT_IDR",
+            "FC_LT_LC_ISSR_MDY",
+            "FC_LT_FC_ISSR_SP"
+         ],
+         "options":[  
+            {  
+               "name":"accountingStandard",
+               "value":"IFRS"
+            },
+            {  
+               "name":"currency",
+               "value":"USD"
+            },
+            {  
+               "name":"consolidation",
+               "value":"CON"
+            }
+         ]
+      }
+   }
+}

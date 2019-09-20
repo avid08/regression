@@ -1,0 +1,27 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+         	
+              },
+         "entities":[  
+            {  
+               "id":"1243051",
+               "type":"fitchid"
+            }
+         ],
+         "fitchFieldIds":[  
+            "FC_IMQR",
+"FC_IMQR_ACTN",
+"FC_IMQR_DT",
+"FC_IMQR_ALRT",
+"FC_IMQR_SOLST"
+           
+         ],
+         "options":[  
+           
+         ]
+      }
+   }
+}

@@ -1,0 +1,39 @@
+{  
+  "data":{  
+     "type":"valueResponse",
+     "attributes":{  
+        "dateOptions":{  
+          "dates":[  
+       "2007-01-11",
+      "2008-01-11",
+      "2009-01-11",
+      "2010-01-11",
+      "2011-01-11",
+      "2012-01-11",
+      "2013-01-11",
+      "2014-01-11",
+      "2015-01-11",
+      "2016-01-11",
+      "2017-01-11"
+
+          ],
+           "periods":[  
+
+           ]
+        },
+        "entities":[  
+           {  
+              "id":"107353",
+              "type":"fitchid"
+           }
+        ],
+        "fitchFieldIds":[  
+            "FC_LT_FC_ISSR_SP",         
+           "FC_LT_LC_ISSR_DT_SP"
+        ],
+        "options":[  
+
+        ]
+     }
+  }
+}

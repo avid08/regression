@@ -1,0 +1,41 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+                     "2014-12-31"    
+               
+            ],
+            "periods":[ 
+             {
+               "type":"Annual",
+               "year":2012
+            }
+              
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"110631",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+            "FC_TOTAL_ASSETS_BNK",
+            "FC_INT_INC_LOANS_BNK",
+            "FC_STATEMENT_ID",
+            "FC_COMPANY_NAME",
+            "FC_LT_IDR"
+         ],
+         "options":[ 
+  
+            {
+               "name":"currency",
+               "value":"JPY"
+            }
+           
+         ]
+      }
+   }
+}
