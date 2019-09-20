@@ -69,7 +69,9 @@
 			<class name="com.fulcrum.api.FulcrumDataAggregator" />
 			<class name="com.region.api.regions_datavalueRquest" />
 			<class name="com.equityprice.api.EquityPriceBenchMarkTestCases"/>	
-			
+			<class name="com.levfin.T1_Sprint_9"/>
+			<class name="com.Cds.Api.T1_Sprint_10"/>
+
 			
 
 			
