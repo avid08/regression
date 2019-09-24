@@ -102,13 +102,13 @@ public class Configuration {
                 BMIbaseURL = "https://api.bmiresearch.com";
                 break;
             default:
-            	 baseURI = "https://api.fitchconnect-qa.com";
-                 dataBaseServer1 = "mgo-que1a-cr001.fitchratings.com";
-                 dataBaseServer2 = "mgo-que1a-ur001.fitchratings.com";
-                 dataBaseServerNewESP9 = "mgo-que1a-sn001";
-                 databaseFitchEnty = "esp-9";
-                 BMIbaseURL = "https://api-stg1.bmiresearch.com";
-                 break;
+            	baseURI = "https://api.fitchconnect.com";
+                dataBaseServerNewESP9 = "mgo-uue1a-sn001";
+                dataBaseServer1 = "mgo-pue1c-cr001.fitchratings.com";
+                dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
+                databaseFitchEnty = "esp-9";
+                BMIbaseURL = "https://api.bmiresearch.com";
+                break;
         }
         bearerToken(environment);
         AuthrztionValue = "Bearer " + refresh_token;
@@ -125,8 +125,9 @@ public class Configuration {
         String filename = null;
         switch (environment) {
         case NOT_DEFINED:
-        	 filename = "Dev_granType.json";
-             break;
+        	filename = "PROD_granType.json";
+            break;
+       
             case DEV:
                 filename = "Dev_granType.json";
                 break;

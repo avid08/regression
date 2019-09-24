@@ -39,7 +39,7 @@ public class fisCon_Sprint37 extends Configuration {
 				
 	}
 		
-@Test
+@Test(enabled=false)
 	
 	public void BMI_Period_Monthly_quarterly_Annual_fisc2755() throws IOException{
 		
