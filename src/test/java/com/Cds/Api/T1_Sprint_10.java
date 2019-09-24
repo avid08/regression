@@ -28,7 +28,7 @@ public class T1_Sprint_10 extends Configuration {
         try {
             DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HH_mm_ss");
             Date date = new Date();
-            String filePath = System.getProperty("user.home") + "\\IdeaProjects\\APIRegression\\src\\test\\java\\com\\logs\\" + testSuiteName + "__" + dateFormat.format(date) + "_API_Test_Execution_Log.log";
+            String filePath = System.getProperty("user.home") + "\\IdeaProjects\\apiregresssion\\regression\\src\\test\\java\\com\\logs\\" + testSuiteName + "__" + dateFormat.format(date) + "_API_Test_Execution_Log.log";
             // String filePath = System.getProperty("user.home") + "\\IdeaProjects\\APIRegression\\src\\test\\java\\com\\logs\\log.log";
             org.apache.log4j.PatternLayout layout = new PatternLayout("%-5p %d %m%n");
             org.apache.log4j.RollingFileAppender appender = new RollingFileAppender(layout, filePath);
@@ -209,7 +209,7 @@ public class T1_Sprint_10 extends Configuration {
         };
     }
 
-    @Test(dataProvider = "Fisc6914_baseUser_SmokeTest") //The same CDS_Data_Mnemonics_v6.xlsx -> here we check 6918, but in data aggregator
+    /*@Test(dataProvider = "Fisc6914_baseUser_SmokeTest", enabled = false) //The same CDS_Data_Mnemonics_v6.xlsx -> here we check 6918, but in data aggregator
     public void Fisc6914_cdsChangeInPermissionsPdAndSpreadMetadata_BaseUser(String fitchFieldId, String isRestricted) throws IOException, InterruptedException {
         Thread.sleep(timeoutBetweenTests);
         Response res6914_baseUser = postToDataAggregatorBaseUser("6914.json");
@@ -227,7 +227,7 @@ public class T1_Sprint_10 extends Configuration {
             logger.log(Level.WARN, "FISC 6914 FAILED! TESTED FITCHFIELDID: " + fitchFieldId + " ERROR: " + err);
             Assert.fail();
         }
-    }
+    }*/
 
     @Test(dataProvider = "Fisc6914_baseUser_SmokeTest") //The same CDS_Data_Mnemonics_v6.xlsx -> here we check 6918, but in data aggregator
     public void Fisc6914_cdsChangeInPermissionsPdAndSpreadMetadata_CdsUser(String fitchFieldId, String isRestricted) throws IOException, InterruptedException {
@@ -243,17 +243,10 @@ public class T1_Sprint_10 extends Configuration {
         }
     }
 
-    @DataProvider(name = "Fisc7236")
-    public Object[][] getIdsFor7236(){
-        return new Object[][]{
-                {"111634471"},{"111634470"},{"111634469"},{"111634468"},{"111634467"},{"111634466"},{"111634465"},{"111634464"},{"111634479"},{"111634478"},{"111634477"},{"111634476"},{"111634475"},{"111634474"},{"111634473"},{"111634472"},{"111634487"},{"111634486"},{"111634485"},{"111634484"},{"111634483"},{"111634482"},{"111634481"},{"111634480"},{"111634495"},{"111634494"},{"111634493"},{"111634492"},{"111634491"},{"111634490"},{"111634489"},{"111634488"},{"111634455"},{"111634454"},{"111634453"},{"111634452"},{"111634451"},{"111634450"},{"111634449"},{"111634448"},{"111634463"},{"111634462"},{"111634461"},{"111634460"},{"111634459"},{"111634458"},{"111634457"},{"111634456"},{"111634497"},{"111634496"}
-        };
-    }
-
     @DataProvider(name = "Fisc7236_SmokeTest")
     public Object[][] getIdsFor7236_SmokeTest(){
         return new Object[][]{
-                {"111634471"}, {"111634470"}, {"111634469"}, {"111634468"}, {"111634467"}, {"111634466"}
+                {"122860754"}
         };
     }
 
@@ -272,18 +265,21 @@ public class T1_Sprint_10 extends Configuration {
         }
     }
 
-    @Test(dataProvider = "Fisc7236_SmokeTest")
-    public void Fisc7236_lfiResourcefulEndpointRelationship_FindOne(String id) throws InterruptedException {
+    @Test(/*dataProvider = "Fisc7236_SmokeTest"*/)
+    public void Fisc7236_lfiResourcefulEndpointRelationship_FindOne(/*String id*/) throws InterruptedException {
         Thread.sleep(timeoutBetweenTests);
-        String uri = baseURI + "/v1/levfinloans/" + id;
+        String uri = baseURI + "/v1/levfinloans/";
         Response res = getResponse(uri);
+        String findOneLfiResource = res.path("data[0].id");
+        Response partialResponse = getResponse(uri + findOneLfiResource);
+        System.out.println((uri + findOneLfiResource));
 
         try {
-            Assert.assertTrue(res.asString().contains("{\"related\":\"" + uri + "/entity\"}"));
-            logger.log(Level.INFO, "FISC 7236 FIND ONE PASSED! ID " + id);
+            Assert.assertTrue(partialResponse.asString().contains("{\"related\":\"" + uri + findOneLfiResource + "/entity\"}"));
+            logger.log(Level.INFO, "FISC 7236 FIND ONE PASSED!");
         }
         catch (AssertionError err){
-            logger.log(Level.WARN, "FISC 7236 FIND ONE FAILED! ID " + id + " ERROR: " + err);
+            logger.log(Level.WARN, "FISC 7236 FIND ONE FAILED! ERROR: " + err);
             Assert.fail();
         }
     }

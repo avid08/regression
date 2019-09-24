@@ -1,0 +1,1 @@
+{ "data": { "type": "valueRequest", "attributes": { "dateOptions": { }, "issues": [ { "id": "80879262", "type": "FitchIssueID" } ], "fitchFieldIds": [ "FC_LT_IR" ] } } }
