@@ -48,7 +48,7 @@ public class Cds_TestCases extends Configuration {
  
  
 	
-@Test
+@Test(enabled=false)
  public void cdsValueRequest_NonExistingCdsEntity_FISC_6691() throws IOException{
 	 
 		URL file = Resources.getResource("Fisc_6691.json");
@@ -93,11 +93,11 @@ public void cdsValueRequest_with150Entities_multipleDatapoints() throws IOExcept
 	 
 }
 
-@Test(enabled=false)
+@Test(enabled=true)
 
 public void Fisc_1974_CDS_MetaData__Verification() throws URISyntaxException, IOException {
 
-	URL fileUrl = Resources.getResource("CDS Data Mnemonics v5.1.xlsx");
+	URL fileUrl = Resources.getResource("CDS_Data_Mnemonics_v5.1.xlsx");
 	File src = new File(fileUrl.toURI());
 	FileInputStream file = new FileInputStream(src);
 	XSSFWorkbook wb = new XSSFWorkbook(file);

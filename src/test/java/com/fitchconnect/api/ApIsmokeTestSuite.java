@@ -2877,7 +2877,7 @@ public class ApIsmokeTestSuite extends Configuration {
 
 		String newURI = entityURI + "?page[number]=";
 
-		ExecutorService executor = Executors.newFixedThreadPool(1);
+		ExecutorService executor = Executors.newFixedThreadPool(10);
 
 		for (int i = 0; i < numberofPages; i++) {
 			final int idx = i;

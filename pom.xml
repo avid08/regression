@@ -25,7 +25,8 @@
         <artifactId>testng</artifactId>
         <version>6.8.8</version>
     </dependency>
-    <dependency>
+    
+   <dependency>
         <groupId>com.jayway.restassured</groupId>
         <artifactId>rest-assured</artifactId>
         <version>2.4.1</version>
