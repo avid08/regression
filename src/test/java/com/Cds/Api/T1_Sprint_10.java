@@ -257,6 +257,8 @@ public class T1_Sprint_10 extends Configuration {
 
         try {
             Assert.assertTrue(res.asString().contains("{\"data\":["));
+            Assert.assertTrue(res.asString().contains("\"related\":"));
+            Assert.assertTrue(res.asString().contains("/entity\""));
             logger.log(Level.INFO, "FISC 7236 FIND ALL PASSED!");
         }
         catch(AssertionError err){
