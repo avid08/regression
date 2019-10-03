@@ -218,17 +218,103 @@ public class T1_Sprint_9 extends Configuration {
         }
     }
 
-    @Test
-    public void Fisc6929_lfiApiChnages_DataAggregator() throws IOException, InterruptedException {
-        Thread.sleep(timeoutBetweenTests);
-        Response res = postToDataAggregator("6929.json");
-        try {
-            Assert.assertTrue(res.asString().contains("{\"fitchFieldId\":\"FC_LT_IR\",\"type\":\"text\",\"values\":"));
-            logger.log(Level.INFO, "FISC 6929 PASSED!");
-        }
+    @DataProvider(name = "Fisc6929")
+    public Object[][] getDataFor6929() throws IOException {
+        String apiResponse = postToDataAggregator("6929.json").asString();
+        return new Object[][]{
+                {"FC_100_MARGIN","numerical",apiResponse},
+                {"FC_50_MARGIN","numerical",apiResponse},
+                {"FC_AMT_REPRICD","numerical",apiResponse},
+                {"FC_ASSET_SL_CNG","text",apiResponse},
+                {"FC_BID_PRICE","numerical",apiResponse},
+                {"FC_BREAK_DT","date",apiResponse},
+                {"FC_COMMIT_DT","date",apiResponse},
+                {"FC_BOND_AMT_CONCURT","numerical",apiResponse},
+                {"FC_CURR","text",apiResponse},
+                {"FC_COVENANT_COMMENT_FNL","text",apiResponse},
+                {"FC_FINANCIAL_COVENANT_FNL","text",apiResponse},
+                {"FC_INCREMENTAL_TERMS_FNL","text",apiResponse},
+                {"FC_OTHR_COMMENT","text",apiResponse},
+                {"FC_DDTL_AMT","numerical",apiResponse},
+                {"FC_DDTL_AVL_MTH","numerical",apiResponse},
+                {"FC_DL_CAT","text",apiResponse},
+                {"FC_DELAY_CLS","text",apiResponse},
+                {"FC_DESC_TERMS","text",apiResponse},
+                {"FC_EBITDA","numerical",apiResponse},
+                {"FC_ECF_CHNG","text",apiResponse},
+                {"FC_EQTY_CONT_LBO","text",apiResponse},
+                {"FC_FIN_COV_CHNG","text",apiResponse},
+                {"FC_FNL_DOC_SCR","text",apiResponse},
+                {"FC_SCRD_LEV","numerical",apiResponse},
+                {"FC_FXD_FLTING","text",apiResponse},
+                {"FC_FLX_DT_LN1","date",apiResponse},
+                {"FC_FLX_TYPE_LN1","text",apiResponse},
+                {"FC_REPRICRD_DEAL_FLOOR","numerical",apiResponse},
+                {"FC_GRID_CHANGE","text",apiResponse},
+                {"FC_INCR_FCLTY_CHNG","text",apiResponse},
+                {"FC_CALLS_PRLM","text",apiResponse},
+                {"FC_COVENANT_COMMENT_PRLM","text",apiResponse},
+                {"FC_FINANCIAL_COVENANT_PRLM","text",apiResponse},
+                {"FC_INITIAL_FLT_FEE","numerical",apiResponse},
+                {"FC_FLOOR_PRLM","text",apiResponse},
+                {"FC_INCREMENTAL_TERMS_PRLM","text",apiResponse},
+                {"FC_MATURITY_DATE_PRLM","date",apiResponse},
+                {"FC_OID_PRLM","text",apiResponse},
+                {"FC_INITIAL_OTHR","text",apiResponse},
+                {"FC_ISSUE_AMOUNT_PRLM","numerical",apiResponse},
+                {"FC_INITIAL_SPRD","text",apiResponse},
+                {"FC_TERM_PRLM","numerical",apiResponse},
+                {"FC_YT3_PRLM","text",apiResponse},
+                {"FC_YTM_PRLM","text",apiResponse},
+                {"FC_LIBOR_RT","numerical",apiResponse},
+                {"FC_MARKET_ISSUANCE","text",apiResponse},
+                {"FC_MEETING_DT","date",apiResponse},
+                {"FC_MFN","numerical",apiResponse},
+                {"FC_OFFER_PRC","numerical",apiResponse},
+                {"FC_PERMID","numerical",apiResponse},
+                {"FC_PERMNAME","text",apiResponse},
+                {"FC_PIK","text",apiResponse},
+                {"FC_PRELM_DOC","text",apiResponse},
+                {"FC_PRVT_PLCD_SLTL","numerical",apiResponse},
+                {"FC_REPAY_AMT","numerical",apiResponse},
+                {"FC_REPAY_101","text",apiResponse},
+                {"FC_REPRC","text",apiResponse},
+                {"FC_RP_CHNG","text",apiResponse},
+                {"FC_SPRD_REPRC_DL","numerical",apiResponse},
+                {"FC_STORY","text",apiResponse},
+                {"FC_SUNSET","numerical",apiResponse},
+                {"FC_SUNSET_CMT","text",apiResponse},
+                {"FC_TTL_LEV","numerical",apiResponse},
+                {"FC_TRAN_CNT","numerical",apiResponse},
+                {"FC_CALLS_FNL","text",apiResponse},
+                {"FC_FLOOR_FNL","text",apiResponse},
+                {"FC_MATURITY_DATE_FNL","date",apiResponse},
+                {"FC_OID_FNL","text",apiResponse},
+                {"FC_ISSUE_AMOUNT_FNL","numerical",apiResponse},
+                {"FC_CURRENT_SPREAD","text",apiResponse},
+                {"FC_TERM_FNL","numerical",apiResponse},
+                {"FC_YT3_FNL","text",apiResponse},
+                {"FC_YTM_FNL","text",apiResponse},
+                {"FC_LAUNCH_DATE","date",apiResponse},
+                {"FC_LEAD_ARRANGERS","text",apiResponse},
+                {"FC_OWNERSHIP","text",apiResponse},
+                {"FC_CMNT_PURPOSE","text",apiResponse},
+                {"FC_REVLVR_SIZE","text",apiResponse},
+                {"FC_TLA","numerical",apiResponse},
+                {"FC_TRANCHE_NM","text",apiResponse},
+                {"FC_TRANSACTION_TYPE","text",apiResponse}
+        };
+    }
 
+    @Test(dataProvider = "Fisc6929")
+    public void Fisc6929_lfiApiChnages_DataAggregator(String attribute, String type, String responseFromApi){
+        try {
+            String expectedStringInApi = "\"fitchFieldId\":\"" + attribute + "\",\"type\":\"" + type;
+            Assert.assertTrue(responseFromApi.contains(expectedStringInApi));
+            logger.log(Level.INFO, "FISC 6929 PASSED! ATTRIBUTE " + attribute);
+        }
         catch (AssertionError err) {
-            logger.log(Level.WARN, "FISC 6929 FAILED! ERROR " + err);
+            logger.log(Level.WARN, "FISC 6929 FAILED! ATTRIBUTE " + attribute + "ERROR " + err);
             Assert.fail();
         }
     }
