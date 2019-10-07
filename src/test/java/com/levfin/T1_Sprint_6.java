@@ -4,7 +4,7 @@ import com.backendutils.Env;
 import com.backendutils.ExcelUtils;
 import com.backendutils.MongoUtils;
 import com.backendutils.PostgresUtils;
-import com.fitchconnect.api.Configuration;
+import com.configuration.api.Configuration;
 import com.google.common.io.Resources;
 import com.jayway.restassured.response.Response;
 import com.mongodb.Block;

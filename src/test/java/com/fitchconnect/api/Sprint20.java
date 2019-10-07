@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
+import com.configuration.api.Configuration;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.testng.annotations.Test;

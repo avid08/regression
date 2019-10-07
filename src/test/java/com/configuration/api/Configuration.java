@@ -1,5 +1,5 @@
 
-package com.fitchconnect.api;
+package com.configuration.api;
 
 import static com.jayway.restassured.RestAssured.given;
 

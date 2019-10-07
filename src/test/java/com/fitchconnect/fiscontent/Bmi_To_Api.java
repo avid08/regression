@@ -7,7 +7,7 @@ import java.util.List;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import com.fitchconnect.api.Configuration;
+import com.configuration.api.Configuration;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
 

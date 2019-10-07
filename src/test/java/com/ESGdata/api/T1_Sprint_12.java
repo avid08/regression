@@ -1,4 +1,4 @@
-package com.fitchconnect.fiscontent;
+package com.ESGdata.api;
 
 import com.apiutils.APIUtils;
 import com.backendutils.Env;

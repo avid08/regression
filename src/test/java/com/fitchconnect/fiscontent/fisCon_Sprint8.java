@@ -10,7 +10,7 @@ import java.net.URL;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 
-import com.fitchconnect.api.Configuration;
+import com.configuration.api.Configuration;
 import com.google.common.io.Resources;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;

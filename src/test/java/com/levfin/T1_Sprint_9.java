@@ -1,6 +1,6 @@
 package com.levfin;
 
-import com.fitchconnect.api.Configuration;
+import com.configuration.api.Configuration;
 import com.google.common.io.Resources;
 import com.jayway.restassured.response.Response;
 import groovy.json.internal.Charsets;

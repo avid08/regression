@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import com.configuration.api.Configuration;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 

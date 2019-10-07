@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.configuration.api.Configuration;
 import org.hamcrest.Matchers;
 import org.testng.Assert;
 import org.testng.annotations.Test;

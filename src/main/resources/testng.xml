@@ -4,7 +4,7 @@
 	<test name="API Test Cases">
 		<classes>
 			<class name="com.fitchconnect.api.ApIsmokeTestSuite" />
-			<class name="com.fitchconnect.api.Configuration" />
+			<class name="com.configuration.api.Configuration" />
 			<class name="com.fitchconnect.api.BatchService_Testing" />
 			<class name="com.fitchconnect.api.Sprint20" />
 			<class name="com.fitchconnect.api.Sprint21" />
@@ -68,12 +68,9 @@
 			<class name="com.Cds.Api.Cds_TestCases" />
 			<class name="com.fulcrum.api.FulcrumDataAggregator" />
 			<class name="com.region.api.regions_datavalueRquest" />
-			<class name="com.equityprice.api.EquityPriceBenchMarkTestCases"/>	
+			<class name="com.equityprice.api.EquityPriceBenchMarkTestCases"/>
 			<class name="com.levfin.T1_Sprint_9"/>
 			<class name="com.Cds.Api.T1_Sprint_10"/>
-
-			
-
 			
 		</classes>
 

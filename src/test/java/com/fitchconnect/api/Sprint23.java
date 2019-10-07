@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import com.configuration.api.Configuration;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 

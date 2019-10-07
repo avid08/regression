@@ -11,7 +11,7 @@ import org.json.simple.parser.ParseException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.fitchconnect.api.Configuration;
+import com.configuration.api.Configuration;
 import com.jayway.restassured.response.Header;
 import com.jayway.restassured.response.Headers;
 import com.jayway.restassured.response.Response;

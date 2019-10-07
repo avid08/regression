@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.containsString;
 import java.io.IOException;
 import java.net.URL;
 
+import com.configuration.api.Configuration;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -14,7 +15,7 @@ import com.jayway.restassured.response.Response;
 
 import groovy.json.internal.Charsets;
 
-public class Sprint32 extends Configuration{
+public class Sprint32 extends Configuration {
 
 
 	@Test
