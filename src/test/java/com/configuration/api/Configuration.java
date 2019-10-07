@@ -25,7 +25,7 @@ public class Configuration {
     protected String AuthrztionValue;
     protected String baseURI;
     protected String refresh_token;
-    String env;
+    public String env;
     protected String databaseFitchEnty;
     protected String dataBaseServer1;
     protected String dataBaseServerNewESP9;
@@ -33,9 +33,9 @@ public class Configuration {
     protected String id;
     protected String id1;
     public static Logger logger;
-    String metaEndPoint = "/v1/metadata/fields"; // Metadata-EndPoint
+    public String metaEndPoint = "/v1/metadata/fields"; // Metadata-EndPoint
     public String metaUrl = baseURI + metaEndPoint;
-    String dataEndPoint = "/v1/data/valueRequest";
+    public String dataEndPoint = "/v1/data/valueRequest";
     protected String dataPostUrl = baseURI + dataEndPoint; // Data Aggregator
     protected String BMIbaseURL;                                                        // -EndPoint
     protected String XappClintIDvalue = "3dab0f06-eb00-4bee-8966-268a0ee27ba0";
@@ -102,12 +102,12 @@ public class Configuration {
                 BMIbaseURL = "https://api.bmiresearch.com";
                 break;
             default:
-            	baseURI = "https://api.fitchconnect.com";
-                dataBaseServerNewESP9 = "mgo-uue1a-sn001";
-                dataBaseServer1 = "mgo-pue1c-cr001.fitchratings.com";
-                dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
+                baseURI = "https://api.fitchconnect-qa.com";
+                dataBaseServer1 = "mgo-que1a-cr001.fitchratings.com";
+                dataBaseServer2 = "mgo-que1a-ur001.fitchratings.com";
+                dataBaseServerNewESP9 = "mgo-que1a-sn001";
                 databaseFitchEnty = "esp-9";
-                BMIbaseURL = "https://api.bmiresearch.com";
+                BMIbaseURL = "https://api-stg1.bmiresearch.com";
                 break;
         }
         bearerToken(environment);
@@ -125,16 +125,14 @@ public class Configuration {
         String filename = null;
         switch (environment) {
         case NOT_DEFINED:
-        	filename = "PROD_granType.json";
+        	filename = "QA_granType.json";
             break;
-       
             case DEV:
                 filename = "Dev_granType.json";
                 break;
             case INT:
                 filename = "Int_granType.json";
                 break;
-        
             case QA:
                 filename = "QA_granType.json";
                 break;
