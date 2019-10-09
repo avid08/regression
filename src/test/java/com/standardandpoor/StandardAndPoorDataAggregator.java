@@ -5,7 +5,7 @@ import java.util.Arrays;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.fitchconnect.api.Configuration;
+import com.configuration.api.Configuration;
 import com.google.gson.Gson;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.Header;

@@ -8,6 +8,7 @@ import static org.hamcrest.Matchers.containsString;
 import java.io.IOException;
 import java.net.URL;
 
+import com.configuration.api.Configuration;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 

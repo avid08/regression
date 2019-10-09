@@ -1,0 +1,96 @@
+
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+        "2009-09-20"
+               
+            ],
+            "periods":[  
+              
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"562",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+        
+"FC_DATE_CDS",
+"FC_CURRENCY_CDS",
+"FC_RANK_CDS",
+"FC_RESTRUCTURING_CDS",
+"FC_10Y_BPS_CDS",
+"FC_10Y_DD_BPS_CDS",
+"FC_10Y_MM_BPS_CDS",
+"FC_10Y_QQ_BPS_CDS",
+"FC_10Y_WW_BPS_CDS",
+"FC_10Y_YY_BPS_CDS",
+"FC_10Y_DD_PERCENT_CDS",
+"FC_10Y_MM_PERCENT_CDS",
+"FC_10Y_QQ_PERCENT_CDS",
+"FC_10Y_WW_PERCENT_CDS",
+"FC_10Y_YY_PERCENT_CDS",
+"FC_1Y_BPS_CDS",
+"FC_1Y_DD_BPS_CDS",
+"FC_1Y_MM_BPS_CDS",
+"FC_1Y_QQ_BPS_CDS",
+"FC_1Y_WW_BPS_CDS",
+"FC_1Y_YY_BPS_CDS",
+"FC_1Y_DD_PERCENT_CDS",
+"FC_1Y_MM_PERCENT_CDS",
+"FC_1Y_QQ_PERCENT_CDS",
+"FC_1Y_WW_PERCENT_CDS",
+"FC_1Y_YY_PERCENT_CDS",
+"FC_3Y_BPS_CDS",
+"FC_3Y_DD_BPS_CDS",
+"FC_3Y_MM_BPS_CDS",
+"FC_3Y_QQ_BPS_CDS",
+"FC_3Y_WW_BPS_CDS",
+"FC_3Y_YY_BPS_CDS",
+"FC_3Y_DD_PERCENT_CDS",
+"FC_3Y_MM_PERCENT_CDS",
+"FC_3Y_QQ_PERCENT_CDS",
+"FC_3Y_WW_PERCENT_CDS",
+"FC_3Y_YY_PERCENT_CDS",
+"FC_5Y_BPS_CDS",
+"FC_5Y_DD_BPS_CDS",
+"FC_5Y_MM_BPS_CDS",
+"FC_5Y_QQ_BPS_CDS",
+"FC_5Y_WW_BPS_CDS",
+"FC_5Y_YY_BPS_CDS",
+"FC_5Y_DD_PERCENT_CDS",
+"FC_5Y_MM_PERCENT_CDS",
+"FC_5Y_QQ_PERCENT_CDS",
+"FC_5Y_WW_PERCENT_CDS",
+"FC_5Y_YY_PERCENT_CDS",
+"FC_7Y_BPS_CDS",
+"FC_7Y_DD_BPS_CDS",
+"FC_7Y_MM_BPS_CDS",
+"FC_7Y_QQ_BPS_CDS",
+"FC_7Y_WW_BPS_CDS",
+"FC_7Y_YY_BPS_CDS",
+"FC_7Y_DD_PERCENT_CDS",
+"FC_7Y_MM_PERCENT_CDS",
+"FC_7Y_QQ_PERCENT_CDS",
+"FC_7Y_WW_PERCENT_CDS",
+"FC_7Y_YY_PERCENT_CDS",
+"FC_SOV_5YR_CDS",
+"FC_SOV_5YR_DD_CDS",
+"FC_SOV_5YR_MM_CDS",
+"FC_SOV_5YR_QQ_CDS",
+"FC_SOV_5YR_WW_CDS",
+"FC_SOV_5YR_YY_CDS"
+
+			
+         ],
+         "options":[  
+
+         ]
+      }
+   }
+}

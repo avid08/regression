@@ -1,0 +1,33 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+        
+               
+            ],
+            "periods":[  
+              
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"117954",
+               "type":"FitchID"
+            },
+              {  
+               "id":"140818",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+            "FC_MRKT_SECTOR_ALL_DESC",
+			"FC_MRKT_SECTOR_ALL_ID"
+         ],
+         "options":[  
+
+         ]
+      }
+   }
+}

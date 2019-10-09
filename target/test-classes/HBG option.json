@@ -1,0 +1,46 @@
+{
+   "data":{
+      "type":"valueResponse",
+      "attributes":{
+         "dateOptions":{
+            "dates":[
+		"2015-08-09"
+            ],
+            "periods":[
+
+            ]
+         },
+         "entities":[
+            {
+               "id":"1429993",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[
+            "FC_CALLED_SHARE_CAPITAL_INS"
+         ],
+         "options":[
+            {
+               "name":"consolidation",
+               "value":"combined"
+            },
+            {
+               "name":"accountingStandard",
+               "value":"HGB"
+            },
+            {
+               "name":"filingType",
+               "value":"Original"
+            },
+            {
+               "name":"currency",
+               "value":"USD"
+            },
+            {
+               "name":"linesOfBusiness",
+               "value":"Life"
+            }
+         ]
+      }
+   }
+}

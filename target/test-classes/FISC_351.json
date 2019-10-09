@@ -1,0 +1,29 @@
+{
+   "data":{
+      "type":"valueResponse",
+      "attributes":{
+         "dateOptions":{
+            "dates":[
+
+            ],
+            "periods":[
+
+            ]
+         },
+         "entities":[
+            {
+               "id":"90260665 ",
+               "type":"fitchGroupId"
+            }
+         ],
+         "fitchFieldIds":[
+            "FC_SPONSOR_SPV",
+            "FC_COUNTRY_NAME"
+            
+         ],
+         "options":[
+           
+         ]
+      }
+   }
+}

@@ -10,7 +10,7 @@ import java.net.URL;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 
-import com.fitchconnect.api.Configuration;
+import com.configuration.api.Configuration;
 import com.google.common.io.Resources;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
@@ -23,7 +23,7 @@ public class fisCon_Sprint8 extends Configuration {
 	public void FISC_606_attributefilter() {
 
 		String FIRfilterUrl = baseURI
-				+ "/v1/financialImpliedRatings/?filter[fitchEntityId]=1143152,1003922,1000469,1040027&filter[rating]=c&filter[stmntDate]=2014-12-31&filter[stmntDateRank]=4";
+				+ "/v1/financialImpliedRatings/?filter[fitchEntityId]=1143152,1003922,1000469,1040027&filter[rating]=c&filter[stmntDate]=2014-12-31&filter[stmntDateRank]=5";
 
 		Response res = given().header("Authorization", (AuthrztionValue)).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType(ContentType.JSON).when()

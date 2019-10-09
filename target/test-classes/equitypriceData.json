@@ -1,0 +1,35 @@
+{  
+   "data":{  
+      "type":"valueResponse",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+                      ],
+            "periods":[  
+            ]
+         },
+         "benchmarks":[  
+           {  
+               "id":"4",
+               "type":"benchmarkId"
+            }
+         ],
+         "fitchFieldIds":[
+ "FC_EQUITY_BENCHMARK_MAX_INCL_TOP_TAIL_DAILY",
+"FC_EQUITY_BENCHMARK_MEAN_7_DAY",
+"FC_EQUITY_BENCHMARK_MEAN_DAILY",
+"FC_EQUITY_BENCHMARK_MEDIAN_DAILY",
+"FC_EQUITY_BENCHMARK_STDDEV_DAILY",
+"FC_EQUITY_BENCHMARK_MIN_EXCL_TOP_TAIL_30_DAY",
+"FC_EQUITY_BENCHMARK_MEAN_90_DAY",
+"FC_EQUITY_BENCHMARK_COUNT_INCL_TOP_TAIL_180_DAY",
+"FC_EQUITY_BENCHMARK_MIN_INCL_TOP_TAIL_365_DAY"
+         ],
+         "options":[  
+
+ 
+
+         ]
+      }
+   }
+}

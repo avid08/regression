@@ -15,7 +15,7 @@ import com.DmetadataRegression.Helpers.MetaType;
 import com.DmetadataRegression.Helpers.Runnables.DataConsumer;
 import com.DmetadataRegression.Helpers.Runnables.DataProducer;
 import com.DmetadataRegression.Helpers.TestRecord.TestRecord;
-import com.fitchconnect.api.Configuration;
+import com.configuration.api.Configuration;
 import com.jayway.restassured.response.Header;
 
 import javafx.util.Pair;

@@ -1,0 +1,27 @@
+{
+   "data":{
+      "type":"valueRequest",
+      "attributes":{
+         "dateOptions":{
+            "dates":[
+              "2010-13-09"
+           
+            ],
+         "periods":[
+      
+         ]},
+         "entities":[
+            {
+               "id":"1012179",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[
+            "FC_INT_INC_LOANS_BNK1"
+         ],
+         "options":[
+		
+         ]
+      }
+   }
+}

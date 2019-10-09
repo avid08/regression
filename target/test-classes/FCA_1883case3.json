@@ -1,0 +1,38 @@
+{  
+   "data":{  
+      "type":"valueResponse",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+          
+            ],
+            "periods":[  
+
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"1024280",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+            "FC_GROSS_LOANS_BNK"
+         ],
+         "options":[  
+            {  
+               "name":"accountingStandard",
+               "value":"IFRS"
+            },
+            {  
+               "name":"currency",
+               "value":"USD"
+            },
+            {  
+               "name":"consolidation",
+               "value":"CON"
+            }
+         ]
+      }
+   }
+}

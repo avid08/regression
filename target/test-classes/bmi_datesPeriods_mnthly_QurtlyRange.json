@@ -1,0 +1,52 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+
+            ],
+            "dateRanges":[  
+               {  
+                  "startDate":"2015-09-30",
+                  "endDate":"2015-12-31",
+                  "frequency":"Monthly"
+               }
+            ],
+            "periods":[  
+
+            ],
+            "periodRanges":[  
+               {  
+                  "startPeriod":{  
+                     "type":"Q1",
+                     "year":2004
+                  },
+                  "endPeriod":{  
+                     "type":"Q4",
+                     "year":2004
+                  }
+               }
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"140104",
+               "type":"fitchId"
+            }
+         ],
+         "fitchFieldIds":[  
+            "BMI_GDP_Nom_LCU",
+            "BMI_INDEX_Composite_UNIT",
+            "BMI_INDEX_Pol_LT_UNIT",
+            "FC_COMPANY_NAME",
+            "FC_TOTAL_ASSETS_BNK",
+            "FC_LT_IDR"
+         ],
+         "options":[  
+
+         ]
+      }
+   }
+}
+

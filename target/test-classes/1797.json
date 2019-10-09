@@ -1,0 +1,27 @@
+{  
+   "data":{  
+      "type":"valueResponse",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+         "2025-01-31"
+            ],
+            "periods":[  
+
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"140090",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+            "FC_LT_ASN_NSR_SP"
+         ],
+         "options":[  
+           
+         ]
+      }
+   }
+}

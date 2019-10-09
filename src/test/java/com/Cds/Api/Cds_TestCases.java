@@ -17,7 +17,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 
-import com.fitchconnect.api.Configuration;
+import com.configuration.api.Configuration;
 import com.google.common.io.Resources;
 import com.jayway.restassured.response.Response;
 
@@ -48,7 +48,7 @@ public class Cds_TestCases extends Configuration {
  
  
 	
-@Test
+@Test(enabled=true)
  public void cdsValueRequest_NonExistingCdsEntity_FISC_6691() throws IOException{
 	 
 		URL file = Resources.getResource("Fisc_6691.json");
@@ -68,7 +68,7 @@ public class Cds_TestCases extends Configuration {
 	 
 }
  
-@Test
+@Test(enabled=false)
 public void cdsValueRequest_with150Entities_multipleDatapoints() throws IOException{
 	 
 		URL file = Resources.getResource("Fisc_6690_with150Entities.json");
@@ -97,7 +97,7 @@ public void cdsValueRequest_with150Entities_multipleDatapoints() throws IOExcept
 
 public void Fisc_1974_CDS_MetaData__Verification() throws URISyntaxException, IOException {
 
-	URL fileUrl = Resources.getResource("CDS_Data_Mnemonics_v5.xlsx");
+	URL fileUrl = Resources.getResource("CDS_Data_Mnemonics_v5.1.xlsx");
 	File src = new File(fileUrl.toURI());
 	FileInputStream file = new FileInputStream(src);
 	XSSFWorkbook wb = new XSSFWorkbook(file);
@@ -114,10 +114,12 @@ public void Fisc_1974_CDS_MetaData__Verification() throws URISyntaxException, IO
 		String fitchFieldIds = mySheet.getRow(i).getCell(0).getStringCellValue();
 		String displayName = mySheet.getRow(i).getCell(1).getStringCellValue();
 		String fitchFieldDescp = mySheet.getRow(i).getCell(2).getStringCellValue();
-		String dataType = mySheet.getRow(i).getCell(4).getStringCellValue();
-		String permission = mySheet.getRow(i).getCell(5).getStringCellValue();
+		String dataType = mySheet.getRow(i).getCell(3).getStringCellValue();
+		String permission = mySheet.getRow(i).getCell(4).getStringCellValue();
 
 		String DataTypeUrl = metaUrl + "/" + fitchFieldIds;
+		
+		System.out.println(DataTypeUrl );
 
 
 

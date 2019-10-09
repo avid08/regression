@@ -1,0 +1,43 @@
+{
+   "data":{
+      "type":"valueResponse",
+      "attributes":{
+         "dateOptions":{
+          
+         },
+         "entities":[
+            {
+               "id":"1346752",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[
+         "FC_NET_INSURANCE_INC_BNK"
+
+
+         ],
+         "options":[
+            {
+               "name":"consolidation",
+               "value":"combined"
+            },
+            {
+               "name":"accountingStandard",
+               "value":"Local"
+            },
+            {
+               "name":"filingType",
+               "value":"Original"
+            },
+            {
+               "name":"currency",
+               "value":"USD"
+            },
+			{
+               "name":"linesOfBusiness",
+               "value":"Life"
+            }
+         ]
+      }
+   }
+}

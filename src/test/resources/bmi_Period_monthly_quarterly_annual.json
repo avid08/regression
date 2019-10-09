@@ -39,11 +39,8 @@
          "fitchFieldIds":[  
              "BMI_INDEX_Composite_UNIT",
              "BMI_INDEX_Pol_LT_UNIT",
-             "BMI_GDP_Nom_LCU",
-             "FC_COMPANY_NAME",
-             "FC_TOTAL_ASSETS_BNK",
-             "FC_LT_IDR"
-
+             "BMI_GDP_Nom_LCU"
+             
             ],
          "options":[  
             

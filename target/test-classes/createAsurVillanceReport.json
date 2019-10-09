@@ -1,0 +1,15 @@
+{
+  "data": {
+    "type": "surveillanceReports",
+    "attributes": {
+      "fileName": "Acme Inc. Series 2016-1.xlsx",
+      "fileMimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "fileUploadDateTime": "2014-02-15T12:45:55.159Z"
+    },
+    "relationships": {
+      "surveillanceDeals": {
+        "data": { "type": "surveillanceDeals", "id": "8d5498ea-9a39-4def-8f9d-1f1d5dd592e6" }
+      }
+    }
+  }
+}

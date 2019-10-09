@@ -1,0 +1,33 @@
+
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+   
+            
+            ],
+            "periods":[  
+               
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"6684",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+        
+"FC_DATE_CDS",
+"FC_RISK_BENCHMARK_MM_BPS_CDS"
+
+			
+         ],
+         "options":[  
+
+         ]
+      }
+   }
+}

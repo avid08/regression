@@ -3,6 +3,7 @@ package com.fitchconnect.api;
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.containsString;
 
+import com.configuration.api.Configuration;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 

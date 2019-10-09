@@ -1,0 +1,30 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "entities":[  
+            {  
+               "id":"1011826",
+               "type":"fitchId"
+            }
+         ],
+         "fitchFieldIds":[  
+           "FC_PERIOD_DT_FIR",
+"FC_STATEMENT_ID_FIR",
+"FC_TOTAL_ASSETS_FIR",
+"FC_COUNTRY_RISK_IND_FIR",
+"FC_REGION_FIR",
+"FC_PERIOD_DT_RANK_FIR",
+"FC_PROFIT_FIR",
+"FC_LOAN_QUAL_FIR",
+"FC_MODEL_SCORE_FIR",
+"FC_FIR",
+"FC_BAND_RANK_FIR"
+
+         ],
+         "options":[ 
+
+         ]
+      }
+   }
+}

@@ -1,0 +1,34 @@
+{  
+   "data":{  
+      "type":"valueResponse",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+
+            ],
+            "periods":[  
+              
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"140046",
+               "type":"fitchid"
+            }
+         ],
+         "fitchFieldIds":[  
+            "FC_MRKT_SECTOR_1_DESC",
+"FC_MRKT_SECTOR_1_ID",
+"FC_MRKT_SECTOR_2_DESC",
+"FC_MRKT_SECTOR_2_ID",
+"FC_MRKT_SECTOR_3_DESC",
+"FC_MRKT_SECTOR_3_ID",
+"FC_MRKT_SECTOR_4_DESC",
+"FC_MRKT_SECTOR_4_ID"
+         ],
+         "options":[  
+
+         ]
+      }
+   }
+}

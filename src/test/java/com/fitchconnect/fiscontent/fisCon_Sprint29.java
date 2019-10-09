@@ -8,7 +8,7 @@ import java.io.IOException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.fitchconnect.api.Configuration;
+import com.configuration.api.Configuration;
 import com.jayway.restassured.response.Response;
 
 public class fisCon_Sprint29 extends Configuration {

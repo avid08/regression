@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="ApIsmokeTestSuite.xml">
+	<test name="API Test Cases">
+		<classes>
+			<class name="com.fitchconnect.api.ApIsmokeTestSuite" />
+			<class name="com.configuration.api.Configuration" />
+			<class name="com.fitchconnect.api.BatchService_Testing" />
+			<class name="com.fitchconnect.api.Sprint20" />
+			<class name="com.fitchconnect.api.Sprint21" />
+			<class name="com.fitchconnect.api.Sprint22" />
+			<class name="com.fitchconnect.api.Sprint23" />
+			<class name="com.fitchconnect.api.Sprint24" />
+			<class name="com.fitchconnect.api.Sprint25" />
+			<class name="com.fitchconnect.api.Sprint26" />
+			<class name="com.fitchconnect.api.Sprint27" />
+			<class name="com.fitchconnect.api.Sprint28" />
+			<class name="com.fitchconnect.api.Sprint29" />
+			<class name="com.fitchconnect.api.Sprint30" />
+			<class name="com.fitchconnect.api.Sprint31" />
+			<class name="com.fitchconnect.api.Sprint32" />
+			<class name="com.fitchconnect.api.Sprint33" />
+			<class name="com.fitchconnect.api.Sprint34" />
+			<class name="com.fitchconnect.api.Sprint35" />
+			<class name="com.fitchconnect.api.Sprint36" />
+			<class name="com.fitchconnect.api.Sprint37" />
+			<class name="com.fitchconnect.api.Sprint38" />
+			<class name="com.fitchconnect.api.Sprint39" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint1" />	
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint2" />	
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint4" />	
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint5" />	
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint6" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint7" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint8" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint9" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint10" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint11" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint12" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint13" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint14" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint15" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint16" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint17" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint18" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint19" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint20" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint21" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint22" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint23" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint24" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint25" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint26" />
+			<class name="com.fitchconnect.fiscontent.fisCon_sprint27" />	
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint28" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint29" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint31" />
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint32" />			
+			<class name="com.fitchconnect.fiscontent.fisCon_Sprint37" />
+			<class name="com.PublicFinanc.api.TransactionService_Test_cases" />
+			<class name="com.PublicFinanc.api.TransactionSecurityTestCases" />			
+			<class name="com.issueRatingTransition.IssueRatingsTransition" />
+			<class name="com.issueRatingTransition.IssueRatingsTransitionHistory" />
+			<class name="com.financial.api.Financials" />			
+			<class name="com.ESGdata.api.EsgValueRequestTestCases" />
+			<class name="com.CreditOpinions.api.IssuerCreditOpinions" />
+			<class name="com.CreditOpinions.api.IssueCreditOpinions" />			
+			<class name="com.Cds.Api.Cds_TestCases" />
+			<class name="com.fulcrum.api.FulcrumDataAggregator" />
+			<class name="com.region.api.regions_datavalueRquest" />
+			<class name="com.equityprice.api.EquityPriceBenchMarkTestCases"/>
+			<class name="com.levfin.T1_Sprint_9"/>
+			<class name="com.Cds.Api.T1_Sprint_10"/>
+			
+		</classes>
+
+	</test> <!-- Test -->
+</suite> <!-- Suite -->
+			

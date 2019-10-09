@@ -1,0 +1,38 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+
+            ],
+            "periods":[  
+
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"1012249",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+            "FC_COMPANY_NAME",
+            "FC_COUNTRY",
+            "FC_INT_INC_LOANS_BNK",
+            "FC_OTHER_INT_INC_BNK",
+            "FC_GDP_INDEX_SOV"
+         ],
+         "options":[  
+            {  
+               "name":"accountingStandard",
+               "value":"Local"
+            },
+            {  
+               "name":"consolidation",
+               "value":"combined"
+            }
+         ]
+      }
+   }
+}

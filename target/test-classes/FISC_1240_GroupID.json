@@ -1,0 +1,25 @@
+{
+    "data": {
+        "type": "valueRequest",
+        "attributes": {
+            "dateOptions": {
+                "dates": []
+            },
+            "entities": [{
+                "id": "80359523",
+                "type": "fitchGroupId"
+            },
+            {
+                "id": "80359629",
+                "type": "fitchGroupId"
+            }],
+            "fitchFieldIds": ["FC_TOTAL_ASSETS_BNK"],
+            "options": [{
+                "name": "currency",
+                "value": "AED",
+                "date": "2012-12-31",
+                "customRate":1.9
+            }]
+        }
+    }
+}

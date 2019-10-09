@@ -1,0 +1,28 @@
+{
+   "data":{
+       "type":"valueRequest",
+       "attributes":{
+           "dateOptions":{
+               "periods":[
+               
+                  {"type":"Q4", "year":2011}
+              ]
+           },
+           "entities":[
+             
+               {
+                    "id": "HU",
+                    "type": "regionId"
+                }
+           ],
+           "fitchFieldIds":[
+
+            "FC_TOT_MBL_PHN_SBSCRBRS_MOB",
+            "FC_MBL_SBSCRBR_ACQTN_CST_SAC_MOB"
+            
+           ],
+           "options":[
+           ]
+       }
+   }
+}

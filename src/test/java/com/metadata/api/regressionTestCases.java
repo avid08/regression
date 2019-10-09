@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.junit.Assert;
 
-import com.fitchconnect.api.Configuration;
+import com.configuration.api.Configuration;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
 

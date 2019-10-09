@@ -6,7 +6,7 @@ import static org.hamcrest.Matchers.containsString;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 
-import com.fitchconnect.api.Configuration;
+import com.configuration.api.Configuration;
 import com.jayway.restassured.response.Response;
 
 public class fisCon_Sprint17 extends Configuration {
@@ -236,6 +236,28 @@ String IdfilterMSinclusiveURI = baseURI+"/v1/marketSectors?filter[level]=3&filte
 		Assert.assertFalse(res.asString().contains("isMissing"));
 	   }
 	
+	
+@Test()
+	
+	public void MarketSector_all() {
+		String marketSctURI = baseURI+"/v1/marketSectors";
+		
+		Response res = given()
+
+				.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+				.header("accept", acceptValue).header("content", contentValue).when().get(marketSctURI).then().statusCode(200)
+				.body(containsString("marketSectors"))
+				.body(containsString("parent"))
+				.body(containsString("children"))
+				.body(containsString("level"))
+				.body(containsString("name"))
+				.body(containsString("active"))
+				.body(containsString("bmiServiceChannelIds"))
+					
+				.extract().response();
+		
+	}
+
 		
 		
 }

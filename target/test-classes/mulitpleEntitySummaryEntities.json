@@ -1,0 +1,50 @@
+{
+   "data":{
+      "type":"valueRequest",
+      "attributes":{
+         "dateOptions":{
+            "dates":[
+              "2007-09-09"
+            ],
+         "periods":[
+            
+         ]},
+         "entities":[
+            {
+               "id":"500180.BY",
+               "type":"companyTicker"
+            },
+           {
+               "id":"116980",
+               "type":"FitchID"
+            },
+            {
+               "id":"90484689",
+               "type":"fitchGroupId"
+            },
+            {
+               "id":"432748",
+               "type":"CUSIP6"
+            }
+            
+         ],
+         "fitchFieldIds":[
+            "FC_COUNTRY"
+         ],
+         "options":[
+		{
+               "name":"consolidation",
+               "value":"combined"
+            },
+            {
+               "name":"accountingStandard",
+               "value":"USGAAP"
+            },
+            {
+               "name":"filingType",
+               "value":"Original"
+            }
+         ]
+      }
+   }
+}

@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 import java.util.List;
 
+import com.configuration.api.Configuration;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

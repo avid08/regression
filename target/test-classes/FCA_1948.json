@@ -1,0 +1,31 @@
+{ 
+"data":{ 
+"type":"valueRequest",
+"attributes":{ 
+"dateOptions":{
+"periods":[ 
+{ "type":"Q1", "year":2015 }
+,
+{ "type":"Q2", "year":2015}
+,
+{ "type":"Q3", "year":2015}
+,
+{ "type":"Q4", "year":2015}
+,
+{ "type":"Annual", "year":2015 }
+,
+{ "type":"Q1", "year":2015, "relative":4}
+]
+},
+"entities":[
+{ "id":"140064", "type":"fitchid" }
+],
+"fitchFieldIds":[
+"BMI_GDP_Nom_LCU",
+"FC_LT_IDR"
+],
+"options":[
+]
+}
+}
+}

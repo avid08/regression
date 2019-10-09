@@ -9,7 +9,7 @@ import java.util.List;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.fitchconnect.api.Configuration;
+import com.configuration.api.Configuration;
 import com.google.common.collect.Ordering;
 import com.jayway.restassured.response.Response;
 

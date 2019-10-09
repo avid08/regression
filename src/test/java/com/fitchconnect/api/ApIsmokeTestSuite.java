@@ -20,6 +20,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import com.configuration.api.Configuration;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hamcrest.Matchers;
@@ -1282,8 +1283,7 @@ public class ApIsmokeTestSuite extends Configuration {
 
 		}
 
-		Assert.assertTrue(fitchEntityId.contains("112082"));
-		Assert.assertTrue(fitchEntityId.contains("1315051"));
+		Assert.assertTrue(fitchEntityId.contains("112082"));		
 		Assert.assertTrue(fitchEntityId.contains("116980"));
 		Assert.assertTrue(fitchEntityId.contains("1313773"));
 		Assert.assertTrue(fitchEntityId.contains("1407617"));
@@ -2878,7 +2878,7 @@ public class ApIsmokeTestSuite extends Configuration {
 
 		String newURI = entityURI + "?page[number]=";
 
-		ExecutorService executor = Executors.newFixedThreadPool(1);
+		ExecutorService executor = Executors.newFixedThreadPool(10);
 
 		for (int i = 0; i < numberofPages; i++) {
 			final int idx = i;

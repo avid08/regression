@@ -1,0 +1,50 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{ 
+         
+          "dates":[
+         
+          
+            ],
+            "periods":[ 
+                {
+                 "type":"Q4",
+                 "year":2007
+              },
+              {
+                 "type":"M10",
+                 "year":2007
+              },
+                {
+                 "type":"Annual",
+                 "year":2007
+              }
+              
+            
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"140104",
+               "type":"fitchId"
+            },
+             {  
+               "id":"116980",
+               "type":"fitchId"
+            }
+            
+         ],
+         "fitchFieldIds":[  
+             "BMI_INDEX_Composite_UNIT",
+             "BMI_INDEX_Pol_LT_UNIT",,
+             "BMI_GDP_Nom_LCU"
+             
+            ],
+         "options":[  
+            
+         ]
+      }
+   }
+}

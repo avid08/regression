@@ -1,0 +1,20 @@
+{ 
+   "data":{ 
+      "type":"portfolios",
+      "id":"550e8400-e29b-41d4-a716-446655440000",
+      "relationships":{ 
+         "entities":{ 
+            "data":[
+                    { 
+                       "type":"entities",
+                       "id":"890934820"
+                    },
+                    { 
+                       "type":"entities",
+                       "id":"867869989"
+                    }
+            ]
+         }
+      }
+   }
+}

@@ -1,0 +1,47 @@
+{
+    "data": {
+        "type": "valueRequest",
+        "attributes": {
+            "dateOptions": {
+                "dates": [
+
+                ],
+                "periods": [
+                   
+                   
+                ],
+                "mostRecent":[
+                
+                   {  
+                        "date":"2028-12-30",  
+                        "type":"Annual"
+                  }
+                 
+                ]
+            },
+            "entities": [
+             {
+               "id":"100188",
+               "type":"FitchID"
+             }
+             
+            ],
+            
+            "fitchFieldIds": [
+             
+            "FC_TOTAL_ASSETS_BNK",
+            
+            "FC_STATEMENT_ID",
+            "FC_PERIOD_DT"
+                
+            ],
+            "options": [
+                
+                {
+                    "name": "currency",
+                    "value": "AED"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{  
+  "data":{  
+     "type":"valueRequest",
+      "attributes":{  
+        "entities":[  
+           {  
+              "id":"92870090",
+               "type":"fitchgroupID"
+            }
+         ],
+         "fitchFieldIds":[  
+           "FC_SPONSOR_SPV"
+         ],
+         "options":[  
+
+        ]
+      }
+   }
+}

@@ -1,0 +1,39 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+            "periods":[  
+               {  
+                  "type":"Annual",
+                  "year":2015
+               }
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"BO",
+               "type":"isoCountryCode2"
+            },
+            {  
+               "id":"BOL",
+               "type":"isoCountryCode3"
+            },
+            {  
+               "id":"LC",
+               "type":"isoCountryCode2"
+            },
+            {  
+               "id":"LCA",
+               "type":"isoCountryCode3"
+            }
+         ],
+         "fitchFieldIds":[  
+            "FC_ENTITY_ID"
+         ],
+         "options":[  
+
+         ]
+      }
+   }
+}

@@ -9,7 +9,7 @@ import java.net.URL;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 
-import com.fitchconnect.api.Configuration;
+import com.configuration.api.Configuration;
 import com.google.common.io.Resources;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
@@ -53,7 +53,7 @@ public class fisCon_Sprint7 extends Configuration {
 
 	}
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 
 	public void fisc_605_FIR_statementRelation() {
 
@@ -72,7 +72,7 @@ public class fisCon_Sprint7 extends Configuration {
 
 		Response res1 = given().header("Authorization", (AuthrztionValue)).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType(ContentType.JSON).when()
-				.get(FIRgetAll).then().statusCode(200).body(containsString("statements"))
+				.get(statementrelation).then().statusCode(200).body(containsString("statements"))
 				.body(containsString("accountingStandard")).body(containsString("filingType"))
 				.body(containsString("detail")).body(containsString("fitchFieldType"))
 				.body(containsString("periodType")).extract().response();
@@ -81,9 +81,9 @@ public class fisCon_Sprint7 extends Configuration {
 
 	@Test(enabled = false)
 
-	public void FISC_869() {
+	public void FISC_869_start_endDatefilter() {
 
-		String FIRgetAll = baseURI + "/v1/financialImpliedRatings";
+		String FIRgetAll = baseURI + "/v1/financialImpliedRatings?filter[startDate]=2017-01-01&filter[endDate]=2017-02-28";
 
 		Response res = given().header("Authorization", (AuthrztionValue)).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType(ContentType.JSON).when()
@@ -92,7 +92,7 @@ public class fisCon_Sprint7 extends Configuration {
 
 	}
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void FISC_869_FIR_Amendments() {
 
 		String getAllurl = baseURI + "/v1/financialImpliedRatings";

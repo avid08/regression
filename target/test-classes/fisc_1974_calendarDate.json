@@ -1,0 +1,40 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+              "2010-09-13"
+               
+            ],
+            "periods":[  
+              
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"138222",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+        
+"FC_RISK_BENCHMARK_DD_BPS_CDS",
+"FC_RISK_BENCHMARK_MM_BPS_CDS",
+"FC_RISK_BENCHMARK_DD_PERCENT_CDS",
+"FC_RISK_BENCHMARK_MM_PERCENT_CDS",
+"FC_RISK_BENCHMARK_WW_PERCENT_CDS",
+"FC_RISK_BENCHMARK_YY_PERCENT_CDS",
+"FC_RISK_BENCHMARK_QQ_BPS_CDS",
+"FC_RISK_BENCHMARK_BPS_CDS",
+"FC_RISK_BENCHMARK_WW_BPS_CDS"
+
+
+			
+         ],
+         "options":[  
+
+         ]
+      }
+   }
+}

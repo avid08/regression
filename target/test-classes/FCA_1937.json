@@ -1,0 +1,46 @@
+
+{  
+   "data":{  
+      "type":"valueResponse",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+             
+            ],
+            "periods":[  
+{ "type":"Q1", "year":2015 },
+           { "type":"Q2", "year":2015},
+           { "type":"Q3", "year":2015},
+           { "type":"Q4", "year":2015},
+           { "type":"Annual", "year":2015 },
+           { "type":"Q1", "year":2015, "relative":4}
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"1024280",
+               "type":"FitchID"
+            },
+             {"id":"140064",  "type":"fitchId"}
+             
+         ],
+         "fitchFieldIds":[  
+            "FC_GROSS_LOANS_BNK"
+         ],
+         "options":[  
+            {  
+               "name":"accountingStandard",
+               "value":"IFRS"
+            },
+            {  
+               "name":"currency",
+               "value":"USD"
+            },
+            {  
+               "name":"consolidation",
+               "value":"CON"
+            }
+         ]
+      }
+   }
+}

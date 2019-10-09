@@ -1,0 +1,57 @@
+{
+   "data":{
+      "type":"valueRequest",
+      "attributes":{
+         "dateOptions":{
+            "dates":[
+               "2015-09-15",
+               "2014-09-27"
+            ],
+            "periods":[
+               
+            ]
+         },
+         "entities":[
+            {
+               "id":"116980",
+               "type":"FitchID"
+            },
+            {
+               "id":"90484689",
+               "type":"fitchGroupId"
+            },
+            {
+               "id":"432748",
+               "type":"CUSIP6"
+            },
+            {
+               "id":"CCP",
+               "type":"companyTicker"
+            },
+            {
+               "id":"1288351",
+               "type":"FitchID"
+            }
+            
+         ],
+         "fitchFieldIds":[
+            "FC_LT_IDR"
+         
+         ],
+         "options":[
+		{
+               "name":"consolidation",
+               "value":"combined"
+            },
+            {
+               "name":"accountingStandard",
+               "value":"USGAAP"
+            },
+            {
+               "name":"filingType",
+               "value":"Original"
+            }
+         ]
+      }
+   }
+}

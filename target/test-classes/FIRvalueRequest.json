@@ -1,0 +1,29 @@
+{  
+   "data":{  
+      "type":"valueResponse",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+          
+            ],
+            "periods":[  
+
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"1024280",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+         "FC_TOTAL_ASSETS_FIR",
+		  "FC_PERIOD_DT_FIR",
+           "FC_STATEMENT_ID_FIR"
+         ],
+         "options":[  
+          
+         ]
+      }
+   }
+}

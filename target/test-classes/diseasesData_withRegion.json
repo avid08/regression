@@ -1,0 +1,26 @@
+{
+   "data":{
+       "type":"valueRequest",
+       "attributes":{
+           "dateOptions":{
+               "periods":[
+               
+                  {"type":"Annual", "year":2012}
+              ]
+           },
+           "entities":[
+             
+                {
+                    "id": "HU",
+                    "type": "regionId"
+                }
+           ],
+           "fitchFieldIds":[
+            "FC_BLA_CAN_DLY_DIS",
+            "FC_WHO_COU_PERCENT_YOY_DTHS_DIS"
+           ],
+           "options":[
+           ]
+       }
+   }
+   }

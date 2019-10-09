@@ -1,0 +1,27 @@
+{  
+   "data":{  
+      "type":"portfolios",
+      "attributes":{  
+         "portfolioName":"QA Test PortPolio",
+         "legacyPortfolioID":"342423424"
+      },
+      "relationships":{  
+         "entities":{  
+            "data":[  
+               {  
+                  "type":"entities",
+                  "id":"80089876"
+               }
+            ]
+         },
+         "issues":{  
+            "data":[  
+               {  
+                  "type":"issues",
+                  "id":"80089876"
+               }
+            ]
+         }
+      }
+   }
+}

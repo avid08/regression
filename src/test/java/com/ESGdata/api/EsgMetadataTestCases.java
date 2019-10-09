@@ -14,13 +14,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 
-import com.fitchconnect.api.Configuration;
+import com.configuration.api.Configuration;
 import com.google.common.io.Resources;
 import com.jayway.restassured.response.Response;
 
 public class EsgMetadataTestCases extends Configuration{
 	
-	@Test(enabled=false)
+	@Test(enabled=true)
 	
 	public void ESG_MetaData_Verification() throws URISyntaxException, IOException {
 
@@ -41,13 +41,13 @@ public class EsgMetadataTestCases extends Configuration{
 			String fitchFieldIds = mySheet.getRow(i).getCell(0).getStringCellValue();
 			String displayName = mySheet.getRow(i).getCell(1).getStringCellValue();
 			String fitchFieldDescp = mySheet.getRow(i).getCell(2).getStringCellValue();
-			String dataType = mySheet.getRow(i).getCell(4).getStringCellValue();
-			String permission = mySheet.getRow(i).getCell(5).getStringCellValue();
+			String dataType = mySheet.getRow(i).getCell(3).getStringCellValue();
+			String permission = mySheet.getRow(i).getCell(4).getStringCellValue();
 
 			String DataTypeUrl = metaUrl + "/" + fitchFieldIds;
 
-
-
+			System.out.println(DataTypeUrl + "URL");
+         
 			String jsonAsString;
 
 			Response response = given().header("Authorization", AuthrztionValue)

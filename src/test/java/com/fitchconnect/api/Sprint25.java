@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.configuration.api.Configuration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.Assert;
@@ -28,7 +29,7 @@ import com.mongodb.ServerAddress;
 
 import groovy.json.internal.Charsets;
 
-public class Sprint25 extends Configuration{
+public class Sprint25 extends Configuration {
 	
 
 	private static final String priority = null;

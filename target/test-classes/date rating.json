@@ -1,0 +1,35 @@
+{
+   "data":{
+      "type":"valueRequest",
+      "attributes":{
+         "dateOptions":{
+            "dates":[
+			"2015-08-09"
+            ]
+         },
+         "entities":[
+            {
+               "id":"94834890",
+               "type":"fitchGroupId"
+            }
+         ],
+         "fitchFieldIds":[
+            "FC_LT_IDR"
+         ],
+         "options":[
+		{
+               "name":"consolidation",
+               "value":"combined"
+            },
+            {
+               "name":"accountingStandard",
+               "value":"USGAAP"
+            },
+            {
+               "name":"filingType",
+               "value":"Original"
+            }
+         ]
+      }
+   }
+}

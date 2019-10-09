@@ -1,0 +1,38 @@
+{
+   "data":{
+      "type":"valueRequest",
+      "attributes":{
+         "dateOptions":{
+         	"dates":[
+        "2016-02-15"
+            ],
+            "periods":[
+            
+                      
+         ]
+         },
+         "entities":[
+            
+            {
+      "id":"1012179",
+               "type":"FITCHID"
+            }
+         ],
+         "fitchFieldIds":[
+		"fc_lt_idr",
+		"FC_CounTRY",
+		"FC_RATING_outlook_RANK_MDY"
+         ],
+         "options":[
+		{
+        "name": "accountingStandard",
+        "value":"uSGaAp"
+		},
+		{
+               "name":"consolidation",
+               "value":"coMBIned"
+            }  
+         ]
+      }
+   }
+}

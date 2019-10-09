@@ -1,0 +1,42 @@
+
+{  
+   "data":{  
+      "type":"valueResponse",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+              "2015-12-31"
+            ],
+            "periods":[  
+ {  
+                 "type":"Annual",
+                 "year":2015
+              }
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"1024280",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+            "FC_GROSS_LOANS_BNK"
+         ],
+         "options":[  
+            {  
+               "name":"accountingStandard",
+               "value":"IFRS"
+            },
+            {  
+               "name":"currency",
+               "value":"USD"
+            },
+            {  
+               "name":"consolidation",
+               "value":"CON"
+            }
+         ]
+      }
+   }
+}

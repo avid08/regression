@@ -1,0 +1,43 @@
+{  
+   "data":{  
+      "type":"valueRequest",
+      "attributes":{  
+         "dateOptions":{  
+            "dates":[  
+               "2015-09-09",
+               "2015-10-09",
+               "2015-11-09",
+               "2015-12-09"
+            ],
+            "periods":[  
+
+            ],
+            "dateRanges":[  
+
+            ],
+            "periodRanges":[  
+
+            ]
+         },
+         "entities":[  
+            {  
+               "id":"116980",
+               "type":"FitchID"
+            }
+         ],
+         "fitchFieldIds":[  
+            "FC_LT_IDR"
+         ],
+         "options":[  
+            {  
+               "name":"accountingStandard",
+               "value":"Local"
+            },
+            {  
+               "name":"consolidation",
+               "value":"combined"
+            }
+         ]
+      }
+   }
+}
