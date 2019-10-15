@@ -48,7 +48,7 @@ public class Cds_TestCases extends Configuration {
  
  
 	
-@Test(enabled=false)
+@Test(enabled=true)
  public void cdsValueRequest_NonExistingCdsEntity_FISC_6691() throws IOException{
 	 
 		URL file = Resources.getResource("Fisc_6691.json");
@@ -68,7 +68,7 @@ public class Cds_TestCases extends Configuration {
 	 
 }
  
-@Test
+@Test(enabled=false)
 public void cdsValueRequest_with150Entities_multipleDatapoints() throws IOException{
 	 
 		URL file = Resources.getResource("Fisc_6690_with150Entities.json");

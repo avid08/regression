@@ -71,7 +71,7 @@
 			<class name="com.equityprice.api.EquityPriceBenchMarkTestCases"/>
 			<class name="com.levfin.T1_Sprint_9"/>
 			<class name="com.Cds.Api.T1_Sprint_10"/>
-			
+			<class name="com.marketsector.api.marketSectorTestCases"/>
 		</classes>
 
 	</test> <!-- Test -->
