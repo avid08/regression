@@ -70,6 +70,31 @@ public class PostgresUtils {
         return size;
     }
 
+    private static Object[][] removeRowFrom2dArray(Object[][] array, int rowNumber){
+        Object[][] result = new Object[array.length - 1][array[0].length];
+        int count = 0;
+        if (rowNumber == array.length - 1) {
+            for (int r = 0; r < array.length - 1; r++) {
+                for (int c = 0; c < array[0].length; c++) {
+                    if (rowNumber == r)
+                        r++;
+                    result[count][c] = array[r][c];
+                }
+                count++;
+            }
+        } else {
+            for (int r = 0; r < array.length; r++) {
+                for (int c = 0; c < array[0].length; c++) {
+                    if (rowNumber == r)
+                        r++;
+                    result[count][c] = array[r][c];
+                }
+                count++;
+            }
+        }
+        return result;
+    }
+
     public Object[][] resultSetToArray(ResultSet rs, boolean skipColumnNames) {
         try {
             ResultSetMetaData rsmd = rs.getMetaData();
@@ -82,14 +107,16 @@ public class PostgresUtils {
                     postgresArray[0][i] = rsmd.getColumnName(i + 1);
                 }
             }
-
-            int row = 1;
-            while (rs.next()) {
-                for (int i = 0; i < columnCount; i++) {
-                    postgresArray[row][i] = rs.getObject(i + 1);
+                int row = 1;
+                while (rs.next()) {
+                    for (int i = 0; i < columnCount; i++) {
+                        postgresArray[row][i] = rs.getObject(i + 1);
+                    }
+                    row++;
                 }
-                row++;
-            }
+                if (skipColumnNames == true) {
+                    postgresArray = removeRowFrom2dArray(postgresArray, 0);
+                }
             return postgresArray;
         } catch (Exception ex) {
             System.out.println("Exception: " + ex);
