@@ -35,7 +35,7 @@ public class T1_Sprint_12 extends Configuration {
 
     private Integer timeoutBetweenTests = 2000;
 
-    private Env.Postgres postgresEnvironment = Env.Postgres.STG;
+    private Env.Postgres postgresEnvironment = Env.Postgres.PROD;
 
     private Object[][] getDataFromPostgres(String sqlFileName, Env.Postgres db, boolean skipColumnNames){
         Connection conn = postgresUtils.connectToPostgreDatabase(db);
