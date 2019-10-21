@@ -35,7 +35,7 @@ public class T1_Sprint_12 extends Configuration {
 
     private Integer timeoutBetweenTests = 2000;
 
-    private Env.Postgres postgresEnvironment = Env.Postgres.PROD;
+    private Env.Postgres postgresEnvironment = Env.Postgres.STG;
 
     private Object[][] getDataFromPostgres(String sqlFileName, Env.Postgres db, boolean skipColumnNames){
         Connection conn = postgresUtils.connectToPostgreDatabase(db);
@@ -89,10 +89,10 @@ public class T1_Sprint_12 extends Configuration {
                 Assert.assertTrue(filter.toString().contains("$.Type=\"BANK\"; $$.IDX=\"VR\"; $$.Factors[].IDX=\"FinProfile\"; $$.Factors[].SubFactors[].IDX=\"Fund&Liq\""));
             }
             else throw new AssertionError();
-            logger.log(Level.INFO, "FISC 7308 PASSED ATTRIBUTE " + attributeName);
+            logger.info("FISC 7308 PASSED ATTRIBUTE " + attributeName);
         }
         catch (AssertionError err){
-            logger.log(Level.WARN, "FISC 7308 FAILED ATTRIBUTE " + attributeName + " ERROR " + err);
+            logger.warn("FISC 7308 FAILED ATTRIBUTE " + attributeName + " ERROR " + err);
             Assert.fail();
         }
     }
@@ -163,7 +163,6 @@ public class T1_Sprint_12 extends Configuration {
         }
         return allData;
     }
-
     @Test(dataProvider = "Fisc7309")
     public void Fisc7309_BankScoreCardIntoMasterSchema(Object entity_id, Object field_id, Object start_date, Object end_date, Object value, Object nullObj, HashMap<String, String> mapOfIngestionData) {
         try {
@@ -171,14 +170,14 @@ public class T1_Sprint_12 extends Configuration {
             Assert.assertEquals(mapOfIngestionData.get(field_id), value);
             Assert.assertEquals(new SimpleDateFormat("yyyy-MM-dd").parse(mapOfIngestionData.get("PublishedDate")).getDate(),
                                 new SimpleDateFormat("yyyy-MM-dd").parse(start_date.toString()).getDate());
-            logger.log(Level.INFO, "FISC 7309 PASSED ENTITY ID " + entity_id + " ATTRIBUTE " + field_id);
+            logger.info("FISC 7309 PASSED ENTITY ID " + entity_id + " ATTRIBUTE " + field_id);
         }
         catch (AssertionError err){
-            logger.log(Level.WARN, "FISC 7309 FAILED ENTITY ID " + entity_id + " ATTRIBUTE " + field_id + " ERROR " + err);
+            logger.warn("FISC 7309 FAILED ENTITY ID " + entity_id + " ATTRIBUTE " + field_id + " ERROR " + err);
             Assert.fail();
         }
         catch (ParseException ex){
-            logger.log(Level.WARN, "FISC 7309 WARNING ENTITY ID " + entity_id + " ATTRIBUTE " + field_id + "COULD NOT PARSE DATE   REASON: " + ex);
+            logger.warn("FISC 7309 WARNING ENTITY ID " + entity_id + " ATTRIBUTE " + field_id + "COULD NOT PARSE DATE   REASON: " + ex);
             Assert.fail();
         }
     }
@@ -213,10 +212,10 @@ public class T1_Sprint_12 extends Configuration {
             Assert.assertEquals(attribute, postgresAttribute);
             Assert.assertTrue(apiResponse.asString().contains("\"fitchFieldId\":\""+ postgresAttribute +"\""));
             Assert.assertTrue(apiResponse.asString().contains("\"value\":[\""+ postgresValue +"\"]"));
-            logger.log(Level.INFO, "FISC 7311 PASSED ATTRIBUTE " + attribute);
+            logger.info("FISC 7311 PASSED ATTRIBUTE " + attribute);
         }
         catch (AssertionError err){
-            logger.log(Level.WARN, "FISC 7311 FAILED ATTRIBUTE " + attribute + " ERROR " + err);
+            logger.info("FISC 7311 FAILED ATTRIBUTE " + attribute + " ERROR " + err);
             Assert.fail();
         }
     }
@@ -254,10 +253,10 @@ public class T1_Sprint_12 extends Configuration {
             Assert.assertTrue(listOfLfiAttributesFromApi.contains("links"));
             Assert.assertTrue(listOfLfiAttributesFromApi.contains("\"related\":\"" + baseURI + "/v1/metadata/fields/" + attribute + "/categories\""));
             Assert.assertTrue(listOfLfiAttributesFromApi.contains("\"type\":\"Text\""));
-            logger.log(Level.INFO, "FISC 7313 PASSED! ATTRIBUTE " + attribute);
+            logger.info("FISC 7313 PASSED! ATTRIBUTE " + attribute);
         }
         catch (AssertionError err){
-            logger.log(Level.WARN, "FISC 7313 FAILED! ATTRIBUTE " + attribute + " ERROR " + err);
+            logger.warn("FISC 7313 FAILED! ATTRIBUTE " + attribute + " ERROR " + err);
             Assert.fail();
         }
     }
