@@ -5,6 +5,7 @@ import com.backendutils.Env;
 import com.backendutils.MongoUtils;
 import com.configuration.LoggerInitialization;
 import com.configuration.api.Configuration;
+import com.google.common.io.Resources;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.restassured.response.Response;
 import com.mongodb.BasicDBObject;
@@ -12,6 +13,7 @@ import com.mongodb.Block;
 import com.mongodb.DBCursor;
 import com.mongodb.MongoException;
 import com.mongodb.client.*;
+import groovy.json.internal.Charsets;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.bson.Document;
@@ -26,10 +28,13 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+
+import static com.jayway.restassured.RestAssured.given;
 
 public class T1_Sprint_13 extends Configuration {
 
@@ -37,7 +42,22 @@ public class T1_Sprint_13 extends Configuration {
     MongoUtils mongoUtils = new MongoUtils();
     APIUtils apiUtils = new APIUtils();
 
-    private String baseUserToken;
+    private String baseUserToken = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwOi8vaWRlbnRpdHktZGF0YS1zZXJ2aWNlOjgwODAvdjIvdXNlcnMvNWRiNzE4ZmU2YzllZGIwMDAxMGNiNjhmIiwic2NvcGUiOlsidHJ1c3QiXSwiYXRpIjoiNDE3NmM2MTktYWM5YS00ZTBiLWE0MWItNzFlNGI4YzFhMDZiIiwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5maXRjaGNvbm5lY3QtcWEuY29tIiwiZXhwIjoxNTc3NTI2NTc4LCJpYXQiOjE1NzIzNDI1NzgsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUiJdLCJqdGkiOiJiOTA1NTIwMi01Yzk3LTQyM2ItOTNmZi0xMzlkNTllNmY5NmQiLCJjbGllbnRfaWQiOiJscXI3bzE0NWhmZ2FyNTNsa242b3FlOGRmYSJ9.9o8KlHNa7du2JoSkwO-D66s7dAjdSplH8N2hoDvF7PA";
+
+    private Response postToDataAggregatorBaseUser(String resourceFileName, String xappClientIdValue, String dataPostUrl) throws IOException {
+
+        URL file = Resources.getResource(resourceFileName);
+        myjson = Resources.toString(file, Charsets.UTF_8);
+
+        Response response = given()
+                .header("Authorization", baseUserToken)
+                .header("X-App-Client-Id", xappClientIdValue)
+                .contentType("application/vnd.api+json").body(myjson).with()
+                .when().post(dataPostUrl).then().assertThat().statusCode(206)
+                .extract()
+                .response();
+        return response;
+    }
 
     @DataProvider(name = "agentIds")
     public Object[][] getAgentIds(){
@@ -425,7 +445,7 @@ public class T1_Sprint_13 extends Configuration {
 
 
             //API Base User Validation
-            Response res_base = apiUtils.postToDataAggregatorBaseUser("7824.json", XappClintIDvalue, dataPostUrl);
+            Response res_base = postToDataAggregatorBaseUser("7824.json", XappClintIDvalue, dataPostUrl);
 
             ArrayList<String> values_baseUser = res_base.path("data.attributes.entities[0].values");
             int numberOfValues_baseUser = values_baseUser.size();
