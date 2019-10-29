@@ -75,7 +75,7 @@ public class T1_Sprint_13 extends Configuration {
     public void Fisc7821_EntitiesResource_AdditionalDisclosuresForUkRegulatoryAgency(String agentId) {
         try {
             MongoCollection<Document> collection = mongoUtils
-                    .connectToMongoDatabase(Env.Mongo.CAL_QA2)
+                    .connectToMongoDatabase(CAL)
                     .getDatabase("esp-9")
                     .getCollection("fitch_entity");
 
@@ -135,7 +135,7 @@ public class T1_Sprint_13 extends Configuration {
     @Test
     public void Fisc7822_IssuesResource_AdditionalDisclosuresForUkRegulatoryAgency() {
         MongoCollection<Document> collection = mongoUtils
-                .connectToMongoDatabase(Env.Mongo.CAL_QA2)
+                .connectToMongoDatabase(CAL)
                 .getDatabase("esp-9")
                 .getCollection("fitch_ratable");
 
@@ -165,6 +165,7 @@ public class T1_Sprint_13 extends Configuration {
                     Response res = apiUtils.getResponse(uri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
                     String apiResponse = res.asString();
                     String apiDisclosure = res.path("data.attributes.disclosure");
+
 
                     for (int i = 0; i < disclosureListSize; i++) {
                         JSONObject mongoDisclosures = (JSONObject) disclosureList.get(i);
@@ -198,7 +199,7 @@ public class T1_Sprint_13 extends Configuration {
         collection.find(query).sort(sort).limit(limit).forEach(processBlock);
     }
 
-    @Test
+    @Test(enabled = false)
     public void Fisc7823_RatingsMetadata_DisclosureFieldChanges() {
         MongoCollection<Document> collection = mongoUtils
                 .connectToMongoDatabase(Env.Mongo.META_QA)
@@ -321,7 +322,7 @@ public class T1_Sprint_13 extends Configuration {
         }
     }
 
-    @Test
+    @Test(enabled=false)
     public void Fisc7824_DataAggregator_RatingsMetadata_DisclosureFieldChanges() {
         try {
             MongoCollection<Document> collection = mongoUtils
@@ -429,7 +430,7 @@ public class T1_Sprint_13 extends Configuration {
                             break;
                         case "FC_UK_ENDORSEMENT_COMPLIANCE":
                             Assert.assertEquals(apiValue, "Issued");
-                            logger.info("FISC 7824 PASSED FC_UK_ENDORSEMENT_COMPLIANCE");
+                            logger.info("FISC 7824 API PASSED FC_UK_ENDORSEMENT_COMPLIANCE");
                             break;
                         default:
                             Assert.assertTrue(true);
@@ -488,7 +489,7 @@ public class T1_Sprint_13 extends Configuration {
         }
     }
 
-    @Test
+    @Test(enabled=false)
     public void Fisc7827_IssuesMetadata_DisclosureFieldChanges() {
 
         MongoCollection<Document> collection = mongoUtils
@@ -630,7 +631,7 @@ public class T1_Sprint_13 extends Configuration {
         }
     }
 
-    @Test
+    @Test(enabled=false)
     public void Fisc7828_DataAggregator_IssuesMetadata_DisclosureFieldChanges() {
         try {
             MongoCollection<Document> collection = mongoUtils
