@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.backendutils.Env;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeClass;
 
+import com.backendutils.Env;
 import com.google.common.io.Resources;
 import com.jayway.restassured.response.Response;
 
@@ -116,16 +116,7 @@ public class Configuration {
                 FEEDS = Env.Mongo.FEEDS_PROD;
                 META = Env.Mongo.META_PROD;
                 break;
-            default:
-<<<<<<< HEAD
-            	 baseURI = "https://api.fitchconnect.com";
-                 dataBaseServerNewESP9 = "mgo-uue1a-sn001";
-                 dataBaseServer1 = "mgo-pue1c-cr001.fitchratings.com";
-                 dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
-                 databaseFitchEnty = "esp-9";
-                 BMIbaseURL = "https://api.bmiresearch.com";
-                 break;
-=======
+            default:           	
                 baseURI = "https://api.fitchconnect-qa.com";
                 dataBaseServer1 = "mgo-que1a-cr001.fitchratings.com";
                 dataBaseServer2 = "mgo-que1a-ur001.fitchratings.com";
@@ -136,7 +127,7 @@ public class Configuration {
                 FEEDS = Env.Mongo.FEEDS_QA;
                 META = Env.Mongo.META_QA;
                 break;
->>>>>>> 4bef9cb936972c23ccced0e447dbbf1caec11fec
+
         }
         bearerToken(environment);
         AuthrztionValue = "Bearer " + refresh_token;
@@ -145,7 +136,7 @@ public class Configuration {
         metaUrl = baseURI + metaEndPoint;
         dataPostUrl = baseURI + dataEndPoint;
 
-    }
+    };
 
     private void bearerToken(Environment environment) throws IOException {
         String url = baseURI + "/v1/oauth/token";
