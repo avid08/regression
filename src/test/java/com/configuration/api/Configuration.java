@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.backendutils.Env;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeClass;
@@ -41,6 +42,9 @@ public class Configuration {
     protected String XappClintIDvalue = "3dab0f06-eb00-4bee-8966-268a0ee27ba0";
     protected String acceptValue = "application/vnd.api+json";
     protected String contentValue = "application/vnd.api+json";
+    protected Env.Mongo CAL;
+    protected Env.Mongo FEEDS;
+    protected Env.Mongo META;
     public static boolean failure = false;
     public static boolean publishFlag = true;
     public static ArrayList<String> DBRes = new ArrayList<String>();
@@ -69,6 +73,9 @@ public class Configuration {
                 dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
                 databaseFitchEnty = "esp-dev-9";
                 BMIbaseURL = "https://api-stg1.bmiresearch.com";
+                CAL = Env.Mongo.CAL_DEV;
+                FEEDS = Env.Mongo.FEEDS_DEV;
+                META = Env.Mongo.META_DEV;
                 break;
             case INT:
                 baseURI = "https://api.fitchconnect-int.com";
@@ -84,6 +91,9 @@ public class Configuration {
                 dataBaseServerNewESP9 = "mgo-que1a-sn001";
                 databaseFitchEnty = "esp-9";
                 BMIbaseURL = "https://api-stg1.bmiresearch.com";
+                CAL = Env.Mongo.CAL_QA;
+                FEEDS = Env.Mongo.FEEDS_QA;
+                META = Env.Mongo.META_QA;
                 break;
             case STAGE:
                 baseURI = "https://api.fitchconnect-stg.com";
@@ -92,6 +102,8 @@ public class Configuration {
                 dataBaseServerNewESP9 = "mgo-uue1a-sn001";
                 databaseFitchEnty = "esp-9";
                 BMIbaseURL = "https://api-stg1.bmiresearch.com";
+                CAL = Env.Mongo.CAL_STG;
+                META = Env.Mongo.META_STG;
                 break;
             case PROD:
                 baseURI = "https://api.fitchconnect.com";
@@ -100,8 +112,12 @@ public class Configuration {
                 dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
                 databaseFitchEnty = "esp-9";
                 BMIbaseURL = "https://api.bmiresearch.com";
+                CAL = Env.Mongo.CAL_PROD;
+                FEEDS = Env.Mongo.FEEDS_PROD;
+                META = Env.Mongo.META_PROD;
                 break;
             default:
+<<<<<<< HEAD
             	 baseURI = "https://api.fitchconnect.com";
                  dataBaseServerNewESP9 = "mgo-uue1a-sn001";
                  dataBaseServer1 = "mgo-pue1c-cr001.fitchratings.com";
@@ -109,6 +125,18 @@ public class Configuration {
                  databaseFitchEnty = "esp-9";
                  BMIbaseURL = "https://api.bmiresearch.com";
                  break;
+=======
+                baseURI = "https://api.fitchconnect-qa.com";
+                dataBaseServer1 = "mgo-que1a-cr001.fitchratings.com";
+                dataBaseServer2 = "mgo-que1a-ur001.fitchratings.com";
+                dataBaseServerNewESP9 = "mgo-que1a-sn001";
+                databaseFitchEnty = "esp-9";
+                BMIbaseURL = "https://api-stg1.bmiresearch.com";
+                CAL = Env.Mongo.CAL_QA;
+                FEEDS = Env.Mongo.FEEDS_QA;
+                META = Env.Mongo.META_QA;
+                break;
+>>>>>>> 4bef9cb936972c23ccced0e447dbbf1caec11fec
         }
         bearerToken(environment);
         AuthrztionValue = "Bearer " + refresh_token;
