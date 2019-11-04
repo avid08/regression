@@ -103,7 +103,7 @@ public class IssueCreditOpinions extends Configuration {
 
 	public void FISC_5835_Filter_IssueCreditOpinion() {
 		
-		String IssuerCreditOpnionUri = baseURI +"/v1/issueCreditOpinions?filter[FC_ISSUER_ID]=80104684";
+		String IssuerCreditOpnionUri = baseURI +"/v1/issueCreditOpinions?filter[FC_ISSUER_ID]=96705915";
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
@@ -122,13 +122,13 @@ public class IssueCreditOpinions extends Configuration {
 
 	public void FISC_5843_Filter_Entity() {
 		
-		String IssuerCreditOpnionUri = baseURI +"/v1/issueCreditOpinions?filter[FC_ENTITY_ID]=116299";
+		String IssuerCreditOpnionUri = baseURI +"/v1/issueCreditOpinions?filter[FC_ENTITY_ID]=1501482";
 
 		Response res = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType("application/vnd.api+json")
 				.when().get(IssuerCreditOpnionUri).then().statusCode(200)
 				.body(containsString("Public CO / Public Data"))
-				.body(containsString("a*"))			
+				.body(containsString("rr2"))			
 				.extract().response();				
 		Assert.assertFalse(res.asString().contains("isError"));
 		Assert.assertFalse(res.asString().contains("isMissing"));
