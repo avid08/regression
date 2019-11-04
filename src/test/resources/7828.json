@@ -1,0 +1,23 @@
+{
+  "data":{
+    "type":"valueRequest",
+    "attributes":{
+      "dateOptions":{
+      },
+      "issues":[
+        {
+          "id":"1020009105",
+          "type":"fitchIssueID"
+        }
+
+      ],
+      "fitchFieldIds":[
+        "FC_ISSUE_DISCLOSURE_REG_AGENCY",
+        "FC_ISSUE_DISCLOSURE_STATUS",
+        "FC_ISSUE_UK_ENDORSEMENT_COMPLIANCE",
+        "FC_ISSUE_EU_ENDORSEMENT_COMPLIANCE"
+      ],
+      "options":[  ]
+    }
+  }
+}

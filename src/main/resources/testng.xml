@@ -72,6 +72,8 @@
 			<class name="com.levfin.T1_Sprint_9"/>
 			<class name="com.Cds.Api.T1_Sprint_10"/>
 			<class name="com.marketsector.api.marketSectorTestCases"/>
+			<class name="com.ESGdata.api.T1_Sprint_12"></class>
+			<class name="com.brexit.T1_Sprint_13"></class>
 		</classes>
 
 	</test> <!-- Test -->

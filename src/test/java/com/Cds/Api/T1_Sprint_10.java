@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static com.jayway.restassured.RestAssured.given;
+import static org.apache.log4j.Level.INFO;
 
 public class T1_Sprint_10 extends Configuration {
 
@@ -35,6 +36,7 @@ public class T1_Sprint_10 extends Configuration {
             appender.setName("Test_Execution_Log");
             appender.setMaxFileSize("25MB");
             appender.activateOptions();
+            Logger.getRootLogger().setLevel(INFO);
             org.apache.log4j.Logger.getRootLogger().addAppender(appender);
         }
         catch (IOException ex) {
@@ -122,10 +124,10 @@ public class T1_Sprint_10 extends Configuration {
             Assert.assertTrue(res.asString().contains("\"fitchFieldDesc\":\"" + fitchFieldDesc + "\""));
             Assert.assertTrue(res.asString().contains("\"fieldDefinition\":\"" + fieldDefinition + "\""));
             Assert.assertTrue(res.asString().contains("\"permissionsRequired\":[\"" + permissionsRequired + "\"]"));
-            logger.log(Level.INFO, "FISC 6354 PASSED! Tested FITCHFIELDID: " + fitchFieldId + " DISPLAYNAME: " + displayName + " FITCHFIELDDESC " + fitchFieldDesc + " FIELDDEFINITION " + fieldDefinition + " PERMISSION " + permissionsRequired);
+            logger.info("FISC 6354 PASSED! Tested FITCHFIELDID: " + fitchFieldId + " DISPLAYNAME: " + displayName + " FITCHFIELDDESC " + fitchFieldDesc + " FIELDDEFINITION " + fieldDefinition + " PERMISSION " + permissionsRequired);
         }
         catch (AssertionError err){
-            logger.log(Level.WARN, "FISC 6354 FAILED! Tested FITCHFIELDID: "  + fitchFieldId + " ERROR: " + err);
+            logger.warn("FISC 6354 FAILED! Tested FITCHFIELDID: "  + fitchFieldId + " ERROR: " + err);
             Assert.fail();
         }
     }
@@ -154,10 +156,10 @@ public class T1_Sprint_10 extends Configuration {
             Assert.assertTrue(res.asString().contains("\"id\":\""+ fitchFieldId +"\""));
             Assert.assertTrue(res.asString().contains("\"displayName\":\"" + displayName + "\""));
             Assert.assertTrue(res.asString().contains("\"fitchFieldDesc\":\"" + fitchFieldDesc + "\""));
-            logger.log(Level.INFO, "FISC 6729 PASSED! Tested FITCHFIELDID: " + fitchFieldId + " DISPLAYNAME: " + displayName + " FITCHFIELDDESC " + fitchFieldDesc);
+            logger.info("FISC 6729 PASSED! Tested FITCHFIELDID: " + fitchFieldId + " DISPLAYNAME: " + displayName + " FITCHFIELDDESC " + fitchFieldDesc);
         }
         catch (AssertionError err){
-            logger.log(Level.WARN, "FISC 6729 FAILED!  ERROR: " + err);
+            logger.warn("FISC 6729 FAILED!  ERROR: " + err);
             Assert.fail();
         }
     }
@@ -187,10 +189,10 @@ public class T1_Sprint_10 extends Configuration {
         try {
             Assert.assertTrue(res.asString().contains("\"id\":\"" + fitchFieldId + "\""));
             Assert.assertTrue(res.asString().contains("\"permissionsRequired\":[\"" + permissionsRequired + "\"]"));
-            logger.log(Level.INFO, "FISC 6918 PASSED! Tested FITCHFIELDID: " + fitchFieldId + " PERMISSION " + permissionsRequired);
+            logger.info("FISC 6918 PASSED! Tested FITCHFIELDID: " + fitchFieldId + " PERMISSION " + permissionsRequired);
         }
         catch (AssertionError err){
-            logger.log(Level.WARN, "FISC 6918 FAILED! Tested FITCHFIELDID: "  + fitchFieldId + " ERROR: " + err);
+            logger.warn("FISC 6918 FAILED! Tested FITCHFIELDID: "  + fitchFieldId + " ERROR: " + err);
             Assert.fail();
         }
     }
@@ -235,10 +237,10 @@ public class T1_Sprint_10 extends Configuration {
         Response res6914_cdsUser = postToDataAggregator("6914.json");
         try {
                 Assert.assertTrue(res6914_cdsUser.asString().contains("{\"fitchFieldId\":\"" + fitchFieldId + "\",\"type\":\"numerical\"}"));
-                logger.log(Level.INFO, "FISC 6914 PASSED! TESTED FITCHFIELDID: " + fitchFieldId);
+                logger.info("FISC 6914 PASSED! TESTED FITCHFIELDID: " + fitchFieldId);
         }
         catch (AssertionError err){
-            logger.log(Level.WARN, "FISC 6914 FAILED! TESTED FITCHFIELDID: " + fitchFieldId + " ERROR: " + err);
+            logger.warn("FISC 6914 FAILED! TESTED FITCHFIELDID: " + fitchFieldId + " ERROR: " + err);
             Assert.fail();
         }
     }
@@ -259,10 +261,10 @@ public class T1_Sprint_10 extends Configuration {
             Assert.assertTrue(res.asString().contains("{\"data\":["));
             Assert.assertTrue(res.asString().contains("\"related\":"));
             Assert.assertTrue(res.asString().contains("/entity\""));
-            logger.log(Level.INFO, "FISC 7236 FIND ALL PASSED!");
+            logger.info("FISC 7236 FIND ALL PASSED!");
         }
         catch(AssertionError err){
-            logger.log(Level.WARN, "FISC 7236 FIND ALL FAILED! ERROR: " + err);
+            logger.warn("FISC 7236 FIND ALL FAILED! ERROR: " + err);
             Assert.fail();
         }
     }
@@ -278,10 +280,10 @@ public class T1_Sprint_10 extends Configuration {
 
         try {
             Assert.assertTrue(partialResponse.asString().contains("{\"related\":\"" + uri + findOneLfiResource + "/entity\"}"));
-            logger.log(Level.INFO, "FISC 7236 FIND ONE PASSED!");
+            logger.info("FISC 7236 FIND ONE PASSED!");
         }
         catch (AssertionError err){
-            logger.log(Level.WARN, "FISC 7236 FIND ONE FAILED! ERROR: " + err);
+            logger.warn("FISC 7236 FIND ONE FAILED! ERROR: " + err);
             Assert.fail();
         }
     }

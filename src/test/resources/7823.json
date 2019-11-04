@@ -1,0 +1,23 @@
+{
+  "data": {
+    "type": "valueRequest",
+    "attributes": {
+      "dateOptions": {
+        "dates": []
+      },
+      "entities": [
+        {
+          "id": "4",
+          "type": "FitchGroupID"
+        }
+      ],
+      "fitchFieldIds": [
+        "FC_ENDORSEMENT_COMPLIANCE",
+        "FC_EU_ENDORSEMENT_COMPLIANCE",
+        "FC_UK_ENDORSEMENT_COMPLIANCE",
+        "FC_COMPANY_NAME"
+      ],
+      "options": []
+    }
+  }
+}

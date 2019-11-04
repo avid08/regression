@@ -39,7 +39,7 @@ public class EnvConfig {
             public static final String META_STG = "mongodb://reporter:the_call@mgo-uue1a-ur001.fitchratings.com:27017/?authSource=admin&authMechanism=SCRAM-SHA-1";
             public static final String CAL_QA2 = "mongodb://reporter:the_call@mgo-que1a-sn001.fitchratings.com:27017/?authSource=admin&authMechanism=SCRAM-SHA-1";
             public static final String CAL_QA = "mongodb://reporter:the_call@mgo-que1a-cr001.fitchratings.com:27017/?authSource=admin&authMechanism=SCRAM-SHA-1";
-            public static final String FEEDS_QA = "mongodb://reporter:the_call@mgo-que1c-fd001:27017/?authSource=admin&authMechanism=SCRAM-SHA-1";
+            public static final String FEEDS_QA = "mongodb://reporter:the_call@mgo-que1a-sn001:27017/?authSource=admin&authMechanism=SCRAM-SHA-1";
             public static final String META_QA = "mongodb://reporter:the_call@mgo-que1a-ur001.fitchratings.com:27017/?authSource=admin&authMechanism=SCRAM-SHA-1";
             public static final String EDIT_CAL_DEV = "mongodb://mongo-esp-usr:the_call@mgo-due1c-cr001:27017/?authSource=esp-dev-9&authMechanism=SCRAM-SHA-1";
             public static final String CAL_DEV = "mongodb://reporter:the_call@mgo-due1c-cr001:27017/?authSource=admin&authMechanism=SCRAM-SHA-1";

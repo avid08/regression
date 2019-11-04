@@ -3,6 +3,7 @@ package com.configuration;
 import com.google.common.io.Resources;
 import com.jayway.restassured.response.Response;
 import groovy.json.internal.Charsets;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 import org.apache.log4j.RollingFileAppender;
@@ -28,6 +29,7 @@ public class LoggerInitialization {
             appender.setName("Test_Execution_Log");
             appender.setMaxFileSize("25MB");
             appender.activateOptions();
+            Logger.getRootLogger().setLevel(Level.INFO);
             org.apache.log4j.Logger.getRootLogger().addAppender(appender);
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -36,7 +38,7 @@ public class LoggerInitialization {
 
     public static Logger setupLogger(String sprintName) {
         initLogger(sprintName + "_");
-        Logger logger = Logger.getLogger("Test_Execution_Log_Sprint_10");
+        Logger logger = Logger.getLogger("Test_Execution_Log");
         return logger;
     }
 }

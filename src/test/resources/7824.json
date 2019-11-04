@@ -1,0 +1,22 @@
+{
+  "data":{
+    "type":"valueRequest",
+    "attributes":{
+      "dateOptions":{
+      },
+      "entities":[
+        {
+          "id":"90206861",
+          "type":"fitchGroupID"
+        }
+
+      ],
+      "fitchFieldIds":[
+        "FC_ENDORSEMENT_COMPLIANCE",
+        "FC_UK_ENDORSEMENT_COMPLIANCE",
+        "FC_EU_ENDORSEMENT_COMPLIANCE"
+      ],
+      "options":[  ]
+    }
+  }
+}
