@@ -4,9 +4,12 @@ import com.backendutils.Env;
 import com.backendutils.MongoUtils;
 import com.configuration.LoggerInitialization;
 import com.configuration.api.Configuration;
+import com.mongodb.BasicDBObject;
 import com.mongodb.Block;
 import com.mongodb.MongoException;
+import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import org.apache.log4j.Logger;
 import org.bson.Document;
 import org.testng.Assert;
@@ -27,6 +30,99 @@ public class ETLAutomation extends Configuration {
     private Env.Mongo dbServer = Env.Mongo.FEEDS_PROD_PARALLEL;
     private String dbName = "idscp-prod-2";
 
+    @DataProvider(name = "incrementalCollections")
+    public Object[][] getIncrementalCollections() {
+        return new Object[][]{
+                {"rds_agnt_rtng", "rds_issuer_incr"},
+                {"rds_security_rtng", "rds_issue_incr"}
+        };
+    }
+
+    @Test(dataProvider = "incrementalCollections")
+    public void etl_validateIncrementalCollections(String collectionName, String etlName) throws ParseException {
+        //Pass Query
+        final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
+        Date date = new Date();
+        String reqDate = formatter.format(date);
+        System.out.println("Validating For Date: " + reqDate);
+
+        //For Tomorrow's Date
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DAY_OF_YEAR, -1);
+        Date yesterday = cal.getTime();
+        String reqYesterday = formatter.format(yesterday);
+        System.out.println("Yesterday's Date: " + reqYesterday);
+
+        MongoCollection<Document> etlHistoryCollection = mongoUtils
+                .connectToMongoDatabase(dbServer)
+                .getDatabase(dbName)
+                .getCollection("ETLHistory_Meter");
+
+
+        AggregateIterable<Document> etlHistoryOutput = etlHistoryCollection.aggregate(Arrays.asList(
+                new Document()
+                        .append("$match", new Document()
+                                .append("etlName", etlName)
+                                .append("startTime", new Document()
+                                        .append("$gte", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ").parse(reqYesterday))
+                                        .append("$lte", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ").parse(reqDate))
+                                )
+                        ),
+                new Document()
+                        .append("$project", new Document()
+                                .append("etlName", 1.0)
+                                .append("rowsProcessed", 1.0)
+                                .append("startTime", 1.0)
+                                .append("LOAD_ID", 1.0)
+                                .append("_id", 0.0)
+                        ),
+                new Document()
+                        .append("$group", new Document()
+                                .append("_id", "$etlName")
+                                .append("count", new Document()
+                                        .append("$sum", "$rowsProcessed")
+                                )
+                                .append("first", new Document()
+                                        .append("$min", "$LOAD_ID")
+                                )
+                                .append("last", new Document()
+                                        .append("$max", "$LOAD_ID")
+                                )
+                        )
+                )
+        );
+
+        MongoCollection<Document> collection = mongoUtils
+                .connectToMongoDatabase(dbServer)
+                .getDatabase(dbName)
+                .getCollection(collectionName);
+
+
+        for (Document etlDocument : etlHistoryOutput) {
+            System.out.println("ETL_HISTORY_METER COUNT " + collectionName.toUpperCase() + "    " + etlDocument.get("count"));
+
+            AggregateIterable<Document> collectionOutput = collection.aggregate(
+                    Arrays.asList(
+                            new Document()
+                                    .append("$match", new Document()
+                                            .append("LOAD_ID", new Document()
+                                                    .append("$gte", etlDocument.get("first"))
+                                                    .append("$lte", etlDocument.get("last"))
+                                            )
+                                    ),
+                            new Document()
+                                    .append("$count", "count")
+                    )
+            );
+
+            for (Document collectionDocument : collectionOutput) {
+                System.out.println("COLLECTION COUNT " + collectionName.toUpperCase() + "   " + collectionDocument.get("count"));
+            }
+        }
+    }
+
+
     @DataProvider(name = "etlNames")
     public Object[][] getEtlNames() {
         return new Object[][]{
@@ -39,16 +135,16 @@ public class ETLAutomation extends Configuration {
 //                {"clients_ftpAccess","client_FTPAccess"},
 //                {"directors_executives","directors_executives"},
 //                {"insurance_financials","Insurance_Financials"},
-                {"issue_credit_opinions","issue_credit_opinions"},
-                {"issuer_credit_opinions","issuer_credit_opinions"},
+//                {"issue_credit_opinions","issue_credit_opinions"},
+//                {"issuer_credit_opinions","issuer_credit_opinions"},
 //                {"lloyds_financial","Lloyds_Financials"},
 //                {"market_sectors","get_market_sector"},
-                {"rds_agnt_rtng","rds_issuer_incr"},
-                {"rds_agnt_rtng_ref","rds_issuer_ref"},
-                {"rds_security_rtng","rds_issue_incr"},
-                {"rds_security_rtng_ref","rds_issue_ref"},
+                {"rds_agnt_rtng", "rds_issuer_incr"},
+//                {"rds_agnt_rtng_ref","rds_issuer_ref"},
+                {"rds_security_rtng", "rds_issue_incr"},
+//                {"rds_security_rtng_ref","rds_issue_ref"},
 //                {"region_countries","populate_region_countries"},
-                {"security_identifiers","security_identifiers"},
+//                {"security_identifiers","security_identifiers"},
 //                {"shareholders","shareholders"},
 //                {"sovereign_financials","Sovereign_Financials"},
 //                {"st_agnt_attr","AGNT_ATTR_INS"},
@@ -114,7 +210,6 @@ public class ETLAutomation extends Configuration {
             int limit = 1;
 
 
-
             Block<Document> processBlock = new Block<Document>() {
                 @Override
                 public void apply(final Document document) {
@@ -154,53 +249,7 @@ public class ETLAutomation extends Configuration {
             logger.error("ERROR PARSE EXCEPTION " + e);
         }
     }
-
-    @Test
-    public void etl_incrementalCollection() {
-        MongoCollection<Document> etlHistoryCollection = mongoUtils
-                .connectToMongoDatabase(dbServer)
-                .getDatabase(dbName)
-                .getCollection("ETLHistory_Meter");
-
-        Document query = new Document();
-
-        Document projection = new Document();
-
-        Document sort = new Document();
-
-
-        int limit = 1;
-
-        try {
-
-            Block<Document> processBlock = new Block<Document>() {
-                @Override
-                public void apply(final Document document) {
-
-                    System.out.println(document.toJson());
-
-                    String etlRunStatus = (document.getString("jobStatus"));
-                    Integer numberOfDocumentsProcessed = (document.getInteger("rowsProcessed"));
-                    Date dateOfProcess = (document.getDate("startTime"));
-                    Long latestLoadId = (document.getLong("LOAD_ID"));
-                    System.out.println(etlRunStatus);
-
-                    boolean failure = false;
-
-                    if (etlRunStatus.equals("Success")) {
-
-                    } else {
-
-                    }
-                    Assert.assertFalse(failure);
-                }
-            };
-
-            etlHistoryCollection.find(query).projection(projection).sort(sort).limit(limit).forEach(processBlock);
-
-        } catch (MongoException e) {
-            System.err.println("ERROR MONGO EXCEPTION " + e);
-            logger.error("ERROR MONGO EXCEPTION " + e);
-        }
-    }
 }
+
+
+
