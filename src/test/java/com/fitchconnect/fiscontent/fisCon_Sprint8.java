@@ -28,7 +28,7 @@ public class fisCon_Sprint8 extends Configuration {
 		Response res = given().header("Authorization", (AuthrztionValue)).header("X-App-Client-Id", XappClintIDvalue)
 				.header("accept", acceptValue).header("content", contentValue).contentType(ContentType.JSON).when()
 				.get(FIRfilterUrl).then().statusCode(200).body(containsString("stmntDate"))
-				.body(containsString("fitchEntityId")).body(containsString("1143152")).body(containsString("3")).extract()
+				.body(containsString("fitchEntityId")).body(containsString("1143152")).body(containsString("5")).extract()
 				.response();
 
 		Assert.assertFalse(res.asString().contains("isError"));

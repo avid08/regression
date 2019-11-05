@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.backendutils.Env;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeClass;
 
+import com.backendutils.Env;
 import com.google.common.io.Resources;
 import com.jayway.restassured.response.Response;
 
@@ -116,7 +116,7 @@ public class Configuration {
                 FEEDS = Env.Mongo.FEEDS_PROD;
                 META = Env.Mongo.META_PROD;
                 break;
-            default:
+            default:           	
                 baseURI = "https://api.fitchconnect-qa.com";
                 dataBaseServer1 = "mgo-que1a-cr001.fitchratings.com";
                 dataBaseServer2 = "mgo-que1a-ur001.fitchratings.com";
@@ -127,6 +127,7 @@ public class Configuration {
                 FEEDS = Env.Mongo.FEEDS_QA;
                 META = Env.Mongo.META_QA;
                 break;
+
         }
         bearerToken(environment);
         AuthrztionValue = "Bearer " + refresh_token;
@@ -135,7 +136,7 @@ public class Configuration {
         metaUrl = baseURI + metaEndPoint;
         dataPostUrl = baseURI + dataEndPoint;
 
-    }
+    };
 
     private void bearerToken(Environment environment) throws IOException {
         String url = baseURI + "/v1/oauth/token";
@@ -143,7 +144,7 @@ public class Configuration {
         String filename = null;
         switch (environment) {
         case NOT_DEFINED:
-        	filename = "QA_granType.json";
+        	filename = "PROD_granType.json";
             break;
             case DEV:
                 filename = "Dev_granType.json";

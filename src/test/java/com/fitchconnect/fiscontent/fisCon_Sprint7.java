@@ -79,7 +79,7 @@ public class fisCon_Sprint7 extends Configuration {
 
 	}
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 
 	public void FISC_869_start_endDatefilter() {
 
