@@ -122,6 +122,64 @@ public class ETLAutomation extends Configuration {
         }
     }
 
+    @DataProvider(name = "refreshCollections")
+    public Object[][] getRefreshCollections(){
+        return new Object[][]{
+                {"rds_agnt_rtng_ref","rds_issuer_ref"},
+                {"rds_security_rtng_ref","rds_issue_ref"}
+        };
+    }
+
+    @Test(dataProvider = "refreshCollections")
+    public void etl_validateRefreshCollections(String collectionName, String etlName){
+        MongoCollection<Document> etlHistoryCollection = mongoUtils
+                .connectToMongoDatabase(dbServer)
+                .getDatabase(dbName)
+                .getCollection("ETLHistory_Meter");
+
+        AggregateIterable<Document> etlHistoryOutput = etlHistoryCollection.aggregate(
+                Arrays.asList(
+                        new Document()
+                                .append("$match", new Document()
+                                        .append("etlName", etlName)
+                                ),
+                        new Document()
+                                .append("$sort", new Document()
+                                        .append("_id", -1.0)
+                                ),
+                        new Document()
+                                .append("$limit", 1.0)
+                )
+        );
+
+        MongoCollection<Document> collection = mongoUtils
+                .connectToMongoDatabase(dbServer)
+                .getDatabase(dbName)
+                .getCollection(collectionName);
+
+
+        for (Document etlDocument : etlHistoryOutput) {
+            System.out.println("ETL_HISTORY_METER COUNT " + collectionName.toUpperCase() + "    " + etlDocument.get("rowsProcessed"));
+
+            AggregateIterable<Document> collectionOutput = collection.aggregate(
+                    Arrays.asList(
+                            new Document()
+                                    .append("$match", new Document()
+                                            .append("LOAD_ID", etlDocument.get("LOAD_ID"))
+                                    ),
+                            new Document()
+                                    .append("$count", "count")
+                    )
+            );
+
+            for (Document collectionDocument : collectionOutput) {
+                Assert.assertEquals(etlDocument.get("rowsProcessed"), collectionDocument.get("count"));
+                System.out.println("COLLECTION COUNT " + collectionName.toUpperCase() + "   " + collectionDocument.get("count"));
+            }
+        }
+
+    }
+
 
     @DataProvider(name = "etlNames")
     public Object[][] getEtlNames() {
@@ -152,7 +210,7 @@ public class ETLAutomation extends Configuration {
         };
     }
 
-    @Test(dataProvider = "etlNames")
+    @Test(dataProvider = "refreshCollections")
     public void ETL_HistoryTest(String collectionName, String etlName) {
         try {
             MongoCollection<Document> etlHistoryCollection = mongoUtils
