@@ -6,12 +6,15 @@ import com.backendutils.MongoUtils;
 import com.backendutils.PostgresUtils;
 import com.configuration.LoggerInitialization;
 import com.configuration.api.Configuration;
+import com.jayway.restassured.path.json.config.JsonPathConfig;
 import com.jayway.restassured.response.Response;
 import com.mongodb.BasicDBObject;
 import com.mongodb.Block;
 import com.mongodb.MongoException;
+import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.bson.Document;
 import org.testng.Assert;
@@ -19,6 +22,11 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.regex.Pattern;
 
 public class T1_Sprint_14 extends Configuration {
 
@@ -115,7 +123,7 @@ public class T1_Sprint_14 extends Configuration {
                 {"FC_6M_YY_BPS_CDS","6M CDS y/y (bps)","6M CDS y/y (bps)","6M CDS Year on Year change in basis points","creditDefaultSwaps", apiResponse, mongoResponse},
                 {"FC_6M_YY_PERCENT_CDS","6M CDS y/y (%)","6M CDS y/y (%)","6M CDS Year on Year percentage change","creditDefaultSwaps", apiResponse, mongoResponse},
                 {"FC_RISK_BENCHMARK_2Y_BPS_CDS","2Y CDS Risk Benchmark (bps)","2Y CDS Risk Benchmark (bps)","2Y CDS Risk Benchmark in basis points","base", apiResponse, mongoResponse},
-                {"FC_RISK_BENCHMARK_4Y_BPS_CDS","4Y CDS Risk Benchmark (bps)","4Y CDS Risk Benchmark (bps)","4Y CDS Risk Benchmark in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_4Y_BPS_CDS","4Y CDS Risk Benchmark (bps)","4Y CDS Risk Benchmark (bps) PD","4Y CDS Risk Benchmark in basis points","base", apiResponse, mongoResponse},
                 {"FC_RISK_BENCHMARK_6M_BPS_CDS","6M CDS Risk Benchmark (bps)","6M CDS Risk Benchmark (bps)","6M CDS Risk Benchmark in basis points","base", apiResponse, mongoResponse},
                 {"FC_RISK_BENCHMARK_PD_2Y_BPS_CDS","2Y CDS Risk Benchmark (bps) PD","2Y CDS Risk Benchmark (bps) PD","2Y CDS Risk Benchmark Probability of Default in basis points","base", apiResponse, mongoResponse},
                 {"FC_RISK_BENCHMARK_PD_2Y_DD_BPS_CDS","2Y CDS Risk Benchmark d/d (bps) PD","2Y CDS Risk Benchmark d/d (bps) PD","2Y CDS Risk Benchmark Probability of Default Day on Day change in basis points","base", apiResponse, mongoResponse},
@@ -191,6 +199,65 @@ public class T1_Sprint_14 extends Configuration {
                 {"FC_RISK_BENCHMARK_SPREADS_6M_WW_PERCENT_CDS","6M CDS Risk Benchmark w/w (%)","6M CDS Risk Benchmark w/w (%)","6M CDS Risk Benchmark Spread Week on Week percentage change","base", apiResponse, mongoResponse},
                 {"FC_RISK_BENCHMARK_SPREADS_6M_YY_BPS_CDS","6M CDS Risk Benchmark y/y (bps)","6M CDS Risk Benchmark y/y (bps)","6M CDS Risk Benchmark Spread Year on Year change in basis points","base", apiResponse, mongoResponse},
                 {"FC_RISK_BENCHMARK_SPREADS_6M_YY_PERCENT_CDS","6M CDS Risk Benchmark y/y (%)","6M CDS Risk Benchmark y/y (%)","6M CDS Risk Benchmark Spread Year on Year percentage change","base", apiResponse, mongoResponse},
+                //changes
+                {"FC_1Y_SS_PERCENT_CDS","1y CDS hy/hy (bps) %","1y CDS hy/hy (%)","1y CDS Quarter on Half-Year percentage change","creditDefaultSwaps", apiResponse, mongoResponse},
+                {"FC_IMPLIED_CREDIT_SCORE_YY_CDS_SPOT","CDS ICS y/y Spot","CDS ICS y/y Spot","CDS Implied Credit Score Year on Year Spot","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_10Y_BPS_CDS","10y CDS Risk Benchmark (bps) PD","10y CDS Risk Benchmark (bps) PD","10y CDS Risk Benchmark Probability of Default in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_10Y_WW_PERCENT_CDS","10y CDS Risk Benchmark w/w (%) PD","10y CDS Risk Benchmark w/w (%) PD","10y CDS Risk Benchmark Probability of Default Week on Week percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_10Y_YY_BPS_CDS","10y CDS Risk Benchmark y/y (bps) PD","10y CDS Risk Benchmark y/y (bps) PD","10y CDS Risk Benchmark Probability of Default Year on Year change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_10Y_YY_PERCENT_CDS","10y CDS Risk Benchmark y/y (%) PD","10y CDS Risk Benchmark y/y (%) PD","10y CDS Risk Benchmark Probability of Default Year on Year percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_1Y_BPS_CDS","1y CDS Risk Benchmark (bps) PD","1y CDS Risk Benchmark (bps) PD","1y CDS Risk Benchmark Probability of Default in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_1Y_DD_BPS_CDS","1y CDS Risk Benchmark d/d (bps) PD","1y CDS Risk Benchmark d/d (bps) PD","1y CDS Risk Benchmark Probability of Default Day on Day change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_1Y_DD_PERCENT_CDS","1y CDS Risk Benchmark d/d (%) PD","1y CDS Risk Benchmark d/d (%) PD","1y CDS Risk Benchmark Probability of Default Day on Day percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_1Y_MM_BPS_CDS","1y CDS Risk Benchmark m/m (bps) PD","1y CDS Risk Benchmark m/m (bps) PD","1y CDS Risk Benchmark Probability of Default Month on Month change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_1Y_MM_PERCENT_CDS","1y CDS Risk Benchmark m/m (%) PD","1y CDS Risk Benchmark m/m (%) PD","1y CDS Risk Benchmark Probability of Default Month on Month percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_1Y_QQ_BPS_CDS","1y CDS Risk Benchmark q/q (bps) PD","1y CDS Risk Benchmark q/q (bps) PD","1y CDS Risk Benchmark Probability of Default Quater on Quater change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_1Y_QQ_PERCENT_CDS","1y CDS Risk Benchmark q/q (%) PD","1y CDS Risk Benchmark q/q (%) PD","1y CDS Risk Benchmark Probability of Default Quater on Quater percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_1Y_SS_BPS_CDS","1y CDS Risk Benchmark hy/hy (bps) PD","1y CDS Risk Benchmark hy/hy (bps) PD","1y CDS Risk Benchmark Probability of Default Half-Year on Half-Year change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_1Y_SS_PERCENT_CDS","1y CDS Risk Benchmark hy/hy (%) PD","1y CDS Risk Benchmark hy/hy (%) PD","1y CDS Risk Benchmark Probability of Default Half-Year on Healf-Year percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_1Y_WW_BPS_CDS","1y CDS Risk Benchmark w/w (bps) PD","1y CDS Risk Benchmark w/w (bps) PD","1y CDS Risk Benchmark Probability of Default Week on Week change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_1Y_WW_PERCENT_CDS","1y CDS Risk Benchmark w/w (%) PD","1y CDS Risk Benchmark w/w (%) PD","1y CDS Risk Benchmark Probability of Default Week on Week percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_1Y_YY_BPS_CDS","1y CDS Risk Benchmark y/y (bps) PD","1y CDS Risk Benchmark y/y (bps) PD","1y CDS Risk Benchmark Probability of Default Year on Year change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_1Y_YY_PERCENT_CDS","1y CDS Risk Benchmark y/y (%) PD","1y CDS Risk Benchmark y/y (%) PD","1y CDS Risk Benchmark Probability of Default Year on Year percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_3Y_BPS_CDS","3y CDS Risk Benchmark (bps) PD","3y CDS Risk Benchmark (bps) PD","3y CDS Risk Benchmark Probability of Default in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_3Y_DD_BPS_CDS","3y CDS Risk Benchmark d/d (bps) PD","3y CDS Risk Benchmark d/d (bps) PD","3y CDS Risk Benchmark Probability of Default Day on Day change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_3Y_DD_PERCENT_CDS","3y CDS Risk Benchmark d/d (%) PD","3y CDS Risk Benchmark d/d (%) PD","3y CDS Risk Benchmark Probability of Default Day on Day percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_3Y_MM_BPS_CDS","3y CDS Risk Benchmark m/m (bps) PD","3y CDS Risk Benchmark m/m (bps) PD","3y CDS Risk Benchmark Probability of Default Month on Month change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_3Y_MM_PERCENT_CDS","3y CDS Risk Benchmark m/m (%) PD","3y CDS Risk Benchmark m/m (%) PD","3y CDS Risk Benchmark Probability of Default Month on Month percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_3Y_QQ_BPS_CDS","3y CDS Risk Benchmark q/q (bps) PD","3y CDS Risk Benchmark q/q (bps) PD","3y CDS Risk Benchmark Probability of Default Quater on Quater change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_3Y_QQ_PERCENT_CDS","3y CDS Risk Benchmark q/q (%) PD","3y CDS Risk Benchmark q/q (%) PD","3y CDS Risk Benchmark Probability of Default Quater on Quater percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_3Y_SS_BPS_CDS","3y CDS Risk Benchmark hy/hy (bps) PD","3y CDS Risk Benchmark hy/hy (bps) PD","3y CDS Risk Benchmark Probability of Default Half-Year on Half-Year change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_3Y_SS_PERCENT_CDS","3y CDS Risk Benchmark hy/hy (%) PD","3y CDS Risk Benchmark hy/hy (%) PD","3y CDS Risk Benchmark Probability of Default Half-Year on Healf-Year percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_3Y_WW_BPS_CDS","3y CDS Risk Benchmark w/w (bps) PD","3y CDS Risk Benchmark w/w (bps) PD","3y CDS Risk Benchmark Probability of Default Week on Week change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_3Y_WW_PERCENT_CDS","3y CDS Risk Benchmark w/w (%) PD","3y CDS Risk Benchmark w/w (%) PD","3y CDS Risk Benchmark Probability of Default Week on Week percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_3Y_YY_BPS_CDS","3y CDS Risk Benchmark y/y (bps) PD","3y CDS Risk Benchmark y/y (bps) PD","3y CDS Risk Benchmark Probability of Default Year on Year change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_3Y_YY_PERCENT_CDS","3y CDS Risk Benchmark y/y (%) PD","3y CDS Risk Benchmark y/y (%) PD","3y CDS Risk Benchmark Probability of Default Year on Year percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_5Y_BPS_CDS","5y CDS Risk Benchmark (bps) PD","5y CDS Risk Benchmark (bps) PD","5y CDS Risk Benchmark Probability of Default in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_5Y_DD_BPS_CDS","5y CDS Risk Benchmark d/d (bps) PD","5y CDS Risk Benchmark d/d (bps) PD","5y CDS Risk Benchmark Probability of Default Day on Day change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_5Y_DD_PERCENT_CDS","5y CDS Risk Benchmark d/d (%) PD","5y CDS Risk Benchmark d/d (%) PD","5y CDS Risk Benchmark Probability of Default Day on Day percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_5Y_MM_BPS_CDS","5y CDS Risk Benchmark m/m (bps) PD","5y CDS Risk Benchmark m/m (bps) PD","5y CDS Risk Benchmark Probability of Default Month on Month change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_5Y_MM_PERCENT_CDS","5y CDS Risk Benchmark m/m (%) PD","5y CDS Risk Benchmark m/m (%) PD","5y CDS Risk Benchmark Probability of Default Month on Month percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_5Y_QQ_BPS_CDS","5y CDS Risk Benchmark q/q (bps) PD","5y CDS Risk Benchmark q/q (bps) PD","5y CDS Risk Benchmark Probability of Default Quater on Quater change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_5Y_QQ_PERCENT_CDS","5y CDS Risk Benchmark q/q (%) PD","5y CDS Risk Benchmark q/q (%) PD","5y CDS Risk Benchmark Probability of Default Quater on Quater percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_5Y_SS_BPS_CDS","5y CDS Risk Benchmark hy/hy (bps) PD","5y CDS Risk Benchmark hy/hy (bps) PD","5y CDS Risk Benchmark Probability of Default Half-Year on Half-Year change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_5Y_SS_PERCENT_CDS","5y CDS Risk Benchmark hy/hy (%) PD","5y CDS Risk Benchmark hy/hy (%) PD","5y CDS Risk Benchmark Probability of Default Half-Year on Healf-Year percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_5Y_WW_BPS_CDS","5y CDS Risk Benchmark w/w (bps) PD","5y CDS Risk Benchmark w/w (bps) PD","5y CDS Risk Benchmark Probability of Default Week on Week change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_5Y_WW_PERCENT_CDS","5y CDS Risk Benchmark w/w (%) PD","5y CDS Risk Benchmark w/w (%) PD","5y CDS Risk Benchmark Probability of Default Week on Week percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_5Y_YY_BPS_CDS","5y CDS Risk Benchmark y/y (bps) PD","5y CDS Risk Benchmark y/y (bps) PD","5y CDS Risk Benchmark Probability of Default Year on Year change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_5Y_YY_PERCENT_CDS","5y CDS Risk Benchmark y/y (%) PD","5y CDS Risk Benchmark y/y (%) PD","5y CDS Risk Benchmark Probability of Default Year on Year percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_7Y_BPS_CDS","7y CDS Risk Benchmark (bps) PD","7y CDS Risk Benchmark (bps) PD","7y CDS Risk Benchmark Probability of Default in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_7Y_DD_BPS_CDS","7y CDS Risk Benchmark d/d (bps) PD","7y CDS Risk Benchmark d/d (bps) PD","7y CDS Risk Benchmark Probability of Default Day on Day change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_7Y_DD_PERCENT_CDS","7y CDS Risk Benchmark d/d (%) PD","7y CDS Risk Benchmark d/d (%) PD","7y CDS Risk Benchmark Probability of Default Day on Day percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_7Y_MM_BPS_CDS","7y CDS Risk Benchmark m/m (bps) PD","7y CDS Risk Benchmark m/m (bps) PD","7y CDS Risk Benchmark Probability of Default Month on Month change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_7Y_MM_PERCENT_CDS","7y CDS Risk Benchmark m/m (%) PD","7y CDS Risk Benchmark m/m (%) PD","7y CDS Risk Benchmark Probability of Default Month on Month percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_7Y_QQ_BPS_CDS","7y CDS Risk Benchmark q/q (bps) PD","7y CDS Risk Benchmark q/q (bps) PD","7y CDS Risk Benchmark Probability of Default Quater on Quater change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_7Y_QQ_PERCENT_CDS","7y CDS Risk Benchmark q/q (%) PD","7y CDS Risk Benchmark q/q (%) PD","7y CDS Risk Benchmark Probability of Default Quater on Quater percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_7Y_SS_BPS_CDS","7y CDS Risk Benchmark hy/hy (bps) PD","7y CDS Risk Benchmark hy/hy (bps) PD","7y CDS Risk Benchmark Probability of Default Half-Year on Half-Year change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_7Y_SS_PERCENT_CDS","7y CDS Risk Benchmark hy/hy (%) PD","7y CDS Risk Benchmark hy/hy (%) PD","7y CDS Risk Benchmark Probability of Default Half-Year on Healf-Year percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_7Y_WW_BPS_CDS","7y CDS Risk Benchmark w/w (bps) PD","7y CDS Risk Benchmark w/w (bps) PD","7y CDS Risk Benchmark Probability of Default Week on Week change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_7Y_WW_PERCENT_CDS","7y CDS Risk Benchmark w/w (%) PD","7y CDS Risk Benchmark w/w (%) PD","7y CDS Risk Benchmark Probability of Default Week on Week percentage change","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_7Y_YY_BPS_CDS","7y CDS Risk Benchmark y/y (bps) PD","7y CDS Risk Benchmark y/y (bps) PD","7y CDS Risk Benchmark Probability of Default Year on Year change in basis points","base", apiResponse, mongoResponse},
+                {"FC_RISK_BENCHMARK_PD_7Y_YY_PERCENT_CDS","7y CDS Risk Benchmark y/y (%) PD","7y CDS Risk Benchmark y/y (%) PD","7y CDS Risk Benchmark Probability of Default Year on Year percentage change","base", apiResponse, mongoResponse},
         };
     }
 
@@ -199,8 +266,10 @@ public class T1_Sprint_14 extends Configuration {
         try {
             Assert.assertTrue(mongoResponse.contains("\"fitchFieldId\": \"" + fitchFieldId + "\""));
             Assert.assertTrue(mongoResponse.contains("\"displayName\": \"" + displayName + "\""));
-            Assert.assertTrue(mongoResponse.contains("\"fitchFieldDesc\": \"" + fitchFieldDesc + "\""));
             Assert.assertTrue(mongoResponse.contains("\"fieldDefinition\": \"" + fieldDefinition + "\""));
+            Assert.assertEquals(StringUtils.countMatches(mongoResponse, "\"fitchFieldId\": \"" + fitchFieldId + "\""), 1);
+            Assert.assertEquals(StringUtils.countMatches(mongoResponse, "\"displayName\": \"" + displayName + "\""), 1);
+            Assert.assertEquals(StringUtils.countMatches(mongoResponse, "\"fieldDefinition\": \"" + fieldDefinition + "\""), 1);
             logger.info("FISC 6354 MONGO DATA PASSED! Tested FITCHFIELDID: " + fitchFieldId + " DISPLAYNAME: " + displayName + " FITCHFIELDDESC " + fitchFieldDesc + " FIELDDEFINITION " + fieldDefinition + " PERMISSION " + permissionsRequired);
         } catch (AssertionError err){
             logger.error("FISC 6354 MONGO DATA FAILED! Tested FITCHFIELDID: "  + fitchFieldId + " ERROR: " + err);
@@ -211,10 +280,15 @@ public class T1_Sprint_14 extends Configuration {
     @Test(dataProvider = "Fisc6354")
     public void Fisc6354_API_cdsMetadataEnhacements(String fitchFieldId, String displayName, String fitchFieldDesc, String fieldDefinition, String permissionsRequired, String apiResponse, String mongoResponse){
         try {
+            System.out.println(apiResponse);
             Assert.assertTrue(apiResponse.contains("\"id\":\"" + fitchFieldId + "\""));
             Assert.assertTrue(apiResponse.contains("\"displayName\":\"" + displayName + "\""));
             Assert.assertTrue(apiResponse.contains("\"fitchFieldDesc\":\"" + fitchFieldDesc + "\""));
             Assert.assertTrue(apiResponse.contains("\"fieldDefinition\":\"" + fieldDefinition + "\""));
+            /*Assert.assertEquals(StringUtils.countMatches(apiResponse, "\"id\":\"" + fitchFieldId + "\""), 1);
+            Assert.assertEquals(StringUtils.countMatches(apiResponse, "\"displayName\":\"" + displayName + "\""), 1);
+            Assert.assertEquals(StringUtils.countMatches(apiResponse, "\"fitchFieldDesc\":\"" + fitchFieldDesc + "\""), 1);
+            Assert.assertEquals(StringUtils.countMatches(apiResponse, "\"fieldDefinition\":\"" + fieldDefinition + "\""), 1);*/
             logger.info("FISC 6354 API RESOURCEFUL ENDPOINT DATA PASSED! Tested FITCHFIELDID: " + fitchFieldId + " DISPLAYNAME: " + displayName + " FITCHFIELDDESC " + fitchFieldDesc + " FIELDDEFINITION " + fieldDefinition + " PERMISSION " + permissionsRequired);
         } catch (AssertionError err){
             logger.error("FISC 6354 API RESOURCEFUL ENDPOINT DATA FAILED! Tested FITCHFIELDID: "  + fitchFieldId + " ERROR: " + err);
@@ -372,13 +446,18 @@ public class T1_Sprint_14 extends Configuration {
         };
     }
 
-    @Test(dataProvider = "Fisc6373")
-    public void Fisc6373_cdsEnhacementsInDataAggregator(String fitchFieldId, String displayName, String fitchFieldDesc, String fieldDefinition, String permissionsRequired, String apiResponse){
+    @Test(dataProvider = "Fisc6373", enabled = false)
+    public void Fisc6373_cdsEnhacementsInDataAggregator_ValidatingPresenceOfAttributes(String fitchFieldId, String displayName, String fitchFieldDesc, String fieldDefinition, String permissionsRequired, String apiResponse){
         try {
-            Assert.assertTrue(apiResponse.contains("\"id\":\"" + fitchFieldId + "\""));
-            Assert.assertTrue(apiResponse.contains("\"displayName\":\"" + displayName + "\""));
+
+            Assert.assertTrue(apiResponse.contains("\"fitchFieldId\":\"" + fitchFieldId + "\""));
+           /* Assert.assertTrue(apiResponse.contains("\"displayName\":\"" + displayName + "\""));
             Assert.assertTrue(apiResponse.contains("\"fitchFieldDesc\":\"" + fitchFieldDesc + "\""));
-            Assert.assertTrue(apiResponse.contains("\"fieldDefinition\":\"" + fieldDefinition + "\""));
+            Assert.assertTrue(apiResponse.contains("\"fieldDefinition\":\"" + fieldDefinition + "\""));*/
+            /*Assert.assertEquals(StringUtils.countMatches(apiResponse, "\"id\":\"" + fitchFieldId + "\""), 1);
+            Assert.assertEquals(StringUtils.countMatches(apiResponse, "\"displayName\":\"" + displayName + "\""), 1);
+            Assert.assertEquals(StringUtils.countMatches(apiResponse, "\"fitchFieldDesc\":\"" + fitchFieldDesc + "\""), 1);
+            Assert.assertEquals(StringUtils.countMatches(apiResponse, "\"fieldDefinition\":\"" + fieldDefinition + "\""), 1);*/
             logger.info("FISC 6373 API DATA AGGREGATOR PASSED! Tested FITCHFIELDID: " + fitchFieldId + " DISPLAYNAME: " + displayName + " FITCHFIELDDESC " + fitchFieldDesc + " FIELDDEFINITION " + fieldDefinition + " PERMISSION " + permissionsRequired);
         } catch (AssertionError err){
             logger.error("FISC 6373 API DATA AGGREGATOR FAILED! Tested FITCHFIELDID: "  + fitchFieldId + " ERROR: " + err);
@@ -387,8 +466,192 @@ public class T1_Sprint_14 extends Configuration {
     }
 
     @Test
-    public void Fisc7288_HistoryFilesFor6MCDSDataToUpstreamAndMongo(){
+    public void Fisc6373_cdsEnhacementsInDataAggregator_ValidatingValues() throws IOException {
+        MongoCollection<Document> collection = mongoUtils
+                .connectToMongoDatabase(Env.Mongo.CDS)
+                .getDatabase("cds-data")
+                .getCollection("cdsEntities");
 
+        AggregateIterable<Document> mongoValues = collection.aggregate(
+                Arrays.asList(
+                        new Document()
+                                .append("$match", new Document()
+                                        .append("FC_AGENT_ID", 114281L)
+                                ),
+                        new Document()
+                                .append("$project", new Document()
+                                        .append("FC_2Y_BPS_CDS", 1.0)
+                                        .append("FC_2Y_BPS_CDS_PD", 1.0)
+                                        .append("FC_2Y_DD_BPS_CDS", 1.0)
+                                        .append("FC_2Y_DD_BPS_CDS_PD", 1.0)
+                                        .append("FC_2Y_DD_PERCENT_CDS", 1.0)
+                                        .append("FC_2Y_DD_PERCENT_CDS_PD", 1.0)
+                                        .append("FC_2Y_MM_BPS_CDS", 1.0)
+                                        .append("FC_2Y_MM_BPS_CDS_PD", 1.0)
+                                        .append("FC_2Y_MM_PERCENT_CDS", 1.0)
+                                        .append("FC_2Y_MM_PERCENT_CDS_PD", 1.0)
+                                        .append("FC_2Y_QQ_BPS_CDS", 1.0)
+                                        .append("FC_2Y_QQ_BPS_CDS_PD", 1.0)
+                                        .append("FC_2Y_QQ_PERCENT_CDS", 1.0)
+                                        .append("FC_2Y_QQ_PERCENT_CDS_PD", 1.0)
+                                        .append("FC_2Y_SS_BPS_CDS", 1.0)
+                                        .append("FC_2Y_SS_BPS_CDS_PD", 1.0)
+                                        .append("FC_2Y_SS_PERCENT_CDS", 1.0)
+                                        .append("FC_2Y_SS_PERCENT_CDS_PD", 1.0)
+                                        .append("FC_2Y_WW_BPS_CDS", 1.0)
+                                        .append("FC_2Y_WW_BPS_CDS_PD", 1.0)
+                                        .append("FC_2Y_WW_PERCENT_CDS", 1.0)
+                                        .append("FC_2Y_WW_PERCENT_CDS_PD", 1.0)
+                                        .append("FC_2Y_YY_BPS_CDS", 1.0)
+                                        .append("FC_2Y_YY_BPS_CDS_PD", 1.0)
+                                        .append("FC_2Y_YY_PERCENT_CDS", 1.0)
+                                        .append("FC_2Y_YY_PERCENT_CDS_PD", 1.0)
+                                        .append("FC_4Y_BPS_CDS", 1.0)
+                                        .append("FC_4Y_BPS_CDS_PD", 1.0)
+                                        .append("FC_4Y_DD_BPS_CDS", 1.0)
+                                        .append("FC_4Y_DD_BPS_CDS_PD", 1.0)
+                                        .append("FC_4Y_DD_PERCENT_CDS", 1.0)
+                                        .append("FC_4Y_DD_PERCENT_CDS_PD", 1.0)
+                                        .append("FC_4Y_MM_BPS_CDS", 1.0)
+                                        .append("FC_4Y_MM_BPS_CDS_PD", 1.0)
+                                        .append("FC_4Y_MM_PERCENT_CDS", 1.0)
+                                        .append("FC_4Y_MM_PERCENT_CDS_PD", 1.0)
+                                        .append("FC_4Y_QQ_BPS_CDS", 1.0)
+                                        .append("FC_4Y_QQ_BPS_CDS_PD", 1.0)
+                                        .append("FC_4Y_QQ_PERCENT_CDS", 1.0)
+                                        .append("FC_4Y_QQ_PERCENT_CDS_PD", 1.0)
+                                        .append("FC_4Y_SS_BPS_CDS", 1.0)
+                                        .append("FC_4Y_SS_BPS_CDS_PD", 1.0)
+                                        .append("FC_4Y_SS_PERCENT_CDS", 1.0)
+                                        .append("FC_4Y_SS_PERCENT_CDS_PD", 1.0)
+                                        .append("FC_4Y_WW_BPS_CDS", 1.0)
+                                        .append("FC_4Y_WW_BPS_CDS_PD", 1.0)
+                                        .append("FC_4Y_WW_PERCENT_CDS", 1.0)
+                                        .append("FC_4Y_WW_PERCENT_CDS_PD", 1.0)
+                                        .append("FC_4Y_YY_BPS_CDS", 1.0)
+                                        .append("FC_4Y_YY_BPS_CDS_PD", 1.0)
+                                        .append("FC_4Y_YY_PERCENT_CDS", 1.0)
+                                        .append("FC_4Y_YY_PERCENT_CDS_PD", 1.0)
+                                        .append("FC_6M_BPS_CDS", 1.0)
+                                        .append("FC_6M_DD_BPS_CDS", 1.0)
+                                        .append("FC_6M_DD_PERCENT_CDS", 1.0)
+                                        .append("FC_6M_MM_BPS_CDS", 1.0)
+                                        .append("FC_6M_MM_PERCENT_CDS", 1.0)
+                                        .append("FC_6M_QQ_BPS_CDS", 1.0)
+                                        .append("FC_6M_QQ_PERCENT_CDS", 1.0)
+                                        .append("FC_6M_SS_BPS_CDS", 1.0)
+                                        .append("FC_6M_SS_PERCENT_CDS", 1.0)
+                                        .append("FC_6M_WW_BPS_CDS", 1.0)
+                                        .append("FC_6M_WW_PERCENT_CDS", 1.0)
+                                        .append("FC_6M_YY_BPS_CDS", 1.0)
+                                        .append("FC_6M_YY_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_2Y_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_4Y_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_6M_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_2Y_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_2Y_DD_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_2Y_DD_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_2Y_MM_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_2Y_MM_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_2Y_QQ_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_2Y_QQ_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_2Y_SS_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_2Y_SS_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_2Y_WW_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_2Y_WW_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_2Y_YY_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_2Y_YY_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_4Y_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_4Y_DD_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_4Y_DD_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_4Y_MM_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_4Y_MM_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_4Y_QQ_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_4Y_QQ_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_4Y_SS_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_4Y_SS_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_4Y_WW_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_4Y_WW_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_4Y_YY_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_PD_4Y_YY_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_2Y_DD_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_2Y_DD_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_2Y_MM_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_2Y_MM_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_2Y_QQ_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_2Y_QQ_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_2Y_SS_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_2Y_SS_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_2Y_WW_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_2Y_WW_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_2Y_YY_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_2Y_YY_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_4Y_DD_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_4Y_DD_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_4Y_MM_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_4Y_MM_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_4Y_QQ_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_4Y_QQ_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_4Y_SS_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_4Y_SS_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_4Y_WW_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_4Y_WW_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_4Y_YY_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_4Y_YY_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_6M_DD_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_6M_DD_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_6M_MM_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_6M_MM_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_6M_QQ_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_6M_QQ_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_6M_SS_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_6M_SS_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_6M_WW_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_6M_WW_PERCENT_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_6M_YY_BPS_CDS", 1.0)
+                                        .append("FC_RISK_BENCHMARK_SPREADS_6M_YY_PERCENT_CDS", 1.0)
+                                ),
+                        new Document()
+                                .append("$sort", new Document()
+                                        .append("_id", -1.0)
+                                ),
+                        new Document()
+                                .append("$limit", 1.0)
+                )
+        );
+
+        Response res = apiUtils.postToDataAggregator("6373.json", AuthrztionValue, XappClintIDvalue, dataPostUrl);
+
+        ArrayList<String> values = res.path("data.attributes.entities[0].values");
+        int numberOfValues = values.size();
+
+        HashMap<String, String> apiValues = new HashMap<>();
+        DecimalFormat df = new DecimalFormat("#.####");
+
+
+
+        for (Document mongoValue : mongoValues) {
+            System.out.println(res.asString());
+            for (int i = 0; i < numberOfValues; i++) {
+                String apiFitchFieldId = res.path("data.attributes.entities[0].values[" + i + "].fitchFieldId");
+                String apiValue = df.format(res.path("data.attributes.entities[0].values[" + i + "].values[0].value[0]"));
+                apiValues.put(apiFitchFieldId, apiValue);
+                System.out.println(apiFitchFieldId + "     " + apiValue + "     " + df.format(mongoValue.get(apiFitchFieldId)));
+                try {
+                    Assert.assertEquals(apiValue, df.format(mongoValue.get(apiFitchFieldId)));
+                    logger.info("FISC 6373 API VALUES PASSED FITCHFIELDID " + apiFitchFieldId);
+                } catch (AssertionError err) {
+                    logger.error("FISC 6373 API VALUES FAILED! FITCHFIELDID " + apiFitchFieldId);
+                    Assert.fail();
+                }
+            }
+        }
+    }
+
+    @Test
+    public void Fisc7288_HistoryFilesFor6MCDSDataToUpstreamAndMongo(){
+        //Done by Max
+        Assert.assertTrue(true);
     }
 
     @Test
