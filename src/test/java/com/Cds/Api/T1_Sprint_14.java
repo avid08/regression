@@ -661,7 +661,20 @@ public class T1_Sprint_14 extends Configuration {
                 {"FC_4Y_WW_PERCENT_CDS",apiResponse},
                 {"FC_4Y_YY_BPS_CDS",apiResponse},
                 {"FC_4Y_YY_PERCENT_CDS",apiResponse},
-                {"FC_6M_YY_PERCENT_CDS", apiResponse}
+                {"FC_6M_YY_PERCENT_CDS", apiResponse},
+                {"FC_6M_BPS_CDS",apiResponse},
+                {"FC_6M_DD_BPS_CDS",apiResponse},
+                {"FC_6M_DD_PERCENT_CDS",apiResponse},
+                {"FC_6M_MM_BPS_CDS",apiResponse},
+                {"FC_6M_MM_PERCENT_CDS",apiResponse},
+                {"FC_6M_QQ_BPS_CDS",apiResponse},
+                {"FC_6M_QQ_PERCENT_CDS",apiResponse},
+                {"FC_6M_SS_BPS_CDS",apiResponse},
+                {"FC_6M_SS_PERCENT_CDS",apiResponse},
+                {"FC_6M_WW_BPS_CDS",apiResponse},
+                {"FC_6M_WW_PERCENT_CDS",apiResponse},
+                {"FC_6M_YY_BPS_CDS",apiResponse},
+                {"FC_6M_YY_PERCENT_CDS", apiResponse},
         };
     }
 
