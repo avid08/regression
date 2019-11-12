@@ -440,15 +440,7 @@ public class T1_Sprint_14 extends Configuration {
     @Test(dataProvider = "Fisc6373", enabled = false)
     public void Fisc6373_cdsEnhacementsInDataAggregator_ValidatingPresenceOfAttributes(String fitchFieldId, String displayName, String fitchFieldDesc, String fieldDefinition, String permissionsRequired, String apiResponse){
         try {
-
             Assert.assertTrue(apiResponse.contains("\"fitchFieldId\":\"" + fitchFieldId + "\""));
-           /* Assert.assertTrue(apiResponse.contains("\"displayName\":\"" + displayName + "\""));
-            Assert.assertTrue(apiResponse.contains("\"fitchFieldDesc\":\"" + fitchFieldDesc + "\""));
-            Assert.assertTrue(apiResponse.contains("\"fieldDefinition\":\"" + fieldDefinition + "\""));*/
-            /*Assert.assertEquals(StringUtils.countMatches(apiResponse, "\"id\":\"" + fitchFieldId + "\""), 1);
-            Assert.assertEquals(StringUtils.countMatches(apiResponse, "\"displayName\":\"" + displayName + "\""), 1);
-            Assert.assertEquals(StringUtils.countMatches(apiResponse, "\"fitchFieldDesc\":\"" + fitchFieldDesc + "\""), 1);
-            Assert.assertEquals(StringUtils.countMatches(apiResponse, "\"fieldDefinition\":\"" + fieldDefinition + "\""), 1);*/
             logger.info("FISC 6373 API DATA AGGREGATOR PASSED! Tested FITCHFIELDID: " + fitchFieldId + " DISPLAYNAME: " + displayName + " FITCHFIELDDESC " + fitchFieldDesc + " FIELDDEFINITION " + fieldDefinition + " PERMISSION " + permissionsRequired);
         } catch (AssertionError err){
             logger.error("FISC 6373 API DATA AGGREGATOR FAILED! Tested FITCHFIELDID: "  + fitchFieldId + " ERROR: " + err);
@@ -638,13 +630,59 @@ public class T1_Sprint_14 extends Configuration {
         }
     }
 
-    @Test
+    @DataProvider(name="Fisc6373_baseUser")
+    public Object[][] getDataFor6373_baseUser() throws IOException {
+
+        String apiResponse = apiUtils.postToDataAggregatorBaseUser("6373_baseUserFields.json", XappClintIDvalue, dataPostUrl).asString();
+        return new Object[][] {
+                {"FC_2Y_BPS_CDS",apiResponse},
+                {"FC_2Y_DD_BPS_CDS",apiResponse},
+                {"FC_2Y_DD_PERCENT_CDS",apiResponse},
+                {"FC_2Y_MM_BPS_CDS",apiResponse},
+                {"FC_2Y_MM_PERCENT_CDS",apiResponse},
+                {"FC_2Y_QQ_BPS_CDS",apiResponse},
+                {"FC_2Y_QQ_PERCENT_CDS",apiResponse},
+                {"FC_2Y_SS_BPS_CDS",apiResponse},
+                {"FC_2Y_SS_PERCENT_CDS",apiResponse},
+                {"FC_2Y_WW_BPS_CDS",apiResponse},
+                {"FC_2Y_WW_PERCENT_CDS",apiResponse},
+                {"FC_2Y_YY_BPS_CDS",apiResponse},
+                {"FC_2Y_YY_PERCENT_CDS",apiResponse},
+                {"FC_4Y_BPS_CDS",apiResponse},
+                {"FC_4Y_DD_BPS_CDS",apiResponse},
+                {"FC_4Y_DD_PERCENT_CDS",apiResponse},
+                {"FC_4Y_MM_BPS_CDS",apiResponse},
+                {"FC_4Y_MM_PERCENT_CDS",apiResponse},
+                {"FC_4Y_QQ_BPS_CDS",apiResponse},
+                {"FC_4Y_QQ_PERCENT_CDS",apiResponse},
+                {"FC_4Y_SS_BPS_CDS",apiResponse},
+                {"FC_4Y_SS_PERCENT_CDS",apiResponse},
+                {"FC_4Y_WW_BPS_CDS",apiResponse},
+                {"FC_4Y_WW_PERCENT_CDS",apiResponse},
+                {"FC_4Y_YY_BPS_CDS",apiResponse},
+                {"FC_4Y_YY_PERCENT_CDS",apiResponse},
+                {"FC_6M_YY_PERCENT_CDS", apiResponse}
+        };
+    }
+
+    @Test(dataProvider = "Fisc6373_baseUser")
+    public void Fisc6373_cdsEnhacementsInDataAggregator_BaseUser_ValidatingValues(String fitchFieldId, String apiResponse){
+        try {
+            Assert.assertTrue(apiResponse.contains("\"fitchFieldId\":\"" + fitchFieldId + "\",\"type\":\"numerical\",\"auditTrail\":false,\"isRestricted\":true"));
+            logger.info("FISC 6373 API DATA AGGREGATOR BASE USER PASSED FITCHFIELDID " + fitchFieldId);
+        } catch (AssertionError err) {
+            logger.error("FISC 6373 API DATA AGGREGATOR BASE USER PASSED FITCHFIELDID " + fitchFieldId + " ERROR " + err);
+            Assert.fail();
+        }
+    }
+
+    @Test(enabled=false)
     public void Fisc7288_HistoryFilesFor6MCDSDataToUpstreamAndMongo(){
         //Done by Max
         Assert.assertTrue(true);
     }
 
-    @Test
+    @Test(enabled=false)
     public void Fisc7891_IssueDataInPostgresMasterDatabase(){
 
     }
