@@ -22,7 +22,10 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -151,18 +154,6 @@ public class T1_Sprint_14 extends Configuration {
                 {"FC_RISK_BENCHMARK_PD_4Y_WW_PERCENT_CDS","4Y CDS Risk Benchmark w/w (%) PD","4Y CDS Risk Benchmark w/w (%)","4Y CDS Risk Benchmark Probability of Default Week on Week percentage change","base", apiResponse, mongoResponse},
                 {"FC_RISK_BENCHMARK_PD_4Y_YY_BPS_CDS","4Y CDS Risk Benchmark y/y (bps) PD","4Y CDS Risk Benchmark y/y (bps)","4Y CDS Risk Benchmark Probability of Default Year on Year change in basis points","base", apiResponse, mongoResponse},
                 {"FC_RISK_BENCHMARK_PD_4Y_YY_PERCENT_CDS","4Y CDS Risk Benchmark y/y (%) PD","4Y CDS Risk Benchmark y/y (%)","4Y CDS Risk Benchmark Probability of Default Year on Year percentage change","base", apiResponse, mongoResponse},
-                {"FC_RISK_BENCHMARK_PD_6M_DD_BPS_CDS","6M CDS Risk Benchmark d/d (bps) PD","6M CDS Risk Benchmark d/d (bps) PD","6M CDS Risk Benchmark Probability of Default Day on Day change in basis points","base", apiResponse, mongoResponse},
-                {"FC_RISK_BENCHMARK_PD_6M_DD_PERCENT_CDS","6M CDS Risk Benchmark d/d (%) PD","6M CDS Risk Benchmark d/d (%) PD","6M CDS Risk Benchmark Probability of Default Day on Day percentage change","base", apiResponse, mongoResponse},
-                {"FC_RISK_BENCHMARK_PD_6M_MM_BPS_CDS","6M CDS Risk Benchmark m/m (bps) PD","6M CDS Risk Benchmark m/m (bps) PD","6M CDS Risk Benchmark Probability of Default Month on Month change in basis points","base", apiResponse, mongoResponse},
-                {"FC_RISK_BENCHMARK_PD_6M_MM_PERCENT_CDS","6M CDS Risk Benchmark m/m (%) PD","6M CDS Risk Benchmark m/m (%) PD","6M CDS Risk Benchmark Probability of Default Month on Month percentage change","base", apiResponse, mongoResponse},
-                {"FC_RISK_BENCHMARK_PD_6M_QQ_BPS_CDS","6M CDS Risk Benchmark q/q (bps) PD","6M CDS Risk Benchmark q/q (bps) PD","6M CDS Risk Benchmark Probability of Default Quater on Quater change in basis points","base", apiResponse, mongoResponse},
-                {"FC_RISK_BENCHMARK_PD_6M_QQ_PERCENT_CDS","6M CDS Risk Benchmark q/q (%) PD","6M CDS Risk Benchmark q/q (%) PD","6M CDS Risk Benchmark Probability of Default Quater on Quater percentage change","base", apiResponse, mongoResponse},
-                {"FC_RISK_BENCHMARK_PD_6M_SS_BPS_CDS","6M CDS Risk Benchmark hy/hy (bps) PD","6M CDS Risk Benchmark hy/hy (bps) PD","6M CDS Risk Benchmark Probability of Default Half-Year on Half-Year change in basis points","base", apiResponse, mongoResponse},
-                {"FC_RISK_BENCHMARK_PD_6M_SS_PERCENT_CDS","6M CDS Risk Benchmark hy/hy (%) PD","6M CDS Risk Benchmark hy/hy (%) PD","6M CDS Risk Benchmark Probability of Default Half-Year on Healf-Year percentage change","base", apiResponse, mongoResponse},
-                {"FC_RISK_BENCHMARK_PD_6M_WW_BPS_CDS","6M CDS Risk Benchmark w/w (bps) PD","6M CDS Risk Benchmark w/w (bps) PD","6M CDS Risk Benchmark Probability of Default Week on Week change in basis points","base", apiResponse, mongoResponse},
-                {"FC_RISK_BENCHMARK_PD_6M_WW_PERCENT_CDS","6M CDS Risk Benchmark w/w (%) PD","6M CDS Risk Benchmark w/w (%) PD","6M CDS Risk Benchmark Probability of Default Week on Week percentage change","base", apiResponse, mongoResponse},
-                {"FC_RISK_BENCHMARK_PD_6M_YY_BPS_CDS","6M CDS Risk Benchmark y/y (bps) PD","6M CDS Risk Benchmark y/y (bps) PD","6M CDS Risk Benchmark Probability of Default Year on Year change in basis points","base", apiResponse, mongoResponse},
-                {"FC_RISK_BENCHMARK_PD_6M_YY_PERCENT_CDS","6M CDS Risk Benchmark y/y (%) PD","6M CDS Risk Benchmark y/y (%) PD","6M CDS Risk Benchmark Probability of Default Year on Year percentage change","base", apiResponse, mongoResponse},
                 {"FC_RISK_BENCHMARK_SPREADS_2Y_DD_BPS_CDS","2Y CDS Risk Benchmark d/d (bps)","2Y CDS Risk Benchmark d/d (bps)","2Y CDS Risk Benchmar Spread Day on Day change in basis points","base", apiResponse, mongoResponse},
                 {"FC_RISK_BENCHMARK_SPREADS_2Y_DD_PERCENT_CDS","2Y CDS Risk Benchmark d/d (%)","2Y CDS Risk Benchmark d/d (%)","2Y CDS Risk Benchmark Spread Day on Day percentage change","base", apiResponse, mongoResponse},
                 {"FC_RISK_BENCHMARK_SPREADS_2Y_MM_BPS_CDS","2Y CDS Risk Benchmark m/m (bps)","2Y CDS Risk Benchmark m/m (bps)","2Y CDS Risk Benchmark Spread Month on Month change in basis points","base", apiResponse, mongoResponse},
@@ -449,15 +440,7 @@ public class T1_Sprint_14 extends Configuration {
     @Test(dataProvider = "Fisc6373", enabled = false)
     public void Fisc6373_cdsEnhacementsInDataAggregator_ValidatingPresenceOfAttributes(String fitchFieldId, String displayName, String fitchFieldDesc, String fieldDefinition, String permissionsRequired, String apiResponse){
         try {
-
             Assert.assertTrue(apiResponse.contains("\"fitchFieldId\":\"" + fitchFieldId + "\""));
-           /* Assert.assertTrue(apiResponse.contains("\"displayName\":\"" + displayName + "\""));
-            Assert.assertTrue(apiResponse.contains("\"fitchFieldDesc\":\"" + fitchFieldDesc + "\""));
-            Assert.assertTrue(apiResponse.contains("\"fieldDefinition\":\"" + fieldDefinition + "\""));*/
-            /*Assert.assertEquals(StringUtils.countMatches(apiResponse, "\"id\":\"" + fitchFieldId + "\""), 1);
-            Assert.assertEquals(StringUtils.countMatches(apiResponse, "\"displayName\":\"" + displayName + "\""), 1);
-            Assert.assertEquals(StringUtils.countMatches(apiResponse, "\"fitchFieldDesc\":\"" + fitchFieldDesc + "\""), 1);
-            Assert.assertEquals(StringUtils.countMatches(apiResponse, "\"fieldDefinition\":\"" + fieldDefinition + "\""), 1);*/
             logger.info("FISC 6373 API DATA AGGREGATOR PASSED! Tested FITCHFIELDID: " + fitchFieldId + " DISPLAYNAME: " + displayName + " FITCHFIELDDESC " + fitchFieldDesc + " FIELDDEFINITION " + fieldDefinition + " PERMISSION " + permissionsRequired);
         } catch (AssertionError err){
             logger.error("FISC 6373 API DATA AGGREGATOR FAILED! Tested FITCHFIELDID: "  + fitchFieldId + " ERROR: " + err);
@@ -629,7 +612,6 @@ public class T1_Sprint_14 extends Configuration {
         DecimalFormat df = new DecimalFormat("#.####");
 
 
-
         for (Document mongoValue : mongoValues) {
             System.out.println(res.asString());
             for (int i = 0; i < numberOfValues; i++) {
@@ -648,13 +630,72 @@ public class T1_Sprint_14 extends Configuration {
         }
     }
 
-    @Test
+    @DataProvider(name="Fisc6373_baseUser")
+    public Object[][] getDataFor6373_baseUser() throws IOException {
+
+        String apiResponse = apiUtils.postToDataAggregatorBaseUser("6373_baseUserFields.json", XappClintIDvalue, dataPostUrl).asString();
+        return new Object[][] {
+                {"FC_2Y_BPS_CDS",apiResponse},
+                {"FC_2Y_DD_BPS_CDS",apiResponse},
+                {"FC_2Y_DD_PERCENT_CDS",apiResponse},
+                {"FC_2Y_MM_BPS_CDS",apiResponse},
+                {"FC_2Y_MM_PERCENT_CDS",apiResponse},
+                {"FC_2Y_QQ_BPS_CDS",apiResponse},
+                {"FC_2Y_QQ_PERCENT_CDS",apiResponse},
+                {"FC_2Y_SS_BPS_CDS",apiResponse},
+                {"FC_2Y_SS_PERCENT_CDS",apiResponse},
+                {"FC_2Y_WW_BPS_CDS",apiResponse},
+                {"FC_2Y_WW_PERCENT_CDS",apiResponse},
+                {"FC_2Y_YY_BPS_CDS",apiResponse},
+                {"FC_2Y_YY_PERCENT_CDS",apiResponse},
+                {"FC_4Y_BPS_CDS",apiResponse},
+                {"FC_4Y_DD_BPS_CDS",apiResponse},
+                {"FC_4Y_DD_PERCENT_CDS",apiResponse},
+                {"FC_4Y_MM_BPS_CDS",apiResponse},
+                {"FC_4Y_MM_PERCENT_CDS",apiResponse},
+                {"FC_4Y_QQ_BPS_CDS",apiResponse},
+                {"FC_4Y_QQ_PERCENT_CDS",apiResponse},
+                {"FC_4Y_SS_BPS_CDS",apiResponse},
+                {"FC_4Y_SS_PERCENT_CDS",apiResponse},
+                {"FC_4Y_WW_BPS_CDS",apiResponse},
+                {"FC_4Y_WW_PERCENT_CDS",apiResponse},
+                {"FC_4Y_YY_BPS_CDS",apiResponse},
+                {"FC_4Y_YY_PERCENT_CDS",apiResponse},
+                {"FC_6M_YY_PERCENT_CDS", apiResponse},
+                {"FC_6M_BPS_CDS",apiResponse},
+                {"FC_6M_DD_BPS_CDS",apiResponse},
+                {"FC_6M_DD_PERCENT_CDS",apiResponse},
+                {"FC_6M_MM_BPS_CDS",apiResponse},
+                {"FC_6M_MM_PERCENT_CDS",apiResponse},
+                {"FC_6M_QQ_BPS_CDS",apiResponse},
+                {"FC_6M_QQ_PERCENT_CDS",apiResponse},
+                {"FC_6M_SS_BPS_CDS",apiResponse},
+                {"FC_6M_SS_PERCENT_CDS",apiResponse},
+                {"FC_6M_WW_BPS_CDS",apiResponse},
+                {"FC_6M_WW_PERCENT_CDS",apiResponse},
+                {"FC_6M_YY_BPS_CDS",apiResponse},
+                {"FC_6M_YY_PERCENT_CDS", apiResponse},
+        };
+    }
+
+    @Test(dataProvider = "Fisc6373_baseUser")
+    public void Fisc6373_cdsEnhacementsInDataAggregator_BaseUser_ValidatingValues(String fitchFieldId, String apiResponse){
+        try {
+            Assert.assertTrue(apiResponse.contains("\"fitchFieldId\":\"" + fitchFieldId + "\",\"type\":\"numerical\",\"auditTrail\":false,\"isRestricted\":true"));
+            logger.info("FISC 6373 API DATA AGGREGATOR BASE USER PASSED FITCHFIELDID " + fitchFieldId);
+        } catch (AssertionError err) {
+            logger.error("FISC 6373 API DATA AGGREGATOR BASE USER PASSED FITCHFIELDID " + fitchFieldId + " ERROR " + err);
+            Assert.fail();
+        }
+    }
+
+    @Test(enabled=false)
     public void Fisc7288_HistoryFilesFor6MCDSDataToUpstreamAndMongo(){
         //Done by Max
         Assert.assertTrue(true);
     }
 
-    @Test
+    @Test(enabled=false)
     public void Fisc7891_IssueDataInPostgresMasterDatabase(){
 
     }

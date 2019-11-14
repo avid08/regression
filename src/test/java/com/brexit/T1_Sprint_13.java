@@ -62,12 +62,7 @@ public class T1_Sprint_13 extends Configuration {
     @DataProvider(name = "agentIds")
     public Object[][] getAgentIds(){
         return new Object[][] {
-                {"1708"},
-                {"12624"},
-                {"102289"},
-                {"113891"},
-                {"141822"},
-                {"1021561"}
+                {"102289"}
         };
     }
 
@@ -157,6 +152,7 @@ public class T1_Sprint_13 extends Configuration {
                     object = jsonParser.parse(document.toJson());
 
                     JSONObject mongoResponse = (JSONObject) object;
+
                     Long ratableID = (Long) mongoResponse.get("ratableID");
                     JSONArray disclosureList = (JSONArray) mongoResponse.get("disclosureList");
                     int disclosureListSize = disclosureList.size();
@@ -166,7 +162,6 @@ public class T1_Sprint_13 extends Configuration {
                     String apiResponse = res.asString();
                     String apiDisclosure = res.path("data.attributes.disclosure");
 
-
                     for (int i = 0; i < disclosureListSize; i++) {
                         JSONObject mongoDisclosures = (JSONObject) disclosureList.get(i);
                         String regulatoryAgency = (String) mongoDisclosures.get("regulatoryAgency");
@@ -174,10 +169,8 @@ public class T1_Sprint_13 extends Configuration {
                         System.out.println(regulatoryAgency);
                         System.out.println(status);
                        // String expectedDisclosure=regulatoryAgency+ ", " + status;
-
                        // System.out.println("\"disclosure\":\"" + expectedDisclosure);
-
-                       // Assert.assertTrue(apiResponse.contains("\"disclosure\": \""+ expectedDisclosure));
+                        // Assert.assertTrue(apiResponse.contains("\"disclosure\": \""+ expectedDisclosure));
                         Assert.assertTrue(apiResponse.contains("\"id\":\"" + ratableID + "\""));
                         Assert.assertTrue(apiResponse.contains("\"regulatoryAgency\":\"" + regulatoryAgency + "\""));
                         Assert.assertTrue(apiResponse.contains("\"status\":\"" + status + "\""));
