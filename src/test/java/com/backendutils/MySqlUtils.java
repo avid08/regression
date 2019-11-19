@@ -6,21 +6,43 @@ import java.sql.*;
 
 public class MySqlUtils {
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    static final String DB_URL = EnvConfig.MySQL.QA.HOSTNAME;
-    static final String USER = EnvConfig.MySQL.QA.USERNAME;
-    static final String PASS = EnvConfig.MySQL.QA.PASSWORD;
 
-    public Connection connectToMySqlDatabase() {
-        Connection conn = null;
 
+    public Connection connectToMySqlDatabase(Env.MySQL env) throws SQLException {
         try {
-            //    Class.forName(JDBC_DRIVER).newInstance();
-            System.out.println("Connecting to MySQL Database");
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            System.out.println("Connected database successfully");
-        } catch (Exception ex) {
-            System.out.println("Exception: " + ex);      }
-        return conn;
+            switch (env) {
+                case QA:
+                    Connection qaConn = null;
+                    final String DB_URL_QA = EnvConfig.MySQL.QA.HOSTNAME;
+                    final String USER_QA = EnvConfig.MySQL.QA.USERNAME;
+                    final String PASS_QA = EnvConfig.MySQL.QA.PASSWORD;
+                    System.out.println("Connecting to MySQL QA Database");
+                    qaConn = DriverManager.getConnection(DB_URL_QA, USER_QA, PASS_QA);
+                    System.out.println("Connected database successfully");
+                    return qaConn;
+                case PROD:
+                    Connection prodConn = null;
+                    final String DB_URL_PROD = EnvConfig.MySQL.PROD.HOSTNAME;
+                    final String USER_PROD = EnvConfig.MySQL.PROD.USERNAME;
+                    final String PASS_PROD = EnvConfig.MySQL.PROD.PASSWORD;
+                    System.out.println("Connecting to MySQL PROD Database");
+                    prodConn = DriverManager.getConnection(DB_URL_PROD, USER_PROD, PASS_PROD);
+                    System.out.println("Connected database successfully");
+                    return prodConn;
+                default:
+                    Connection defaultConn = null;
+                    final String DB_URL_DEFAULT_QA = EnvConfig.MySQL.QA.HOSTNAME;
+                    final String USER_DEFAULT_QA = EnvConfig.MySQL.QA.USERNAME;
+                    final String PASS_DEFAULT_QA = EnvConfig.MySQL.QA.PASSWORD;
+                    System.out.println("Connecting to MySQL QA Database");
+                    defaultConn = DriverManager.getConnection(DB_URL_DEFAULT_QA, USER_DEFAULT_QA, PASS_DEFAULT_QA);
+                    System.out.println("Connected database successfully");
+                    return defaultConn;
+            }
+        } catch (SQLException ex) {
+            System.out.println("SQL Exception occured: " + ex);
+            return null;
+        }
     }
 
     public ResultSet executeMySqlScript(Connection conn, String databaseName, String mySqlFilePath) {
