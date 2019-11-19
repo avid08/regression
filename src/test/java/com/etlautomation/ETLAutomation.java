@@ -27,7 +27,10 @@ public class ETLAutomation extends Configuration {
     MongoUtils mongoUtils = new MongoUtils();
 
     private Env.Mongo dbServer = Env.Mongo.FEEDS_PROD_PARALLEL;
+    //PROD
     private String dbName = "idscp-prod-2";
+    //QA
+    //private String dbName = "ids-dev-2";
 
     @DataProvider(name = "incrementalCollections")
     public Object[][] getIncrementalCollections() {

@@ -60,7 +60,7 @@ public class ExcelUtils {
           XSSFWorkbook workbook = new XSSFWorkbook(fs);
           XSSFSheet sheet = workbook.getSheet(sheetName);
           int rowNum = sheet.getLastRowNum();
-            Object[][] excelData = new Object[rowNum][];
+            Object[][] excelData = new Object[rowNum][sheet.getRow(1).getLastCellNum()];
             System.out.println(rowNum);
 
             for (int i = 1; i < rowNum; i++){
