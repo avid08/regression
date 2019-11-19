@@ -21,7 +21,7 @@ import com.jayway.restassured.response.Response;
 
 public class fisCon_Sprint14 extends Configuration {
 
-	@Test(enabled=false)
+	@Test(enabled=true)
 
 	public void BMI_Batch_FISC1263() throws InterruptedException {
 
@@ -106,7 +106,7 @@ public class fisCon_Sprint14 extends Configuration {
 			
 			String CategoryURI = baseCategoryURI +"/"+BmiCategoryId;
 			
-			//System.out.println(CategoryURI);
+			System.out.println(CategoryURI);
 
 			Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 					.header("accept", acceptValue).header("content", contentValue).when().get(CategoryURI).then()
