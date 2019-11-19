@@ -1,26 +1,25 @@
-package com.etlautomation;
-
-import com.backendutils.Env;
-import com.backendutils.MongoUtils;
-import com.configuration.LoggerInitialization;
-import com.configuration.api.Configuration;
-import com.mongodb.BasicDBObject;
-import com.mongodb.Block;
-import com.mongodb.MongoException;
-import com.mongodb.client.AggregateIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
-import org.apache.log4j.Logger;
-import org.bson.Document;
-import org.testng.Assert;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+package com.ETLAutomation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+
+import org.apache.log4j.Logger;
+import org.bson.Document;
+import org.testng.Assert;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+import com.backendutils.Env;
+import com.backendutils.MongoUtils;
+import com.configuration.LoggerInitialization;
+import com.configuration.api.Configuration;
+import com.mongodb.Block;
+import com.mongodb.MongoException;
+import com.mongodb.client.AggregateIterable;
+import com.mongodb.client.MongoCollection;
 
 public class ETLAutomation extends Configuration {
 

@@ -1,8 +1,8 @@
-package com.etlautomation;
-
-import org.bson.Document;
+package com.ETLAutomation;
 
 import java.util.HashMap;
+
+import org.bson.Document;
 
 public class ETLUtils {
     public static HashMap<String, Document> runQueryAndProjection(String etlName){
