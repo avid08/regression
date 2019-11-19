@@ -36,14 +36,11 @@ public class T1_Sprint_14 extends Configuration {
     Logger logger = LoggerInitialization.setupLogger("T1_Sprint_14");
     MongoUtils mongoUtils = new MongoUtils();
     APIUtils apiUtils = new APIUtils();
-    PostgresUtils postgresUtils = new PostgresUtils();
-
-    private Integer timeoutBetweenTests = 2000;
 
     @DataProvider(name="Fisc6354")
     public Object[][] getDataFor6354(){
         MongoCollection<Document> collection = mongoUtils
-                .connectToMongoDatabase(Env.Mongo.META_QA)
+                .connectToMongoDatabase(META)
                 .getDatabase("xrefdb")
                 .getCollection("metadataFields");
 

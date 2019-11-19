@@ -116,7 +116,7 @@ public class Configuration {
                 FEEDS = Env.Mongo.FEEDS_PROD;
                 META = Env.Mongo.META_PROD;
                 break;
-            default:           	
+            default:
                 baseURI = "https://api.fitchconnect-qa.com";
                 dataBaseServer1 = "mgo-que1a-cr001.fitchratings.com";
                 dataBaseServer2 = "mgo-que1a-ur001.fitchratings.com";
@@ -158,7 +158,6 @@ public class Configuration {
             case STAGE:
                 filename = "STG_granType.json";
                 break;
-           
             case PROD:
                 filename = "PROD_granType.json";
                 break;
