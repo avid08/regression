@@ -24,13 +24,10 @@
            {  
                "id":"C",
                "type":"CompanyTicker"
-             },
-
-            {  
-               "id":"G463NB",
-               "type":"CUSIP6"
              }
-        ],
+
+           
+      ],
         "fitchFieldIds":[ 
         "FC_LT_FC_ISSR_SP", 
         "BMI_GDP_Nom_LCU",
