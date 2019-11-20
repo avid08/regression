@@ -21,7 +21,7 @@ import com.jayway.restassured.response.Response;
 
 public class fisCon_Sprint14 extends Configuration {
 
-	@Test(enabled=true)
+	@Test(enabled=false)
 
 	public void BMI_Batch_FISC1263() throws InterruptedException {
 
