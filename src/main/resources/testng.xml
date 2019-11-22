@@ -74,6 +74,7 @@
 			<class name="com.marketsector.api.marketSectorTestCases"/>
 			<class name="com.ESGdata.api.T1_Sprint_12"></class>
 			<class name="com.brexit.T1_Sprint_13"></class>
+			<class name="com.Cds.Api.T1_Sprint_14"></class>
 		</classes>
 
 	</test> <!-- Test -->

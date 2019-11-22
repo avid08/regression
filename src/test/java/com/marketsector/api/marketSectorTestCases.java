@@ -64,7 +64,7 @@ public class marketSectorTestCases extends Configuration  {
 		Assert.assertFalse(failure);
 	}
      	
-@Test()
+@Test(enabled = false )// There has been a change in new story FISC_7864
 	
 	public void MarketSector_with_allfilter() {
 		String marketSctURI = baseURI+"/v1/marketSectors?filter[level]=1,2&filter[bmiServiceChannelIds]=C427";
@@ -80,5 +80,41 @@ public class marketSectorTestCases extends Configuration  {
 		
 	}
      
-
+ @Test(enabled=false)
+ 
+ public void mrketSectorchangedForBmiServiceChannel_FISC_7864() {
+	 
+		String marketSctURI = baseURI+"/v1/marketSectors?filter[bmiServiceChannelIds]=C427,C687,S3";
+		
+		Response res = given()
+		.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+		.header("accept", acceptValue).header("content", contentValue).when().get(marketSctURI).then().statusCode(200)
+		.body(containsString("marketSectors"))
+		.extract().response();
+		
+		Assert.assertFalse(res.asString().contains("04030000"));
+		
+	 
+ }
+ 
+@Test(enabled=false)
+ 
+ public void mrketSectorchangedForBmiServiceChannel_FISC_7864_2() {
+	 
+		String marketSctURI = baseURI+"/v1/marketSectors/01031700 ";
+		
+		Response res = given()
+		.header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
+		.header("accept", acceptValue).header("content", contentValue).when().get(marketSctURI).then().statusCode(200)
+		.body(containsString("marketSectors"))
+		.extract().response();
+		
+		Assert.assertTrue(res.asString().contains("C427"));
+		Assert.assertTrue(res.asString().contains("C687"));
+		Assert.assertTrue(res.asString().contains("S3"));
+		
+		
+	 
+ }
+ 
 }
