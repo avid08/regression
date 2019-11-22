@@ -1,19 +1,24 @@
 package com.fulcrum.api;
 
+import com.apiutils.APIUtils;
+import com.backendutils.ArrayUtils;
 import com.backendutils.Env;
 import com.backendutils.PostgresUtils;
 import com.configuration.LoggerInitialization;
 import com.configuration.api.Configuration;
 import com.google.common.io.Resources;
+import com.jayway.restassured.response.Response;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class T1_Sprint_15 extends Configuration {
 
@@ -24,6 +29,8 @@ public class T1_Sprint_15 extends Configuration {
     }
 
     PostgresUtils postgresUtils = new PostgresUtils();
+    APIUtils apiUtils = new APIUtils();
+    ArrayUtils arrayUtils = new ArrayUtils();
     Connection conn = postgresUtils.connectToPostgreDatabase(Env.Postgres.QA);
 
     @Test
@@ -42,10 +49,8 @@ public class T1_Sprint_15 extends Configuration {
     }
 
     @DataProvider(name="Fisc6569")
-    public Object[][] getDataFromPostgres(){
-        ResultSet rs = postgresUtils.executePostgreScript(conn, getFullSqlFilePath("6569.sql"));
-        Object[][] postgresData = postgresUtils.resultSetToArray(rs, true);
-        return postgresData;
+    public Object[][] getDataFromPostgres_6569(){
+        return postgresUtils.getDataFromPostgres("7308.sql", POSTGRES, true);
     }
 
     @Test(dataProvider = "Fisc6569")
@@ -68,17 +73,64 @@ public class T1_Sprint_15 extends Configuration {
 
     @Test
     public void Fisc7315_LFIEnhacementsMetadata(){
-        
-    }
-
-    @Test
-    public void Fisc7316_LFIEnhacementsMetadata_DataAggregator(){
 
     }
 
-    @Test
-    public void Fisc7317_LFILoansFieldsEnhacements_ResourcefulEndpoint(){
+    @DataProvider(name = "Fisc7316")
+    public Object[][] getData_7316() throws IOException {
+        Object[][] postgresData = postgresUtils.getDataFromPostgres("7316.sql", POSTGRES, true);
+        Object[][] allData = new Object[postgresData.length][postgresData[0].length+2];
 
+        Response apiResponse = apiUtils.postToDataAggregator("7316.json", AuthrztionValue, XappClintIDvalue, dataPostUrl);
+
+        ArrayList<String> values = apiResponse.path("data.attributes.entities[0].values");
+        int numberOfValues = values.size();
+        HashMap<String, String> apiValues = new HashMap<>();
+
+        for (int i = 0; i < numberOfValues; i++){
+            String apiFitchFieldId = apiResponse.path("data.attributes.entities[0].values[" + i + "].fitchFieldId");
+            //String apiValue = apiResponse.path("data.attributes.entities[0].values[" + i + "].values[0].value[0]");
+            String apiValue = "aaaa";
+            apiValues.put(apiFitchFieldId, apiValue);
+        }
+
+        for (int j=0; j<postgresData.length; j++){
+            System.arraycopy(postgresData[j],0,allData[j],0,postgresData[j].length);
+            allData[j][postgresData[j].length+1]=apiValues;
+        }
+        return allData;
+    }
+
+    @Test(dataProvider = "Fisc7316")
+    public void Fisc7316_LFIEnhacementsMetadata_DataAggregator(Object postgresFieldId, Object postgresValue, Object nullObj, HashMap<String, String> apiValues){
+        System.out.println(postgresFieldId + "    " + postgresValue + "    " + apiValues.get(postgresFieldId));
+    }
+
+    @DataProvider(name = "Fisc7317")
+    public Object[][] getData_7317(){
+        String findAllUri = baseURI+"/v1/levfinloans";
+        String findOneUri = baseURI+"/v1/levfinloans/111637680";
+        Object[][] postgresData = postgresUtils.getDataFromPostgres("7317.sql", POSTGRES, true);
+        Response findAllApiData = apiUtils.getResponse(findAllUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        Response findOneApiData = apiUtils.getResponse(findOneUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+
+        Object[][] postgres_findAll_Data = new Object[postgresData.length][postgresData[0].length+2];
+        for (int i=0; i<postgresData.length; i++){
+            System.arraycopy(postgresData[i],0,postgres_findAll_Data[i],0,postgresData[i].length);
+            postgres_findAll_Data[i][postgresData[i].length+1]=findAllApiData;
+        }
+
+        Object[][] data = new Object[postgres_findAll_Data.length][postgres_findAll_Data[0].length+2];
+        for (int j=0; j<postgres_findAll_Data.length; j++){
+            System.arraycopy(postgres_findAll_Data[j],0,data[j],0,postgres_findAll_Data[j].length);
+            data[j][postgres_findAll_Data[j].length+1]=findOneApiData;
+        }
+        return data;
+    }
+
+    @Test(dataProvider = "Fisc7317")
+    public void Fisc7317_LFILoansFieldsEnhacements_ResourcefulEndpoint(Object postgresFitchFieldId, Object nullObj2, Response findAllApiResponse, Object nullObj3, Response findOneApiResponse){
+        System.out.println(postgresFitchFieldId + "       " + findAllApiResponse.asString() + "    " + findOneApiResponse.asString());
     }
 
 }
