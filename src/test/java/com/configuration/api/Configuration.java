@@ -122,18 +122,17 @@ public class Configuration {
                 META = Env.Mongo.META_PROD;
                 POSTGRES = Env.Postgres.PROD;
                 break;
-            default:           	
-                baseURI = "https://api.fitchconnect.com";
-                dataBaseServerNewESP9 = "mgo-uue1a-sn001";
-                dataBaseServer1 = "mgo-pue1c-cr001.fitchratings.com";
-                dataBaseServer2 = "mgo-pue1c-ur001.fitchratings.com";
+            default:
+                baseURI = "https://api.fitchconnect-qa.com";
+                dataBaseServer1 = "mgo-que1a-cr001.fitchratings.com";
+                dataBaseServer2 = "mgo-que1a-ur001.fitchratings.com";
+                dataBaseServerNewESP9 = "mgo-que1a-sn001";
                 databaseFitchEnty = "esp-9";
-                BMIbaseURL = "https://api.bmiresearch.com";
-                CAL = Env.Mongo.CAL_PROD;
-                FEEDS = Env.Mongo.FEEDS_PROD;
-                META = Env.Mongo.META_PROD;
-                POSTGRES = Env.Postgres.PROD;
-                break;
+                BMIbaseURL = "https://api-stg1.bmiresearch.com";
+                CAL = Env.Mongo.CAL_QA;
+                FEEDS = Env.Mongo.FEEDS_QA;
+                META = Env.Mongo.META_QA;
+                POSTGRES = Env.Postgres.QA;
         }
         bearerToken(environment);
         AuthrztionValue = "Bearer " + refresh_token;
@@ -150,7 +149,7 @@ public class Configuration {
         String filename = null;
         switch (environment) {
         case NOT_DEFINED:
-        	filename = "PROD_granType.json";
+        	filename = "QA_granType.json";
             break;
             case DEV:
                 filename = "Dev_granType.json";
