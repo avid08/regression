@@ -1,17 +1,5 @@
 package com.ETLAutomation;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-
-import org.apache.log4j.Logger;
-import org.bson.Document;
-import org.testng.Assert;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
-
 import com.backendutils.Env;
 import com.backendutils.MongoUtils;
 import com.configuration.LoggerInitialization;
@@ -20,6 +8,17 @@ import com.mongodb.Block;
 import com.mongodb.MongoException;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
+import org.apache.log4j.Logger;
+import org.bson.Document;
+import org.testng.Assert;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 
 public class ETLAutomation extends Configuration {
 
@@ -124,16 +123,20 @@ public class ETLAutomation extends Configuration {
         }
     }
 
-    @DataProvider(name = "refreshCollections")
-    public Object[][] getRefreshCollections(){
+    @DataProvider(name = "refreshAndFinancialCollections")
+    public Object[][] getRefreshAndFinancialCollections(){
         return new Object[][]{
                 {"rds_agnt_rtng_ref","rds_issuer_ref"},
-                {"rds_security_rtng_ref","rds_issue_ref"}
+                {"rds_security_rtng_ref","rds_issue_ref"},
+                {"bank_financials","Bank_Financials"},
+                {"insurance_financials","Insurance_Financials"},
+                {"lloyds_financial","Lloyds_Financials"},
+                {"sovereign_financials","Sovereign_Financials"}
         };
     }
 
-    @Test(dataProvider = "refreshCollections")
-    public void etl_validateRefreshCollections(String collectionName, String etlName){
+    @Test(dataProvider = "refreshAndFinancialCollections")
+    public void etl_validateRefreshAndFinancialCollections(String collectionName, String etlName){
         MongoCollection<Document> etlHistoryCollection = mongoUtils
                 .connectToMongoDatabase(dbServer)
                 .getDatabase(dbName)
@@ -182,7 +185,6 @@ public class ETLAutomation extends Configuration {
 
     }
 
-
     @DataProvider(name = "etlNames")
     public Object[][] getEtlNames() {
         return new Object[][]{
@@ -212,7 +214,7 @@ public class ETLAutomation extends Configuration {
         };
     }
 
-    @Test(dataProvider = "refreshCollections")
+    @Test(dataProvider = "getRefreshAndFinancialCollections")
     public void ETL_HistoryTest(String collectionName, String etlName) {
         try {
             MongoCollection<Document> etlHistoryCollection = mongoUtils

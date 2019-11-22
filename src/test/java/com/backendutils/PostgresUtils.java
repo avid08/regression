@@ -58,7 +58,7 @@ public class PostgresUtils {
         }
     }
 
-    private static int getRowCount(ResultSet rs) {
+    public static int getRowCount(ResultSet rs) {
         int size = 0;
         try {
             rs.last();
