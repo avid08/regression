@@ -6,11 +6,14 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+
+import static org.apache.poi.ss.usermodel.CellType.*;
 
 public class ExcelUtils {
 
@@ -56,25 +59,59 @@ public class ExcelUtils {
 
     public Object[][] getDataFromExcel(String excelFilePath, String sheetName) {
         try {
-          FileInputStream fs = new FileInputStream(excelFilePath);
-          XSSFWorkbook workbook = new XSSFWorkbook(fs);
-          XSSFSheet sheet = workbook.getSheet(sheetName);
-          int rowNum = sheet.getLastRowNum();
+            FileInputStream fs = new FileInputStream(excelFilePath);
+            XSSFWorkbook workbook = new XSSFWorkbook(fs);
+            XSSFSheet sheet = workbook.getSheet(sheetName);
+            int rowNum = sheet.getLastRowNum();
+
             Object[][] excelData = new Object[rowNum][sheet.getRow(1).getLastCellNum()];
             System.out.println(rowNum);
 
-            for (int i = 1; i < rowNum; i++){
-            Row row = sheet.getRow(i);
-            int colNum = row.getLastCellNum();
+            for (int i = 0; i < rowNum; i++) {
+                Row row = sheet.getRow(i);
+                int colNum = row.getLastCellNum();
                 System.out.println(colNum);
-                for (int j = 1; j < colNum; j++){
-                excelData[i][j] = sheet.getRow(i).getCell(j).getStringCellValue();
-                System.out.println(excelData[i][j]);
+                for (int j = 0; j < colNum; j++) {
+                    try {
+                        XSSFCell cell = sheet.getRow(i).getCell(j);
+                        switch (cell.getCellType()) {
+
+                            case STRING:
+                                excelData[i][j] = sheet.getRow(i).getCell(j).getStringCellValue();
+                                System.out.println(excelData[i][1]+ "   ->  " + excelData[0][j] + "     ->  " + excelData[i][j]);
+                                break;
+                            case NUMERIC:
+                                if (DateUtil.isCellDateFormatted(cell)) {
+                                    excelData[i][j] = sheet.getRow(i).getCell(j).getDateCellValue();
+                                    System.out.println(excelData[i][1]+ "   ->  " + excelData[0][j] + "     ->  " + excelData[i][j]);
+                                } else {
+                                    excelData[i][j] = new BigDecimal(sheet.getRow(i).getCell(j).getNumericCellValue()).toPlainString();
+                                    System.out.println(excelData[i][1]+ "   ->  " + excelData[0][j] + "     ->  " + excelData[i][j]);
+                                }
+                                break;
+                            case BOOLEAN:
+                                excelData[i][j] = sheet.getRow(i).getCell(j).getBooleanCellValue();
+                                System.out.println(excelData[i][1]+ "   ->  " + excelData[0][j] + "     ->  " + excelData[i][j]);
+                                break;
+                            case FORMULA:
+                                excelData[i][j] = sheet.getRow(i).getCell(j).getCellFormula();
+                                System.out.println(excelData[i][1]+ "   ->  " + excelData[0][j] + "     ->  " + excelData[i][j]);
+                                break;
+                            case ERROR:
+                                excelData[i][j] = sheet.getRow(i).getCell(j).getErrorCellString();
+                                System.out.println(excelData[i][1]+ "   ->  " + excelData[0][j] + "     ->  " + excelData[i][j]);
+                            default:
+                                excelData[i][j] = sheet.getRow(i).getCell(j).getStringCellValue();
+                                System.out.println(excelData[i][1]+ "   ->  " + excelData[0][j] + "     ->  " + excelData[i][j]);
+                        }
+                    } catch (NullPointerException ex) {
+                        i++;
+                        j=0;
+                    }
+                }
             }
-          }
             return excelData;
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             return null;
         }

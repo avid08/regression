@@ -1,5 +1,7 @@
 package com.backendutils;
 
+import com.google.common.io.Resources;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.*;
@@ -56,6 +58,13 @@ public class PostgresUtils {
             System.out.println("Exception: " + ex);
             return null;
         }
+    }
+
+    public Object[][] getDataFromPostgres(String sqlFileName, Env.Postgres db, boolean skipColumnNames){
+        Connection conn = connectToPostgreDatabase(db);
+        ResultSet rs = executePostgreScript(conn, Resources.getResource(sqlFileName).getPath());
+        Object[][] data = resultSetToArray(rs, skipColumnNames);
+        return data;
     }
 
     public static int getRowCount(ResultSet rs) {
