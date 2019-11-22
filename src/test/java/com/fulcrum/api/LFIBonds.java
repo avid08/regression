@@ -23,7 +23,7 @@ public class LFIBonds extends Configuration {
     @Test
     public void getExcelData(){
        Object[][] excelData = excelUtils.getDataFromExcel(getFullResourcePath("LFIBonds.xlsx"),"source");
-   }
+    }
 
    @Test
     public void getMySqlData() throws SQLException {
