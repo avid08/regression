@@ -2,10 +2,10 @@ package com.fulcrum.api;
 
 public class FulcrumKey {
 
-    private String agentId;
-    private String fitchFieldId;
+    private Object agentId;
+    private Object fitchFieldId;
 
-    public FulcrumKey(String agentId, String fitchFieldId) {
+    public FulcrumKey(Object agentId, Object fitchFieldId) {
         this.agentId = agentId;
         this.fitchFieldId = fitchFieldId;
     }
