@@ -25,11 +25,11 @@ public class ETLAutomation extends Configuration {
     private Logger logger = LoggerInitialization.setupLogger("ETL_Status_");
     MongoUtils mongoUtils = new MongoUtils();
 
-    private Env.Mongo dbServer = Env.Mongo.FEEDS_PROD_PARALLEL;
+    private Env.Mongo dbServer = Env.Mongo.FEEDS_QA;
     //PROD
-    private String dbName = "idscp-prod-2";
+    //private String dbName = "idscp-prod-2";
     //QA
-    //private String dbName = "ids-dev-2";
+    private String dbName = "ids-dev-2";
 
     @DataProvider(name = "incrementalCollections")
     public Object[][] getIncrementalCollections() {
@@ -131,7 +131,10 @@ public class ETLAutomation extends Configuration {
                 {"bank_financials","Bank_Financials"},
                 {"insurance_financials","Insurance_Financials"},
                 {"lloyds_financial","Lloyds_Financials"},
-                {"sovereign_financials","Sovereign_Financials"}
+                {"sovereign_financials","Sovereign_Financials"},
+                {"issueRatings_td", "fcf_issue_rating_transitions"},
+                {"issuerRatings_td", "fcf_issuer_rating_transitions"},
+                {"security_identifiers", "security_identifiers"}
         };
     }
 
@@ -214,7 +217,7 @@ public class ETLAutomation extends Configuration {
         };
     }
 
-    @Test(dataProvider = "getRefreshAndFinancialCollections")
+    @Test(dataProvider = "etlNames", enabled = false)
     public void ETL_HistoryTest(String collectionName, String etlName) {
         try {
             MongoCollection<Document> etlHistoryCollection = mongoUtils
