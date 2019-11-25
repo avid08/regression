@@ -1,12 +1,15 @@
 package com.backendutils;
 
+import com.google.common.io.Resources;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.*;
 
+import static com.backendutils.FileUtils.getFullResourcePath;
+
 public class MySqlUtils {
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-
 
     public Connection connectToMySqlDatabase(Env.MySQL env) throws SQLException {
         try {
@@ -103,5 +106,12 @@ public class MySqlUtils {
             System.out.println("Exception: " + ex);
             return null;
         }
+    }
+
+    public Object[][] getDataFromMySQL(Env.MySQL env, String databaseName, String sqlFileName) throws SQLException {
+        Connection conn = connectToMySqlDatabase(env);
+        ResultSet rs = executeMySqlScript(conn,databaseName, getFullResourcePath(sqlFileName));
+        Object[][] mySqlData = resultSetToArray(rs);
+        return mySqlData;
     }
 }
