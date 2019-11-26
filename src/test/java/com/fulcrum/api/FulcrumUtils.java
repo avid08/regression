@@ -19,9 +19,10 @@ public class FulcrumUtils extends Configuration {
     com.backendutils.ExcelUtils excelUtils = new ExcelUtils();
     com.backendutils.MySqlUtils mySqlUtils = new MySqlUtils();
 
-    private HashMap<LFIBondsKey, Object> lfiBondsMySqlMap = new HashMap<>();
-    private HashMap<CSBondsKey, Object> csBondsMySqlMap = new HashMap<>();
     private HashMap<LFILoansKey, Object> lfiLoansMySqlMap = new HashMap<>();
+    private HashMap<LFIBondsKey, Object> lfiBondsMySqlMap = new HashMap<>();
+    private HashMap<Object, Object> csLoansMySqlMap = new HashMap<>();
+    private HashMap<CSBondsKey, Object> csBondsMySqlMap = new HashMap<>();
 
 
     public HashMap<LFIBondsKey, Object> getLfiBondsMySqlMap(Env.MySQL env) throws SQLException {
@@ -57,15 +58,26 @@ public class FulcrumUtils extends Configuration {
         return lfiLoansMySqlMap;
     }
 
+    public Object[][] getCsLoansMySqlArray(Env.MySQL env) throws SQLException {
+        Object[][] mySqlData = mySqlUtils.getDataFromMySQL(env, "prodstage", "CSLoans.sql");
+        for (int i = 1; i<mySqlData.length; i++) {
+            for (int j = 1; j < mySqlData[i].length; j++){
+                System.out.println((i - 1) + "      " + mySqlData[i][0] + "      " + mySqlData[0][j] + "         " + mySqlData[i][j]);
+            }
+        }
+        return mySqlData;
+    }
+
     @Test(enabled=false)
     public void getExcelData(){
        Object[][] excelData = excelUtils.getDataFromExcel(getFullResourcePath("LFIBonds.xlsx"),"source");
     }
 
-   @Test
+    @Test
     public void getMySqlData() throws SQLException {
-    //    HashMap<LFIBondsKey, Object> lfiBondsMySqlMap = getLfiBondsMySqlMap(QA);
-    //    HashMap<CSBondsKey, Object> csBondsMySqlMap = getCsBondsMySqlMap(QA);
-       HashMap<LFILoansKey, Object> lfiLoansMySqlMap = getLfiLoansMySqlMap(QA);
+        //   HashMap<LFIBondsKey, Object> lfiBondsMySqlMap = getLfiBondsMySqlMap(QA);
+        //   HashMap<CSBondsKey, Object> csBondsMySqlMap = getCsBondsMySqlMap(QA);
+        //   HashMap<LFILoansKey, Object> lfiLoansMySqlMap = getLfiLoansMySqlMap(QA);
+       Object[][] csLoansMySqlArray = getCsLoansMySqlArray(QA);
    }
 }
