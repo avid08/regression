@@ -25,6 +25,38 @@ public class EnvConfig {
             public static final String PORT = "5432";
             public static final String DBNAME = "master";
         }
+
+        public static class CR_DEV {
+            public static final String USERNAME = "prov_admin";
+            public static final String PASSWORD = "q9=w7UMR";
+            public static final String HOSTNAME = "jdbc:postgresql://pos-pro-due-rds.cvhy6th3vpsn.us-east-1.rds.amazonaws.com/prov_dev";
+            public static final String PORT = "5432";
+            public static final String DBNAME = "prov_dev";
+        }
+
+        public static class CR_QA {
+            public static final String USERNAME = "product";
+            public static final String PASSWORD = "5HNJbSJUYkDD";
+            public static final String HOSTNAME = "jdbc:postgresql://pos-pro-que-rds.c3qwnbqmztfh.us-east-1.rds.amazonaws.com/prov_qa";
+            public static final String PORT = "5432";
+            public static final String DBNAME = "prov_qa";
+        }
+
+        public static class CR_STG {
+            public static final String USERNAME = "product";
+            public static final String PASSWORD = "j94HdB09TrYxxNlWg";
+            public static final String HOSTNAME = "jdbc:postgresql://pos-pro-que-rds.c3qwnbqmztfh.us-east-1.rds.amazonaws.com/server";
+            public static final String PORT = "5432";
+            public static final String DBNAME = "server";
+        }
+
+        public static class CR_PROD {
+            public static final String USERNAME = "product";
+            public static final String PASSWORD = "j94HdB09TrYxxNlWg";
+            public static final String HOSTNAME = "jdbc:postgresql://pos-smr-pue-rds.cskmoyo8brj0.us-east-1.rds.amazonaws.com/server";
+            public static final String PORT = "5432";
+            public static final String DBNAME = "server";
+        }
     }
 
     public static class Mongo {
@@ -62,6 +94,14 @@ public class EnvConfig {
             public static final String USERNAME = "fsda-prod";
             public static final String PASSWORD = "dfdb96edgh32R";
             public static final String HOSTNAME = "jdbc:mysql://mys-cov-pue-rds.cskmoyo8brj0.us-east-1.rds.amazonaws.com";
+            public static final String PORT = "3306";
+            public static final String DBNAME = "";
+        }
+
+        public static class CR_QA {
+            public static final String USERNAME = "product";
+            public static final String PASSWORD = "cVmKx6wStYjz";
+            public static final String HOSTNAME = "jdbc:mysql://mys-cov-que-rds.c3qwnbqmztfh.us-east-1.rds.amazonaws.com";
             public static final String PORT = "3306";
             public static final String DBNAME = "";
         }
