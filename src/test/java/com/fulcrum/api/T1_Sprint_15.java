@@ -108,8 +108,8 @@ public class T1_Sprint_15 extends Configuration {
 
     @DataProvider(name = "Fisc7317")
     public Object[][] getData_7317(){
-        String findAllUri = baseURI+"/v1/levfinloans";
-        String findOneUri = baseURI+"/v1/levfinloans/111637680";
+        String findAllUri = baseURI+"/v1/securities?filter[sourceName]=LFI&filter[sourceType]=Loans";
+        String findOneUri = baseURI+"/v1/securities/122860754";
         Object[][] postgresData = postgresUtils.getDataFromPostgres("7317.sql", POSTGRES, true);
         Response findAllApiData = apiUtils.getResponse(findAllUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
         Response findOneApiData = apiUtils.getResponse(findOneUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
