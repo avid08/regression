@@ -234,16 +234,19 @@ public class T1_Sprint_15 extends Configuration {
         for (ConfigSchemaKey expectedKey : expectedKeys) {
             ArrayList<Object> expectedDataList = expectedDataMap.get(expectedKey);
             ArrayList<Object> postgresDataList = postgresDataMap.get(expectedKey);
-
-            System.out.println(expectedDataList);
-            System.out.println(postgresDataList);
-
-            boolean isAttributePassed = expectedDataList.equals(postgresDataList);
-
-            System.out.println(expectedKey + "     " + isAttributePassed);
-
+            boolean isAttributePassed = arrayUtils.areListsOfObjectsEqual(expectedDataList, postgresDataList);
+            try {
+                Assert.assertTrue(isAttributePassed);
+                logger.info("FISC 6569 PASSED " + expectedKey.getAttributeName() + "       " + expectedKey.getInformationProvenance() + "      " + expectedKey.getSourceCategory());
+            }
+            catch (AssertionError err) {
+                errorsList.add(err);
+                logger.error("FISC 6569 FAILED " + expectedKey.getAttributeName() + "       " + expectedKey.getInformationProvenance() + "      " + expectedKey.getSourceCategory() + "     " + err);
+                System.out.println("FISC 6569 FAILED " + expectedKey.getAttributeName() + "       " + expectedKey.getInformationProvenance() + "      " + expectedKey.getSourceCategory() + "     " + err);
+                continue;
+            }
         }
-
+        Assert.assertEquals(errorsList.size(), 0);
     }
 
     @Test
