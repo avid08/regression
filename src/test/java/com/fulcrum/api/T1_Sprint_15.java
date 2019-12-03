@@ -17,8 +17,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public class T1_Sprint_15 extends Configuration {
 
@@ -209,28 +208,30 @@ public class T1_Sprint_15 extends Configuration {
                 {"FC_YTM","transaction_element","Tranche","Bond public data","FC_YTM","security_attributes","true","null","Final","capstr"},
         };
 
-        HashMap<Object, ArrayList<Object>> expectedDataMap = new HashMap<Object, ArrayList<Object>>();
-        HashMap<Object, ArrayList<Object>> postgresDataMap = new HashMap<Object, ArrayList<Object>>();
+        HashMap<ConfigSchemaKey, ArrayList<Object>> expectedDataMap = new HashMap<ConfigSchemaKey, ArrayList<Object>>();
+        HashMap<ConfigSchemaKey, ArrayList<Object>> postgresDataMap = new HashMap<ConfigSchemaKey, ArrayList<Object>>();
 
         for (Object[] expectedDataRow : expectedData){
             ArrayList<Object> expectedDataList = new ArrayList<Object>();
             for (Object expectedDataItem : expectedDataRow){
                 expectedDataList.add(expectedDataItem);
             }
-            expectedDataMap.put(expectedDataRow[0], expectedDataList);
+            expectedDataMap.put(new ConfigSchemaKey(expectedDataRow[0], expectedDataRow[3], expectedDataRow[9]), expectedDataList);
         }
 
-        for (Object[] postgresDataRow : postgresData){
+        for (Object[] postgresDataRow : postgresData) {
             ArrayList<Object> postgresDataList = new ArrayList<Object>();
-            for (Object postgresDataItem : postgresDataRow){
+            for (Object postgresDataItem : postgresDataRow) {
                 postgresDataList.add(postgresDataItem);
             }
-            postgresDataMap.put(postgresDataRow[0], postgresDataList);
+            postgresDataMap.put(new ConfigSchemaKey(postgresDataRow[0], postgresDataRow[3], postgresDataRow[9]), postgresDataList);
         }
 
-        Object[] expectedKeys = expectedDataMap.keySet().toArray();
+        Set<ConfigSchemaKey> expectedKeys = expectedDataMap.keySet();
 
-        for (Object expectedKey : expectedKeys){
+        List<AssertionError> errorsList = new ArrayList<AssertionError>();
+
+        for (ConfigSchemaKey expectedKey : expectedKeys) {
             ArrayList<Object> expectedDataList = expectedDataMap.get(expectedKey);
             ArrayList<Object> postgresDataList = postgresDataMap.get(expectedKey);
 
