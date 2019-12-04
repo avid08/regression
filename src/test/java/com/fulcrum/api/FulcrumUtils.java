@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static com.backendutils.Env.MySQL.QA;
@@ -20,41 +21,44 @@ public class FulcrumUtils extends Configuration {
     com.backendutils.ExcelUtils excelUtils = new ExcelUtils();
     com.backendutils.MySqlUtils mySqlUtils = new MySqlUtils();
 
-    private HashMap<LFILoansKey, Object> lfiLoansMySqlMap = new HashMap<>();
-    private HashMap<LFIBondsKey, Object> lfiBondsMySqlMap = new HashMap<>();
+    private HashMap<LFILoansKey, ArrayList<Object>> lfiLoansMySqlMap = new HashMap<>();
+    private HashMap<LFIBondsKey, ArrayList<Object>> lfiBondsMySqlMap = new HashMap<>();
     private HashMap<Object, Object> csLoansMySqlMap = new HashMap<>();
-    private HashMap<CSBondsKey, Object> csBondsMySqlMap = new HashMap<>();
+    private HashMap<CSBondsKey, ArrayList<Object>> csBondsMySqlMap = new HashMap<>();
 
 
-    public HashMap<LFIBondsKey, Object> getLfiBondsMySqlMap(Env.MySQL env) throws SQLException {
+    public HashMap<LFIBondsKey, ArrayList<Object>> getLfiBondsMySqlMap(Env.MySQL env) throws SQLException {
         Object[][] mySqlData = mySqlUtils.getDataFromMySQL(env, "prodstage", "LFIBonds.sql");
-        for (int i = 2; i < mySqlData.length; i++){
-            for (int j = 1; j < mySqlData[i].length; j++){
-                System.out.println((i-1) + "    " + mySqlData[i][0] + "      " + mySqlData[i][1] + "        " + mySqlData[0][j] + "        " + mySqlData[i][j]);
-                lfiBondsMySqlMap.put(new LFIBondsKey(mySqlData[i][0], mySqlData[i][1], mySqlData[0][j]), mySqlData[i][j]);
+        for (Object[] mySqlDataRow : mySqlData){
+            ArrayList<Object> mySqlDataList = new ArrayList<Object>();
+            for (Object mySqlDataItem : mySqlDataRow){
+                mySqlDataList.add(mySqlDataItem);
             }
+            lfiBondsMySqlMap.put(new LFIBondsKey(mySqlDataRow[0], mySqlDataRow[1]), mySqlDataList);
         }
         return lfiBondsMySqlMap;
     }
 
-    public HashMap<CSBondsKey, Object> getCsBondsMySqlMap(Env.MySQL env) throws SQLException{
+    public HashMap<CSBondsKey, ArrayList<Object>> getCsBondsMySqlMap(Env.MySQL env) throws SQLException{
         Object[][] mySqlData = mySqlUtils.getDataFromMySQL(env, "prodstage", "CSBonds.sql");
-        for (int i = 2; i < mySqlData.length; i++){
-            for (int j = 1; j < mySqlData[i].length; j++){
-                System.out.println((i-1) + "    " + mySqlData[i][0] + "      " + mySqlData[i][1] + "        " + mySqlData[0][j] + "        " + mySqlData[i][j]);
-                csBondsMySqlMap.put(new CSBondsKey(mySqlData[i][0], mySqlData[i][1], mySqlData[0][j]), mySqlData[i][j]);
+        for (Object[] mySqlDataRow : mySqlData){
+            ArrayList<Object> mySqlDataList = new ArrayList<Object>();
+            for (Object mySqlDataItem : mySqlDataRow){
+                mySqlDataList.add(mySqlDataItem);
             }
+            csBondsMySqlMap.put(new CSBondsKey(mySqlDataRow[0], mySqlDataRow[1]), mySqlDataList);
         }
         return csBondsMySqlMap;
     }
 
-    public HashMap<LFILoansKey, Object> getLfiLoansMySqlMap(Env.MySQL env) throws SQLException {
+    public HashMap<LFILoansKey, ArrayList<Object>> getLfiLoansMySqlMap(Env.MySQL env) throws SQLException {
         Object[][] mySqlData = mySqlUtils.getDataFromMySQL(env, "prodstage", "LFILoans.sql");
-        for (int i = 1; i < mySqlData.length; i++){
-            for (int j = 1; j < mySqlData[i].length; j++){
-                System.out.println((i-1) + "    " + mySqlData[i][0] + "        " + mySqlData[0][j] + "        " + mySqlData[i][j]);
-                lfiLoansMySqlMap.put(new LFILoansKey(mySqlData[i][0], mySqlData[0][j]), mySqlData[i][j]);
+        for (Object[] mySqlDataRow : mySqlData){
+            ArrayList<Object> mySqlDataList = new ArrayList<Object>();
+            for (Object mySqlDataItem : mySqlDataRow){
+                mySqlDataList.add(mySqlDataItem);
             }
+            lfiLoansMySqlMap.put(new LFILoansKey(mySqlDataRow[0], mySqlDataRow[1]), mySqlDataList);
         }
         return lfiLoansMySqlMap;
     }
