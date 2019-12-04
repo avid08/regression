@@ -56,67 +56,27 @@ public class ExcelUtils {
         return result;
     }
 
+    public Object[][] getDataFromExcel(String excelFilePath, String sheetName) throws IOException {
+        File myFile = new File(excelFilePath);
+        FileInputStream myStream = new FileInputStream(myFile);
+        XSSFWorkbook workbook = new XSSFWorkbook(myStream);
+        XSSFSheet sheet = workbook.getSheet(sheetName);
 
-    public Object[][] getDataFromExcel(String excelFilePath, String sheetName) {
-        try {
-            FileInputStream fs = new FileInputStream(excelFilePath);
-            XSSFWorkbook workbook = new XSSFWorkbook(fs);
-            XSSFSheet sheet = workbook.getSheet(sheetName);
-            int rowNum = sheet.getLastRowNum();
+        int numRows = sheet.getLastRowNum()+1;
+        int numCols = sheet.getRow(0).getLastCellNum();
 
-            Object[][] excelData = new Object[rowNum][sheet.getRow(1).getLastCellNum()];
-            System.out.println(rowNum);
+        Object[][] excelData = new Object[numRows][numCols];
 
-            for (int i = 0; i < rowNum; i++) {
-                Row row = sheet.getRow(i);
-                int colNum = row.getLastCellNum();
-                System.out.println(colNum);
-                for (int j = 0; j < colNum; j++) {
-                    try {
-                        XSSFCell cell = sheet.getRow(i).getCell(j);
-                        switch (cell.getCellType()) {
-
-                            case STRING:
-                                excelData[i][j] = sheet.getRow(i).getCell(j).getStringCellValue();
-                                System.out.println(excelData[i][1]+ "   ->  " + excelData[0][j] + "     ->  " + excelData[i][j]);
-                                break;
-                            case NUMERIC:
-                                if (DateUtil.isCellDateFormatted(cell)) {
-                                    excelData[i][j] = sheet.getRow(i).getCell(j).getDateCellValue();
-                                    System.out.println(excelData[i][1]+ "   ->  " + excelData[0][j] + "     ->  " + excelData[i][j]);
-                                } else {
-                                    excelData[i][j] = new BigDecimal(sheet.getRow(i).getCell(j).getNumericCellValue()).toPlainString();
-                                    System.out.println(excelData[i][1]+ "   ->  " + excelData[0][j] + "     ->  " + excelData[i][j]);
-                                }
-                                break;
-                            case BOOLEAN:
-                                excelData[i][j] = sheet.getRow(i).getCell(j).getBooleanCellValue();
-                                System.out.println(excelData[i][1]+ "   ->  " + excelData[0][j] + "     ->  " + excelData[i][j]);
-                                break;
-                            case FORMULA:
-                                excelData[i][j] = sheet.getRow(i).getCell(j).getCellFormula();
-                                System.out.println(excelData[i][1]+ "   ->  " + excelData[0][j] + "     ->  " + excelData[i][j]);
-                                break;
-                            case ERROR:
-                                excelData[i][j] = sheet.getRow(i).getCell(j).getErrorCellString();
-                                System.out.println(excelData[i][1]+ "   ->  " + excelData[0][j] + "     ->  " + excelData[i][j]);
-                            default:
-                                excelData[i][j] = sheet.getRow(i).getCell(j).getStringCellValue();
-                                System.out.println(excelData[i][1]+ "   ->  " + excelData[0][j] + "     ->  " + excelData[i][j]);
-                        }
-                    } catch (NullPointerException ex) {
-                        i++;
-                        j=0;
-                    }
-                }
+        for (int i = 0; i < numRows; i++){
+            XSSFRow row = sheet.getRow(i);
+            for (int j = 0; j < numCols; j++){
+                XSSFCell cell = row.getCell(j);
+                String value = String.valueOf(cell);
+                excelData[i][j] = value;
             }
-            return excelData;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
         }
+        return excelData;
     }
-
 
     public void writeMySqlToExcelFile(Object[][] mySqlResults) {
         File file = new File(EXCELOUTPUTFILEPATH);

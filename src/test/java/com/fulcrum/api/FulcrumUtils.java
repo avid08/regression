@@ -7,6 +7,7 @@ import com.configuration.api.Configuration;
 import com.google.common.io.Resources;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -69,7 +70,7 @@ public class FulcrumUtils extends Configuration {
     }
 
     @Test(enabled=false)
-    public void getExcelData(){
+    public void getExcelData() throws IOException {
        Object[][] excelData = excelUtils.getDataFromExcel(getFullResourcePath("LFIBonds.xlsx"),"source");
     }
 
