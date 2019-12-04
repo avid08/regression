@@ -99,9 +99,9 @@ public class EnvConfig {
         }
 
         public static class CR_QA {
-            public static final String USERNAME = "product";
-            public static final String PASSWORD = "cVmKx6wStYjz";
-            public static final String HOSTNAME = "jdbc:mysql://mys-cov-que-rds.c3qwnbqmztfh.us-east-1.rds.amazonaws.com";
+            public static final String USERNAME = "fs_readonly";
+            public static final String PASSWORD = "M9d3Gp^g!LPXp";
+            public static final String HOSTNAME = "jdbc:mysql://covrevtest.ccwpcizbgfg6.us-east-1.rds.amazonaws.com";
             public static final String PORT = "3306";
             public static final String DBNAME = "";
         }
