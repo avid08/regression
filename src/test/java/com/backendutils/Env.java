@@ -9,6 +9,6 @@ public class Env {
     }
 
     public enum MySQL {
-        PROD, QA
+        PROD, QA, CR_QA
     }
 }

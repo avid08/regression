@@ -32,6 +32,15 @@ public class MySqlUtils {
                     prodConn = DriverManager.getConnection(DB_URL_PROD, USER_PROD, PASS_PROD);
                     System.out.println("Connected database successfully");
                     return prodConn;
+                case CR_QA:
+                    Connection crQAConn = null;
+                    final String CR_DB_URL_QA = EnvConfig.MySQL.CR_QA.HOSTNAME;
+                    final String USER_CR_QA = EnvConfig.MySQL.CR_QA.USERNAME;
+                    final String PASS_CR_QA = EnvConfig.MySQL.CR_QA.PASSWORD;
+                    System.out.println("Connecting to CR QA Database");
+                    crQAConn = DriverManager.getConnection(CR_DB_URL_QA, USER_CR_QA, PASS_CR_QA);
+                    System.out.println("Connected database successfully");
+                    return crQAConn;
                 default:
                     Connection defaultConn = null;
                     final String DB_URL_DEFAULT_QA = EnvConfig.MySQL.QA.HOSTNAME;
