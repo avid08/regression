@@ -25,6 +25,7 @@ public class FulcrumUtils extends Configuration {
     private HashMap<LFIBondsKey, ArrayList<Object>> lfiBondsMySqlMap = new HashMap<>();
     private HashMap<Object, Object> csLoansMySqlMap = new HashMap<>();
     private HashMap<CSBondsKey, ArrayList<Object>> csBondsMySqlMap = new HashMap<>();
+    private HashMap<CovRevKey, ArrayList<Object>> covRevMySqlMap = new HashMap<>();
 
 
     public HashMap<LFIBondsKey, ArrayList<Object>> getLfiBondsMySqlMap(Env.MySQL env) throws SQLException {
@@ -71,6 +72,18 @@ public class FulcrumUtils extends Configuration {
             }
         }
         return mySqlData;
+    }
+
+    public HashMap<CovRevKey, ArrayList<Object>> getCovenantReviewData(Env.MySQL env) throws SQLException {
+        Object[][] mySqlData = mySqlUtils.getDataFromMySQL(env, "prodstage", "covenant_review.sql");
+        for (Object[] mySqlDataRow : mySqlData){
+            ArrayList<Object> mySqlDataList = new ArrayList<Object>();
+            for (Object mySqlDataItem : mySqlDataRow){
+                mySqlDataList.add(mySqlDataItem);
+            }
+            covRevMySqlMap.put(new CovRevKey(mySqlDataRow[0], mySqlDataRow[1]), mySqlDataList);
+        }
+        return covRevMySqlMap;
     }
 
     @Test(enabled=false)
