@@ -8,4 +8,18 @@ public class CSBondsKey extends FulcrumKey {
         super(agentId, fitchFieldId);
         this.bondId=bondId;
     }
+
+    public CSBondsKey(Object agentId, Object bondId){
+        super(agentId);
+        this.bondId=bondId;
+    }
+
+    @Override
+    public Object getAgentId() {
+        return super.getAgentId();
+    }
+
+    public Object getBondId() {
+        return bondId;
+    }
 }

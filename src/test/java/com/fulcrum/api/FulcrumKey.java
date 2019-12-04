@@ -10,6 +10,18 @@ public class FulcrumKey {
         this.fitchFieldId = fitchFieldId;
     }
 
+    public FulcrumKey(Object agentId) {
+        this.agentId=agentId;
+    }
+
+    public Object getAgentId() {
+        return agentId;
+    }
+
+    public Object getFitchFieldId() {
+        return fitchFieldId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

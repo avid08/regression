@@ -8,4 +8,18 @@ public class LFIBondsKey extends FulcrumKey {
         super(agentId, fitchFieldId);
         this.lfyHyId = lfyHyId;
     }
+
+    public LFIBondsKey(Object agentId, Object lfyHyId){
+        super(agentId);
+        this.lfyHyId = lfyHyId;
+    }
+
+    @Override
+    public Object getAgentId() {
+        return super.getAgentId();
+    }
+
+    public Object getLfyHyId() {
+        return lfyHyId;
+    }
 }
