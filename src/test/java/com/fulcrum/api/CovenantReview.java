@@ -39,7 +39,7 @@ public class CovenantReview extends Configuration {
                 boolean isRowPassed = arrayUtils.areListsOfObjectsEqual(covRevQAList, covRevCRQAList);
                 try {
                     Assert.assertTrue(isRowPassed);
-                    System.out.println(i + "        COVREV PASSED       ID" + covRevKey.getId() + "         ENTITY ID" + covRevKey.getEntityId());
+                    System.out.println(i + "        COVREV PASSED       ID  " + covRevKey.getId() + "         ENTITY ID  " + covRevKey.getEntityId());
                     i++;
                     //  logger.info("COVREV PASSED " + covRevKey.getId() + "       " + covRevKey.getEntityId());
                 }
