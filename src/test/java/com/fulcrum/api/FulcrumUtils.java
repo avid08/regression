@@ -3,6 +3,7 @@ package com.fulcrum.api;
 import com.backendutils.Env;
 import com.backendutils.ExcelUtils;
 import com.backendutils.MySqlUtils;
+import com.backendutils.PostgresUtils;
 import com.configuration.api.Configuration;
 import com.google.common.io.Resources;
 import org.testng.annotations.Test;
@@ -20,11 +21,13 @@ import static com.backendutils.FileUtils.getFullResourcePath;
 public class FulcrumUtils extends Configuration {
     com.backendutils.ExcelUtils excelUtils = new ExcelUtils();
     com.backendutils.MySqlUtils mySqlUtils = new MySqlUtils();
+    PostgresUtils postgresUtils = new PostgresUtils();
 
     private HashMap<LFILoansKey, ArrayList<Object>> lfiLoansMySqlMap = new HashMap<>();
     private HashMap<LFIBondsKey, ArrayList<Object>> lfiBondsMySqlMap = new HashMap<>();
     private HashMap<Object, Object> csLoansMySqlMap = new HashMap<>();
     private HashMap<CSBondsKey, ArrayList<Object>> csBondsMySqlMap = new HashMap<>();
+    private HashMap<CSBondsKey, ArrayList<Object>> csBondsPostgresMap = new HashMap<>();
     private HashMap<CovRevKey, ArrayList<Object>> covRevMySqlMap = new HashMap<>();
 
 
@@ -50,6 +53,30 @@ public class FulcrumUtils extends Configuration {
             csBondsMySqlMap.put(new CSBondsKey(mySqlDataRow[0], mySqlDataRow[1]), mySqlDataList);
         }
         return csBondsMySqlMap;
+    }
+
+    public HashMap<CSBondsKey, ArrayList<Object>> getCsBondsMySqlMap_customQuery(Env.MySQL env, String queryFileName, Integer agentIdColumnNumber, Integer bondIdColumnNumber) throws SQLException{
+        Object[][] mySqlData = mySqlUtils.getDataFromMySQL(env, "prodstage", queryFileName);
+        for (Object[] mySqlDataRow : mySqlData){
+            ArrayList<Object> mySqlDataList = new ArrayList<Object>();
+            for (Object mySqlDataItem : mySqlDataRow){
+                mySqlDataList.add(mySqlDataItem);
+            }
+            csBondsMySqlMap.put(new CSBondsKey(mySqlDataRow[agentIdColumnNumber], mySqlDataRow[bondIdColumnNumber]), mySqlDataList);
+        }
+        return csBondsMySqlMap;
+    }
+
+    public HashMap<CSBondsKey, ArrayList<Object>> getCsBondsPostgresMap_customQuery(String queryFileName, Integer agentIdColumnNumber, Integer bondIdColumnNumber) throws SQLException{
+        Object[][] postgresData = postgresUtils.getDataFromPostgres(queryFileName, Env.Postgres.QA, true);
+        for (Object[] postgresDataRow : postgresData){
+            ArrayList<Object> postgresDataList = new ArrayList<Object>();
+            for (Object postgresDataItem : postgresDataRow){
+                postgresDataList.add(postgresDataItem);
+            }
+            csBondsPostgresMap.put(new CSBondsKey(postgresDataRow[agentIdColumnNumber], postgresDataRow[bondIdColumnNumber]), postgresDataList);
+        }
+        return csBondsPostgresMap;
     }
 
     public HashMap<LFILoansKey, ArrayList<Object>> getLfiLoansMySqlMap(Env.MySQL env) throws SQLException {
@@ -85,17 +112,4 @@ public class FulcrumUtils extends Configuration {
         }
         return covRevMySqlMap;
     }
-
-    @Test(enabled=false)
-    public void getExcelData() throws IOException {
-       Object[][] excelData = excelUtils.getDataFromExcel(getFullResourcePath("LFIBonds.xlsx"),"source");
-    }
-
-    @Test
-    public void getMySqlData() throws SQLException {
-        //   HashMap<LFIBondsKey, Object> lfiBondsMySqlMap = getLfiBondsMySqlMap(QA);
-        //   HashMap<CSBondsKey, Object> csBondsMySqlMap = getCsBondsMySqlMap(QA);
-        //   HashMap<LFILoansKey, Object> lfiLoansMySqlMap = getLfiLoansMySqlMap(QA);
-       Object[][] csLoansMySqlArray = getCsLoansMySqlArray(QA);
-   }
 }

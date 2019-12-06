@@ -19,6 +19,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+import static com.backendutils.Env.MySQL.QA;
+
 public class T1_Sprint_15 extends Configuration {
 
     Logger logger = LoggerInitialization.setupLogger("T1_Sprint_15");
@@ -32,6 +34,7 @@ public class T1_Sprint_15 extends Configuration {
     PostgresUtils postgresUtils = new PostgresUtils();
     APIUtils apiUtils = new APIUtils();
     ArrayUtils arrayUtils = new ArrayUtils();
+    FulcrumUtils fulcrumUtils = new FulcrumUtils();
     Connection conn = postgresUtils.connectToPostgreDatabase(Env.Postgres.QA);
 
     @Test
@@ -249,8 +252,34 @@ public class T1_Sprint_15 extends Configuration {
     }
 
     @Test
-    public void Fisc6570_CSLoans_LFIBonds_MasterSchema() {
+    public void Fisc6570_CSBonds_MasterSchema() throws SQLException {
 
+        HashMap<CSBondsKey, ArrayList<Object>> csBondsMySqlMap = fulcrumUtils.getCsBondsMySqlMap_customQuery(QA, "6570_CSBonds_MySQL.sql", 0, 3);
+        HashMap<CSBondsKey, ArrayList<Object>> csBondsPostgresMap = fulcrumUtils.getCsBondsPostgresMap_customQuery("6570_CSBonds_Postgres.sql", 0, 3);
+
+        Set<CSBondsKey> csBondsKeySet = csBondsMySqlMap.keySet();
+        List<AssertionError> errorsList = new ArrayList<AssertionError>();
+
+        int i = 0;
+
+        for (CSBondsKey csBondsKey : csBondsKeySet) {
+            ArrayList<Object> csBondsMySqlList = csBondsMySqlMap.get(csBondsKey);
+            ArrayList<Object> csBondsPostgresList = csBondsPostgresMap.get(csBondsKey);
+            boolean isRowPassed = arrayUtils.areListsOfObjectsEqual(csBondsMySqlList, csBondsPostgresList);
+            try {
+                Assert.assertTrue(isRowPassed);
+                System.out.println(i + "        CSBONDS PASSED      AGENT ID  " + csBondsKey.getAgentId() + "         BOND ID  " + csBondsKey.getBondId());
+                i++;
+                //  logger.info("COVREV PASSED " + covRevKey.getId() + "       " + covRevKey.getEntityId());
+            }
+            catch (AssertionError err) {
+                errorsList.add(err);
+                logger.error("CSBONDS FAILED   AGENT ID " + csBondsKey.getAgentId() + "      BOND ID  " + csBondsKey.getBondId() + "      " + err);
+                System.out.println("CSBONDS FAILED   AGENT ID " + csBondsKey.getAgentId() + "      BOND ID  " + csBondsKey.getBondId() + "      " + err);
+                continue;
+            }
+        }
+        Assert.assertEquals(errorsList.size(), 0);
     }
 
     @DataProvider(name = "Fisc_7315_FunctionalTest")
