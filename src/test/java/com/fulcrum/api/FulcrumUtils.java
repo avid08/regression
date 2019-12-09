@@ -5,18 +5,10 @@ import com.backendutils.ExcelUtils;
 import com.backendutils.MySqlUtils;
 import com.backendutils.PostgresUtils;
 import com.configuration.api.Configuration;
-import com.google.common.io.Resources;
-import org.testng.annotations.Test;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import static com.backendutils.Env.MySQL.QA;
-import static com.backendutils.FileUtils.getFullResourcePath;
 
 public class FulcrumUtils extends Configuration {
     com.backendutils.ExcelUtils excelUtils = new ExcelUtils();
@@ -34,7 +26,7 @@ public class FulcrumUtils extends Configuration {
 
 
     public HashMap<LFIBondsKey, ArrayList<Object>> getLfiBondsMySqlMap(Env.MySQL env) throws SQLException {
-        Object[][] mySqlData = mySqlUtils.getDataFromMySQL(env, "prodstage", "LFIBonds.sql");
+        Object[][] mySqlData = mySqlUtils.getDataFromMySQL(env, "prodstage", "LFIBonds_MySQL.sql");
         for (Object[] mySqlDataRow : mySqlData){
             ArrayList<Object> mySqlDataList = new ArrayList<Object>();
             for (Object mySqlDataItem : mySqlDataRow){
