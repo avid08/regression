@@ -25,10 +25,12 @@ public class FulcrumUtils extends Configuration {
 
     private HashMap<LFILoansKey, ArrayList<Object>> lfiLoansMySqlMap = new HashMap<>();
     private HashMap<LFIBondsKey, ArrayList<Object>> lfiBondsMySqlMap = new HashMap<>();
-    private HashMap<Object, Object> csLoansMySqlMap = new HashMap<>();
+    private HashMap<CSLoansKey, ArrayList<Object>> csLoansMySqlMap = new HashMap<>();
+    private HashMap<CSLoansKey, ArrayList<Object>> csLoansPostgresMap = new HashMap<>();
     private HashMap<CSBondsKey, ArrayList<Object>> csBondsMySqlMap = new HashMap<>();
     private HashMap<CSBondsKey, ArrayList<Object>> csBondsPostgresMap = new HashMap<>();
     private HashMap<CovRevKey, ArrayList<Object>> covRevMySqlMap = new HashMap<>();
+
 
 
     public HashMap<LFIBondsKey, ArrayList<Object>> getLfiBondsMySqlMap(Env.MySQL env) throws SQLException {
@@ -53,6 +55,30 @@ public class FulcrumUtils extends Configuration {
             csBondsMySqlMap.put(new CSBondsKey(mySqlDataRow[0], mySqlDataRow[1]), mySqlDataList);
         }
         return csBondsMySqlMap;
+    }
+
+    public HashMap<CSLoansKey, ArrayList<Object>> getCsLoansMySqlMap_customQuery(Env.MySQL env, String queryFileName, Integer agentIdColumnNumber, Integer fcTlbEuroColumnNumber) throws SQLException {
+        Object[][] mySqlData = mySqlUtils.getDataFromMySQL(env, "prodstage", queryFileName);
+        for (Object[] mySqlDataRow : mySqlData){
+            ArrayList<Object> mySqlDataList = new ArrayList<Object>();
+            for (Object mySqlDataItem : mySqlDataRow){
+                mySqlDataList.add(mySqlDataItem);
+            }
+            csLoansMySqlMap.put(new CSLoansKey(mySqlDataRow[agentIdColumnNumber], mySqlDataRow[fcTlbEuroColumnNumber]), mySqlDataList);
+        }
+        return csLoansMySqlMap;
+    }
+
+    public HashMap<CSLoansKey, ArrayList<Object>> getCsLoansPostgresMap_customQuery(String queryFileName, Integer agentIdColumnNumber, Integer fcTlbEuroColumnNumber) throws SQLException {
+        Object[][] postgresData = postgresUtils.getDataFromPostgres(queryFileName, Env.Postgres.QA, true);
+        for (Object[] postgresDataRow : postgresData){
+            ArrayList<Object> postgresDataList = new ArrayList<Object>();
+            for (Object postgresDataItem : postgresDataRow){
+                postgresDataList.add(postgresDataItem);
+            }
+            csLoansPostgresMap.put(new CSLoansKey(postgresDataRow[agentIdColumnNumber], postgresDataRow[fcTlbEuroColumnNumber]), postgresDataList);
+        }
+        return csLoansPostgresMap;
     }
 
     public HashMap<CSBondsKey, ArrayList<Object>> getCsBondsMySqlMap_customQuery(Env.MySQL env, String queryFileName, Integer agentIdColumnNumber, Integer bondIdColumnNumber) throws SQLException{

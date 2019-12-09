@@ -282,6 +282,38 @@ public class T1_Sprint_15 extends Configuration {
         Assert.assertEquals(errorsList.size(), 0);
     }
 
+    @Test
+    public void Fisc6570_CSLoans_MasterSchema() throws SQLException {
+        HashMap<CSLoansKey, ArrayList<Object>> csLoansMySqlMap = fulcrumUtils.getCsLoansMySqlMap_customQuery(QA, "6570_CSLoans_MySQL.sql",0,1);
+        HashMap<CSLoansKey, ArrayList<Object>> csLoansPostgresMap = fulcrumUtils.getCsLoansPostgresMap_customQuery("6570_CSLoans_Postgres.sql",0,1);
+
+        Set<CSLoansKey> csLoansKeySet = csLoansMySqlMap.keySet();
+        Set<CSLoansKey> csLoansKeySetPostgres = csLoansPostgresMap.keySet();
+
+        List<AssertionError> errorsList = new ArrayList<AssertionError>();
+
+        int i = 0;
+
+        for (CSLoansKey csLoansKey : csLoansKeySet){
+            ArrayList<Object> csLoansMySqlList = csLoansMySqlMap.get(csLoansKey);
+            ArrayList<Object> csLoansPostgresList = csLoansPostgresMap.get(csLoansKey);
+            boolean isRowPassed = arrayUtils.areListsOfObjectsEqual(csLoansMySqlList, csLoansPostgresList);
+            try {
+                Assert.assertTrue(isRowPassed);
+                System.out.println(i + "        CSBONDS PASSED      AGENT ID  " + csLoansKey.getAgentId() + "         FC_TLB_EURO  " + csLoansKey.getFcTlbEuro());
+                i++;
+                //  logger.info("COVREV PASSED " + covRevKey.getId() + "       " + covRevKey.getEntityId());
+            }
+            catch (AssertionError err) {
+                errorsList.add(err);
+                logger.error("CSBONDS FAILED   AGENT ID " + csLoansKey.getAgentId() + "      FC_TLB_EURO  " + csLoansKey.getFcTlbEuro() + "      " + err);
+                System.out.println("CSBONDS FAILED   AGENT ID " + csLoansKey.getAgentId() + "      FC_TLB_EURO  " + csLoansKey.getFcTlbEuro() + "      " + err);
+                continue;
+            }
+        }
+        Assert.assertEquals(errorsList.size(), 0);
+    }
+
     @DataProvider(name = "Fisc_7315_FunctionalTest")
     public Object[][] getDataFor7315_FunctionalTest() {
         return new Object[][]{
