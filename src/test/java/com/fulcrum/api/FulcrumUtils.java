@@ -17,6 +17,7 @@ public class FulcrumUtils extends Configuration {
 
     private HashMap<LFILoansKey, ArrayList<Object>> lfiLoansMySqlMap = new HashMap<>();
     private HashMap<LFIBondsKey, ArrayList<Object>> lfiBondsMySqlMap = new HashMap<>();
+    private HashMap<LFIBondsKey, ArrayList<Object>> lfiBondsPostgresMap = new HashMap<>();
     private HashMap<CSLoansKey, ArrayList<Object>> csLoansMySqlMap = new HashMap<>();
     private HashMap<CSLoansKey, ArrayList<Object>> csLoansPostgresMap = new HashMap<>();
     private HashMap<CSBondsKey, ArrayList<Object>> csBondsMySqlMap = new HashMap<>();
@@ -25,16 +26,28 @@ public class FulcrumUtils extends Configuration {
 
 
 
-    public HashMap<LFIBondsKey, ArrayList<Object>> getLfiBondsMySqlMap(Env.MySQL env) throws SQLException {
-        Object[][] mySqlData = mySqlUtils.getDataFromMySQL(env, "prodstage", "LFIBonds_MySQL.sql");
+    public HashMap<LFIBondsKey, ArrayList<Object>> getLfiBondsMySqlMap_customQuery(Env.MySQL env, String queryFileName, Integer agentIdColumnNumber, Integer lfyHyIdColumnNumber) throws SQLException {
+        Object[][] mySqlData = mySqlUtils.getDataFromMySQL(env, "prodstage", queryFileName);
         for (Object[] mySqlDataRow : mySqlData){
             ArrayList<Object> mySqlDataList = new ArrayList<Object>();
             for (Object mySqlDataItem : mySqlDataRow){
                 mySqlDataList.add(mySqlDataItem);
             }
-            lfiBondsMySqlMap.put(new LFIBondsKey(mySqlDataRow[0], mySqlDataRow[1]), mySqlDataList);
+            lfiBondsMySqlMap.put(new LFIBondsKey(mySqlDataRow[agentIdColumnNumber], mySqlDataRow[lfyHyIdColumnNumber]), mySqlDataList);
         }
         return lfiBondsMySqlMap;
+    }
+
+    public HashMap<LFIBondsKey, ArrayList<Object>> getLfiBondsPostgresMap_customQuery(String queryFileName, Integer agentIdColumnNumber, Integer lfyHyIdColumnNumber) throws SQLException {
+        Object[][] postgresData = postgresUtils.getDataFromPostgres(queryFileName, Env.Postgres.QA, true);
+        for (Object[] postgresDataRow : postgresData){
+            ArrayList<Object> postgresDataList = new ArrayList<Object>();
+            for (Object postgresDataItem : postgresDataRow){
+                postgresDataList.add(postgresDataItem);
+            }
+            lfiBondsPostgresMap.put(new LFIBondsKey(postgresDataRow[agentIdColumnNumber], postgresDataRow[lfyHyIdColumnNumber]), postgresDataList);
+        }
+        return lfiBondsPostgresMap;
     }
 
     public HashMap<CSBondsKey, ArrayList<Object>> getCsBondsMySqlMap(Env.MySQL env) throws SQLException{

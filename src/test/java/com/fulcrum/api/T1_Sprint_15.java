@@ -252,6 +252,36 @@ public class T1_Sprint_15 extends Configuration {
     }
 
     @Test
+    public void Fisc6570_LFIBonds_MasterSchema() throws SQLException {
+        HashMap<LFIBondsKey, ArrayList<Object>> lfiBondsMySqlMap = fulcrumUtils.getLfiBondsMySqlMap_customQuery(QA, "LFIBonds_MySQL.sql", 0, 1);
+        HashMap<LFIBondsKey, ArrayList<Object>> lfiBondsPostgresMap = fulcrumUtils.getLfiBondsPostgresMap_customQuery( "LFIBonds_Postgres.sql", 0, 1);
+
+        Set<LFIBondsKey> lfiBondsKeySet = lfiBondsMySqlMap.keySet();
+        List<AssertionError> errorsList = new ArrayList<AssertionError>();
+
+        int i = 0;
+
+        for (LFIBondsKey lfiBondsKey : lfiBondsKeySet) {
+            ArrayList<Object> lfiBondsMySqlList = lfiBondsMySqlMap.get(lfiBondsKey);
+            ArrayList<Object> lfiBondsPostrgesList = lfiBondsPostgresMap.get(lfiBondsKey);
+            boolean isRowPassed = arrayUtils.areListsOfObjectsEqual(lfiBondsMySqlList, lfiBondsPostrgesList);
+            try {
+                Assert.assertTrue(isRowPassed);
+                System.out.println(i + "        LFIBONDS PASSED      AGENT ID  " + lfiBondsKey.getAgentId() + "         LFY HY ID  " + lfiBondsKey.getLfyHyId());
+                i++;
+                //logger.info("LFIBONDS PASSED " + lfiBondsKey.getAgentId() + "       " + lfiBondsKey.getLfyHyId());
+            }
+            catch (AssertionError err) {
+                errorsList.add(err);
+                logger.error("LFIBONDS FAILED   AGENT ID " + lfiBondsKey.getAgentId() + "      LFY HY ID  " + lfiBondsKey.getLfyHyId() + "      " + err);
+                System.out.println("LFIBONDS FAILED   AGENT ID " + lfiBondsKey.getAgentId() + "      LFY HY ID  " + lfiBondsKey.getLfyHyId() + "      " + err);
+                continue;
+            }
+        }
+        Assert.assertEquals(errorsList.size(), 0);
+    }
+
+    @Test
     public void Fisc6570_CSBonds_MasterSchema() throws SQLException {
 
         HashMap<CSBondsKey, ArrayList<Object>> csBondsMySqlMap = fulcrumUtils.getCsBondsMySqlMap_customQuery(QA, "6570_CSBonds_MySQL.sql", 0, 3);
@@ -270,7 +300,7 @@ public class T1_Sprint_15 extends Configuration {
                 Assert.assertTrue(isRowPassed);
                 System.out.println(i + "        CSBONDS PASSED      AGENT ID  " + csBondsKey.getAgentId() + "         BOND ID  " + csBondsKey.getBondId());
                 i++;
-                //  logger.info("COVREV PASSED " + covRevKey.getId() + "       " + covRevKey.getEntityId());
+                //  logger.info("CSBONDS PASSED " + csBondsKey.getAgentId() + "       " + csBondsKey.getBondId());
             }
             catch (AssertionError err) {
                 errorsList.add(err);
@@ -300,14 +330,14 @@ public class T1_Sprint_15 extends Configuration {
             boolean isRowPassed = arrayUtils.areListsOfObjectsEqual(csLoansMySqlList, csLoansPostgresList);
             try {
                 Assert.assertTrue(isRowPassed);
-                System.out.println(i + "        CSBONDS PASSED      AGENT ID  " + csLoansKey.getAgentId() + "         FC_TLB_EURO  " + csLoansKey.getFcTlbEuro());
+                System.out.println(i + "        CSLOANS PASSED      AGENT ID  " + csLoansKey.getAgentId() + "         FC_TLB_EURO  " + csLoansKey.getFcTlbEuro());
                 i++;
-                //  logger.info("COVREV PASSED " + covRevKey.getId() + "       " + covRevKey.getEntityId());
+                //  logger.info("CSLOANS PASSED " + csLoansKey.getAgentId() + "       " + csLoansKey.getFcTlbEuro());
             }
             catch (AssertionError err) {
                 errorsList.add(err);
-                logger.error("CSBONDS FAILED   AGENT ID " + csLoansKey.getAgentId() + "      FC_TLB_EURO  " + csLoansKey.getFcTlbEuro() + "      " + err);
-                System.out.println("CSBONDS FAILED   AGENT ID " + csLoansKey.getAgentId() + "      FC_TLB_EURO  " + csLoansKey.getFcTlbEuro() + "      " + err);
+                logger.error("CSLOANS FAILED   AGENT ID " + csLoansKey.getAgentId() + "      FC_TLB_EURO  " + csLoansKey.getFcTlbEuro() + "      " + err);
+                System.out.println("CSLOANS FAILED   AGENT ID " + csLoansKey.getAgentId() + "      FC_TLB_EURO  " + csLoansKey.getFcTlbEuro() + "      " + err);
                 continue;
             }
         }
