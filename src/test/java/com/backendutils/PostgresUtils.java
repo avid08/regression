@@ -67,6 +67,16 @@ public class PostgresUtils {
         return data;
     }
 
+    public Object[][] getDataFromPostgresFromStringQuery(String sql, Env.Postgres db, boolean skipColumnNames) throws SQLException {
+        Connection conn = connectToPostgreDatabase(db);
+        Statement stmt = null;
+        System.out.println("Creating statement");
+        stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        ResultSet rs = stmt.executeQuery(sql);
+        Object[][] data = resultSetToArray(rs, skipColumnNames);
+        return data;
+    }
+
     public static int getRowCount(ResultSet rs) {
         int size = 0;
         try {
