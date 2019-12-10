@@ -638,7 +638,6 @@ public class T1_Sprint_15 extends Configuration {
 
     @Test
     public void Fisc7317_validateInMarketDoneAndPagination(){
-
         String doneUri = baseURI + "/v1/securities?filter[sourceName]=LFI&filter[dealType]=Done&page[size]=50";
         String inMarketUri = baseURI + "/v1/securities?filter[sourceName]=LFI&filter[dealType]=In-Market";
         String inMarketDoneUri = baseURI + "/v1/securities?filter[sourceName]=LFI&filter[dealType]=In-Market,Done";
@@ -697,5 +696,139 @@ public class T1_Sprint_15 extends Configuration {
             Assert.fail();
         }
 
+    }
+
+    private HashMap<FulcrumPostgresKey, Object> postgresExpectedData = new HashMap<>();
+
+    private HashMap<FulcrumPostgresKey, Object> getPostgresExpectedData(String sql) throws SQLException {
+        Object[][] postgresData = postgresUtils.getDataFromPostgresFromStringQuery(sql, Env.Postgres.QA, true);
+        for (Object[] postgresDataRow : postgresData){
+            postgresExpectedData.put(new FulcrumPostgresKey(postgresDataRow[0], postgresDataRow[1]), postgresDataRow[2]);
+        }
+        return postgresExpectedData;
+    }
+
+    @DataProvider(name = "Fisc7317_lfiLoansSecurityIds")
+    public Object[][] getLfiLoansSecutiryIds() {
+            return postgresUtils.getDataFromPostgres("7317_LfiLoansSecurityIds.sql", Env.Postgres.QA, true);
+    }
+
+    @DataProvider(name = "Fisc7317_lfiBondsSecurityIds")
+    public Object[][] getLfiBondsSecurityIds() {
+            return postgresUtils.getDataFromPostgres("7317_LfiBondsSecurityIds.sql", Env.Postgres.QA, true);
+    }
+
+    @DataProvider(name = "Fisc7317_csLoansSecurityIds")
+    public Object[][] getCsLoansSecurityIds() {
+            return postgresUtils.getDataFromPostgres("7317_csLoansSecurityIds.sql", Env.Postgres.QA, true);
+    }
+
+    @DataProvider(name = "Fisc7317_csBondsSecurityIds")
+    public Object[][] getCsBondsSecurityIds() {
+            return postgresUtils.getDataFromPostgres("7317_csBondsSecurityIds.sql", Env.Postgres.QA, true);
+    }
+
+    HashMap<FulcrumPostgresKey, Object> lfiLoansExpectedData = null;
+    HashMap<FulcrumPostgresKey, Object> lfiBondsExpectedData = null;
+    HashMap<FulcrumPostgresKey, Object> csLoansExpectedData = null;
+    HashMap<FulcrumPostgresKey, Object> csBondsExpectedData = null;
+
+    @Test(dataProvider = "Fisc7317_lfiLoansSecurityIds")
+    public void Fisc7317_validateDataBetweenMySqlAndPostgres_LfiLoans(Object securityId) throws SQLException {
+        String sql = "select security_id, field_id, value, source_name\n" +
+                "from master.security_attributes sa\n" +
+                "  join master.sources ms on sa.source_id = ms.source_id\n" +
+                "where ms.source_id=5 and security_id=" + securityId;
+
+        lfiLoansExpectedData = getPostgresExpectedData(sql);
+
+        Set<FulcrumPostgresKey> lfiLoansExpectedDataKeys = lfiLoansExpectedData.keySet();
+
+        int i = 0;
+
+        String uri = baseURI + "/v1/securities/" + securityId;
+        Response res = apiUtils.getResponse(uri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        List<AssertionError> errorsList = new ArrayList<AssertionError>();
+
+        for (FulcrumPostgresKey lfiLoansExpectedDataKey : lfiLoansExpectedDataKeys) {
+            try {
+                System.out.println(lfiLoansExpectedData.get(lfiLoansExpectedDataKey).toString() + "        " + res.asString());
+               // Assert.assertTrue(res.asString().contains(lfiLoansExpectedData.get(lfiLoansExpectedDataKey).toString()));
+               // Assert.assertTrue(res.asString().contains("\"" + lfiLoansExpectedDataKey.getFieldId() + "\":\"" + lfiLoansExpectedData.get(lfiLoansExpectedDataKey) + "\""));
+                logger.info("FISC 7317 PASSED SECURITY_ID  " + lfiLoansExpectedDataKey.getSecurityId() + "          " + "\"" + lfiLoansExpectedDataKey.getFieldId() + "\": \"" + lfiLoansExpectedData.get(lfiLoansExpectedDataKey) + "\"");
+            } catch (AssertionError err){
+                errorsList.add(err);
+                logger.error("FISC 7317 FAILED SECURITY_ID  " + lfiLoansExpectedDataKey.getSecurityId() + "          " + "\"" + lfiLoansExpectedDataKey.getFieldId());
+                System.out.println("FISC 7317 FAILED SECURITY_ID  " + lfiLoansExpectedDataKey.getSecurityId() + "          " + "\"" + lfiLoansExpectedDataKey.getFieldId());
+                continue;
+            }
+        }
+        Assert.assertEquals(errorsList.size(), 0);
+        lfiLoansExpectedData.clear();
+    }
+
+    @Test(dataProvider = "Fisc7317_lfiBondsSecurityIds")
+    public void Fisc7317_validateDataBetweenMySqlAndPostgres_LfiBonds(Object securityId) throws SQLException {
+        String sql = "select security_id, field_id, value, source_name\n" +
+                "from master.security_attributes sa\n" +
+                "  join master.sources ms on sa.source_id = ms.source_id\n" +
+                "where ms.source_id=6 and security_id=" + securityId;
+
+
+
+        lfiBondsExpectedData = getPostgresExpectedData(sql);
+
+        Set<FulcrumPostgresKey> lfiBondsExpectedDataKeys = lfiBondsExpectedData.keySet();
+
+        int i = 0;
+
+        for (FulcrumPostgresKey lfiBondsExpectedDataKey : lfiBondsExpectedDataKeys) {
+            System.out.println(i + "        " + lfiBondsExpectedDataKey.getSecurityId() + "     " + lfiBondsExpectedDataKey.getFieldId() + "      " + lfiBondsExpectedData.get(lfiBondsExpectedDataKey));
+            i++;
+        }
+
+        lfiBondsExpectedData.clear();
+    }
+
+    @Test(dataProvider = "Fisc7317_csLoansSecurityIds")
+    public void Fisc7317_validateDataBetweenMySqlAndPostgres_CSLoans(Object securityId) throws SQLException {
+        String sql = "select security_id, field_id, value, source_name\n" +
+                "from master.security_attributes sa\n" +
+                "  join master.sources ms on sa.source_id = ms.source_id\n" +
+                "where ms.source_id=7 and security_id=" + securityId;
+
+
+        csLoansExpectedData = getPostgresExpectedData(sql);
+
+        Set<FulcrumPostgresKey> csLoansExpectedDataKeys = csLoansExpectedData.keySet();
+
+        int i = 0;
+
+        for (FulcrumPostgresKey csLoansExpectedDataKey : csLoansExpectedDataKeys) {
+            System.out.println(i + "        " + csLoansExpectedDataKey.getSecurityId() + "     " + csLoansExpectedDataKey.getFieldId() + "      " + csLoansExpectedData.get(csLoansExpectedDataKey));
+            i++;
+        }
+        csLoansExpectedData.clear();
+    }
+
+    @Test(dataProvider = "Fisc7317_csBondsSecurityIds")
+    public void Fisc7317_validateDataBetweenMySqlAndPostgres_csBonds(Object securityId) throws SQLException {
+        String sql = "select security_id, field_id, value, source_name\n" +
+                "from master.security_attributes sa\n" +
+                "  join master.sources ms on sa.source_id = ms.source_id\n" +
+                "where ms.source_id=8 and security_id=" + securityId;
+
+
+        csBondsExpectedData = getPostgresExpectedData(sql);
+
+        Set<FulcrumPostgresKey> csBondsExpectedDataKeys = csBondsExpectedData.keySet();
+
+        int i = 0;
+
+        for (FulcrumPostgresKey csBondsExpectedDataKey : csBondsExpectedDataKeys) {
+            System.out.println(i + "        " + csBondsExpectedDataKey.getSecurityId() + "     " + csBondsExpectedDataKey.getFieldId() + "      " + csBondsExpectedData.get(csBondsExpectedDataKey));
+            i++;
+        }
+        csBondsExpectedData.clear();
     }
 }
