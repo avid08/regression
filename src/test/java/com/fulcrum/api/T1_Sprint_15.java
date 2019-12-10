@@ -637,18 +637,65 @@ public class T1_Sprint_15 extends Configuration {
     }
 
     @Test
-    public void Fisc7317_validateDoneAndPagination(){
-        String doneUri = baseURI + "/v1/securities?filter[dealType]=Done";
-        String inMarketUri = baseURI + "/v1/securities?filter[dealType]=In-Market";
-        String inMarketDoneUri = baseURI + "/v1/securities?filter[dealType]=In-Market,Done";
+    public void Fisc7317_validateInMarketDoneAndPagination(){
+
+        String doneUri = baseURI + "/v1/securities?filter[sourceName]=LFI&filter[dealType]=Done&page[size]=50";
+        String inMarketUri = baseURI + "/v1/securities?filter[sourceName]=LFI&filter[dealType]=In-Market";
+        String inMarketDoneUri = baseURI + "/v1/securities?filter[sourceName]=LFI&filter[dealType]=In-Market,Done";
         String pageSizeUri = baseURI + "/v1/securities?page[size]=75";
         String pageNumberUri = baseURI + "/v1/securities?page[number]=5";
 
         Response doneResponse = apiUtils.getResponse(doneUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        ArrayList<String> fcBreakDts = doneResponse.path("data.attributes.FC_BREAK_DT");
+        for (int i = 0; i < fcBreakDts.size(); i++){
+            try {
+                Assert.assertTrue(fcBreakDts.get(i) != null);
+                logger.info("FISC 7317 PASSED DONE FILTER  BC_BREAK_DT " + fcBreakDts.get(i));
+            } catch (AssertionError err){
+                System.out.println("FISC 7317 FAILED DONE FILTER FC_BREAK_DT " + fcBreakDts.get(i));
+                logger.error("FISC 7317 FAILED DONE FILTER FC_BREAK_DT " + fcBreakDts.get(i));
+                Assert.fail();
+            }
+        }
+
         Response inMarketResponse = apiUtils.getResponse(inMarketUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        ArrayList<String> fcBreakDts_shouldNotBe = inMarketResponse.path("data.attributes.FC_BREAK_DT");
+        for (int i = 0; i < fcBreakDts_shouldNotBe.size(); i++){
+            try {
+                Assert.assertTrue(fcBreakDts_shouldNotBe.get(i) == null);
+                logger.info("FISC 7317 PASSED IN MARKET FILTER  FC_BREAK_DT IS NOT PRESENT");
+            } catch (AssertionError err){
+                System.out.println("FISC 7317 FAILED IN MARKET FILTER FC_BREAK_DT IS PRESENT");
+                logger.error("FISC 7317 FAILED IN MARKET FILTER FC_BREAK_DT IS PRESENT");
+                Assert.fail();
+            }
+        }
+
         Response inMarketDoneResponse = apiUtils.getResponse(inMarketDoneUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+
         Response pageSizeResponse = apiUtils.getResponse(pageSizeUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        ArrayList<String> idsList = pageSizeResponse.path("data.id");
+        try {
+            Assert.assertEquals(idsList.size(), 75);
+            logger.info("FISC 7317 PASSED PAGINATION");
+        } catch (AssertionError err){
+            System.out.println("FISC 7317 FAILED PAGINATION");
+            logger.error("FISC 7317 FAILED PAGINATION");
+            Assert.fail();
+        }
+
         Response pageNumberResponse = apiUtils.getResponse(pageNumberUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        try {
+            Assert.assertTrue(pageNumberResponse.path("links.first").toString().contains("page[number]=0&page[number]=5"));
+            Assert.assertTrue(pageNumberResponse.path("links.next").toString().contains("page[number]=6&page[number]=5"));
+            Assert.assertTrue(pageNumberResponse.path("links.last").toString().contains("page[number]=194&page[number]=5"));
+            Assert.assertTrue(pageNumberResponse.path("links.prev").toString().contains("page[number]=4&page[number]=5"));
+            logger.info("FISC 7317 PASSED PAGE NUMBER");
+        } catch (AssertionError err){
+            System.out.println("FISC 7317 FAILED PAGE NUMBER");
+            logger.error("FISC 7317 FAILED PAGE NUMBER");
+            Assert.fail();
+        }
 
     }
 }
