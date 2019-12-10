@@ -458,30 +458,197 @@ public class T1_Sprint_15 extends Configuration {
         System.out.println(postgresFieldId + "    " + postgresValue + "    " + apiValues.get(postgresFieldId));
     }
 
-    @DataProvider(name = "Fisc7317")
+   /* @DataProvider(name = "Fisc7317")
     public Object[][] getData_7317() {
         String findAllUri = baseURI + "/v1/securities?filter[sourceName]=LFI&filter[sourceType]=Loans";
-        String findOneUri = baseURI + "/v1/securities/122860754";
-        Object[][] postgresData = postgresUtils.getDataFromPostgres("7317.sql", POSTGRES, true);
+        String findOneUri = baseURI + "/v1/securities/366426766";
         Response findAllApiData = apiUtils.getResponse(findAllUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
         Response findOneApiData = apiUtils.getResponse(findOneUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
-
-        Object[][] postgres_findAll_Data = new Object[postgresData.length][postgresData[0].length + 2];
-        for (int i = 0; i < postgresData.length; i++) {
-            System.arraycopy(postgresData[i], 0, postgres_findAll_Data[i], 0, postgresData[i].length);
-            postgres_findAll_Data[i][postgresData[i].length + 1] = findAllApiData;
-        }
-
-        Object[][] data = new Object[postgres_findAll_Data.length][postgres_findAll_Data[0].length + 2];
-        for (int j = 0; j < postgres_findAll_Data.length; j++) {
-            System.arraycopy(postgres_findAll_Data[j], 0, data[j], 0, postgres_findAll_Data[j].length);
-            data[j][postgres_findAll_Data[j].length + 1] = findOneApiData;
-        }
-        return data;
+        System.out.println(findOneApiData.asString());
+        return new Object[][]{
+                {"FC_AVG_YTM_LN1_C",findAllApiData,findOneApiData},
+                {"FC_COUNT_LN1_C",findAllApiData,findOneApiData},
+                {"FC_FLOOR_LN1_C",findAllApiData,findOneApiData},
+                {"FC_OID_AVG1_C",findAllApiData,findOneApiData},
+                {"FC_RATCAT_LN1_C",findAllApiData,findOneApiData},
+                {"FC_SPRD_AVG_LN1_C",findAllApiData,findOneApiData},
+                {"FC_AVG_YTM_LN2_C",findAllApiData,findOneApiData},
+                {"FC_COUNT_LN2_C",findAllApiData,findOneApiData},
+                {"FC_FLOOR_LN2_C",findAllApiData,findOneApiData},
+                {"FC_OID_AVG2_C",findAllApiData,findOneApiData},
+                {"FC_RATCAT_LN2_C",findAllApiData,findOneApiData},
+                {"FC_SPRD_AVG_LN2_C",findAllApiData,findOneApiData},
+                {"FC_B3_C",findAllApiData,findOneApiData},
+                {"FC_CALL_MONTHS_C",findAllApiData,findOneApiData},
+                {"FC_SPREAD_CAT_C",findAllApiData,findOneApiData},
+                {"FC_SPRD_TIGHT_C",findAllApiData,findOneApiData},
+                {"FC_SPRD_WIDE_C",findAllApiData,findOneApiData},
+                {"FC_OID_CAT_C",findAllApiData,findOneApiData},
+                {"FC_OID_TIGHT_C",findAllApiData,findOneApiData},
+                {"FC_OID_WIDE_C",findAllApiData,findOneApiData},
+                {"FC_ORG_SPRD_CAT_C",findAllApiData,findOneApiData},
+                {"FC_ORG_SPRD1_C",findAllApiData,findOneApiData},
+                {"FC_ORG_SPRD2_C",findAllApiData,findOneApiData},
+                {"FC_ORG_OID1_C",findAllApiData,findOneApiData},
+                {"FC_ORG_OID2_C",findAllApiData,findOneApiData},
+                {"FC_ORG_OID_CAT_C",findAllApiData,findOneApiData},
+                {"FC_FLOOR2_C",findAllApiData,findOneApiData},
+                {"FC_CALL_PROT_LN2_C",findAllApiData,findOneApiData},
+                {"FC_COVENANT_LN2_C",findAllApiData,findOneApiData},
+                {"FC_FNCL_COV_LN2_C",findAllApiData,findOneApiData},
+                {"FC_INCRMT_FCTLY2_C",findAllApiData,findOneApiData},
+                {"FC_ISSUE2_C",findAllApiData,findOneApiData},
+                {"FC_LEV_TRSN_LN2_C",findAllApiData,findOneApiData},
+                {"FC_OID2_C",findAllApiData,findOneApiData},
+                {"FC_OTHER2_C",findAllApiData,findOneApiData},
+                {"FC_SPRD2_C",findAllApiData,findOneApiData},
+                {"FC_TENOR2_C",findAllApiData,findOneApiData},
+                {"FC_YT3_YR2_C",findAllApiData,findOneApiData},
+                {"FC_YTM2_C",findAllApiData,findOneApiData},
+                {"FC_PRC_DT_C",findAllApiData,findOneApiData},
+                {"FC_PURPOSE_C",findAllApiData,findOneApiData},
+                {"FC_SAVNG_C",findAllApiData,findOneApiData},
+                {"FC_SPONSORED_C",findAllApiData,findOneApiData},
+                {"FC_STRETCH_C",findAllApiData,findOneApiData},
+                {"FC_FLOOR1_C",findAllApiData,findOneApiData},
+                {"FC_CALL_PROT_LN1_C",findAllApiData,findOneApiData},
+                {"FC_COVENANT_LN1_C",findAllApiData,findOneApiData},
+                {"FC_FNCL_COV_LN1_C",findAllApiData,findOneApiData},
+                {"FC_INCRMT_FCTLY1_C",findAllApiData,findOneApiData},
+                {"FC_ISSUE1_C",findAllApiData,findOneApiData},
+                {"FC_LEV_TRSN_LN1_C",findAllApiData,findOneApiData},
+                {"FC_OID1_C",findAllApiData,findOneApiData},
+                {"FC_OTHER1_C",findAllApiData,findOneApiData},
+                {"FC_SPRD1_C",findAllApiData,findOneApiData},
+                {"FC_TENOR",findAllApiData,findOneApiData},
+                {"FC_YT3_YR1_C",findAllApiData,findOneApiData},
+                {"FC_YTM1_C",findAllApiData,findOneApiData},
+                {"FC_INITIAL_COV",findAllApiData,findOneApiData}
+        };
     }
 
     @Test(dataProvider = "Fisc7317")
-    public void Fisc7317_LFILoansFieldsEnhacements_ResourcefulEndpoint(Object postgresFitchFieldId, Object nullObj2, Response findAllApiResponse, Object nullObj3, Response findOneApiResponse) {
-        System.out.println(postgresFitchFieldId + "       " + findAllApiResponse.asString() + "    " + findOneApiResponse.asString());
+    public void Fisc7317_LFILoansFieldsEnhacements_ResourcefulEndpoint(String fitchFieldId, Response findAllApiResponse, Response findOneApiResponse) {
+        try {
+            Assert.assertTrue(findAllApiResponse.asString().contains(fitchFieldId));
+            Assert.assertTrue(findOneApiResponse.asString().contains(fitchFieldId));
+            logger.info("FISC 7317 PASSED FITCH FIELD ID " + fitchFieldId);
+        } catch (AssertionError err){
+            logger.error("FISC 7317 FAILED FITCH FIELD ID " + fitchFieldId + " IS NOT PRESENT IN API RESPONSE");
+            System.out.println("FISC 7317 FAILED FITCH FIELD ID " + fitchFieldId + " IS NOT PRESENT IN API RESPONSE");
+            Assert.fail();
+        }
+    }*/
+
+    private boolean isArrayListContainingTheSameStrings(ArrayList<String> list, String value){
+        boolean result = true;
+        for (int i = 0; i < list.size(); i++){
+            if (!list.get(i).equals(value)) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
+
+    @DataProvider(name = "Fisc7317_sourceNameAndType")
+    public Object[][] getData_7317_sourceNameAndType(){
+        String lfiOnlyUri = baseURI + "/v1/securities?filter[sourceName]=LFI";
+        String csOnlyUri = baseURI + "/v1/securities?filter[sourceName]=CS";
+        String lfiAndCsUri = baseURI + "/v1/securities?filter[sourceName]=LFI,CS";
+        String lfiLoansUri = baseURI + "/v1/securities?filter[sourceName]=LFI&filter[sourceType]=Loans";
+        String csLoansUri = baseURI + "/v1/securities?filter[sourceName]=CS&filter[sourceType]=Loans";
+        String lfiAndCsLoansUri = baseURI + "/v1/securities?filter[sourceName]=CS,LFI&filter[sourceType]=Loans";
+        String lfiBondsUri = baseURI + "/v1/securities?filter[sourceName]=LFI&filter[sourceType]=Bonds";
+        String csBondsUri = baseURI + "/v1/securities?filter[sourceName]=CS&filter[sourceType]=Bonds";
+        String lfiAndCsBondsUri = baseURI + "/v1/securities?filter[sourceName]=CS,LFI&filter[sourceType]=Bonds";
+        String lfiLoansAndBondsUri = baseURI + "/v1/securities?filter[sourceName]=LFI&filter[sourceType]=Loans,Bonds";
+        String csLoansAndBondsUri = baseURI + "/v1/securities?filter[sourceName]=CS&filter[sourceType]=Loans,Bonds";
+
+        Response lfiOnlyResponse = apiUtils.getResponse(lfiOnlyUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        Response csOnlyResponse = apiUtils.getResponse(csOnlyUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        Response lfiAndCsResponse = apiUtils.getResponse(lfiAndCsUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        Response lfiLoansResponse = apiUtils.getResponse(lfiLoansUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        Response csLoansResponse = apiUtils.getResponse(csLoansUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        Response lfiAndCsLoansResponse = apiUtils.getResponse(lfiAndCsLoansUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        Response lfiBondsResponse = apiUtils.getResponse(lfiBondsUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        Response csBondsResponse = apiUtils.getResponse(csBondsUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        Response lfiAndCsBondsResponse = apiUtils.getResponse(lfiAndCsBondsUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        Response lfiLoansAndBondsResponse = apiUtils.getResponse(lfiLoansAndBondsUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        Response csLoansAndBondsResponse = apiUtils.getResponse(csLoansAndBondsUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+
+        return new Object[][]{
+                {lfiOnlyResponse, "LFI", "", false, false},
+                {csOnlyResponse, "CS", "", false, false},
+                {lfiAndCsResponse, "LFI", "", false, true},
+                {lfiAndCsResponse, "CS", "", false, true},
+                {lfiLoansResponse, "LFI", "Loans", true, false},
+                {csLoansResponse, "CS", "Loans", true, false},
+                {lfiAndCsLoansResponse, "CS", "Loans", true, true},
+                {lfiAndCsLoansResponse, "LFI", "Loans", true, true},
+                {lfiBondsResponse, "LFI", "Bonds", true, false},
+                {csBondsResponse, "CS", "Bonds", true, false},
+                {lfiAndCsBondsResponse, "CS", "Bonds", true, true},
+                {lfiAndCsBondsResponse, "LFI", "Bonds", true, true},
+                {lfiLoansAndBondsResponse, "LFI", "Bonds", true, true},
+                {lfiLoansAndBondsResponse, "LFI", "Loans", true, true},
+                {csLoansAndBondsResponse, "CS", "Bonds", true, true },
+                {csLoansAndBondsResponse, "CS", "Loans", true, true },
+        };
+    }
+
+    @Test(dataProvider = "Fisc7317_sourceNameAndType")
+    public void Fisc7317_validateSourceNameAndType(Response res, String expectedSourceName, String expectedSourceType, boolean isExpectedSourceChecked, boolean areMultipleSelectionsTogetherInResponse){
+        try {
+            if (isExpectedSourceChecked == false) {
+                if (areMultipleSelectionsTogetherInResponse == false) {
+                    ArrayList<String> sourceNamesList = res.path("data.attributes.sourceName");
+                    boolean isPassed = isArrayListContainingTheSameStrings(sourceNamesList, expectedSourceName);
+                    Assert.assertTrue(isPassed);
+                    logger.info("FISC 7317 PASSED " + expectedSourceName);
+                } else if (areMultipleSelectionsTogetherInResponse == true) {
+                    ArrayList<String> sourceNamesList = res.path("data.attributes.sourceName");
+                    Assert.assertTrue(sourceNamesList.contains("LFI"));
+                    Assert.assertTrue(sourceNamesList.contains("CS"));
+                    Assert.assertTrue(sourceNamesList.contains("LFI") && sourceNamesList.contains("CS"));
+                    logger.info("FISC 7317 PASSED LFI AND/OR CS ");
+                }
+            } else if (isExpectedSourceChecked == true) {
+                if (areMultipleSelectionsTogetherInResponse == false) {
+                    ArrayList<String> sourceNamesList = res.path("data.attributes.sourceName");
+                    ArrayList<String> sourceTypesList = res.path("data.attributes.SourceType");
+                    boolean isSourceNamePassed = isArrayListContainingTheSameStrings(sourceNamesList, expectedSourceName);
+                    boolean isSourceTypePassed = isArrayListContainingTheSameStrings(sourceNamesList, expectedSourceName);
+                    Assert.assertTrue(isSourceNamePassed && isSourceTypePassed);
+                    logger.info("FISC 7317 PASSED " + expectedSourceName + "    " + expectedSourceType);
+                } else if (areMultipleSelectionsTogetherInResponse == true) {
+                    ArrayList<String> sourceNamesList = res.path("data.attributes.sourceName");
+                    ArrayList<String> sourceTypesList = res.path("data.attributes.SourceType");
+                    Assert.assertTrue(sourceNamesList.contains("LFI") || sourceNamesList.contains("CS"));
+                    Assert.assertTrue(sourceTypesList.contains("Loans") || sourceTypesList.contains("Bonds"));
+                    logger.info("FISC 7317 PASSED LFI/CS LOANS/BONDS");
+                }
+            }
+        }   catch (AssertionError err){
+            logger.error("FISC 7317 FAILED " + expectedSourceName + "    " + expectedSourceType + " ERROR " + err);
+            System.out.println("FISC 7317 FAILED " + expectedSourceName + "    " + expectedSourceType + " ERROR " + err);
+            Assert.fail();
+        }
+    }
+
+    @Test
+    public void Fisc7317_validateDoneAndPagination(){
+        String doneUri = baseURI + "/v1/securities?filter[dealType]=Done";
+        String inMarketUri = baseURI + "/v1/securities?filter[dealType]=In-Market";
+        String inMarketDoneUri = baseURI + "/v1/securities?filter[dealType]=In-Market,Done";
+        String pageSizeUri = baseURI + "/v1/securities?page[size]=75";
+        String pageNumberUri = baseURI + "/v1/securities?page[number]=5";
+
+        Response doneResponse = apiUtils.getResponse(doneUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        Response inMarketResponse = apiUtils.getResponse(inMarketUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        Response inMarketDoneResponse = apiUtils.getResponse(inMarketDoneUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        Response pageSizeResponse = apiUtils.getResponse(pageSizeUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        Response pageNumberResponse = apiUtils.getResponse(pageNumberUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+
     }
 }
