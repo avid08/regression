@@ -733,6 +733,10 @@ public class T1_Sprint_15 extends Configuration {
     HashMap<FulcrumPostgresKey, Object> csLoansExpectedData = null;
     HashMap<FulcrumPostgresKey, Object> csBondsExpectedData = null;
 
+    String uri = null;
+    Response res = null;
+
+
     @Test(dataProvider = "Fisc7317_lfiLoansSecurityIds")
     public void Fisc7317_validateDataBetweenMySqlAndPostgres_LfiLoans(Object securityId) throws SQLException {
         String sql = "select security_id, field_id, value, source_name\n" +
@@ -740,20 +744,28 @@ public class T1_Sprint_15 extends Configuration {
                 "  join master.sources ms on sa.source_id = ms.source_id\n" +
                 "where ms.source_id=5 and security_id=" + securityId;
 
+        lfiLoansExpectedData = null;
         lfiLoansExpectedData = getPostgresExpectedData(sql);
 
         Set<FulcrumPostgresKey> lfiLoansExpectedDataKeys = lfiLoansExpectedData.keySet();
 
         int i = 0;
 
-        String uri = baseURI + "/v1/securities/" + securityId;
-        Response res = apiUtils.getResponse(uri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        uri = null;
+        uri = baseURI + "/v1/securities/" + securityId;
+
+        System.out.println("TESTING URI " + uri);
+
+        res = null;
+        res = apiUtils.getResponse(uri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        System.out.println(res.asString());
+        System.out.println("\n\n\n");
         List<AssertionError> errorsList = new ArrayList<AssertionError>();
 
         for (FulcrumPostgresKey lfiLoansExpectedDataKey : lfiLoansExpectedDataKeys) {
             try {
-                System.out.println(lfiLoansExpectedData.get(lfiLoansExpectedDataKey).toString() + "        " + res.asString());
-               // Assert.assertTrue(res.asString().contains(lfiLoansExpectedData.get(lfiLoansExpectedDataKey).toString()));
+                System.out.println(lfiLoansExpectedDataKey.getSecurityId() + "        " + lfiLoansExpectedData.get(lfiLoansExpectedDataKey).toString() + "        " + res.asString());
+                Assert.assertTrue(res.asString().contains(lfiLoansExpectedData.get(lfiLoansExpectedDataKey).toString()));
                // Assert.assertTrue(res.asString().contains("\"" + lfiLoansExpectedDataKey.getFieldId() + "\":\"" + lfiLoansExpectedData.get(lfiLoansExpectedDataKey) + "\""));
                 logger.info("FISC 7317 PASSED SECURITY_ID  " + lfiLoansExpectedDataKey.getSecurityId() + "          " + "\"" + lfiLoansExpectedDataKey.getFieldId() + "\": \"" + lfiLoansExpectedData.get(lfiLoansExpectedDataKey) + "\"");
             } catch (AssertionError err){
@@ -765,6 +777,9 @@ public class T1_Sprint_15 extends Configuration {
         }
         Assert.assertEquals(errorsList.size(), 0);
         lfiLoansExpectedData.clear();
+        lfiLoansExpectedData = null;
+        uri = null;
+        res=null;
     }
 
     @Test(dataProvider = "Fisc7317_lfiBondsSecurityIds")
@@ -775,19 +790,43 @@ public class T1_Sprint_15 extends Configuration {
                 "where ms.source_id=6 and security_id=" + securityId;
 
 
-
+        lfiBondsExpectedData = null;
         lfiBondsExpectedData = getPostgresExpectedData(sql);
 
         Set<FulcrumPostgresKey> lfiBondsExpectedDataKeys = lfiBondsExpectedData.keySet();
 
         int i = 0;
 
+        uri = null;
+        uri = baseURI + "/v1/securities/" + securityId;
+
+        System.out.println("TESTING URI " + uri);
+
+        res = null;
+        res = apiUtils.getResponse(uri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        System.out.println(res.asString());
+        System.out.println("\n\n\n");
+        List<AssertionError> errorsList = new ArrayList<AssertionError>();
+
+
         for (FulcrumPostgresKey lfiBondsExpectedDataKey : lfiBondsExpectedDataKeys) {
-            System.out.println(i + "        " + lfiBondsExpectedDataKey.getSecurityId() + "     " + lfiBondsExpectedDataKey.getFieldId() + "      " + lfiBondsExpectedData.get(lfiBondsExpectedDataKey));
-            i++;
+            try {
+                System.out.println(lfiBondsExpectedDataKey.getSecurityId() + "        " + lfiBondsExpectedData.get(lfiBondsExpectedDataKey).toString() + "        " + res.asString());
+                Assert.assertTrue(res.asString().contains(lfiBondsExpectedData.get(lfiBondsExpectedDataKey).toString()));
+                // Assert.assertTrue(res.asString().contains("\"" + lfiLoansExpectedDataKey.getFieldId() + "\":\"" + lfiLoansExpectedData.get(lfiLoansExpectedDataKey) + "\""));
+                logger.info("FISC 7317 PASSED SECURITY_ID  " + lfiBondsExpectedDataKey.getSecurityId() + "          " + "\"" + lfiBondsExpectedDataKey.getFieldId() + "\": \"" + lfiBondsExpectedData.get(lfiBondsExpectedDataKey) + "\"");
+            } catch (AssertionError err){
+                errorsList.add(err);
+                logger.error("FISC 7317 FAILED SECURITY_ID  " + lfiBondsExpectedDataKey.getSecurityId() + "          " + "\"" + lfiBondsExpectedDataKey.getFieldId());
+                System.out.println("FISC 7317 FAILED SECURITY_ID  " + lfiBondsExpectedDataKey.getSecurityId() + "          " + "\"" + lfiBondsExpectedDataKey.getFieldId());
+                continue;
+            }
         }
 
         lfiBondsExpectedData.clear();
+        lfiBondsExpectedData = null;
+        uri = null;
+        res = null;
     }
 
     @Test(dataProvider = "Fisc7317_csLoansSecurityIds")
@@ -797,18 +836,41 @@ public class T1_Sprint_15 extends Configuration {
                 "  join master.sources ms on sa.source_id = ms.source_id\n" +
                 "where ms.source_id=7 and security_id=" + securityId;
 
-
+        csLoansExpectedData = null;
         csLoansExpectedData = getPostgresExpectedData(sql);
 
         Set<FulcrumPostgresKey> csLoansExpectedDataKeys = csLoansExpectedData.keySet();
 
         int i = 0;
 
+        uri = null;
+        uri = baseURI + "/v1/securities/" + securityId;
+
+        System.out.println("TESTING URI " + uri);
+
+        res = null;
+        res = apiUtils.getResponse(uri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        System.out.println(res.asString());
+        System.out.println("\n\n\n");
+        List<AssertionError> errorsList = new ArrayList<AssertionError>();
+
         for (FulcrumPostgresKey csLoansExpectedDataKey : csLoansExpectedDataKeys) {
-            System.out.println(i + "        " + csLoansExpectedDataKey.getSecurityId() + "     " + csLoansExpectedDataKey.getFieldId() + "      " + csLoansExpectedData.get(csLoansExpectedDataKey));
-            i++;
+            try {
+                System.out.println(csLoansExpectedDataKey.getSecurityId() + "        " + csLoansExpectedData.get(csLoansExpectedDataKey).toString() + "        " + res.asString());
+                Assert.assertTrue(res.asString().contains(csLoansExpectedData.get(csLoansExpectedDataKey).toString()));
+                // Assert.assertTrue(res.asString().contains("\"" + lfiLoansExpectedDataKey.getFieldId() + "\":\"" + lfiLoansExpectedData.get(lfiLoansExpectedDataKey) + "\""));
+                logger.info("FISC 7317 PASSED SECURITY_ID  " + csLoansExpectedDataKey.getSecurityId() + "          " + "\"" + csLoansExpectedDataKey.getFieldId() + "\": \"" + csLoansExpectedData.get(csLoansExpectedDataKey) + "\"");
+            } catch (AssertionError err){
+                errorsList.add(err);
+                logger.error("FISC 7317 FAILED SECURITY_ID  " + csLoansExpectedDataKey.getSecurityId() + "          " + "\"" + csLoansExpectedDataKey.getFieldId());
+                System.out.println("FISC 7317 FAILED SECURITY_ID  " + csLoansExpectedDataKey.getSecurityId() + "          " + "\"" + csLoansExpectedDataKey.getFieldId());
+                continue;
+            }
         }
         csLoansExpectedData.clear();
+        csLoansExpectedData = null;
+        uri = null;
+        res = null;
     }
 
     @Test(dataProvider = "Fisc7317_csBondsSecurityIds")
@@ -818,17 +880,40 @@ public class T1_Sprint_15 extends Configuration {
                 "  join master.sources ms on sa.source_id = ms.source_id\n" +
                 "where ms.source_id=8 and security_id=" + securityId;
 
-
+        csBondsExpectedData = null;
         csBondsExpectedData = getPostgresExpectedData(sql);
 
         Set<FulcrumPostgresKey> csBondsExpectedDataKeys = csBondsExpectedData.keySet();
 
         int i = 0;
 
+        uri = null;
+        uri = baseURI + "/v1/securities/" + securityId;
+
+        System.out.println("TESTING URI " + uri);
+
+        res = null;
+        res = apiUtils.getResponse(uri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
+        System.out.println(res.asString());
+        System.out.println("\n\n\n");
+        List<AssertionError> errorsList = new ArrayList<AssertionError>();
+
         for (FulcrumPostgresKey csBondsExpectedDataKey : csBondsExpectedDataKeys) {
-            System.out.println(i + "        " + csBondsExpectedDataKey.getSecurityId() + "     " + csBondsExpectedDataKey.getFieldId() + "      " + csBondsExpectedData.get(csBondsExpectedDataKey));
-            i++;
+            try {
+                System.out.println(csBondsExpectedDataKey.getSecurityId() + "        " + csBondsExpectedData.get(csBondsExpectedDataKey).toString() + "        " + res.asString());
+                Assert.assertTrue(res.asString().contains(csBondsExpectedData.get(csBondsExpectedDataKey).toString()));
+                // Assert.assertTrue(res.asString().contains("\"" + lfiLoansExpectedDataKey.getFieldId() + "\":\"" + lfiLoansExpectedData.get(lfiLoansExpectedDataKey) + "\""));
+                logger.info("FISC 7317 PASSED SECURITY_ID  " + csBondsExpectedDataKey.getSecurityId() + "          " + "\"" + csBondsExpectedDataKey.getFieldId() + "\": \"" + csBondsExpectedData.get(csBondsExpectedDataKey) + "\"");
+            } catch (AssertionError err){
+                errorsList.add(err);
+                logger.error("FISC 7317 FAILED SECURITY_ID  " + csBondsExpectedDataKey.getSecurityId() + "          " + "\"" + csBondsExpectedDataKey.getFieldId());
+                System.out.println("FISC 7317 FAILED SECURITY_ID  " + csBondsExpectedDataKey.getSecurityId() + "          " + "\"" + csBondsExpectedDataKey.getFieldId());
+                continue;
+            }
         }
         csBondsExpectedData.clear();
+        csBondsExpectedData = null;
+        uri = null;
+        res = null;
     }
 }
