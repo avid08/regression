@@ -257,6 +257,25 @@ public class T1_Sprint_15 extends Configuration {
         HashMap<LFIBondsKey, ArrayList<Object>> lfiBondsPostgresMap = fulcrumUtils.getLfiBondsPostgresMap_customQuery( "LFIBonds_Postgres.sql", 0, 1);
 
         Set<LFIBondsKey> lfiBondsKeySet = lfiBondsMySqlMap.keySet();
+        Set<LFIBondsKey> lfiBondsKeySetPostgres = lfiBondsPostgresMap.keySet();
+
+        System.out.println(lfiBondsMySqlMap);
+        System.out.println(lfiBondsPostgresMap);
+
+        System.out.println("\n\n\n");
+
+        for (LFIBondsKey key : lfiBondsKeySet) {
+            System.out.println("MYSQL KEY " + key.getAgentId() + "        " + key.getLfyHyId());
+        }
+
+        System.out.println("\n\n\n");
+
+        for (LFIBondsKey key : lfiBondsKeySetPostgres) {
+            System.out.println("POSTGRES KEY " + key.getAgentId() + "        " + key.getLfyHyId());
+        }
+
+
+
         List<AssertionError> errorsList = new ArrayList<AssertionError>();
 
         int i = 0;
@@ -267,9 +286,9 @@ public class T1_Sprint_15 extends Configuration {
             boolean isRowPassed = arrayUtils.areListsOfObjectsEqual(lfiBondsMySqlList, lfiBondsPostrgesList);
             try {
                 Assert.assertTrue(isRowPassed);
-                System.out.println(i + "        LFIBONDS PASSED      AGENT ID  " + lfiBondsKey.getAgentId() + "         LFY HY ID  " + lfiBondsKey.getLfyHyId());
+                //System.out.println(i + "        LFIBONDS PASSED      AGENT ID  " + lfiBondsKey.getAgentId() + "         LFY HY ID  " + lfiBondsKey.getLfyHyId());
                 i++;
-                //logger.info("LFIBONDS PASSED " + lfiBondsKey.getAgentId() + "       " + lfiBondsKey.getLfyHyId());
+                logger.info("LFIBONDS PASSED " + lfiBondsKey.getAgentId() + "       " + lfiBondsKey.getLfyHyId());
             }
             catch (AssertionError err) {
                 errorsList.add(err);
@@ -281,11 +300,14 @@ public class T1_Sprint_15 extends Configuration {
         Assert.assertEquals(errorsList.size(), 0);
     }
 
+    HashMap<CSBondsKey, ArrayList<Object>> csBondsMySqlMap = null;
+    HashMap<CSBondsKey, ArrayList<Object>> csBondsPostgresMap = null;
+
     @Test
     public void Fisc6570_CSBonds_MasterSchema() throws SQLException {
 
-        HashMap<CSBondsKey, ArrayList<Object>> csBondsMySqlMap = fulcrumUtils.getCsBondsMySqlMap_customQuery(QA, "6570_CSBonds_MySQL.sql", 0, 3);
-        HashMap<CSBondsKey, ArrayList<Object>> csBondsPostgresMap = fulcrumUtils.getCsBondsPostgresMap_customQuery("6570_CSBonds_Postgres.sql", 0, 3);
+        HashMap<CSBondsKey, ArrayList<Object>> csBondsMySqlMap = fulcrumUtils.getCsBondsMySqlMap_customQuery(QA, "6570_CSBonds_MySQL.sql", 0, 2);
+        HashMap<CSBondsKey, ArrayList<Object>> csBondsPostgresMap = fulcrumUtils.getCsBondsPostgresMap_customQuery( "6570_CSBonds_Postgres.sql", 0, 2);
 
         Set<CSBondsKey> csBondsKeySet = csBondsMySqlMap.keySet();
         List<AssertionError> errorsList = new ArrayList<AssertionError>();
@@ -298,9 +320,9 @@ public class T1_Sprint_15 extends Configuration {
             boolean isRowPassed = arrayUtils.areListsOfObjectsEqual(csBondsMySqlList, csBondsPostgresList);
             try {
                 Assert.assertTrue(isRowPassed);
-                System.out.println(i + "        CSBONDS PASSED      AGENT ID  " + csBondsKey.getAgentId() + "         BOND ID  " + csBondsKey.getBondId());
+                //System.out.println(i + "        CSBONDS PASSED      AGENT ID  " + lfiBondsKey.getAgentId() + "         LFY HY ID  " + lfiBondsKey.getLfyHyId());
                 i++;
-                //  logger.info("CSBONDS PASSED " + csBondsKey.getAgentId() + "       " + csBondsKey.getBondId());
+                logger.info("CSBONDS PASSED " + csBondsKey.getAgentId() + "       " + csBondsKey.getBondId());
             }
             catch (AssertionError err) {
                 errorsList.add(err);
@@ -338,6 +360,10 @@ public class T1_Sprint_15 extends Configuration {
                 errorsList.add(err);
                 logger.error("CSLOANS FAILED   AGENT ID " + csLoansKey.getAgentId() + "      FC_TLB_EURO  " + csLoansKey.getFcTlbEuro() + "      " + err);
                 System.out.println("CSLOANS FAILED   AGENT ID " + csLoansKey.getAgentId() + "      FC_TLB_EURO  " + csLoansKey.getFcTlbEuro() + "      " + err);
+                System.out.println(csLoansKey.getAgentId() + "     " + csLoansKey.getFcTlbEuro());
+                System.out.println("MYSQL " + csLoansMySqlList);
+                System.out.println("POSTGRES " + csLoansPostgresList);
+                System.out.println("\n");
                 continue;
             }
         }
@@ -427,118 +453,6 @@ public class T1_Sprint_15 extends Configuration {
             Assert.fail();
         }
     }
-
-    @DataProvider(name = "Fisc7316")
-    public Object[][] getData_7316() throws IOException {
-        Object[][] postgresData = postgresUtils.getDataFromPostgres("7316.sql", POSTGRES, true);
-        Object[][] allData = new Object[postgresData.length][postgresData[0].length + 2];
-
-        Response apiResponse = apiUtils.postToDataAggregator("7316.json", AuthrztionValue, XappClintIDvalue, dataPostUrl);
-
-        ArrayList<String> values = apiResponse.path("data.attributes.entities[0].values");
-        int numberOfValues = values.size();
-        HashMap<String, String> apiValues = new HashMap<>();
-
-        for (int i = 0; i < numberOfValues; i++) {
-            String apiFitchFieldId = apiResponse.path("data.attributes.entities[0].values[" + i + "].fitchFieldId");
-            //String apiValue = apiResponse.path("data.attributes.entities[0].values[" + i + "].values[0].value[0]");
-            String apiValue = "aaaa";
-            apiValues.put(apiFitchFieldId, apiValue);
-        }
-
-        for (int j = 0; j < postgresData.length; j++) {
-            System.arraycopy(postgresData[j], 0, allData[j], 0, postgresData[j].length);
-            allData[j][postgresData[j].length + 1] = apiValues;
-        }
-        return allData;
-    }
-
-    @Test(dataProvider = "Fisc7316")
-    public void Fisc7316_LFIEnhacementsMetadata_DataAggregator(Object postgresFieldId, Object postgresValue, Object nullObj, HashMap<String, String> apiValues) {
-        System.out.println(postgresFieldId + "    " + postgresValue + "    " + apiValues.get(postgresFieldId));
-    }
-
-   /* @DataProvider(name = "Fisc7317")
-    public Object[][] getData_7317() {
-        String findAllUri = baseURI + "/v1/securities?filter[sourceName]=LFI&filter[sourceType]=Loans";
-        String findOneUri = baseURI + "/v1/securities/366426766";
-        Response findAllApiData = apiUtils.getResponse(findAllUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
-        Response findOneApiData = apiUtils.getResponse(findOneUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
-        System.out.println(findOneApiData.asString());
-        return new Object[][]{
-                {"FC_AVG_YTM_LN1_C",findAllApiData,findOneApiData},
-                {"FC_COUNT_LN1_C",findAllApiData,findOneApiData},
-                {"FC_FLOOR_LN1_C",findAllApiData,findOneApiData},
-                {"FC_OID_AVG1_C",findAllApiData,findOneApiData},
-                {"FC_RATCAT_LN1_C",findAllApiData,findOneApiData},
-                {"FC_SPRD_AVG_LN1_C",findAllApiData,findOneApiData},
-                {"FC_AVG_YTM_LN2_C",findAllApiData,findOneApiData},
-                {"FC_COUNT_LN2_C",findAllApiData,findOneApiData},
-                {"FC_FLOOR_LN2_C",findAllApiData,findOneApiData},
-                {"FC_OID_AVG2_C",findAllApiData,findOneApiData},
-                {"FC_RATCAT_LN2_C",findAllApiData,findOneApiData},
-                {"FC_SPRD_AVG_LN2_C",findAllApiData,findOneApiData},
-                {"FC_B3_C",findAllApiData,findOneApiData},
-                {"FC_CALL_MONTHS_C",findAllApiData,findOneApiData},
-                {"FC_SPREAD_CAT_C",findAllApiData,findOneApiData},
-                {"FC_SPRD_TIGHT_C",findAllApiData,findOneApiData},
-                {"FC_SPRD_WIDE_C",findAllApiData,findOneApiData},
-                {"FC_OID_CAT_C",findAllApiData,findOneApiData},
-                {"FC_OID_TIGHT_C",findAllApiData,findOneApiData},
-                {"FC_OID_WIDE_C",findAllApiData,findOneApiData},
-                {"FC_ORG_SPRD_CAT_C",findAllApiData,findOneApiData},
-                {"FC_ORG_SPRD1_C",findAllApiData,findOneApiData},
-                {"FC_ORG_SPRD2_C",findAllApiData,findOneApiData},
-                {"FC_ORG_OID1_C",findAllApiData,findOneApiData},
-                {"FC_ORG_OID2_C",findAllApiData,findOneApiData},
-                {"FC_ORG_OID_CAT_C",findAllApiData,findOneApiData},
-                {"FC_FLOOR2_C",findAllApiData,findOneApiData},
-                {"FC_CALL_PROT_LN2_C",findAllApiData,findOneApiData},
-                {"FC_COVENANT_LN2_C",findAllApiData,findOneApiData},
-                {"FC_FNCL_COV_LN2_C",findAllApiData,findOneApiData},
-                {"FC_INCRMT_FCTLY2_C",findAllApiData,findOneApiData},
-                {"FC_ISSUE2_C",findAllApiData,findOneApiData},
-                {"FC_LEV_TRSN_LN2_C",findAllApiData,findOneApiData},
-                {"FC_OID2_C",findAllApiData,findOneApiData},
-                {"FC_OTHER2_C",findAllApiData,findOneApiData},
-                {"FC_SPRD2_C",findAllApiData,findOneApiData},
-                {"FC_TENOR2_C",findAllApiData,findOneApiData},
-                {"FC_YT3_YR2_C",findAllApiData,findOneApiData},
-                {"FC_YTM2_C",findAllApiData,findOneApiData},
-                {"FC_PRC_DT_C",findAllApiData,findOneApiData},
-                {"FC_PURPOSE_C",findAllApiData,findOneApiData},
-                {"FC_SAVNG_C",findAllApiData,findOneApiData},
-                {"FC_SPONSORED_C",findAllApiData,findOneApiData},
-                {"FC_STRETCH_C",findAllApiData,findOneApiData},
-                {"FC_FLOOR1_C",findAllApiData,findOneApiData},
-                {"FC_CALL_PROT_LN1_C",findAllApiData,findOneApiData},
-                {"FC_COVENANT_LN1_C",findAllApiData,findOneApiData},
-                {"FC_FNCL_COV_LN1_C",findAllApiData,findOneApiData},
-                {"FC_INCRMT_FCTLY1_C",findAllApiData,findOneApiData},
-                {"FC_ISSUE1_C",findAllApiData,findOneApiData},
-                {"FC_LEV_TRSN_LN1_C",findAllApiData,findOneApiData},
-                {"FC_OID1_C",findAllApiData,findOneApiData},
-                {"FC_OTHER1_C",findAllApiData,findOneApiData},
-                {"FC_SPRD1_C",findAllApiData,findOneApiData},
-                {"FC_TENOR",findAllApiData,findOneApiData},
-                {"FC_YT3_YR1_C",findAllApiData,findOneApiData},
-                {"FC_YTM1_C",findAllApiData,findOneApiData},
-                {"FC_INITIAL_COV",findAllApiData,findOneApiData}
-        };
-    }
-
-    @Test(dataProvider = "Fisc7317")
-    public void Fisc7317_LFILoansFieldsEnhacements_ResourcefulEndpoint(String fitchFieldId, Response findAllApiResponse, Response findOneApiResponse) {
-        try {
-            Assert.assertTrue(findAllApiResponse.asString().contains(fitchFieldId));
-            Assert.assertTrue(findOneApiResponse.asString().contains(fitchFieldId));
-            logger.info("FISC 7317 PASSED FITCH FIELD ID " + fitchFieldId);
-        } catch (AssertionError err){
-            logger.error("FISC 7317 FAILED FITCH FIELD ID " + fitchFieldId + " IS NOT PRESENT IN API RESPONSE");
-            System.out.println("FISC 7317 FAILED FITCH FIELD ID " + fitchFieldId + " IS NOT PRESENT IN API RESPONSE");
-            Assert.fail();
-        }
-    }*/
 
     private boolean isArrayListContainingTheSameStrings(ArrayList<String> list, String value){
         boolean result = true;
