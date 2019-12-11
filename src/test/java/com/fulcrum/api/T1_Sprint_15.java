@@ -737,7 +737,7 @@ public class T1_Sprint_15 extends Configuration {
 
 
     @Test(dataProvider = "Fisc7317_lfiLoansSecurityIds")
-    public void Fisc7317_validateDataBetweenMySqlAndPostgres_LfiLoans(Object securityId) throws SQLException {
+    public void Fisc7317_validateDataBetweenMySqlAndPostgres_LfiLoans(Object securityId, Object agentId) throws SQLException {
         String sql = "select security_id, field_id, value, source_name\n" +
                 "from master.security_attributes sa\n" +
                 "  join master.sources ms on sa.source_id = ms.source_id\n" +
@@ -782,7 +782,7 @@ public class T1_Sprint_15 extends Configuration {
     }
 
     @Test(dataProvider = "Fisc7317_lfiBondsSecurityIds")
-    public void Fisc7317_validateDataBetweenMySqlAndPostgres_LfiBonds(Object securityId) throws SQLException {
+    public void Fisc7317_validateDataBetweenMySqlAndPostgres_LfiBonds(Object securityId, Object agentId) throws SQLException {
         String sql = "select security_id, field_id, value, source_name\n" +
                 "from master.security_attributes sa\n" +
                 "  join master.sources ms on sa.source_id = ms.source_id\n" +
@@ -829,7 +829,7 @@ public class T1_Sprint_15 extends Configuration {
     }
 
     @Test(dataProvider = "Fisc7317_csLoansSecurityIds")
-    public void Fisc7317_validateDataBetweenMySqlAndPostgres_CSLoans(Object securityId) throws SQLException {
+    public void Fisc7317_validateDataBetweenMySqlAndPostgres_CSLoans(Object securityId, Object agentId) throws SQLException {
         String sql = "select security_id, field_id, value, source_name\n" +
                 "from master.security_attributes sa\n" +
                 "  join master.sources ms on sa.source_id = ms.source_id\n" +
@@ -873,7 +873,7 @@ public class T1_Sprint_15 extends Configuration {
     }
 
     @Test(dataProvider = "Fisc7317_csBondsSecurityIds")
-    public void Fisc7317_validateDataBetweenMySqlAndPostgres_csBonds(Object securityId) throws SQLException {
+    public void Fisc7317_validateDataBetweenMySqlAndPostgres_csBonds(Object securityId, Object agentId) throws SQLException {
         String sql = "select security_id, field_id, value, source_name\n" +
                 "from master.security_attributes sa\n" +
                 "  join master.sources ms on sa.source_id = ms.source_id\n" +
