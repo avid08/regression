@@ -735,6 +735,106 @@ public class T1_Sprint_15 extends Configuration {
     String uri = null;
     Response res = null;
 
+    @Test(dataProvider = "Fisc7317_lfiLoansSecurityIds")
+    public void Fisc7316_validateDataAggregator_LfiLoans(Object securityId, Object agentId) throws IOException, SQLException {
+
+        String sql = "select issuer_entity_id, field_id, value, security_id, source_name\n" +
+                "from master.security_attributes sa\n" +
+                "join master.sources ms on sa.source_id = ms.source_id\n" +
+                "join master.securities sec on security_id = sec.fc_sec_id\n" +
+                "where ms.source_id=5 and security_id=" + securityId + ";";
+
+
+        String json = "{\n" +
+                "  \"data\": {\n" +
+                "    \"type\": \"valueRequest\",\n" +
+                "    \"attributes\": {\n" +
+                "      \"dateOptions\": {\n" +
+                "        \"dates\": []\n" +
+                "      },\n" +
+                "      \"entities\": [\n" +
+                "        {\n" +
+                "          \"id\": \"" + agentId + "\",\n" +
+                "          \"type\": \"fitchId\"\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      \"fitchFieldIds\": [\n" +
+                "        \"FC_AVG_YTM_LN1_C\",\n" +
+                "        \"FC_COUNT_LN1_C\",\n" +
+                "        \"FC_FLOOR_LN1_C\",\n" +
+                "        \"FC_OID_AVG1_C\",\n" +
+                "        \"FC_RATCAT_LN1_C\",\n" +
+                "        \"FC_SPRD_AVG_LN1_C\",\n" +
+                "        \"FC_AVG_YTM_LN2_C\",\n" +
+                "        \"FC_COUNT_LN2_C\",\n" +
+                "        \"FC_FLOOR_LN2_C\",\n" +
+                "        \"FC_OID_AVG2_C\",\n" +
+                "        \"FC_RATCAT_LN2_C\",\n" +
+                "        \"FC_SPRD_AVG_LN2_C\",\n" +
+                "        \"FC_B3_C\",\n" +
+                "        \"FC_CALL_MONTHS_C\",\n" +
+                "        \"FC_SPREAD_CAT_C\",\n" +
+                "        \"FC_SPRD_TIGHT_C\",\n" +
+                "        \"FC_SPRD_WIDE_C\",\n" +
+                "        \"FC_OID_CAT_C\",\n" +
+                "        \"FC_OID_TIGHT_C\",\n" +
+                "        \"FC_OID_WIDE_C\",\n" +
+                "        \"FC_ORG_SPRD_CAT_C\",\n" +
+                "        \"FC_ORG_SPRD1_C\",\n" +
+                "        \"FC_ORG_SPRD2_C\",\n" +
+                "        \"FC_ORG_OID1_C\",\n" +
+                "        \"FC_ORG_OID2_C\",\n" +
+                "        \"FC_ORG_OID_CAT_C\",\n" +
+                "        \"FC_FLOOR2_C\",\n" +
+                "        \"FC_CALL_PROT_LN2_C\",\n" +
+                "        \"FC_COVENANT_LN2_C\",\n" +
+                "        \"FC_FNCL_COV_LN2_C\",\n" +
+                "        \"FC_INCRMT_FCTLY2_C\",\n" +
+                "        \"FC_ISSUE2_C\",\n" +
+                "        \"FC_LEV_TRSN_LN2_C\",\n" +
+                "        \"FC_OID2_C\",\n" +
+                "        \"FC_OTHER2_C\",\n" +
+                "        \"FC_SPRD2_C\",\n" +
+                "        \"FC_TENOR2_C\",\n" +
+                "        \"FC_YT3_YR2_C\",\n" +
+                "        \"FC_YTM2_C\",\n" +
+                "        \"FC_PRC_DT_C\",\n" +
+                "        \"FC_PURPOSE_C\",\n" +
+                "        \"FC_SAVNG_C\",\n" +
+                "        \"FC_SPONSORED_C\",\n" +
+                "        \"FC_STRETCH_C\",\n" +
+                "        \"FC_FLOOR1_C\",\n" +
+                "        \"FC_CALL_PROT_LN1_C\",\n" +
+                "        \"FC_COVENANT_LN1_C\",\n" +
+                "        \"FC_FNCL_COV_LN1_C\",\n" +
+                "        \"FC_INCRMT_FCTLY1_C\",\n" +
+                "        \"FC_ISSUE1_C\",\n" +
+                "        \"FC_LEV_TRSN_LN1_C\",\n" +
+                "        \"FC_OID1_C\",\n" +
+                "        \"FC_OTHER1_C\",\n" +
+                "        \"FC_SPRD1_C\",\n" +
+                "        \"FC_TENOR1_C\",\n" +
+                "        \"FC_YT3_YR1_C\",\n" +
+                "        \"FC_YTM1_C\"\n" +
+                "      ],\n" +
+                "      \"options\": []\n" +
+                "    }\n" +
+                "  }\n" +
+                "}";
+
+        Response res = apiUtils.postToDataAggregatorStringPayload(json, AuthrztionValue, XappClintIDvalue, dataPostUrl);
+        HashMap<FulcrumPostgresKey, Object> lfiLoansExpectedData = getPostgresExpectedData(sql);
+
+        if (res.asString().contains("\"type\":\"fitchId\",\"isMissing\":true")){
+            logger.error("WARNING! RECORD IS MISSING IN API PLEASE CHECK AGENT ID " + agentId + " SECURITY ID " + securityId);
+        }
+
+        for (FulcrumPostgresKey lfiLoansExpectedDataKey : lfiLoansExpectedData.keySet()) {
+            System.out.println(lfiLoansExpectedDataKey.getSecurityId() + "     " + lfiLoansExpectedDataKey.getFieldId() + "        " + lfiLoansExpectedData.get(lfiLoansExpectedDataKey));
+        }
+
+        System.out.println(res.asString());
+    }
 
     @Test(dataProvider = "Fisc7317_lfiLoansSecurityIds")
     public void Fisc7317_validateDataBetweenMySqlAndPostgres_LfiLoans(Object securityId, Object agentId) throws SQLException {
