@@ -685,10 +685,9 @@ public class T1_Sprint_15 extends Configuration {
 
         Response pageNumberResponse = apiUtils.getResponse(pageNumberUri, AuthrztionValue, XappClintIDvalue, acceptValue, contentValue);
         try {
-            Assert.assertTrue(pageNumberResponse.path("links.first").toString().contains("page[number]=0&page[number]=5"));
-            Assert.assertTrue(pageNumberResponse.path("links.next").toString().contains("page[number]=6&page[number]=5"));
-            Assert.assertTrue(pageNumberResponse.path("links.last").toString().contains("page[number]=194&page[number]=5"));
-            Assert.assertTrue(pageNumberResponse.path("links.prev").toString().contains("page[number]=4&page[number]=5"));
+            Assert.assertTrue(pageNumberResponse.path("links.first").toString().contains("page[size]=50&page[number]=0"));
+            Assert.assertTrue(pageNumberResponse.path("links.next").toString().contains("page[size]=50&page[number]=6"));
+            Assert.assertTrue(pageNumberResponse.path("links.prev").toString().contains("page[size]=50&page[number]=4"));
             logger.info("FISC 7317 PASSED PAGE NUMBER");
         } catch (AssertionError err){
             System.out.println("FISC 7317 FAILED PAGE NUMBER");
