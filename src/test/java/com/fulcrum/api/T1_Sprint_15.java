@@ -650,18 +650,20 @@ public class T1_Sprint_15 extends Configuration {
     HashMap<FulcrumPostgresKey, Object> lfiBondsExpectedData = null;
     HashMap<FulcrumPostgresKey, Object> csLoansExpectedData = null;
     HashMap<FulcrumPostgresKey, Object> csBondsExpectedData = null;
+    MongoCollection<Document> collection = null;
 
     String uri = null;
     Response res = null;
+    String riskConnectFlag = null;
 
     @Test(dataProvider = "Fisc7317_lfiLoansSecurityIds")
-    public void Fisc7316_validateDataAggregator_LfiLoans(Object securityId, Object agentId) throws IOException, SQLException {
-
+    public void Fisc7316_validateDataAggregator_LfiLoans(Object securityId, Object agentId) throws IOException, SQLException, InterruptedException {
+        Thread.sleep(5000);
         String sql = "select issuer_entity_id, field_id, value, security_id, source_name\n" +
                 "from master.security_attributes sa\n" +
                 "join master.sources ms on sa.source_id = ms.source_id\n" +
                 "join master.securities sec on security_id = sec.fc_sec_id\n" +
-                "where ms.source_id=5 and security_id=" + securityId + ";";
+                "where ms.source_id=5 and security_id=" + securityId + " and field_id in ('FC_AVG_YTM_LN1_C', 'FC_COUNT_LN1_C', 'FC_FLOOR_LN1_C', 'FC_OID_AVG1_C', 'FC_RATCAT_LN1_C', 'FC_SPRD_AVG_LN1_C', 'FC_AVG_YTM_LN2_C', 'FC_COUNT_LN2_C', 'FC_FLOOR_LN2_C', 'FC_OID_AVG2_C', 'FC_RATCAT_LN2_C', 'FC_SPRD_AVG_LN2_C', 'FC_B3_C', 'FC_CALL_MONTHS_C', 'FC_SPREAD_CAT_C', 'FC_SPRD_TIGHT_C', 'FC_SPRD_WIDE_C', 'FC_OID_CAT_C', 'FC_OID_TIGHT_C', 'FC_OID_WIDE_C', 'FC_ORG_SPRD_CAT_C', 'FC_ORG_SPRD1_C', 'FC_ORG_SPRD2_C', 'FC_ORG_OID1_C', 'FC_ORG_OID2_C', 'FC_ORG_OID_CAT_C', 'FC_FLOOR2_C', 'FC_CALL_PROT_LN2_C', 'FC_COVENANT_LN2_C', 'FC_FNCL_COV_LN2_C', 'FC_INCRMT_FCTLY2_C', 'FC_ISSUE2_C', 'FC_LEV_TRSN_LN2_C', 'FC_OID2_C', 'FC_OTHER2_C', 'FC_SPRD2_C', 'FC_TENOR2_C', 'FC_YT3_YR2_C', 'FC_YTM2_C', 'FC_PRC_DT_C', 'FC_PURPOSE_C', 'FC_SAVNG_C', 'FC_SPONSORED_C', 'FC_STRETCH_C', 'FC_FLOOR1_C', 'FC_CALL_PROT_LN1_C', 'FC_COVENANT_LN1_C', 'FC_FNCL_COV_LN1_C', 'FC_INCRMT_FCTLY1_C', 'FC_ISSUE1_C', 'FC_LEV_TRSN_LN1_C', 'FC_OID1_C', 'FC_OTHER1_C', 'FC_SPRD1_C', 'FC_TENOR1_C', 'FC_YT3_YR1_C', 'FC_YTM1_C')\n";
 
 
         String json = "{\n" +
@@ -741,9 +743,11 @@ public class T1_Sprint_15 extends Configuration {
                 "  }\n" +
                 "}";
 
-        Response res = apiUtils.postToDataAggregatorStringPayload(json, AuthrztionValue, XappClintIDvalue, dataPostUrl);
-        HashMap<FulcrumPostgresKey, Object> lfiLoansExpectedData = getPostgresExpectedData(sql);
-        MongoCollection<Document> collection = mongoUtils.connectToMongoDatabase(CAL).getDatabase("esp-9").getCollection("fitch_entity");
+        res = null;
+        res = apiUtils.postToDataAggregatorStringPayload(json, AuthrztionValue, XappClintIDvalue, dataPostUrl);
+        lfiLoansExpectedData = null;
+        lfiLoansExpectedData = getPostgresExpectedData(sql);
+        collection = mongoUtils.connectToMongoDatabase(CAL).getDatabase("esp-9").getCollection("fitch_entity");
         AggregateIterable<Document> riskConnFlgInfo = collection.aggregate(
                 Arrays.asList(
                         new Document()
@@ -758,19 +762,60 @@ public class T1_Sprint_15 extends Configuration {
                 )
         );
 
-        String riskConnectFlag = "";
 
+        riskConnectFlag = null;
         for (Document riskConnFlgInfoDocument : riskConnFlgInfo){
             riskConnectFlag = riskConnFlgInfoDocument.get("riskConnectFlg").toString();
         }
 
         System.out.println(riskConnectFlag);
 
+        List<AssertionError> errorsList = new ArrayList<AssertionError>();
+
         for (FulcrumPostgresKey lfiLoansExpectedDataKey : lfiLoansExpectedData.keySet()) {
-            System.out.println(lfiLoansExpectedDataKey.getSecurityId() + "     " + lfiLoansExpectedDataKey.getFieldId() + "        " + lfiLoansExpectedData.get(lfiLoansExpectedDataKey));
+            if (riskConnectFlag.equals("Y")) {
+                try {
+                    Object value = lfiLoansExpectedData.get(lfiLoansExpectedDataKey);
+                    boolean testResult = res.asString().contains(String.valueOf(value).substring(1, 5));
+                    Assert.assertTrue(testResult);
+                    System.out.println(res.asString());
+                    System.out.println(testResult + "       " + lfiLoansExpectedDataKey.getSecurityId() + "     " + lfiLoansExpectedDataKey.getFieldId() + "        " + lfiLoansExpectedData.get(lfiLoansExpectedDataKey));
+                    System.out.println("\n");
+                    logger.info("FISC 7316 DATA AGGREGATOR PASSED " + lfiLoansExpectedDataKey.getSecurityId() + "       " + lfiLoansExpectedDataKey.getFieldId());
+                } catch (StringIndexOutOfBoundsException ex) {
+                    Object value = lfiLoansExpectedData.get(lfiLoansExpectedDataKey);
+                    boolean testResult = res.asString().contains(String.valueOf(value));
+                    Assert.assertTrue(testResult);
+                    System.out.println(res.asString());
+                    System.out.println(testResult + "       " + lfiLoansExpectedDataKey.getSecurityId() + "     " + lfiLoansExpectedDataKey.getFieldId() + "        " + lfiLoansExpectedData.get(lfiLoansExpectedDataKey));
+                    System.out.println("\n");
+                    logger.info("FISC 7316 DATA AGGREGATOR PASSED " + lfiLoansExpectedDataKey.getSecurityId() + "       " + lfiLoansExpectedDataKey.getFieldId());
+                } catch (AssertionError err) {
+                    errorsList.add(err);
+                    logger.error("FISC 7316 DATA AGGREGATOR FAILED " + lfiLoansExpectedDataKey.getSecurityId() + " " + lfiLoansExpectedDataKey.getFieldId());
+                    Assert.fail();
+                    continue;
+                }
+            } else if (riskConnectFlag.equals("N")) {
+                try {
+                    boolean testResult = res.asString().contains(String.valueOf("\"type\":\"fitchId\",\"isMissing\":true"));
+                    Assert.assertTrue(testResult);
+                    logger.info("FISC 7316 DATA AGGREGATOR PASSED " + lfiLoansExpectedDataKey.getSecurityId() + "       " + lfiLoansExpectedDataKey.getFieldId());
+                } catch (AssertionError err) {
+                    errorsList.add(err);
+                    logger.error("FISC 7316 DATA AGGREGATOR FAILED " + lfiLoansExpectedDataKey.getSecurityId() + " " + lfiLoansExpectedDataKey.getFieldId());
+                    Assert.fail();
+                    continue;
+                }
+            }
         }
 
         System.out.println(res.asString());
+        Assert.assertEquals(errorsList.size(), 0);
+        lfiLoansExpectedData.clear();
+        lfiLoansExpectedData = null;
+        res = null;
+        riskConnectFlag = null;
     }
 
     @Test(dataProvider = "Fisc7317_lfiLoansSecurityIds")
