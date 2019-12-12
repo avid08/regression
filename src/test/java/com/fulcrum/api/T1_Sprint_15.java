@@ -256,7 +256,7 @@ public class T1_Sprint_15 extends Configuration {
         Assert.assertEquals(errorsList.size(), 0);
     }
 
-    @Test
+    @Test(enabled = false)
     public void Fisc6570_LFIBonds_MasterSchema() throws SQLException {
         HashMap<LFIBondsKey, ArrayList<Object>> lfiBondsMySqlMap = fulcrumUtils.getLfiBondsMySqlMap_customQuery(QA, "LFIBonds_MySQL.sql", 0, 1);
         HashMap<LFIBondsKey, ArrayList<Object>> lfiBondsPostgresMap = fulcrumUtils.getLfiBondsPostgresMap_customQuery( "LFIBonds_Postgres.sql", 0, 1);
@@ -308,7 +308,7 @@ public class T1_Sprint_15 extends Configuration {
     HashMap<CSBondsKey, ArrayList<Object>> csBondsMySqlMap = null;
     HashMap<CSBondsKey, ArrayList<Object>> csBondsPostgresMap = null;
 
-    @Test
+    @Test(enabled = false)
     public void Fisc6570_CSBonds_MasterSchema() throws SQLException {
 
         HashMap<CSBondsKey, ArrayList<Object>> csBondsMySqlMap = fulcrumUtils.getCsBondsMySqlMap_customQuery(QA, "6570_CSBonds_MySQL.sql", 0, 2);
@@ -339,7 +339,7 @@ public class T1_Sprint_15 extends Configuration {
         Assert.assertEquals(errorsList.size(), 0);
     }
 
-    @Test
+    @Test(enabled = false)
     public void Fisc6570_CSLoans_MasterSchema() throws SQLException {
         HashMap<CSLoansKey, ArrayList<Object>> csLoansMySqlMap = fulcrumUtils.getCsLoansMySqlMap_customQuery(QA, "6570_CSLoans_MySQL.sql",0,1);
         HashMap<CSLoansKey, ArrayList<Object>> csLoansPostgresMap = fulcrumUtils.getCsLoansPostgresMap_customQuery("6570_CSLoans_Postgres.sql",0,1);
