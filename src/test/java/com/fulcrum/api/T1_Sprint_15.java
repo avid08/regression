@@ -3,12 +3,16 @@ package com.fulcrum.api;
 import com.apiutils.APIUtils;
 import com.backendutils.ArrayUtils;
 import com.backendutils.Env;
+import com.backendutils.MongoUtils;
 import com.backendutils.PostgresUtils;
 import com.configuration.LoggerInitialization;
 import com.configuration.api.Configuration;
 import com.google.common.io.Resources;
 import com.jayway.restassured.response.Response;
+import com.mongodb.client.AggregateIterable;
+import com.mongodb.client.MongoCollection;
 import org.apache.log4j.Logger;
+import org.bson.Document;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -35,6 +39,7 @@ public class T1_Sprint_15 extends Configuration {
     APIUtils apiUtils = new APIUtils();
     ArrayUtils arrayUtils = new ArrayUtils();
     FulcrumUtils fulcrumUtils = new FulcrumUtils();
+    MongoUtils mongoUtils = new MongoUtils();
     Connection conn = postgresUtils.connectToPostgreDatabase(Env.Postgres.QA);
 
     @Test
@@ -738,10 +743,28 @@ public class T1_Sprint_15 extends Configuration {
 
         Response res = apiUtils.postToDataAggregatorStringPayload(json, AuthrztionValue, XappClintIDvalue, dataPostUrl);
         HashMap<FulcrumPostgresKey, Object> lfiLoansExpectedData = getPostgresExpectedData(sql);
+        MongoCollection<Document> collection = mongoUtils.connectToMongoDatabase(CAL).getDatabase("esp-9").getCollection("fitch_entity");
+        AggregateIterable<Document> riskConnFlgInfo = collection.aggregate(
+                Arrays.asList(
+                        new Document()
+                                .append("$match", new Document()
+                                        .append("agentID", agentId)
+                                ),
+                        new Document()
+                                .append("$project", new Document()
+                                        .append("agentID", 1.0)
+                                        .append("riskConnectFlg", 1.0)
+                                )
+                )
+        );
 
-        if (res.asString().contains("\"type\":\"fitchId\",\"isMissing\":true")){
-            logger.error("WARNING! RECORD IS MISSING IN API PLEASE CHECK AGENT ID " + agentId + " SECURITY ID " + securityId);
+        String riskConnectFlag = "";
+
+        for (Document riskConnFlgInfoDocument : riskConnFlgInfo){
+            riskConnectFlag = riskConnFlgInfoDocument.get("riskConnectFlg").toString();
         }
+
+        System.out.println(riskConnectFlag);
 
         for (FulcrumPostgresKey lfiLoansExpectedDataKey : lfiLoansExpectedData.keySet()) {
             System.out.println(lfiLoansExpectedDataKey.getSecurityId() + "     " + lfiLoansExpectedDataKey.getFieldId() + "        " + lfiLoansExpectedData.get(lfiLoansExpectedDataKey));
