@@ -45,6 +45,7 @@ public class Configuration {
     protected Env.Mongo CAL;
     protected Env.Mongo FEEDS;
     protected Env.Mongo META;
+    protected Env.Postgres POSTGRES;
     public static boolean failure = false;
     public static boolean publishFlag = true;
     public static ArrayList<String> DBRes = new ArrayList<String>();
@@ -76,6 +77,7 @@ public class Configuration {
                 CAL = Env.Mongo.CAL_DEV;
                 FEEDS = Env.Mongo.FEEDS_DEV;
                 META = Env.Mongo.META_DEV;
+                POSTGRES = Env.Postgres.DEV;
                 break;
             case INT:
                 baseURI = "https://api.fitchconnect-int.com";
@@ -83,6 +85,7 @@ public class Configuration {
                 dataBaseServer2 = "mgo-due1c-ur001.fitchratings.com";
                 databaseFitchEnty = "esp-dev-9";
                 BMIbaseURL = "https://api-stg1.bmiresearch.com";
+                POSTGRES = Env.Postgres.DEV_INT;
                 break;
             case QA:
                 baseURI = "https://api.fitchconnect-qa.com";
@@ -94,6 +97,7 @@ public class Configuration {
                 CAL = Env.Mongo.CAL_QA;
                 FEEDS = Env.Mongo.FEEDS_QA;
                 META = Env.Mongo.META_QA;
+                POSTGRES = Env.Postgres.QA;
                 break;
             case STAGE:
                 baseURI = "https://api.fitchconnect-stg.com";
@@ -104,6 +108,7 @@ public class Configuration {
                 BMIbaseURL = "https://api-stg1.bmiresearch.com";
                 CAL = Env.Mongo.CAL_STG;
                 META = Env.Mongo.META_STG;
+                POSTGRES = Env.Postgres.STG;
                 break;
             case PROD:
                 baseURI = "https://api.fitchconnect.com";
@@ -115,8 +120,9 @@ public class Configuration {
                 CAL = Env.Mongo.CAL_PROD;
                 FEEDS = Env.Mongo.FEEDS_PROD;
                 META = Env.Mongo.META_PROD;
+                POSTGRES = Env.Postgres.PROD;
                 break;
-            default:           	
+            default:
                 baseURI = "https://api.fitchconnect-qa.com";
                 dataBaseServer1 = "mgo-que1a-cr001.fitchratings.com";
                 dataBaseServer2 = "mgo-que1a-ur001.fitchratings.com";
@@ -126,8 +132,7 @@ public class Configuration {
                 CAL = Env.Mongo.CAL_QA;
                 FEEDS = Env.Mongo.FEEDS_QA;
                 META = Env.Mongo.META_QA;
-                break;
-
+                POSTGRES = Env.Postgres.QA;
         }
         bearerToken(environment);
         AuthrztionValue = "Bearer " + refresh_token;
@@ -144,7 +149,7 @@ public class Configuration {
         String filename = null;
         switch (environment) {
         case NOT_DEFINED:
-        	filename = "PROD_granType.json";
+        	filename = "QA_granType.json";
             break;
             case DEV:
                 filename = "Dev_granType.json";

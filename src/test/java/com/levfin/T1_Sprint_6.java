@@ -104,7 +104,7 @@ public class T1_Sprint_6 extends Configuration {
     MongoUtils mongoUtils = new MongoUtils();
 
     @Test
-    public void readDataFromExcel() {
+    public void readDataFromExcel() throws IOException {
         ExcelUtils excelUtils = new ExcelUtils();
         Object[][] excelOutput = excelUtils.getDataFromExcel(Resources.getResource("Lfi_mapping_July_2019.xlsx").getPath(), "MAPPING");
         System.out.println(Arrays.deepToString(excelOutput).replace("], ", "]\n").replace("[[", "[").replace("]]", "]"));

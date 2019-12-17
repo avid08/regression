@@ -37,6 +37,20 @@ public class APIUtils extends Configuration {
         return response;
     }
 
+    public Response postToDataAggregatorStringPayload(String json, String authValue, String xappClientIdValue, String dataPostUrl) throws IOException {
+
+        myjson = json;
+
+        Response response = given()
+                .header("Authorization", authValue)
+                .header("X-App-Client-Id", xappClientIdValue)
+                .contentType("application/vnd.api+json").body(myjson).with()
+                .when().post(dataPostUrl).then().assertThat().statusCode(200)
+                .extract()
+                .response();
+        return response;
+    }
+
     public Response postToDataAggregatorBaseUser(String resourceFileName, String xappClientIdValue, String dataPostUrl) throws IOException {
 
         URL file = Resources.getResource(resourceFileName);

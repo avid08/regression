@@ -1,0 +1,2 @@
+select id, entity_id, information_provenance, entity_type, category, element_type, subelement_type, reference_date, transaction_phase, main_metric, low_value, low_value_operator, element_value, high_value, high_value_operator, threshold, threshold_operator, `algorithm`, document_section, created, updated, staff_id from transaction_element WHERE element_type NOT LIKE 'FC_%'
+order by id;

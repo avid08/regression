@@ -1,26 +1,60 @@
 package com.backendutils;
 
+import com.google.common.io.Resources;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.*;
 
+import static com.backendutils.FileUtils.getFullResourcePath;
+
 public class MySqlUtils {
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    static final String DB_URL = EnvConfig.MySQL.QA.HOSTNAME;
-    static final String USER = EnvConfig.MySQL.QA.USERNAME;
-    static final String PASS = EnvConfig.MySQL.QA.PASSWORD;
 
-    public Connection connectToMySqlDatabase() {
-        Connection conn = null;
-
+    public Connection connectToMySqlDatabase(Env.MySQL env) throws SQLException {
         try {
-            //    Class.forName(JDBC_DRIVER).newInstance();
-            System.out.println("Connecting to MySQL Database");
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            System.out.println("Connected database successfully");
-        } catch (Exception ex) {
-            System.out.println("Exception: " + ex);      }
-        return conn;
+            switch (env) {
+                case QA:
+                    Connection qaConn = null;
+                    final String DB_URL_QA = EnvConfig.MySQL.QA.HOSTNAME;
+                    final String USER_QA = EnvConfig.MySQL.QA.USERNAME;
+                    final String PASS_QA = EnvConfig.MySQL.QA.PASSWORD;
+                    System.out.println("Connecting to MySQL QA Database");
+                    qaConn = DriverManager.getConnection(DB_URL_QA, USER_QA, PASS_QA);
+                    System.out.println("Connected database successfully");
+                    return qaConn;
+                case PROD:
+                    Connection prodConn = null;
+                    final String DB_URL_PROD = EnvConfig.MySQL.PROD.HOSTNAME;
+                    final String USER_PROD = EnvConfig.MySQL.PROD.USERNAME;
+                    final String PASS_PROD = EnvConfig.MySQL.PROD.PASSWORD;
+                    System.out.println("Connecting to MySQL PROD Database");
+                    prodConn = DriverManager.getConnection(DB_URL_PROD, USER_PROD, PASS_PROD);
+                    System.out.println("Connected database successfully");
+                    return prodConn;
+                case CR_QA:
+                    Connection crQAConn = null;
+                    final String CR_DB_URL_QA = EnvConfig.MySQL.CR_QA.HOSTNAME;
+                    final String USER_CR_QA = EnvConfig.MySQL.CR_QA.USERNAME;
+                    final String PASS_CR_QA = EnvConfig.MySQL.CR_QA.PASSWORD;
+                    System.out.println("Connecting to CR QA Database");
+                    crQAConn = DriverManager.getConnection(CR_DB_URL_QA, USER_CR_QA, PASS_CR_QA);
+                    System.out.println("Connected database successfully");
+                    return crQAConn;
+                default:
+                    Connection defaultConn = null;
+                    final String DB_URL_DEFAULT_QA = EnvConfig.MySQL.QA.HOSTNAME;
+                    final String USER_DEFAULT_QA = EnvConfig.MySQL.QA.USERNAME;
+                    final String PASS_DEFAULT_QA = EnvConfig.MySQL.QA.PASSWORD;
+                    System.out.println("Connecting to MySQL QA Database");
+                    defaultConn = DriverManager.getConnection(DB_URL_DEFAULT_QA, USER_DEFAULT_QA, PASS_DEFAULT_QA);
+                    System.out.println("Connected database successfully");
+                    return defaultConn;
+            }
+        } catch (SQLException ex) {
+            System.out.println("SQL Exception occured: " + ex);
+            return null;
+        }
     }
 
     public ResultSet executeMySqlScript(Connection conn, String databaseName, String mySqlFilePath) {
@@ -81,5 +115,12 @@ public class MySqlUtils {
             System.out.println("Exception: " + ex);
             return null;
         }
+    }
+
+    public Object[][] getDataFromMySQL(Env.MySQL env, String databaseName, String sqlFileName) throws SQLException {
+        Connection conn = connectToMySqlDatabase(env);
+        ResultSet rs = executeMySqlScript(conn,databaseName, getFullResourcePath(sqlFileName));
+        Object[][] mySqlData = resultSetToArray(rs);
+        return mySqlData;
     }
 }

@@ -6,11 +6,14 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+
+import static org.apache.poi.ss.usermodel.CellType.*;
 
 public class ExcelUtils {
 
@@ -53,33 +56,27 @@ public class ExcelUtils {
         return result;
     }
 
+    public Object[][] getDataFromExcel(String excelFilePath, String sheetName) throws IOException {
+        File myFile = new File(excelFilePath);
+        FileInputStream myStream = new FileInputStream(myFile);
+        XSSFWorkbook workbook = new XSSFWorkbook(myStream);
+        XSSFSheet sheet = workbook.getSheet(sheetName);
 
-    public Object[][] getDataFromExcel(String excelFilePath, String sheetName) {
-        try {
-          FileInputStream fs = new FileInputStream(excelFilePath);
-          XSSFWorkbook workbook = new XSSFWorkbook(fs);
-          XSSFSheet sheet = workbook.getSheet(sheetName);
-          int rowNum = sheet.getLastRowNum();
-            Object[][] excelData = new Object[rowNum][];
-            System.out.println(rowNum);
+        int numRows = sheet.getLastRowNum()+1;
+        int numCols = sheet.getRow(0).getLastCellNum();
 
-            for (int i = 1; i < rowNum; i++){
-            Row row = sheet.getRow(i);
-            int colNum = row.getLastCellNum();
-                System.out.println(colNum);
-                for (int j = 1; j < colNum; j++){
-                excelData[i][j] = sheet.getRow(i).getCell(j).getStringCellValue();
-                System.out.println(excelData[i][j]);
+        Object[][] excelData = new Object[numRows][numCols];
+
+        for (int i = 0; i < numRows; i++){
+            XSSFRow row = sheet.getRow(i);
+            for (int j = 0; j < numCols; j++){
+                XSSFCell cell = row.getCell(j);
+                String value = String.valueOf(cell);
+                excelData[i][j] = value;
             }
-          }
-            return excelData;
         }
-        catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-        }
+        return excelData;
     }
-
 
     public void writeMySqlToExcelFile(Object[][] mySqlResults) {
         File file = new File(EXCELOUTPUTFILEPATH);

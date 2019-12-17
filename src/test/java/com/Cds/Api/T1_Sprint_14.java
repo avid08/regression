@@ -36,14 +36,11 @@ public class T1_Sprint_14 extends Configuration {
     Logger logger = LoggerInitialization.setupLogger("T1_Sprint_14");
     MongoUtils mongoUtils = new MongoUtils();
     APIUtils apiUtils = new APIUtils();
-    PostgresUtils postgresUtils = new PostgresUtils();
-
-    private Integer timeoutBetweenTests = 2000;
 
     @DataProvider(name="Fisc6354")
     public Object[][] getDataFor6354(){
         MongoCollection<Document> collection = mongoUtils
-                .connectToMongoDatabase(Env.Mongo.META_QA)
+                .connectToMongoDatabase(META)
                 .getDatabase("xrefdb")
                 .getCollection("metadataFields");
 
@@ -451,7 +448,7 @@ public class T1_Sprint_14 extends Configuration {
     @Test
     public void Fisc6373_cdsEnhacementsInDataAggregator_ValidatingValues() throws IOException {
         MongoCollection<Document> collection = mongoUtils
-                .connectToMongoDatabase(Env.Mongo.CDS)
+                .connectToMongoDatabase(CAL)
                 .getDatabase("cds-data")
                 .getCollection("cdsEntities");
 
@@ -609,8 +606,11 @@ public class T1_Sprint_14 extends Configuration {
         int numberOfValues = values.size();
 
         HashMap<String, String> apiValues = new HashMap<>();
-        DecimalFormat df = new DecimalFormat("#.####");
+        DecimalFormat df = new DecimalFormat("0.0000");
 
+        for (Document mongoValue: mongoValues){
+            System.out.println(mongoValue.toJson());
+        }
 
         for (Document mongoValue : mongoValues) {
             System.out.println(res.asString());
@@ -618,9 +618,11 @@ public class T1_Sprint_14 extends Configuration {
                 String apiFitchFieldId = res.path("data.attributes.entities[0].values[" + i + "].fitchFieldId");
                 String apiValue = df.format(res.path("data.attributes.entities[0].values[" + i + "].values[0].value[0]"));
                 apiValues.put(apiFitchFieldId, apiValue);
-                System.out.println(apiFitchFieldId + "     " + apiValue + "     " + df.format(mongoValue.get(apiFitchFieldId)));
+                float apiValue_float = Float.parseFloat(apiValue);
+                float mongoValue_float = Float.parseFloat(df.format(mongoValue.get(apiFitchFieldId)));
+                System.out.println(apiFitchFieldId + "     " + apiValue_float + "     " + mongoValue_float);
                 try {
-                    Assert.assertEquals(apiValue, df.format(mongoValue.get(apiFitchFieldId)));
+                    Assert.assertEquals(apiValue_float, mongoValue_float, 0.01);
                     logger.info("FISC 6373 API VALUES PASSED FITCHFIELDID " + apiFitchFieldId);
                 } catch (AssertionError err) {
                     logger.error("FISC 6373 API VALUES FAILED! FITCHFIELDID " + apiFitchFieldId);
@@ -628,6 +630,8 @@ public class T1_Sprint_14 extends Configuration {
                 }
             }
         }
+
+
     }
 
     @DataProvider(name="Fisc6373_baseUser")

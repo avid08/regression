@@ -106,7 +106,7 @@ public class fisCon_Sprint14 extends Configuration {
 			
 			String CategoryURI = baseCategoryURI +"/"+BmiCategoryId;
 			
-			//System.out.println(CategoryURI);
+			System.out.println(CategoryURI);
 
 			Response response = given().header("Authorization", AuthrztionValue).header("X-App-Client-Id", XappClintIDvalue)
 					.header("accept", acceptValue).header("content", contentValue).when().get(CategoryURI).then()

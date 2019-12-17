@@ -1,15 +1,13 @@
-package com.etlautomation;
+package com.ETLAutomation;
 
 import com.backendutils.Env;
 import com.backendutils.MongoUtils;
 import com.configuration.LoggerInitialization;
 import com.configuration.api.Configuration;
-import com.mongodb.BasicDBObject;
 import com.mongodb.Block;
 import com.mongodb.MongoException;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
 import org.apache.log4j.Logger;
 import org.bson.Document;
 import org.testng.Assert;
@@ -27,8 +25,11 @@ public class ETLAutomation extends Configuration {
     private Logger logger = LoggerInitialization.setupLogger("ETL_Status_");
     MongoUtils mongoUtils = new MongoUtils();
 
-    private Env.Mongo dbServer = Env.Mongo.FEEDS_PROD_PARALLEL;
-    private String dbName = "idscp-prod-2";
+    private Env.Mongo dbServer = Env.Mongo.FEEDS_QA;
+    //PROD
+    //private String dbName = "idscp-prod-2";
+    //QA
+    private String dbName = "ids-dev-2";
 
     @DataProvider(name = "incrementalCollections")
     public Object[][] getIncrementalCollections() {
@@ -122,16 +123,23 @@ public class ETLAutomation extends Configuration {
         }
     }
 
-    @DataProvider(name = "refreshCollections")
-    public Object[][] getRefreshCollections(){
+    @DataProvider(name = "refreshAndFinancialCollections")
+    public Object[][] getRefreshAndFinancialCollections(){
         return new Object[][]{
                 {"rds_agnt_rtng_ref","rds_issuer_ref"},
-                {"rds_security_rtng_ref","rds_issue_ref"}
+                {"rds_security_rtng_ref","rds_issue_ref"},
+                {"bank_financials","Bank_Financials"},
+                {"insurance_financials","Insurance_Financials"},
+                {"lloyds_financial","Lloyds_Financials"},
+                {"sovereign_financials","Sovereign_Financials"},
+                {"issueRatings_td", "fcf_issue_rating_transitions"},
+                {"issuerRatings_td", "fcf_issuer_rating_transitions"},
+                {"security_identifiers", "security_identifiers"}
         };
     }
 
-    @Test(dataProvider = "refreshCollections")
-    public void etl_validateRefreshCollections(String collectionName, String etlName){
+    @Test(dataProvider = "refreshAndFinancialCollections")
+    public void etl_validateRefreshAndFinancialCollections(String collectionName, String etlName){
         MongoCollection<Document> etlHistoryCollection = mongoUtils
                 .connectToMongoDatabase(dbServer)
                 .getDatabase(dbName)
@@ -180,7 +188,6 @@ public class ETLAutomation extends Configuration {
 
     }
 
-
     @DataProvider(name = "etlNames")
     public Object[][] getEtlNames() {
         return new Object[][]{
@@ -210,7 +217,7 @@ public class ETLAutomation extends Configuration {
         };
     }
 
-    @Test(dataProvider = "refreshCollections")
+    @Test(dataProvider = "etlNames", enabled = false)
     public void ETL_HistoryTest(String collectionName, String etlName) {
         try {
             MongoCollection<Document> etlHistoryCollection = mongoUtils

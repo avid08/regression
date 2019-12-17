@@ -1,4 +1,4 @@
-package com.etlautomation;
+package com.ETLAutomation;
 
 import org.bson.Document;
 
