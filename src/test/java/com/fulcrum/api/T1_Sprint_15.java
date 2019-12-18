@@ -40,7 +40,7 @@ public class T1_Sprint_15 extends Configuration {
     ArrayUtils arrayUtils = new ArrayUtils();
     FulcrumUtils fulcrumUtils = new FulcrumUtils();
     MongoUtils mongoUtils = new MongoUtils();
-    Connection conn = postgresUtils.connectToPostgreDatabase(Env.Postgres.QA);
+    Connection conn = postgresUtils.connectToPostgreDatabase(Env.Postgres.PROD);
 
     @Test
     public void Fisc6569_CSLoans_LFIBonds_ConfigSchema_validateIfAllExist() throws SQLException {
@@ -634,13 +634,13 @@ public class T1_Sprint_15 extends Configuration {
     public Object[][] getData_7317_sourceNameAndType(){
         String lfiOnlyUri = baseURI + "/v1/securities?filter[sourceName]=LFI";
         String csOnlyUri = baseURI + "/v1/securities?filter[sourceName]=CS";
-        String lfiAndCsUri = baseURI + "/v1/securities?filter[sourceName]=LFI,CS";
+        String lfiAndCsUri = baseURI + "/v1/securities?filter[sourceName]=LFI,CS&page[size]=1000";
         String lfiLoansUri = baseURI + "/v1/securities?filter[sourceName]=LFI&filter[sourceType]=Loans";
         String csLoansUri = baseURI + "/v1/securities?filter[sourceName]=CS&filter[sourceType]=Loans";
-        String lfiAndCsLoansUri = baseURI + "/v1/securities?filter[sourceName]=CS,LFI&filter[sourceType]=Loans";
+        String lfiAndCsLoansUri = baseURI + "/v1/securities?filter[sourceName]=CS,LFI&filter[sourceType]=Loans&page[size]=1000";
         String lfiBondsUri = baseURI + "/v1/securities?filter[sourceName]=LFI&filter[sourceType]=Bonds";
         String csBondsUri = baseURI + "/v1/securities?filter[sourceName]=CS&filter[sourceType]=Bonds";
-        String lfiAndCsBondsUri = baseURI + "/v1/securities?filter[sourceName]=CS,LFI&filter[sourceType]=Bonds";
+        String lfiAndCsBondsUri = baseURI + "/v1/securities?filter[sourceName]=CS,LFI&filter[sourceType]=Bonds&page[size]=1000";
         String lfiLoansAndBondsUri = baseURI + "/v1/securities?filter[sourceName]=LFI&filter[sourceType]=Loans,Bonds";
         String csLoansAndBondsUri = baseURI + "/v1/securities?filter[sourceName]=CS&filter[sourceType]=Loans,Bonds";
 
